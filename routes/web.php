@@ -17,7 +17,7 @@ Route::get('/', function () {
     return redirect('/home');
 });
 
-Auth::routes();
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/product/{id}', 'ProductController@details');
@@ -25,3 +25,13 @@ Route::get('cart', 'ProductController@cart');
 Route::get('add-to-cart/{id}', 'ProductController@addToCart');
 Route::patch('update-cart', 'ProductController@update');
 Route::delete('remove-from-cart', 'ProductController@remove');
+
+Route::group([
+    'middleware' => ['auth']
+], function() {
+
+    Route::get('purchase', 'PurchaseControler@purchase');
+    
+});
+
+Auth::routes();

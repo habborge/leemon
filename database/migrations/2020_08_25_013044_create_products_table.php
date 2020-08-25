@@ -29,6 +29,7 @@ class CreateProductsTable extends Migration
             $table->decimal('price',10,2);
             $table->text('img1');
             $table->text('img2');
+            $table->integer('prom');
             //$table->decimal('price_min',10,2);
             $table->timestamps();
             $table->softDeletes();

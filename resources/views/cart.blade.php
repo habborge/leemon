@@ -8,33 +8,75 @@
             <th style="width:50%">Product</th>
             <th style="width:10%">Price</th>
             <th style="width:8%">Quantity</th>
-            <th style="width:22%" class="text-center">Subtotal</th>
+            <th style="width:22%" class="text-right">Subtotal</th>
             <th style="width:10%"></th>
         </tr>
         </thead>
         <tbody>
  
-        <?php $total = 0 ?>
+        <?php 
+            $total = 0;
+            
+        ?>
  
         @if(session('cart'))
             @foreach(session('cart') as $id => $details)
  
-                <?php $total += $details['price'] * $details['quantity'] ?>
+                <?php 
+                $whole = 0;
+                $half = 0;
+                $nq = 0;
+                $h = 0;
+                $discount = 0;
+                 if (($details['prom'] == 1) and ($details['quantity'] >= 2 )){
+                    $whole = (int) ($details['quantity'] / 2);
+                    $h = (2 * $whole) + $whole;
+                    $nq = $details['quantity'] + ($h - $details['quantity']);
+                    $discount = round($details['price'] * $whole);
+                    //$details['quantity'] = $nq;
+
+                 }else if (($details['prom'] == 2) and ($details['quantity'] >= 2)){
+                    $whole = (int) ($details['quantity'] / 2);
+                    $half = round(($details['price'] / 2) * $whole);
+                    $nq = $details['quantity'];
+                 }else{
+                    $nq = $details['quantity'];
+                 }
+                 
+                    $total += ($details['price'] * $nq) - $half - $discount;
+                ?>
  
                 <tr>
                     <td data-th="Product">
                         <div class="row">
                             <div class="col-sm-3 hidden-xs"><img src="{{ $details['photo'] }}" width="100" height="100" class="img-responsive"/></div>
                             <div class="col-sm-9">
-                                <h4 class="nomargin">{{ $details['name'] }}</h4>
+                            <h4 class="nomargin">{{ $details['name'] }}
+                                @if ($details['prom'] == 1) 
+                                <span class="badge badge-warning">Paga 2 Lleva 3</span>
+                              @elseif ($details['prom'] == 2)
+                                <span class="badge badge-danger">2nd 50% off</span>
+                              @endif
+                            </h4>
                             </div>
                         </div>
                     </td>
                     <td data-th="Price">${{ $details['price'] }}</td>
                     <td data-th="Quantity">
                         <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity" />
+                        @if ($discount > 0)
+                            Free: {{ $whole }} Articulos
+                        @endif
                     </td>
-                    <td data-th="Subtotal" class="text-center">${{ $details['price'] * $details['quantity'] }}</td>
+                    <td data-th="Subtotal" class="text-right">$ {{ $details['price'] * $nq}}
+                        @if ($half > 0)
+                            <br> <span class="text-danger">Descuento $ {{ $half }}</span>
+                        @elseif ($discount > 0)
+                            <br> <span class="text-danger">Descuento $ {{ $discount }}</span>
+                        @else
+                        @endif
+                            <br>A pagar $ {{ ($details['price'] * $nq) - $half - $discount }}
+                    </td>
                     <td class="actions" data-th="">
                         <button id="" class="btn btn-info btn-sm update-cart" data-id="{{ $id }}"><i class="fa fa-refresh"></i></button>
                         <button class="btn btn-danger btn-sm remove-from-cart" data-id="{{ $id }}"><i class="fa fa-trash-o"></i></button>
@@ -45,14 +87,24 @@
  
         </tbody>
         <tfoot>
-        <tr class="visible-xs">
-            <td class="text-center"><strong>Total {{ $total }}</strong></td>
-        </tr>
-        <tr>
-            <td><a href="{{ url('/') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
-            <td colspan="2" class="hidden-xs"></td>
-            <td class="hidden-xs text-center"><strong>Total ${{ $total }}</strong></td>
-        </tr>
+            <tr class="visible-xs">
+                <td></td>
+                <td colspan="2" class="hidden-xs"></td>
+                <td class="text-right"><strong>SubTotal $ {{ $total }}</strong></td>
+            </tr>
+            <tr>
+                <td><a href="{{ url('/') }}" class="btn btn-primary"><i class="fa fa-angle-left"></i> Continua de Compras</a></td>
+                <td colspan="2" class="hidden-xs"></td>
+                <!--<td class="hidden-xs text-right"><strong>Total $ {{ $total }}</strong></td>-->
+                <td class="text-right">
+                    @guest
+                        <a class="btn btn-warning" href="{{ route('login') }}">Iniciar Sesión</a>
+                    @else
+                        <a href="{{ url('purchase') }}" class="btn btn-primary"> Continuar con el Pago</a>
+                    @endguest
+                </td>
+                    
+            </tr>
         </tfoot>
     </table>
 @endsection

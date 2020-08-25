@@ -54,7 +54,14 @@
           <div class="card mb-4 shadow-sm">
             <a href="/product/{{$product->id}}"><img src="{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro" alt=""></a>
             <div class="card-body">
-              Producto:<h3>{{$product->name}}</h3>
+              Producto:
+              <h3>{{$product->name}} 
+                  @if ($product->prom == 1) 
+                    <span class="badge badge-warning">Paga 2 Lleva 3</span>
+                  @elseif ($product->prom == 2)
+                    <span class="badge badge-danger">2nd 50% off</span>
+                  @endif
+              </h3>
               <p class="card-text">{{$product->description}}</p>
               <h3>$ {{$product->price}}</h3>
               <div class="d-flex justify-content-between align-items-center">
