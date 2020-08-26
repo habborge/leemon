@@ -26,7 +26,8 @@ $factory->define(Product::class, function (Faker $faker) {
         'price' => rand(1000, 300000),
         'img1' => 'img/',
         'img2' => 'img/',
-        'prom' => rand(1,2)
+        'prom' => rand(1,2),
+        'delivery_cost' => rand(10000, 30000)
         //'price_min' => rand(1000, 300000)
     ];
 });
