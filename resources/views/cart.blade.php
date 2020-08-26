@@ -16,7 +16,7 @@
  
         <?php 
             $total = 0;
-            
+            $delivery = 0;
         ?>
  
         @if(session('cart'))
@@ -44,6 +44,7 @@
                  }
                  
                     $total += ($details['price'] * $nq) - $half - $discount;
+                    $delivery += $details['delivery_cost'] * $nq;
                 ?>
  
                 <tr>
@@ -92,6 +93,13 @@
                 <td colspan="2" class="hidden-xs"></td>
                 <td class="text-right"><strong>SubTotal $ {{ $total }}</strong></td>
             </tr>
+            @if ($answer == 1)
+                <tr>
+                    <td></td>
+                    <td colspan="2" class="hidden-xs"></td>
+                    <td class="text-right">Costo de Entrega $ {{ $delivery }}</td>
+                </tr>
+            @endif
             <tr>
                 <td><a href="{{ url('/') }}" class="btn btn-primary"><i class="fa fa-angle-left"></i> Continua de Compras</a></td>
                 <td colspan="2" class="hidden-xs"></td>
@@ -100,7 +108,11 @@
                     @guest
                         <a class="btn btn-warning" href="{{ route('login') }}">Iniciar Sesión</a>
                     @else
-                        <a href="{{ url('purchase') }}" class="btn btn-primary"> Continuar con el Pago</a>
+                        @if ($answer == 0)
+                            <a href="{{ url('purchase') }}" class="btn btn-primary">Adicionar Metodo de Pago</a>
+                        @elseif ($answer == 1)
+                            <a href="{{ url('confirm') }}" class="btn btn-primary">Confirmar Pago</a>
+                        @endif
                     @endguest
                 </td>
                     

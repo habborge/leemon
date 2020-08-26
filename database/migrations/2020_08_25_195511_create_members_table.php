@@ -24,7 +24,8 @@ class CreateMembersTable extends Migration
             $table->string('address',100);
             $table->string('delivery_address',100);
             $table->string('city',30);
-            $table->integer('country_id');
+            $table->string('dpt',30);
+            $table->string('country', 50);
             $table->timestamps();
         });
     }

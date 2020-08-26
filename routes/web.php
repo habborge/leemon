@@ -31,7 +31,9 @@ Route::group([
 ], function() {
 
     Route::get('purchase', 'PurchaseControler@purchase');
-    
+    Route::post('add-info-user', 'PurchaseControler@addInfoUser')->name('saveinfo');
+    Route::get('confirm', 'PurchaseControler@confirm');
+    Route::post('generateimg', 'PurchaseControler@generateimg')->name('generateimg');
 });
 
 Auth::routes();
