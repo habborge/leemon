@@ -37,6 +37,7 @@ class StoreMembers extends FormRequest
             'cc_number' => 'required|string|min:16|max:20',
             'cc_expiration' => 'required|string|min:5',
             'cc_cvv' => 'required|string|min:3',
+           
         ];
     }
 }

@@ -14,6 +14,7 @@ use PDF;
 use Mail;
 use App\Mail\OrderShipped;
 use File;
+use Illuminate\Support\Facades\Validator;
 
 class PurchaseControler extends Controller
 {
@@ -21,6 +22,24 @@ class PurchaseControler extends Controller
     {
         $this->middleware('auth');
     }
+
+    private function verifyInsert($request){
+        return $p = Validator::make($request->all(), [
+            'firstname' => 'required|string',
+            'lastname' => 'required|string',
+            'email' => 'required|email|unique:members,email',
+            'address' => 'required',
+            'city'  => 'required', 
+            'dpt' => 'required',  
+            'country' => 'required',  
+            'n_doc' => 'required',
+            'cc_name' => 'required|string',
+            'cc_number' => 'required|string|min:16|max:20',
+            'cc_expiration' => 'required|string|min:5',
+            'cc_cvv' => 'required|string|min:3'
+        ] );
+    }
+
     //--------------------------------------------------------------------------------------------------------------    
     //
     //--------------------------------------------------------------------------------------------------------------
@@ -43,16 +62,37 @@ class PurchaseControler extends Controller
     //--------------------------------------------------------------------------------------------------------------
     //
     //--------------------------------------------------------------------------------------------------------------
-        public function addInfoUser(StoreMembers $request){
-            $user_info = New Member();
+        public function addInfoUser(Request $request){
             
-            $rs = $user_info->set($request);
-
-            if($rs){
-                return redirect('cart')->with('success', 'Usuario creado de manera Exitosa!!');
-            }else{
-                return back()->with('notice', 'Un error ha ocurrido!!');
+            $p = $this->verifyInsert($request);
+            $infosaved = 0;
+            $id = Auth::user()->id;
+            
+            $info = Member::where('user_id', $id)->first();
+    
+            if ($info){
+                $infosaved = 1;
             }
+
+            if ($p->fails()){
+                //dd($forType);
+                return view('purchase', [
+                    'completeRequest' => $request,
+                    'infosaved' => $infosaved,
+            'info' => $info
+                ])->withErrors($p);
+            }else{
+                $user_info = New Member();
+            
+                $rs = $user_info->set($request);
+    
+                if($rs){
+                    return redirect('cart')->with('success', 'Usuario creado de manera Exitosa!!');
+                }else{
+                    return back()->with('notice', 'Un error ha ocurrido!!');
+                }
+            }
+           
         }
     //--------------------------------------------------------------------------------------------------------------
     //
