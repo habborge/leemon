@@ -77,7 +77,7 @@
                     <span class="badge badge-danger">2nd 50% off</span>
                   @endif
               </h3>
-              <p class="card-text info-small">{{$product->description}}</p>
+              <p class="card-text info-small recortar">{{$product->description}}</p>
               <h3>$ {{number_format($product->price, 0)}} COP</h3>
               <div class="d-flex justify-content-between align-items-center">
                 
