@@ -41,7 +41,7 @@ header {
 }
 
 #logo img {
-  width: 90px;
+  width: 250px;
 }
 
 h1 {
@@ -150,7 +150,7 @@ footer {
   <body>
     <header class="clearfix">
       <div id="logo">
-        <img src="logo.png">
+        <img src="{{ public_path('img/').$data[0]->id.'.png'  }}">
       </div>
       <h1>ORDEN No {{ $data[0]->id }}</h1>
       <div id="company" class="clearfix">

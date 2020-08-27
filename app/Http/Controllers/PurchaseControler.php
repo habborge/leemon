@@ -13,6 +13,7 @@ use App\Order_detail;
 use PDF;
 use Mail;
 use App\Mail\OrderShipped;
+use File;
 
 class PurchaseControler extends Controller
 {
@@ -134,9 +135,15 @@ class PurchaseControler extends Controller
     public function send($order_id, $member){
 
         $email = Auth::user()->email;
-        $customer = $member->firstname." ".$member->lastname;
-        
+        $mem_id = Auth::user()->id;
 
+        $customer = $member->firstname." ".$member->lastname;
+
+        $customer2 = "CLIENTE: ".$member->firstname." ".$member->lastname." \n"."DIRECCION DE ENTREGA: ".$member->delivery_address." \n"."EMAIL: ".$member->email." \n"."DOCUMENTO: ".$member->n_doc." \n"."TARJETA No: ".$member->cardnumber." \n"."VENCIMIENTO: ".$member->expiration;
+       
+        //Example
+        File::put('orders/member_'.$mem_id.'.txt',$customer2);
+        
         $sending = Mail::to($email)->send(new OrderShipped($customer, $order_id));
 
         return true;

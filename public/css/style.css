@@ -203,3 +203,9 @@
       color: rgb(12, 50, 155);
       font-size: 15px;
   }
+  .info-small{
+        font-size: 12px;    
+  }
+  .bg-purchase{
+      background-color: rgb(218, 218, 218);
+  }
