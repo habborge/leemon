@@ -24,6 +24,7 @@ Route::get('/product/{id}', 'ProductController@details');
 Route::get('cart', 'ProductController@cart');
 Route::get('add-to-cart/{id}', 'ProductController@addToCart');
 Route::patch('update-cart', 'ProductController@update');
+Route::post('add-to-cart-quantity', 'ProductController@addToCartQuantity');
 Route::delete('remove-from-cart', 'ProductController@remove');
 
 Route::group([
@@ -34,6 +35,7 @@ Route::group([
     Route::post('add-info-user', 'PurchaseControler@addInfoUser')->name('saveinfo');
     Route::get('confirm', 'PurchaseControler@confirm');
     Route::post('generateimg', 'PurchaseControler@generateimg')->name('generateimg');
+    Route::get('thanks', 'ProductController@thanks');
 });
 
 Auth::routes();

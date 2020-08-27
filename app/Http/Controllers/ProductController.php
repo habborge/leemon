@@ -22,7 +22,7 @@ class ProductController extends Controller
         if (Auth::user()){
             $id = Auth::user()->id;
             $query = DB::table('members as m')
-            ->select('m.email', 'm.firstname','m.lastname','m.address', 'm.delivery_address', 'm.city', 'm.dpt', 'm.country', 'm.n_doc', 'c.fullname','c.cardnumber', 'c.expiration', 'c.cvv')
+            ->select('m.email as email', 'm.firstname','m.lastname','m.address', 'm.delivery_address', 'm.city', 'm.dpt', 'm.country', 'm.n_doc', 'c.fullname','c.cardnumber', 'c.expiration', 'c.cvv')
             ->join('creditcards as c', 'm.user_id', '=', 'c.user_id' )
             ->where('m.user_id', $id)->get();
 
@@ -54,10 +54,14 @@ class ProductController extends Controller
         }
  
         $cart = session()->get('cart');
- 
+        
+        $hash = md5(env('SECRETPASS')."~".$product->name."~".$product->price."~".$product->prom);
+
         // if cart is empty then this the first product
         if(!$cart) {
- 
+            
+            
+
             $cart = [
                     $id => [
                         "name" => $product->name,
@@ -65,7 +69,8 @@ class ProductController extends Controller
                         "price" => $product->price,
                         "photo" => $product->img1,
                         "prom" => $product->prom,
-                        "delivery_cost" => $product->delivery_cost
+                        "delivery_cost" => $product->delivery_cost,
+                        "hash" => $hash
                     ]
             ];
  
@@ -92,12 +97,84 @@ class ProductController extends Controller
             "price" => $product->price,
             "photo" => $product->img1,
             "prom" => $product->prom,
-            "delivery_cost" => $product->delivery_cost
+            "delivery_cost" => $product->delivery_cost,
+            "hash" => $hash
         ];
  
         session()->put('cart', $cart);
  
         return redirect()->back()->with('success', 'Product added to cart successfully!');
+    }
+
+    //--------------------------------------------------------------------------------------------------------------
+    //
+    //--------------------------------------------------------------------------------------------------------------
+    public function addToCartQuantity(Request $request)
+    {
+        $id = $request->id;
+        $cant = $request->quantity;
+        
+        $product = Product::find($id);
+        
+ 
+        if(!$product) {
+ 
+            abort(404);
+ 
+        }
+ 
+        $cart = session()->get('cart');
+        
+        $hash = md5(env('SECRETPASS')."~".$product->name."~".$product->price."~".$product->prom);
+
+        // if cart is empty then this the first product
+        if(!$cart) {
+            
+            
+
+            $cart = [
+                    $id => [
+                        "name" => $product->name,
+                        "quantity" => $cant,
+                        "price" => $product->price,
+                        "photo" => $product->img1,
+                        "prom" => $product->prom,
+                        "delivery_cost" => $product->delivery_cost,
+                        "hash" => $hash
+                    ]
+            ];
+ 
+            session()->put('cart', $cart);
+ 
+            return redirect('/product'.'/'.$id)->with('success', 'Usuario creado de manera Exitosa!!');
+        }
+ 
+        // if cart not empty then check if this product exist then increment quantity
+        if(isset($cart[$id])) {
+ 
+            $cart[$id]['quantity'] += $cant;
+ 
+            session()->put('cart', $cart);
+ 
+            return redirect('/home')->with('success', 'Usuario creado de manera Exitosa!!');
+ 
+        }
+ 
+        // if item not exist in cart then add to cart with quantity = 1
+        $cart[$id] = [
+            "name" => $product->name,
+            "quantity" => $cant,
+            "price" => $product->price,
+            "photo" => $product->img1,
+            "prom" => $product->prom,
+            "delivery_cost" => $product->delivery_cost,
+            "hash" => $hash
+        ];
+ 
+        session()->put('cart', $cart);
+ 
+        return redirect('/product'.'/'.$id)->with('success', 'Usuario creado de manera Exitosa!!');
+        
     }
 
     //--------------------------------------------------------------------------------------------------------------
@@ -109,6 +186,7 @@ class ProductController extends Controller
         if($request->id and $request->quantity)
         {
             $cart = session()->get('cart');
+            dd($request->quantity);
  
             $cart[$request->id]["quantity"] = $request->quantity;
  
@@ -121,6 +199,7 @@ class ProductController extends Controller
     //--------------------------------------------------------------------------------------------------------------
     //
     //--------------------------------------------------------------------------------------------------------------
+
  
     public function remove(Request $request)
     {
@@ -142,5 +221,24 @@ class ProductController extends Controller
     //--------------------------------------------------------------------------------------------------------------
     //
     //--------------------------------------------------------------------------------------------------------------
-    
+    public function thanks(Request $request)
+    {
+        session()->forget('cart');
+
+        return view('thanks');
+    }
+
+    //--------------------------------------------------------------------------------------------------------------
+    //
+    //--------------------------------------------------------------------------------------------------------------
+    public function details(Request $request)
+    {
+        $pro_id = $request->id;
+        $product = Product::find($pro_id);
+
+        return view('details',[
+            'prod_id' => $pro_id,
+            'prod_info' => $product
+        ]);
+    }
 }

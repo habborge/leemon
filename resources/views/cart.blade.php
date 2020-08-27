@@ -89,17 +89,40 @@
         </tbody>
         <tfoot>
             <tr class="visible-xs">
-                <td></td>
-                <td colspan="2" class="hidden-xs"></td>
-                <td class="text-right"><strong>SubTotal $ {{ $total }}</strong></td>
+                <td>
+                    @if ($answer == 1)
+                        <h4>Información de Envio</h4><br>
+                        Dirección de Envio: {{ $member_info[0]->delivery_address }}<br>
+                        Cliente: {{ $member_info[0]->firstname }} {{ $member_info[0]->lastname }}<br>
+                        Email: {{ $member_info[0]->email }}<br>
+                        No de ID: {{ $member_info[0]->n_doc }}<br>
+                        
+                    @endif
+                </td>
+                <td colspan="2" class="hidden-xs">
+                    @if ($answer == 1)
+                        <h4>Información de Pago</h4><br>
+                        Cliente: {{ $member_info[0]->fullname }}<br>
+                        Metodo de Pago: Credit Card<br>
+                        @php
+                            $number = substr($member_info[0]->cardnumber, -4, 4);
+
+                        @endphp
+                        No de Tarjeta: **********{{$number}}<br>
+                        vence: {{ $member_info[0]->expiration }}<br>
+                    @endif
+                </td>
+                <td class="text-right">
+                    SubTotal $ {{ $total }}<br>
+                    @if ($answer == 1)
+                        Costo de Entrega $ {{ $delivery }}<br>
+                <b>Total a Pagar $ {{ $total + $delivery }}</b>
+                     @endif    
+                   
+                </td>
             </tr>
-            @if ($answer == 1)
-                <tr>
-                    <td></td>
-                    <td colspan="2" class="hidden-xs"></td>
-                    <td class="text-right">Costo de Entrega $ {{ $delivery }}</td>
-                </tr>
-            @endif
+            
+           
             <tr>
                 <td><a href="{{ url('/') }}" class="btn btn-primary"><i class="fa fa-angle-left"></i> Continua de Compras</a></td>
                 <td colspan="2" class="hidden-xs"></td>

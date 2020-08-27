@@ -85,8 +85,11 @@
                           <small id="emailHelp" class="form-text text-muted">Escriba uun comentario.</small>
                         </div>
                         <input type="hidden" id="imgname" name="imgname">
-                        <button type="submit" class="btn btn-primary">Realizar pago</button>
+                        <button type="submit" class="btn btn-primary">Finalizar pago</button>
                       </form>
+                      @if(session('cart'))
+                       
+                      @endif
                 </div>
             </div>
         </div>

@@ -26,7 +26,7 @@ class Member extends Model
         $this->lastname = $request->lastname;
         $this->email = $request->email;
         $this->address = $request->address;
-        $this->delivery_Address = $delivery_ad;
+        $this->delivery_address = $delivery_ad;
         $this->country = $request->country;
         $this->dpt = $request->dpt;
         $this->city = $request->city;

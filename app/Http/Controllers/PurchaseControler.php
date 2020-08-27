@@ -7,6 +7,12 @@ use Auth;
 use App\Member;
 use App\Http\Requests\StoreMembers;
 use Image;
+use Illuminate\Support\Facades\DB;
+use App\Order;
+use App\Order_detail;
+use PDF;
+use Mail;
+use App\Mail\OrderShipped;
 
 class PurchaseControler extends Controller
 {
@@ -52,6 +58,8 @@ class PurchaseControler extends Controller
     //--------------------------------------------------------------------------------------------------------------
     public function confirm()
     {
+        // $valor_almacenado = session('cart');
+        // dd($valor_almacenado);
         return view('confirm');
     }
 
@@ -60,6 +68,33 @@ class PurchaseControler extends Controller
     //--------------------------------------------------------------------------------------------------------------
     public function generateimg(Request $request)
     {
+        //bring product array from cart
+        $valor_almacenado = session('cart');
+
+        $new_array = array_values($valor_almacenado);
+        // dd($new_array[0]['name']);
+        //sql member info
+        $id = Auth::user()->id;
+        $query = DB::table('members as m')
+        ->select('m.email as email', 'm.firstname','m.lastname','m.address', 'm.delivery_address', 'm.city', 'm.dpt', 'm.country', 'm.n_doc', 'c.fullname','c.cardnumber', 'c.expiration', 'c.cvv')
+        ->join('creditcards as c', 'm.user_id', '=', 'c.user_id' )
+        ->where('m.user_id', $id)->get();
+
+        //new class to insert new order
+        $new_order = New Order();
+
+        //call function in Order model
+        $rs = $new_order->insert($query[0]);
+
+        if($rs[0]){
+            //$order_id=$rs->id;
+            $new_details = New Order_detail();
+            $ds = $new_details->insert($rs[1], $new_array);
+            
+        }else{
+            return back()->with('notice', 'Un error ha ocurrido!!');
+        }
+
         // create Image from file
         $file = $request->imgname;
         $texto = $request->texto;
@@ -76,7 +111,38 @@ class PurchaseControler extends Controller
 
         // save the file in png format
         $id = Auth::user()->id;
-        $img->save('img/'.$id.'.png');
-        dd($img);
+        $img->save('img/'.$rs[1].'.png');
+
+        // bring order info
+        $order_info = Order::find($rs[1]);
+
+        
+        $data = array($order_info, $new_array);
+        //dd($data);
+        //generar pdf
+        $pdf = PDF::loadView('extends.order', compact('data'))->save('orders/order_'.$rs[1].'.pdf');
+
+        $sending = $this->send($rs[1], $query[0]);
+        //dd($sending);
+        if ($sending){
+            return redirect('thanks')->with('success', 'Usuario creado de manera Exitosa!!');
+        }else{
+
+        }
+    }
+
+    public function send($order_id, $member){
+
+        $email = Auth::user()->email;
+        $customer = $member->firstname." ".$member->lastname;
+        
+
+        $sending = Mail::to($email)->send(new OrderShipped($customer, $order_id));
+
+        return true;
+        // Mail::send('emails.Recovery_InventCloud', $data, function($message) use ($data) {
+		// 	$message->from('no-reply@inventcloud.com', 'InventCloud');
+		// 	$message->to($data['email'],$data['email'])->subject('Recuperación de Contraseña');
+		// });
     }
 }
