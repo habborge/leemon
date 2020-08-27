@@ -67,9 +67,9 @@
         @foreach ($products as $product)
         <div class="col-md-4">
           <div class="card mb-4 shadow-sm">
-            <a href="/product/{{$product->id}}"><img src="{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro" alt=""></a>
+            <a href="/product/{{$product->id}}"><img src="{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
             <div class="card-body">
-              Producto:
+              <span class="price-color">Producto</span> 
               <h3>{{$product->name}} 
                   @if ($product->prom == 1) 
                     <span class="badge badge-warning">Paga 2 Lleva 3</span>
@@ -77,8 +77,8 @@
                     <span class="badge badge-danger">2nd 50% off</span>
                   @endif
               </h3>
-              <p class="card-text">{{$product->description}}</p>
-              <h3>$ {{$product->price}}</h3>
+              <p class="card-text info-small">{{$product->description}}</p>
+              <h3>$ {{number_format($product->price, 0)}} COP</h3>
               <div class="d-flex justify-content-between align-items-center">
                 
                   <a href="/product/{{$product->id}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a>

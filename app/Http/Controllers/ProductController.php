@@ -186,8 +186,7 @@ class ProductController extends Controller
         if($request->id and $request->quantity)
         {
             $cart = session()->get('cart');
-            dd($request->quantity);
- 
+             
             $cart[$request->id]["quantity"] = $request->quantity;
  
             session()->put('cart', $cart);

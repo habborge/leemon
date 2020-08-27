@@ -56,29 +56,29 @@
                                         <div class="col-sm-9">
                                         <h4 class="nomargin">{{ $details['name'] }}
                                             @if ($details['prom'] == 1) 
-                                            <span class="badge badge-warning">Paga 2 Lleva 3</span>
+                                            <br><span class="badge badge-warning">Paga 2 Lleva 3</span>
                                         @elseif ($details['prom'] == 2)
-                                            <span class="badge badge-danger">2nd 50% off</span>
+                                            <br><span class="badge badge-danger">2nd 50% off</span>
                                         @endif
                                         </h4>
                                         </div>
                                     </div>
                                 </td>
-                                <td data-th="Price">${{ $details['price'] }}</td>
+                                <td data-th="Price">${{ number_format($details['price'],0) }}</td>
                                 <td data-th="Quantity">
                                     <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity" />
                                     @if ($discount > 0)
-                                        Free: {{ $whole }} Articulos
+                                        <span class="info-small">Free: {{ $whole }}</span> 
                                     @endif
                                 </td>
-                                <td data-th="Subtotal" class="text-right">$ {{ $details['price'] * $nq}}
+                                <td data-th="Subtotal" class="text-right">$ {{ number_format($details['price'] * $nq,0)}}
                                     @if ($half > 0)
-                                        <br> <span class="text-danger">Descuento $ {{ $half }}</span>
+                                        <br> <span class="text-danger">Descuento $ {{ number_format($half,0) }}</span>
                                     @elseif ($discount > 0)
-                                        <br> <span class="text-danger">Descuento $ {{ $discount }}</span>
+                                        <br> <span class="text-danger">Descuento $ {{ number_format($discount,0) }}</span>
                                     @else
                                     @endif
-                                        <br>A pagar $ {{ ($details['price'] * $nq) - $half - $discount }}
+                                        <br>A pagar $ {{ number_format(($details['price'] * $nq) - $half - $discount,0) }}
                                 </td>
                                 <td class="actions" data-th="">
                                     <button id="" class="btn btn-info btn-sm update-cart" data-id="{{ $id }}"><i class="fa fa-refresh"></i></button>

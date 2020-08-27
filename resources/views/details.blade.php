@@ -40,9 +40,9 @@
                             <span class="price-color">Referencia:</span> {{ $prod_info->reference }}
                             <p><span class="price-color">Descripción</span> <br> <span class="text-justify">{{ $prod_info->description }}</span> </p>
                             <p>
-                                <span class="price-color">Precio: </span><span class="price text-danger">$ {{ round($prod_info->price) }} COP</span>
+                                <span class="price-color">Precio: </span><span class="price text-danger">$ {{ number_format($prod_info->price, 0) }} COP</span>
                             </p>
-                            <span class="price-color">Costo de Envio:</span> $ {{ $prod_info->delivery_cost }} COP<br>
+                            <span class="price-color">Costo de Envio:</span> $ {{ number_format($prod_info->delivery_cost, 0) }} COP<br>
                         </div>
                         <div class="col-xl-4" data-th="Quantity">
                             Cantidad:
