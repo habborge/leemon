@@ -46,7 +46,7 @@
     display: none;
     position: absolute;
     background-color: #f9f9f9;
-    width: 600px;
+    width: 700px;
     left: 190px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1000;
@@ -62,7 +62,7 @@
 /* Create three equal columns that floats next to each other */
 .columna {
     float: left;
-    width: 33.33%;
+    width: 25%;
     padding: 10px;
     background-color: #ccc;
     height: 250px;
@@ -99,6 +99,11 @@
     background-color: transparent !important;
     border: 1px solid #403d38 !important;
     color: #403d38 !important;
+}
+.btn-leemon-green:hover{
+    background-color: #403d38 !important;
+    border: 1px solid #403d38 !important;
+    color: #fff !important;
 }
 .dropdown .dropdown-menu{
     padding:20px;
@@ -297,9 +302,11 @@
   }
 
   .img-product{
-      width: 200px !important;
-      height: 200px;
+      width: 150px !important;
+      height: 250px;
+      margin-top: 10px;
   }
+  
   .info-small2{
     font-size: 15px;    
 }

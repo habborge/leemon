@@ -31,6 +31,9 @@
                                         <a href="#">Link 2</a>
                                         <a href="#">Link 3</a>
                                     </div>
+                                    <div class="columna">
+                                        <img src="img/Garlic(1).png" class="img-responsive" width="120">
+                                    </div>
                                 </div>
                             </div>
                         </div>
