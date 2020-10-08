@@ -65,30 +65,29 @@
 
       <div class="row">
         @foreach ($products as $product)
-        <div class="col-md-4">
-          <div class="card mb-4 shadow-sm">
-            <a href="/product/{{$product->id}}"><img src="{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
-            <div class="card-body">
-              <span class="price-color">Producto</span> 
-              <h3>{{$product->name}} 
+          <div class="col-md-3">
+            <div class="card mb-4 shadow-sm">
+              <a href="/product/{{$product->id}}"><img src="{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
+              <div class="card-body text-center">
+                
+                <h6>{{$product->name}} </h6>
+                
+                <h6>$ {{number_format($product->price, 0)}} COP</h6>
+                <h6>
                   @if ($product->prom == 1) 
-                    <span class="badge badge-warning">Paga 2 Lleva 3</span>
-                  @elseif ($product->prom == 2)
-                    <span class="badge badge-danger">2nd 50% off</span>
-                  @endif
-              </h3>
-              <p class="card-text info-small recortar">{{$product->description}}</p>
-              <h3>$ {{number_format($product->price, 0)}} COP</h3>
-              <div class="d-flex justify-content-between align-items-center">
+                  <span class="badge badge-warning">Paga 2 Lleva 3</span>
+                @elseif ($product->prom == 2)
+                  <span class="badge badge-success">2nd 50% off</span>
+                @endif
+              </h6> 
+                                     <!-- <a href="/product/{{$product->id}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
+                   <a href="{{ url('add-to-cart/'.$product->id) }}"> <button type="button" class="btn btn-sm btn-leemon-green"><i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito</button></a>
                 
-                  <a href="/product/{{$product->id}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a>
-                  <a href="{{ url('add-to-cart/'.$product->id) }}"> <button type="button" class="btn btn-sm btn-success"><i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito</button></a>
-                
+                  
                 
               </div>
             </div>
           </div>
-        </div>
         @endforeach
       </div>
     </div>
@@ -108,4 +107,13 @@
 
 
 </body></html>
+@endsection
+@section('custom-js')
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(document).on('click', '.dropdown-menu-mega', function (e) {
+      e.stopPropagation();
+    });
+  });
+</script>
 @endsection

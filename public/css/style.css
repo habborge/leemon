@@ -1,18 +1,104 @@
+@font-face {
+    font-family: "AcuminVariableConcept";
+    src: url(http://127.0.0.1:8000/css/AcuminVariableConcept.otf) format('opentype');
+}
+.leemonlogo{
+    width: 100px;
+}
 .distancia{
     padding-left: 20px;
 }
 
 .main-section{
-    background-color: #F8F8F8;
+    /*background-color: #F8F8F8;*/
+}
+.bg-mega{
+    background-color: #403d38;
+}
+.navbar-mega {
+    overflow: hidden;
+  }
+  
+  .navbar-mega a {
+    float: left;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+.dropdown-mega {
+    float: left;
+    overflow: hidden;
+}
+.dropdown-mega .dropbtn {
+    font-size: 16px;  
+    border: none;
+    outline: none;
+    color: #a8f29e;
+    padding: 14px 16px;
+    background-color: inherit;
+    font: inherit;
+    margin: 0;
+}
+
+.dropdown-mega-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    width: 600px;
+    left: 190px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+.dropdown-mega-content .header-mega {
+    background: red;
+    padding: 16px;
+    color: white;
+}
+.dropdown-mega:hover .dropdown-mega-content {
+    display: block;
+  }
+/* Create three equal columns that floats next to each other */
+.columna {
+    float: left;
+    width: 33.33%;
+    padding: 10px;
+    background-color: #ccc;
+    height: 250px;
+}
+
+.columna a {
+    float: none;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+  
+.columna a:hover {
+    background-color: #ddd;
+}
+/* Clear floats after the columns */
+.row-mega:after {
+    content: "";
+    display: table;
+    clear: both;
 }
 .dropdown{
     float:right;
-    padding-right: 30px;
+    /*padding-right: 30px;*/
 }
 .btn{
     border:0px;
     margin:10px 0px;
     box-shadow:none !important;
+}
+.btn-leemon-green{
+    background-color: transparent !important;
+    border: 1px solid #403d38 !important;
+    color: #403d38 !important;
 }
 .dropdown .dropdown-menu{
     padding:20px;
@@ -157,7 +243,7 @@
   
   .tabs a{
     font-size:15px;
-    font-family:OpenSans,sans-serif;
+    font-family: "AcuminVariableConcept";
     font-weight:700;
     color:#fff;
     padding:5px;
@@ -211,8 +297,8 @@
   }
 
   .img-product{
-      width: 250px !important;
-      height: 250px;
+      width: 200px !important;
+      height: 200px;
   }
   .info-small2{
     font-size: 15px;    

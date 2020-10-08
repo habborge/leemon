@@ -29,104 +29,131 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Leemon') }}
-                </a>
+                <div class="col-md-2">
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        <img src="/img/logo_leemon_small_black.png" alt="" class="leemonlogo">
+                    </a>
+                </div>
+                
+                <div class="col-md-6">
+                    <form class="">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="search" aria-describedby="button-addon2">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="row">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <!-- Left Side Of Navbar -->
+                            
+                            <ul class="navbar-nav mr-auto">
+                                
+                            </ul>
+        
+                            <!-- Right Side Of Navbar -->
+                            <ul class="navbar-nav ml-auto">
+                                <!-- Authentication Links -->
+                                @guest
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('login') }}">{{ __('Log in') }}</a>
+                                    </li>
+                                    @if (Route::has('register'))
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('register') }}">{{ __('Registrate') }}</a>
+                                        </li>
+                                    @endif
+                                @else
+                                    <li class="nav-item dropdown">
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            {{ Auth::user()->name }} <span class="caret"></span>
+                                        </a>
+        
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                               onclick="event.preventDefault();
+                                                             document.getElementById('logout-form').submit();">
+                                                {{ __('Logout') }}
+                                            </a>
+        
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                @csrf
+                                            </form>
+                                        </div>
+                                    </li>
+                                @endguest
+                            </ul>
+                            
+                        </div>
+                        <div class="main-section">
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-info" data-toggle="dropdown">
+                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>Carrito<span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <div class="row total-header-section">
+                                        <div class="col-lg-6 col-sm-6 col-6">
+                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
+                                        </div>
+                                        <?php $total = 0 ?>
+                                        @foreach((array) session('cart') as $id => $details)
+                                            <?php $total += $details['price'] * $details['quantity'] ?>
+                                        @endforeach
+         
+                                        <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
+                                            <p>Total: <span class="text-info">$ {{ number_format($total,0) }}</span></p>
+                                        </div>
+                                    </div>
+         
+                                    @if(session('cart'))
+                                        @foreach(session('cart') as $id => $details)
+                                            <div class="row cart-detail">
+                                                <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
+                                                    <img src="{{ URL::to('/').'/' }}{{ $details['photo'] }}" />
+                                                </div>
+                                                <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
+                                                    <p>{{ $details['name'] }}</p>
+                                                    <span class="price text-info"> $ {{ number_format($details['price'],0) }}</span> <span class="count"> Cantidad:{{ $details['quantity'] }}</span>
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                        @endforeach
+                                    @endif
+        
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-12 text-center">
+                                            <hr class="mb-4">
+                                            <a href="{{ url('cart') }}" class="btn btn-primary btn-block">Ver completo</a>
+                                        </div>
+                                    </div>
                                 </div>
-                            </li>
-                        @endguest
-                    </ul>
+                            </div>
+                        </div>
+                    </div>
                     
                 </div>
-                <div class="main-section">
-                    <div class="dropdown">
-                        <button type="button" class="btn btn-info" data-toggle="dropdown">
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i> Carrito <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
-                        </button>
-                <div class="dropdown-menu">
-                    <div class="row total-header-section">
-                        <div class="col-lg-6 col-sm-6 col-6">
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
-                        </div>
- 
-                        <?php $total = 0 ?>
-                        @foreach((array) session('cart') as $id => $details)
-                            <?php $total += $details['price'] * $details['quantity'] ?>
-                        @endforeach
- 
-                        <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
-                            <p>Total: <span class="text-info">$ {{ number_format($total,0) }}</span></p>
-                        </div>
-                    </div>
- 
-                    @if(session('cart'))
-                        @foreach(session('cart') as $id => $details)
-                            <div class="row cart-detail">
-                                <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
-                                    <img src="{{ URL::to('/').'/' }}{{ $details['photo'] }}" />
-                                </div>
-                                <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
-                                    <p>{{ $details['name'] }}</p>
-                                    <span class="price text-info"> $ {{ number_format($details['price'],0) }}</span> <span class="count"> Cantidad:{{ $details['quantity'] }}</span>
-                                </div>
-                                
-                            </div>
-                            
-                        @endforeach
-                    @endif
-                    <div class="row">
-                        <div class="col-lg-12 col-sm-12 col-12 text-center">
-                            <hr class="mb-4">
-                            <a href="{{ url('cart') }}" class="btn btn-primary btn-block">Ver completo</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                
             </div>
         </nav>
-
-        <main class="py-4">
+        @include('layouts.menu')
             @yield('content')
-        </main>
+        
     </div>
     @yield('custom-js')
 </body>
