@@ -26,7 +26,7 @@ Route::get('add-to-cart/{id}', 'ProductController@addToCart');
 Route::patch('update-cart', 'ProductController@update');
 Route::post('add-to-cart-quantity', 'ProductController@addToCartQuantity');
 Route::delete('remove-from-cart', 'ProductController@remove');
-
+Route::get('/result', 'searchController@searchProducts');
 Route::group([
     'middleware' => ['auth']
 ], function() {

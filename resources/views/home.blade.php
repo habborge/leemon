@@ -63,8 +63,11 @@
   <div class="album py-5 bg-light">
     <div class="container">
 
-      <div class="row">
-        @foreach ($products as $product)
+        <div class="row">
+          <div class="col-md-12">
+          <h3>{{ $prom_1 }}</h3>
+        </div>
+        @foreach ($products_1 as $product)
           <div class="col-md-3">
             <div class="card mb-4 shadow-sm">
               <a href="/product/{{$product->id}}"><img src="{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
@@ -92,14 +95,59 @@
             </div>
           </div>
         @endforeach
+    </div>
+    @if (count($products_1))
+      <div class="d-flex justify-content-center">
+          {{-- {{ $products -> links() }} --}}
       </div>
-      @if (count($products))
-        <div class="d-flex justify-content-center">
-            {{ $products -> links() }}
-        </div>
     @endif
+    <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <img src="/img/promo3.jpg" width="100%" class="" alt="">
+            </div>
+          </div>
+        </div>
     </div>
   </div>
+  <br><br>
+  <div class="container">
+
+    <div class="row">
+      <div class="col-md-12">
+      <h3>{{ $prom_2 }}</h3>
+    </div>
+    @foreach ($products_2 as $product2)
+      <div class="col-md-3">
+        <div class="card mb-4 shadow-sm">
+          <a href="/product/{{$product2->id}}"><img src="{{$product2->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
+          <div class="card-body text-center">
+            
+            
+            <span class="brand-font">{{ucwords($product2->brand)}} </span>
+            <h5>{{ucwords($product2->name)}} </h5>
+
+            
+            <h6>
+              @if ($product2->prom == 1) 
+              <span class="badge badge-warning">Paga 2 Lleva 3</span>
+            @elseif ($product2->prom == 2)
+              <span class="badge badge-success">2nd 50% off</span>
+            @endif
+          </h6> 
+          <h6>$ {{number_format($product2->price, 0)}} COP</h6>
+                                 <!-- <a href="/product/{{$product2->id}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
+               <a href="{{ url('add-to-cart/'.$product2->id) }}"> <button type="button" class="btn btn-sm btn-leemon-green"><i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito</button></a>
+            
+              
+            
+          </div>
+        </div>
+      </div>
+    @endforeach
+</div>
+</div>
 
 </main>
 

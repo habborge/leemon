@@ -36,6 +36,11 @@
                           <hr class="mb-4">
                         </div>
                         <div class="form-group">
+                            @if ($prod_info->prom == 1) 
+                                <span class="badge badge-warning">Paga 2 Lleva 3</span><br>
+                            @elseif ($prod_info->prom == 2)
+                                <span class="badge badge-success">2nd 50% off</span><br>
+                            @endif
                             <span class="price-color">Marca:</span> {{ $prod_info->brand }}<br>
                             <span class="price-color">Referencia:</span> {{ $prod_info->reference }}
                             <p><span class="price-color">Descripción</span> <br> <span class="text-justify">{{ $prod_info->description }}</span> </p>

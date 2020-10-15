@@ -36,11 +36,12 @@
                 </div>
                 
                 <div class="col-md-6">
-                    <form class="">
+                    <form name="form" id="form" action="/result" class="" method="GET">
+                        @csrf
                         <div class="row">
                             <div class="col-md-10">
                                 <div class="row">
-                                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="search" aria-describedby="button-addon2">
+                                    <input name="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="search" aria-describedby="button-addon2">
                                 </div>
                             </div>
                             <div class="col-md-2">

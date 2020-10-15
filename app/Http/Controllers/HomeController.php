@@ -24,10 +24,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(20);
+        $products_1 = Product::where('prom', '1')->orderBy('id')->paginate(4);
+        $prom_1 = "Promo Paga 2 Lleva 3";
 
+        $products_2 = Product::where('prom', '2')->orderBy('id')->paginate(4);
+        $prom_2 = "Paga el 2do con el 50% Off";
         return view('home',[
-            'products' => $products 
+            'products_1' => $products_1,
+            'prom_1' => $prom_1,
+            'products_2' => $products_2,
+            'prom_2' => $prom_2,
            /* 'name' => $products->name, 
             'brand' => $products->brand, 
             'description' => $products->description, 

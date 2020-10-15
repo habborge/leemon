@@ -10,23 +10,23 @@
                         <div class="row">
                             <div class="dropdown-mega-content">
                                 <div class="header-mega">
-                                    <h2>Vitaminas</h2>
+                                    <h2 class="title-tam">Vitaminas</h2>
                                 </div>   
                                 <div class="row-mega">
                                     <div class="columna">
-                                        <h3>Category 1</h3>
+                                        <h3 class="title-tam2">Category 1</h3>
                                         <a href="#">Link 1</a>
                                         <a href="#">Link 2</a>
                                         <a href="#">Link 3</a>
                                     </div>
                                     <div class="columna">
-                                        <h3>Category 2</h3>
+                                        <h3 class="title-tam2">Category 2</h3>
                                         <a href="#">Link 1</a>
                                         <a href="#">Link 2</a>
                                         <a href="#">Link 3</a>
                                     </div>
                                     <div class="columna">
-                                        <h3>Category 3</h3>
+                                        <h3 class="title-tam2">Category 3</h3>
                                         <a href="#">Link 1</a>
                                         <a href="#">Link 2</a>
                                         <a href="#">Link 3</a>
