@@ -86,9 +86,14 @@
                 @endif
               </h6> 
               <h6>$ {{number_format($product->price, 0)}} COP</h6>
-                                     <!-- <a href="/product/{{$product->id}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
-                   <a href="{{ url('add-to-cart/'.$product->id) }}"> <button type="button" class="btn btn-sm btn-leemon-green"><i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito</button></a>
-                
+                  <!-- <a href="/product/{{$product->id}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
+                  <a href="{{ url('add-to-cart/'.$product->id) }}"> <button type="button" class="btn btn-sm btn-leemon-green"><i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito</button></a>
+                   @guest
+
+                   @else
+                      <br><a class="favorites" href="{{ url('add-to-favorites/'.$product->id) }}">Enviar a Favoritos</a>
+                   @endguest
+                      
                   
                 
               </div>
