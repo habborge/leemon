@@ -157,7 +157,7 @@
             var ele = $(this);
 
             $.ajax({
-                url: "{{ url('update-cart')}}",
+                url: "{{ env('APP_URL')}}/update-cart",
                 method: "patch",
                 data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id"), quantity: ele.parents("tr").find(".quantity").val()},
                 success: function (response) {
