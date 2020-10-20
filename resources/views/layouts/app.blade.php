@@ -125,7 +125,7 @@
                                         @foreach(session('cart') as $id => $details)
                                             <div class="row cart-detail">
                                                 <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
-                                                    <img src="{{ URL::to('/').'/' }}{{ $details['photo'] }}" />
+                                                    <img src="{{ env('APP_URL') }}/{{ $details['photo'] }}" />
                                                 </div>
                                                 <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
                                                     <p>{{ $details['name'] }}</p>
