@@ -7,7 +7,7 @@
             <table id="cart" class="table table-hover table-condensed">
                     <thead>
                     <tr>
-                        <th style="width:50%">Product - {{ url('update-cart') }}</th>
+                        <th style="width:50%">Product</th>
                         <th style="width:10%">Price</th>
                         <th style="width:8%">Quantity</th>
                         <th style="width:22%" class="text-right">Subtotal</th>
@@ -173,7 +173,7 @@
 
             if(confirm("Are you sure")) {
                 $.ajax({
-                    url: "{{ url('remove-from-cart') }}",
+                    url: "{{ env('APP_URL')}}/remove-from-cart",
                     method: "DELETE",
                     data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id")},
                     success: function (response) {
