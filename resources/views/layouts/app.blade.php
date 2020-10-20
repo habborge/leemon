@@ -25,6 +25,17 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+<style>
+    @font-face {
+        font-family: "AcuminVariableConcept2";
+        src: url("{{ env('APP_URL')}}/css/AcuminVariableConceptCondens.otf") format('opentype');
+    }
+    @font-face {
+        font-family: "AcuminVariableConcept";
+        src: url("{{ env('APP_URL') }}/css/AcuminVariableConcept.otf") format('opentype');
+    }
+
+</style>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
