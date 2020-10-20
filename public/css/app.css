@@ -1,4 +1,9 @@
 
+ @font-face {
+  font-family: "AcuminVariableConcept";
+  src: url("https://develop.leemon.com.co/css/AcuminVariableConceptCondens.otf") format('opentype');
+}
+
 :root {
   --blue: #3490dc;
   --indigo: #6574cd;

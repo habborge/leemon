@@ -1,4 +1,7 @@
-
+@font-face {
+    font-family: "AcuminVariableConcept";
+    src: url(https://develop.leemon.com.co/css/AcuminVariableConcept.otf) format('opentype');
+}
 .leemonlogo{
     width: 100px;
 }
