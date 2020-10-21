@@ -73,7 +73,12 @@
     
 
     $(document).ready(function(){
-        $(".xzoom").xzoom({tint: '#333', Xoffset: 15});
+        $(".xzoom").xzoom({
+            tint: '#333', 
+            Xoffset: 15,
+            position: 'right',
+         
+        });
 
          $(function() {
             var $a = $(".tabs li");
