@@ -1,32 +1,33 @@
 @extends('layouts.app')
-
+@section('custom-css')
+    @if (env('APP_ENV') == "production")    
+        <link href="{{ secure_asset('css/xzoom.css') }}" rel="stylesheet">
+    @else 
+        <link href="{{ asset('css/xzoom.css') }}" rel="stylesheet">
+    @endif
+@endsection
 @section('content')
 <div class="tabs">
     <div class="container">
         <div class="row">
-            <div class="col-xl-2">
+            <div class="col-xl-2 xzoom-thumbs">
                 <ul class="nav nav-pills nav-stacked flex-column">
-                <li class="active"><a href="#tab_a" data-toggle="pill"><img src="../{{ $prod_info->img1 }}" class="img-tam" alt=""></a></li>
+                <li class="active"><a href="../{{ $prod_info->img1 }}" data-toggle="pill"><img src="../{{ $prod_info->img1 }}" class="img-tam xzoom-gallery" alt="" xpreview="../{{ $prod_info->img1 }}"></a></li>
                     <li><a href="#tab_b"  data-toggle="pill"><img src="../{{ $prod_info->img2 }}" class="img-tam" alt=""></a></li>
                 </ul>
             </div>
             <div class="col-xl-4">
                 <div class="tab-content" id="father">
                     <div class="tab-pane active" id="tab_a">
-                        
-                        <img src="../{{ $prod_info->img1 }}" class="img-tam2 img-thumbnail" alt="">
-                        
+                        <img id="xzoom-default" src="../{{ $prod_info->img1 }}" class="img-tam2 img-thumbnail xzoom" xoriginal="../{{ $prod_info->img1 }}" alt="">
                     </div>
                     <div class="tab-pane" id="tab_b">
-                        
-                        <img src="../{{ $prod_info->img2 }}" class="img-tam2 img-thumbnail" alt="">
-                        
+                        <img id="thumb2" src="../{{ $prod_info->img2 }}" class="img-tam2 img-thumbnail" alt="">
                     </div>
-                    
                     <div class="comentario" id="comentario"></div>
                 </div>
-                
             </div>
+            
             <div class="col-xl-4">
                 <div>
                     <form action="{{ route('generateimg') }}" method="POST" name="formaut" id="formRegisterwithdrawal">
@@ -63,10 +64,18 @@
 </div>
 @endsection
 @section('custom-js')
+    @if (env('APP_ENV') == "production")
+        <script src="{{ secure_asset('js/xzoom.min.js') }}" defer></script>
+    @else
+        <script src="{{ asset('js/xzoom.min.js') }}" defer></script>
+    @endif
 <script type="text/javascript">
+    
+
     $(document).ready(function(){
-       
-        $(function() {
+        $(".xzoom").xzoom({tint: '#333', Xoffset: 15});
+
+         $(function() {
             var $a = $(".tabs li");
             $a.click(function() {
                 $a.removeClass("active");
