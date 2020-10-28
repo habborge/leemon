@@ -14,11 +14,13 @@ class CreateProductsTable extends Migration
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id();
-            $table->integer('reference');
-            $table->string('name', 50);
-            $table->string('brand',40);
-            //$table->integer('subcategory_id');
+            $table->bigIncrements('id');
+            $table->integer('reference')->unique();
+            $table->string('name', 50)->index();
+            $table->string('brand',40)->index();
+            $table->integer('subcategory_id')->index();
+            $table->string('made_by', 40)->index();
+            $table->string('sold_by', 40)->index();
             $table->text('description');
             //$table->integer('nature_id');
             $table->integer('quantity');
@@ -29,9 +31,10 @@ class CreateProductsTable extends Migration
             $table->decimal('price',10,2);
             $table->text('img1');
             $table->text('img2');
-            $table->integer('prom');
+            $table->integer('prom')->index();
             $table->decimal('delivery_cost',10,2);
-            //$table->decimal('price_min',10,2);
+            $table->string('health_register', 50)->index();
+            $table->integer('restrictions')->index();
             $table->timestamps();
             $table->softDeletes();
         });
