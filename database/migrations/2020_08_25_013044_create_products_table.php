@@ -35,6 +35,7 @@ class CreateProductsTable extends Migration
             $table->decimal('delivery_cost',10,2);
             $table->string('health_register', 50)->index();
             $table->integer('restrictions')->index();
+            $table->integer('status')->index();
             $table->timestamps();
             $table->softDeletes();
         });

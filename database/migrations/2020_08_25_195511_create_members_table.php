@@ -26,6 +26,7 @@ class CreateMembersTable extends Migration
             $table->string('city',30);
             $table->string('dpt',30);
             $table->string('country', 50);
+            $table->integer('status')->index();
             $table->timestamps();
         });
     }
