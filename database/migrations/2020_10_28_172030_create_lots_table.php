@@ -19,9 +19,11 @@ class CreateLotsTable extends Migration
             $table->bigInteger('product_id')->index();
             $table->integer('quantity');
             $table->text('description');
+            $table->decimal('cost', 10, 2);
             $table->date('made_date');
             $table->date('exp_date');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

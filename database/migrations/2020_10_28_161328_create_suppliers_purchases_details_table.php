@@ -17,7 +17,7 @@ class CreateSuppliersPurchasesDetailsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('supplier_purchase_id')->index();
             $table->bigInteger('product_id')->index();
-            $table->string('lot_id', 50)->index();
+            $table->bigInteger('lot_id')->index();
             $table->integer('quantity');
             $table->text('description');
             $table->integer('discount');
