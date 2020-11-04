@@ -4942,9 +4942,9 @@ input[type=button].btn-block {
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
-  border: 0px solid rgba(0, 0, 0, 0.125) !important;
+  border: 1px solid rgba(0, 0, 0, 0.125) !important;
   border-radius: 0.25rem;
-  height: 450px !important;
+  height: auto !important;
 }
 
 .card > hr {
@@ -8434,7 +8434,7 @@ button.bg-dark:focus {
 
 .mt-2,
 .my-2 {
-  margin-top: 0.5rem !important;
+  margin-top: 0rem !important;
 }
 
 .mr-2,
@@ -10904,4 +10904,36 @@ a.text-dark:focus {
     border-color: #dee2e6;
   }
 }
+.ancho{
+  width: 100%;
+}
 
+@media (max-width: 576px) {
+  #megamenu {
+    display: none;
+  }
+  .dataPosition{
+    display: flex;
+  }
+  #one{
+    order: 1;
+    width: 70% !important;
+  }
+  #four{
+    order: 2;
+    width: 30% !important;
+  }
+  #two{
+    order: 3;
+  }
+  #three{
+    order: 4;
+  }
+  .ancho{
+    width: auto;
+  }
+  #littleCart{
+    display: none;
+  }
+
+}

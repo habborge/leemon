@@ -20,13 +20,14 @@ Route::get('/', function () {
 
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/product/{id}', 'ProductController@details');
+Route::get('/product/{id}', 'ProductController@details')->name('productdetails');
 Route::get('cart', 'ProductController@cart');
 Route::get('add-to-cart/{id}', 'ProductController@addToCart');
 Route::patch('update-cart', 'ProductController@update');
 Route::post('add-to-cart-quantity', 'ProductController@addToCartQuantity');
 Route::delete('remove-from-cart', 'ProductController@remove');
 Route::get('/result', 'searchController@searchProducts');
+
 
 Route::group([
     'middleware' => ['auth']
