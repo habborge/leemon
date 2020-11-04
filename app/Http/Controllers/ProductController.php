@@ -240,4 +240,22 @@ class ProductController extends Controller
             'prod_info' => $product
         ]);
     }
+
+    public function groupSon(Request $request){
+        $Gfather = $request->gfather;
+        $father = $request->father;
+        $string = explode("_", $request->son);
+
+        $subCategory_id = $string[1];
+        $son = $string[0];
+
+        $products = Product::where('subcategory_id', $subCategory_id)->orderBy('name')->paginate(24);
+
+        return view('products.categories', [
+            'gfather' => str_replace("-", " ", $Gfather),
+            'father' => str_replace("-", " ", $father),
+            'son' => str_replace("-", " ", $son),
+            'products' => $products
+        ]);
+    }
 }

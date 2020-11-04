@@ -20,6 +20,8 @@
         <script src="{{ asset('js/scripts.js') }}" defer></script>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+       
+        
     @endif
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -61,7 +63,7 @@
                 </div>
                 
                 <div id="two" class="col-md-6">
-                    <form  name="form" id="form" action="/result" class="" method="GET">
+                    <form  name="form" id="form" action="/result" class="search-form" method="GET">
                         @csrf
                         
                         <div class="input-group mb-3">

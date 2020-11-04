@@ -51,12 +51,42 @@
 .category{
     font-size: 12px;
 }
+.class-100001{
+    /* display: inline !important; */
+    width: 600px;
+    /* left: 190px; */
+}
+.class-100002{
+    /* display: inline !important;  */
+    width: 800px;
+    /* left: 190px; */
+}
+.class-100003{
+    /* display: inline !important;  */
+    width: 700px;
+    /* left: 190px; */
+}
+.class-100004{
+    /* display: inline !important;  */
+    width: 800px;
+    left: 30%; 
+}
+.class-100005{
+    /* display: inline !important;  */
+    width: 600px;
+    right: 40%; 
+}
+.class-100006{
+    /* display: inline !important;  */
+    width: 600px;
+    right: 32%; 
+}
 .dropdown-mega-content {
     display: none;
     position: absolute;
     background-color: #ffffff;
-    width: 700px;
-    /* left: 190px; */
+    /* width: 700px;
+     left: 190px; */
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1000;
 }
@@ -80,6 +110,36 @@
     display: block;
   }
 /* Create three equal columns that floats next to each other */
+
+.columna-100001{
+    width: 33% !important;
+}
+.columna-100002{
+    width: 20% !important;
+}
+.columna-100003{
+    width: 33% !important;
+}
+.columna-100004{
+    width: 25% !important;
+}
+.columna-100005{
+    width: 100% !important;
+}
+.columna-100006{
+    width: 25% !important;
+}
+.columna-img {
+    float: left;
+    width: 25%;
+    padding-top: 10px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    padding-left: 0px;
+    background-color: #ffffff;
+    height: 250px;
+    
+}
 .columna {
     float: left;
     width: 25%;
@@ -344,4 +404,7 @@
 }
 .text-register2{
     font-size: 11px !important;    
+}
+.album{
+    overflow: hidden;
 }

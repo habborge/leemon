@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $products_1 = Product::where('prom', '1')->orderBy('id')->paginate(4);
+        $products_1 = Product::where('prom', '1')->orderBy('id')->paginate(10);
         $prom_1 = "Promo Paga 2 Lleva 3";
 
         $products_2 = Product::where('prom', '2')->orderBy('id')->paginate(4);

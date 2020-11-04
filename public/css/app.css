@@ -59,7 +59,7 @@ section {
 
 body {
   margin: 0;
-  font-family: AcuminVariableConcept !important;
+  font-family: "AcuminVariableConcept" !important;
   font-size: 0.9rem;
   font-weight: 400;
   line-height: 1.6;
@@ -8299,7 +8299,10 @@ button.bg-dark:focus {
   clip: auto;
   white-space: normal;
 }
-
+.shadow-global{
+  width: 100%;
+  margin-right: 10px; 
+}
 .shadow-sm {
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
 }
@@ -10906,8 +10909,37 @@ a.text-dark:focus {
 }
 .ancho{
   width: 100%;
+  align-items: center;
+  justify-content: center;
 }
-
+.search-form{
+    width: 100%;
+    margin-top: 15px;
+}
+.primary-content {
+  width: 76.9%;
+  border-left: 1px solid #cbcbcb;
+}
+.pull-left {
+  float: left !important;
+}
+.pull-right {
+  float: right !important;
+}
+.breadcrumb {
+  font-size: 13px;
+  line-height: 17px;
+  font-family: "AcuminVariableConcept2";
+  letter-spacing: .2px;
+  margin: 0;
+  padding: 20px 0 25px;
+  list-style: none;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+}
+/* ---------------------------------------------------------------------------------
+   -- resposive design
+---------------------------------------------------------------------------------- */
 @media (max-width: 576px) {
   #megamenu {
     display: none;
@@ -10935,5 +10967,10 @@ a.text-dark:focus {
   #littleCart{
     display: none;
   }
-
+  #imgcarousel img{
+    height: 300px;
+  }
+  #procel{
+    
+  }
 }
