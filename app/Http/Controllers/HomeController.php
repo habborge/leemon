@@ -27,7 +27,7 @@ class HomeController extends Controller
         $products_1 = Product::where('prom', '1')->orderBy('id')->paginate(10);
         $prom_1 = "Promo Paga 2 Lleva 3";
 
-        $products_2 = Product::where('prom', '2')->orderBy('id')->paginate(4);
+        $products_2 = Product::where('prom', '2')->orderBy('id')->paginate(12);
         $prom_2 = "Paga el 2do con el 50% Off";
         return view('home',[
             'products_1' => $products_1,

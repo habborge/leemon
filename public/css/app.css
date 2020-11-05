@@ -409,7 +409,12 @@ h6,
 .h6 {
   font-size: 0.9rem;
 }
-
+.brand-font{
+  font-size: 0.7rem;
+}
+.brand-font2{
+  font-size: 0.8rem;
+}
 .lead {
   font-size: 1.125rem;
   font-weight: 300;

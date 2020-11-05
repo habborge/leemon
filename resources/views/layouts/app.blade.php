@@ -180,6 +180,7 @@
             @yield('content')
         
     </div>
+    @include('layouts.footer')
     @yield('custom-js')
 </body>
 </html>
