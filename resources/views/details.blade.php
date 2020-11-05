@@ -12,14 +12,14 @@
         <div class="row">
             <div class="col-xl-2 xzoom-thumbs">
                 <ul class="nav nav-pills nav-stacked flex-column">
-                <li class="active"><a href="../{{ $prod_info->img1 }}" data-toggle="pill"><img src="../{{ $prod_info->img1 }}" class="img-tam xzoom-gallery" alt="" xpreview="../{{ $prod_info->img1 }}"></a></li>
+                <li class="active"><a href="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}" data-toggle="pill"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}" class="img-tam xzoom-gallery" alt="" xpreview="../{{ $prod_info->img1 }}"></a></li>
                     <li><a href="#tab_b"  data-toggle="pill"><img src="../{{ $prod_info->img2 }}" class="img-tam" alt=""></a></li>
                 </ul>
             </div>
             <div class="col-xl-4">
                 <div class="tab-content" id="father">
                     <div class="tab-pane active" id="tab_a">
-                        <img id="xzoom-default" src="../{{ $prod_info->img1 }}" class="img-tam2 img-thumbnail xzoom" xoriginal="../{{ $prod_info->img1 }}" alt="">
+                        <img id="xzoom-default" src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}" class="img-tam2 img-thumbnail xzoom" xoriginal="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}" alt="">
                     </div>
                     <div class="tab-pane" id="tab_b">
                         <img id="thumb2" src="../{{ $prod_info->img2 }}" class="img-tam2 img-thumbnail" alt="">

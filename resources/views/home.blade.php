@@ -72,7 +72,7 @@
               @foreach ($products_1 as $product)
               <div class="col-md-3">
                 <div class="card mb-4 shadow-sm shadow-global">
-                  <a href="/product/{{$product->id}}"><img src="{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
+                <a href="/product/{{$product->id}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $product->reference }}/{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
                   <div class="card-body text-center">
                     
                     
@@ -132,7 +132,7 @@
     @foreach ($products_2 as $product2)
       <div class="col-md-3">
         <div class="card mb-4 shadow-sm">
-          <a href="/product/{{$product2->id}}"><img src="{{$product2->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
+          <a href="/product/{{$product2->id}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $product2->reference }}/{{$product2->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
           <div class="card-body text-center">
             
             

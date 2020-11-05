@@ -67,7 +67,7 @@ class ProductController extends Controller
                         "name" => $product->name,
                         "quantity" => 1,
                         "price" => $product->price,
-                        "photo" => $product->img1,
+                        "photo" =>  env('AWS_URL')."/".env('BUCKET_SUBFOLDER')."/products/".$product->reference."/".$product->img1,
                         "prom" => $product->prom,
                         "delivery_cost" => $product->delivery_cost,
                         "hash" => $hash
@@ -95,7 +95,7 @@ class ProductController extends Controller
             "name" => $product->name,
             "quantity" => 1,
             "price" => $product->price,
-            "photo" => $product->img1,
+            "photo" =>  env('AWS_URL')."/".env('BUCKET_SUBFOLDER')."/products/".$product->reference."/".$product->img1,
             "prom" => $product->prom,
             "delivery_cost" => $product->delivery_cost,
             "hash" => $hash
