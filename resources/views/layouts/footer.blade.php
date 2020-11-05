@@ -6,7 +6,7 @@
                 Leemon Team
             </div>
             <div class="col-md-6 text-right">
-                <a href="#">Regresar Arriba</a>
+                <a class="link-a" href="#">Regresar Arriba</a>
             </div>
         </div>
         
@@ -67,7 +67,7 @@
   
           <!-- Content -->
         <img src="{{ env('APP_URL') }}/img/logo_leemon_small_white.png" alt="" class="leemonlogo">
-          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          {{-- <hr class="hr-color accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;"> --}}
           <p class="line-footer">Here you can use rows and columns to organize your footer content. Lorem ipsum dolor sit amet,
             consectetur
             adipisicing elit.</p>
@@ -76,16 +76,16 @@
         <!-- Grid column -->
   
         <!-- Grid column -->
-        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4 brand-font">
   
           <!-- Links -->
           <h6 class="text-uppercase font-weight-bold">Productos</h6>
-          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <hr class="hr-color accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;"><br>
           @foreach ($menus as $key => $item)
             @if ($item['father_id'] == 0)
-                <p>
-                    <a class="link-a" href="#!">{{ $item['name'] }}</a>
-                </p>
+                
+                    <a class="link-a" href="#!">{{ $item['name'] }}</a><br>
+                
             @endif
           @endforeach
           {{-- <p>
@@ -102,21 +102,18 @@
         <!-- Grid column -->
   
         <!-- Grid column -->
-        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4 brand-font">
   
           <!-- Links -->
           <h6 class="text-uppercase font-weight-bold">Links de Interes</h6>
-          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <hr class="hr-color accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
           <p>
             <a class="link-a" href="#!">Terminos & Condiciones</a>
-          </p>
-          <p>
+         <br>
             <a class="link-a" href="#!">Privacidad de Datos</a>
-          </p>
-          <p>
+         <br>
             <a class="link-a" href="#!">Politicas de Reembolso</a>
-          </p>
-          <p>
+         <br>
             <a class="link-a" href="#!">FAQ</a>
           </p>
   
@@ -124,19 +121,16 @@
         <!-- Grid column -->
   
         <!-- Grid column -->
-        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4 brand-font">
   
           <!-- Links -->
           <h6 class="text-uppercase font-weight-bold">Contacto</h6>
-          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <hr class="hr-color accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
           <p>
-            <i class="fas fa-home mr-3"></i> New York, NY 10012, US</p>
-          <p>
-            <i class="fas fa-envelope mr-3"></i> info@example.com</p>
-          <p>
-            <i class="fas fa-phone mr-3"></i> + 01 234 567 88</p>
-          <p>
-            <i class="fas fa-print mr-3"></i> + 01 234 567 89</p>
+            <i class="fas fa-home mr-3"></i> Barranquilla, 080002, Colombia<br>
+            <i class="fas fa-envelope mr-3"></i> info@leemon.com.co<br>
+            <i class="fas fa-phone mr-3"></i> + 57 234 567 88<br>
+            <i class="fas fa-print mr-3"></i> + 57 234 567 89</p>
   
         </div>
         <!-- Grid column -->

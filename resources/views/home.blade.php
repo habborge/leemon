@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<html lang="en"><head>
+<html lang="en">
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -23,18 +24,15 @@
     <link rel="manifest" href="/docs/4.5/assets/img/favicons/manifest.json">
     <link rel="mask-icon" href="/docs/4.5/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
     <link rel="icon" href="/docs/4.5/assets/img/favicons/favicon.ico">
-<meta name="msapplication-config" content="/docs/4.5/assets/img/favicons/browserconfig.xml">
-<meta name="theme-color" content="#563d7c">
+    <meta name="msapplication-config" content="/docs/4.5/assets/img/favicons/browserconfig.xml">
+    <meta name="theme-color" content="#563d7c">
 
 
     <!-- Custom styles for this template 
     <link href="album.css" rel="stylesheet">-->
   </head>
   <body>
-    
-
-<main role="main">
-
+  <main role="main">
   
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
@@ -68,45 +66,51 @@
           <div class="col-md-12">
             <h3>{{ $prom_1 }}</h3>
           </div>
-          <div class="col-md-12">
-            <div class="row">
+        </div>
+        <div class="owl-carousel owl-theme owl-loaded owl-drag">
+          <div class="owl-stage-outer">
+            <div class="owl-stage" style="transform: translate3d(-1386px, 0px, 0px); transition: all 0.25s ease 0s; width: 2376px;">
               @foreach ($products_1 as $product)
-              <div class="col-md-3">
-                <div class="card mb-4 shadow-sm shadow-global">
-                <a href="/product/{{$product->id}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $product->reference }}/{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
-                  <div class="card-body text-center">
-                    
-                    
-                    <span class="brand-font">{{ucwords($product->brand)}} </span>
-                    <h6>{{ucwords($product->name)}} </h6>
-    
-                    
-                    <h6>
-                      @if ($product->prom == 1) 
-                      <span class="badge badge-warning">Paga 2 Lleva 3</span>
-                    @elseif ($product->prom == 2)
-                      <span class="badge badge-success">2nd 50% off</span>
-                    @endif
-                  </h6> 
-                  <span class="brand-font2"><b>$ {{number_format($product->price, 0)}} COP</b></span><br><br>
-                      <!-- <a href="/product/{{$product->id}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
-                      <a href="{{ url('add-to-cart/'.$product->id) }}"> <button type="button" class="btn btn-sm btn-leemon-green"><i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito</button></a>
-                       @guest
-    
-                       @else
-                          <br><a class="favorites" href="{{ url('add-to-favorites/'.$product->id) }}">Enviar a Favoritos</a>
-                       @endguest
-                          
+              <div class="owl-item" style="width: 200px; margin-right: 10px;">
+                <div class="item">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="rom">
+                        <div class="card mb-4 shadow-sm">
+                          <a href="/product/{{$product->id}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $product->reference }}/{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
+                          <div class="card-body text-center">
+                            
+                            
+                            <span class="brand-font">{{ucwords($product->brand)}} </span>
+                            <h6>{{ucwords($product->name)}} </h6>
+                
+                            
+                            <h6>
+                              @if ($product->prom == 1) 
+                              <span class="badge badge-warning">Paga 2 Lleva 3</span>
+                            @elseif ($product->prom == 2)
+                              <span class="badge badge-success">2nd 50% off</span>
+                            @endif
+                          </h6> 
+                          <span class="brand-font2"><b>$ {{number_format($product->price, 0)}} COP</b></span><br><br>
+                                                 <!-- <a href="/product/{{$product->id}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
+                               <a href="{{ url('add-to-cart/'.$product->id) }}"> <button type="button" class="btn btn-sm btn-leemon-green"><i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito</button></a>
+                            
+                              
+                            
+                          </div>
+                        </div>
+                      </div>
                       
-                    
+                    </div>
                   </div>
                 </div>
               </div>
-            @endforeach
+              @endforeach
             </div>
-            
           </div>
-        
+          
+        </div>
     </div>
     @if (count($products_1))
       <div class="d-flex justify-content-center">

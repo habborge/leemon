@@ -412,6 +412,9 @@ h6,
 .brand-font{
   font-size: 0.7rem;
 }
+.hr-color{
+  border-color: #d1d1d1;
+}
 .brand-font2{
   font-size: 0.8rem;
 }
