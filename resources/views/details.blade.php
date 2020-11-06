@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('custom-css')
+<link rel="stylesheet" href="../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../css/owl.theme.default.min.css">
     @if (env('APP_ENV') == "production")    
         <link href="{{ secure_asset('css/xzoom.css') }}" rel="stylesheet">
     @else 
@@ -61,6 +63,57 @@
             </div>
         </div>
     </div>
+    <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h3>Tambien Querras Comprar</h3>
+          </div>
+        </div>
+        <div class="owl-carousel owl-theme owl-loaded owl-drag">
+          <div class="owl-stage-outer">
+            <div class="owl-stage" style="transform: translate3d(-1386px, 0px, 0px); transition: all 0.25s ease 0s; width: 2376px;">
+              @foreach ($similars as $similar)
+              <div class="owl-item" style="width: 200px; margin-right: 10px;">
+                <div class="item">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="rom">
+                        <div class="card mb-4 shadow-sm">
+                          <a href="/product/{{$similar->id}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $similar->reference }}/{{$similar->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
+                          <div class="card-body text-center">
+                            
+                            
+                            <span class="brand-font">{{ucwords($similar->brand)}} </span>
+                            <h6>{{ucwords($similar->name)}} </h6>
+                
+                            
+                            <h6>
+                              @if ($similar->prom == 1) 
+                              <span class="badge badge-warning">Paga 2 Lleva 3</span>
+                            @elseif ($similar->prom == 2)
+                              <span class="badge badge-success">2nd 50% off</span>
+                            @endif
+                          </h6> 
+                          <span class="brand-font2"><b>$ {{number_format($similar->price, 0)}} COP</b></span><br><br>
+                                                 <!-- <a href="/product/{{$similar->id}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
+                               <a href="{{ url('add-to-cart/'.$similar->id) }}"> <button type="button" class="btn btn-sm btn-leemon-green"><i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito</button></a>
+                            
+                              
+                            
+                          </div>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+              @endforeach
+            </div>
+          </div>
+          
+        </div>
+    </div>
 </div>
 @endsection
 @section('custom-js')
@@ -69,6 +122,8 @@
     @else
         <script src="{{ asset('js/xzoom.min.js') }}" defer></script>
     @endif
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script defer src="../js/owl.carousel.min.js"></script>
 <script type="text/javascript">
     
 
@@ -106,6 +161,28 @@
                 }
             });
         });
+
+        $('.owl-carousel').owlCarousel({
+      
+      loop:true,
+      margin:10,
+      responsiveClass:true,
+      responsive:{
+          0:{
+              items:1,
+              nav:true
+          },
+          600:{
+              items:3,
+              nav:false
+          },
+          1000:{
+              items:5,
+              nav:true,
+              loop:false
+          }
+      }
+    });
     });
 </script>
 @endsection

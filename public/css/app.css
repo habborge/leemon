@@ -56,7 +56,11 @@ nav,
 section {
   display: block;
 }
-
+/* footer {
+  position: ;
+  bottom: 0;
+  width: 100%;
+} */
 body {
   margin: 0;
   font-family: "AcuminVariableConcept" !important;
@@ -410,7 +414,7 @@ h6,
   font-size: 0.9rem;
 }
 .brand-font{
-  font-size: 0.7rem;
+  font-size: 0.7rem !important;
 }
 .hr-color{
   border-color: #d1d1d1;

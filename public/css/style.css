@@ -7,6 +7,7 @@
 }
 .litlemargin{
     margin-top: 40px;
+    margin-bottom: 40px;
 }
 .main-section{
     /*background-color: #F8F8F8;*/
@@ -360,7 +361,8 @@
   }
   
   .img-tam{
-      max-width: 50px;
+      max-width: 100px;
+      margin-left: 0px !important;
   }
 
   .img-tam2{
@@ -417,9 +419,9 @@
 }
 
 .link-a{
-    color: #e0e0e0;
+    color: #e0e0e0 !important;
 }
 .link-a:hover {
-    color: #cac2c2;
+    color: #cac2c2 !important;
     text-decoration: underline;
 }

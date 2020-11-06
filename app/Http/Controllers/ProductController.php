@@ -235,9 +235,12 @@ class ProductController extends Controller
         $pro_id = $request->id;
         $product = Product::find($pro_id);
 
+        $similar = Product::where('subcategory_id', '=',$product->subcategory_id)->where('id', '<>', $product->id)->paginate(12);
+        
         return view('details',[
             'prod_id' => $pro_id,
-            'prod_info' => $product
+            'prod_info' => $product,
+            'similars' => $similar,
         ]);
     }
 
