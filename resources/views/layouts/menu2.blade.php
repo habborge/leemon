@@ -45,7 +45,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="columna-img">
-                                                    <img src="img/Garlic(1).png" class="img-responsive" width="120">
+                                                    <img src="/img/Garlic(1).png" class="img-responsive" width="120">
                                                 </div>
                                             </div>
                                         </div>

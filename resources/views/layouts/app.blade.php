@@ -149,7 +149,7 @@
                                                 <img src="{{ $details['photo'] }}" />
                                             </div>
                                             <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
-                                                <p>{{ $details['name'] }}</p>
+                                                <p class="brand-font">{{ $details['name'] }}</p>
                                                 <span class="price text-info"> $ {{ number_format($details['price'],0) }}</span> <span class="count"> Cantidad:{{ $details['quantity'] }}</span>
                                             </div>
                                             
@@ -161,7 +161,7 @@
                                 <div class="row">
                                     <div class="col-lg-12 col-sm-12 col-12 text-center">
                                         <hr class="mb-4">
-                                        <a href="{{ url('cart') }}" class="btn btn-primary btn-block">Ver completo</a>
+                                        <a href="{{ url('cart') }}" class="btn btn-purchase btn-block">Ver completo</a>
                                     </div>
                                 </div>
                             </div>

@@ -25,10 +25,11 @@ Route::get('cart', 'ProductController@cart');
 Route::get('add-to-cart/{id}', 'ProductController@addToCart');
 Route::patch('update-cart', 'ProductController@update');
 Route::post('add-to-cart-quantity', 'ProductController@addToCartQuantity');
+Route::post('add-to-wishlist', 'ProductController@addToWishList');
 Route::delete('remove-from-cart', 'ProductController@remove');
 Route::get('/result', 'searchController@searchProducts');
 Route::get('/products/{gfather}/{father}/{son}', 'ProductController@groupSon');
-
+Route::get('/products/{gfather}/{father}/{son}/{brand}', 'ProductController@groupByBand');
 Route::group([
     'middleware' => ['auth']
 ], function() {

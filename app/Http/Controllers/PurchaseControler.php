@@ -79,7 +79,7 @@ class PurchaseControler extends Controller
                 return view('purchase', [
                     'completeRequest' => $request,
                     'infosaved' => $infosaved,
-            'info' => $info
+                    'info' => $info
                 ])->withErrors($p);
             }else{
                 $user_info = New Member();

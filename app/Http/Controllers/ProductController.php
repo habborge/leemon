@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Product;
 use Auth;
 use App\Member;
+use App\WishList;
 use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
@@ -244,7 +245,11 @@ class ProductController extends Controller
         ]);
     }
 
+    //--------------------------------------------------------------------------------------------------------------
+    //
+    //--------------------------------------------------------------------------------------------------------------
     public function groupSon(Request $request){
+        
         $Gfather = $request->gfather;
         $father = $request->father;
         $string = explode("_", $request->son);
@@ -253,12 +258,75 @@ class ProductController extends Controller
         $son = $string[0];
 
         $products = Product::where('subcategory_id', $subCategory_id)->orderBy('name')->paginate(24);
+        $brand = Product::select('brand')->where('subcategory_id', $subCategory_id)
+        ->groupBy('brand')
+        ->selectRaw('count(brand) as total_brand, brand')->get();
 
+        
         return view('products.categories', [
             'gfather' => str_replace("-", " ", $Gfather),
             'father' => str_replace("-", " ", $father),
             'son' => str_replace("-", " ", $son),
-            'products' => $products
+            'subcat_id' => $subCategory_id,
+            'products' => $products,
+            'brands' => $brand,
+        ]);
+    }
+
+    //--------------------------------------------------------------------------------------------------------------
+    //
+    //--------------------------------------------------------------------------------------------------------------
+    public function addToWishList(Request $request){
+        
+        if (Auth::user()){
+            $user_id = Auth::user()->id;
+            $pro_id = $request->id;
+        
+            $product = Product::find($pro_id);
+            if(!$product) {
+                abort(404);
+            }
+
+            $info = WishList::where('user_id', $user_id)->where('product_id', $pro_id)->exists();
+            if(!$info){
+                $list = New WishList();
+                $rs = $list->set($request);
+    
+                if($rs){
+                    return redirect('cart')->with('success', 'Producto agregado a lista de deseos de manera Exitosa!!');
+                }else{
+                    return back()->with('notice', 'Un error ha ocurrido!!');
+                }
+            }else{
+
+            }
+
+        }
+    }
+
+    public function groupByBand(Request $request){
+        $Gfather = $request->gfather;
+        $father = $request->father;
+        $string = explode("_", $request->son);
+
+        $subCategory_id = $string[1];
+        $son = $string[0];
+
+        $brandName = mb_strtoupper(str_replace("-", " ",$request->brand)); 
+
+        $products = Product::where('subcategory_id', $subCategory_id)->where('brand', $brandName)->orderBy('name')->paginate(24);
+        $brand = Product::select('brand')->where('subcategory_id', $subCategory_id)
+        ->groupBy('brand')
+        ->selectRaw('count(brand) as total_brand, brand')->get();
+
+        
+        return view('products.categories', [
+            'gfather' => str_replace("-", " ", $Gfather),
+            'father' => str_replace("-", " ", $father),
+            'son' => str_replace("-", " ", $son),
+            'subcat_id' => $subCategory_id,
+            'products' => $products,
+            'brands' => $brand,
         ]);
     }
 }
