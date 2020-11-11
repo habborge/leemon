@@ -304,6 +304,9 @@ class ProductController extends Controller
         }
     }
 
+    //--------------------------------------------------------------------------------------------------------------
+    //
+    //--------------------------------------------------------------------------------------------------------------
     public function groupByBand(Request $request){
         $Gfather = $request->gfather;
         $father = $request->father;
