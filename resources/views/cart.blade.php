@@ -231,17 +231,13 @@
                         <div class="card col-md-12">
                             <div class="row">
                                 <div class="card-header col-md-12">
-                                    
-                                        Total Compra
-                                    
+                                    Total Compra
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="card-body">
-                                    
                                     <span>Cantidad de articulos: {{ $q_prod }}<br>
-                                        <b>Total a Pagar $ {{ $total + $delivery }}</b></span>
-                                    
+                                    <b>Total a Pagar $ {{ $total + $delivery }}</b></span>
                                 </div>
                             </div>
                         </div>

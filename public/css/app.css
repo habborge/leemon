@@ -11056,9 +11056,9 @@ a.text-dark:focus {
   .primary-content2 {
     /* width: 100%; */
     /* border-right: 1px solid #cbcbcb; */
-    margin-left: 5px !important;
-    margin-right: 5px !important;
-    margin-bottom: 5px !important; 
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+    margin-bottom: 10px !important; 
   }
 
   #primary2{
