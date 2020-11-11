@@ -27,5 +27,9 @@ class AppServiceProvider extends ServiceProvider
         view()->composer(['home', 'cart', 'result', 'auth/login', 'auth/register', 'details', 'products/categories', 'purchase'], function($view) {
             $view->with('menus', Category::menus());
         });
+
+        if(config('app.env') === 'production') {
+            \URL::forceScheme('https');
+        }
     }
 }
