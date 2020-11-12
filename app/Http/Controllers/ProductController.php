@@ -332,4 +332,31 @@ class ProductController extends Controller
             'brands' => $brand,
         ]);
     }
+
+    //--------------------------------------------------------------------------------------------------------------
+    //
+    //--------------------------------------------------------------------------------------------------------------
+    public function groupGfa(Request $request){
+        
+        
+        $string = explode("_", $request->gfather);
+
+        $category_id = $string[1];
+        $Gfather = $string[0];
+        
+        $products = Product::join('categories as c', 'c.id', '=', 'products.subcategory_id')
+        ->join('categories as c2', 'c2.id', '=', 'c.father_id')
+        ->join('categories as c3', 'c3.id', '=', 'c2.father_id')
+        ->where('c3.id', $category_id)->orderBy('products.name')->paginate(24);
+
+        
+        return view('products.categories', [
+            'gfather' => str_replace("-", " ", $Gfather),
+            'father' => '',
+            'son' => '',
+            'subcat_id' => 0,
+            'products' => $products,
+            'brands' => [],
+        ]);
+    }
 }
