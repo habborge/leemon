@@ -34,7 +34,7 @@
   width: 0;
   position: fixed;
   z-index: 9999;
-  height: 450px;
+  height: 100%;
   top: 0;
   left: 0;
   background-color: #403d38;
@@ -46,7 +46,7 @@
 .sidepanel a {
   padding: 0px 8px 0px 32px;
   text-decoration: none;
-  font-size: 15px;
+  font-size: 20px;
   color: #818181;
   display: block;
   transition: 0.3s;
@@ -64,13 +64,13 @@ ul#menu-responsive ul{
   margin-top: 10px;
   list-style: none;
 }
-ul#menu-responsive li:hover ul ul,ul#menu-responsive li:hover ul ul ul,ul#menu-responsive li.iehover ul ul,ul#menu-responsive li.iehover ul ul ul {
+ul#menu-responsive li:target ul ul,ul#menu-responsive li:target ul ul ul,ul#menu-responsive li.iehover ul ul,ul#menu-responsive li.iehover ul ul ul {
   display: none;
   cursor:pointer;
 
  }
    
- ul#menu-responsive li:hover ul,ul#menu-responsive ul li:hover ul,ul#menu-responsive ul ul li:hover ul,ul#menu-responsive li.iehover ul,ul#menu-responsive ul li.iehover ul,ul#menu-responsive ul ul li.iehover ul {
+ ul#menu-responsive li:target ul,ul#menu-responsive ul li:target ul,ul#menu-responsive ul ul li:target ul,ul#menu-responsive li.iehover ul,ul#menu-responsive ul li.iehover ul,ul#menu-responsive ul ul li.iehover ul {
   display: block;
   cursor:pointer;
   background-color: #a5a5a5;

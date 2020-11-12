@@ -180,22 +180,29 @@
             <div class="">
                 <ul id="menu-responsive" class="menu-responsive">
                     <li class="sidepanel-li">
-                        <a href="#">Nosotros</a>
+                        <a href="#"><i class="fa fa-id-card" aria-hidden="true"></i> Nosotros</a>
                     </li>
-                    <li class="sidepanel-li">
-                        <a href="#">Productos</a>
-                    </li>
-                    <li class="sidepanel-li-sub">
-                        <a href="#">Perfil</a>
+                    <li id="products" class="sidepanel-li">
+                        <a href="#products"><i class="fa fa-shopping-bag" aria-hidden="true"></i> Productos</a>
                         <ul class="sub-menu-responsive">
-                            <li class="sidepanel-li">Ordenes</li>
-                            <li class="sidepanel-li">Lista de Deseos</li>
-                            <li class="sidepanel-li">Direcciones</li>
-                            <li class="sidepanel-li">Metodos de Pago</li>
+                            @foreach ($menus as $key => $item)
+                                @if ($item['father_id'] == 0)
+                                    <li class="sidepanel-li"><a href="{{ url($item['name']) }}">{{ $item['name'] }} </a></li>
+                                @endif
+                            @endforeach
+                        </ul>
+                    </li>
+                    <li id="profile" class="sidepanel-li">
+                        <a href="#profile"><i class="fa fa-user-circle" aria-hidden="true"></i> Perfil</a>
+                        <ul class="sub-menu-responsive">
+                            <li class="sidepanel-li"><a href="">Ordenes</a></li>
+                            <li class="sidepanel-li"><a href="">Lista de Deseos</a></li>
+                            <li class="sidepanel-li"><a href="">Direcciones</a></li>
+                            <li class="sidepanel-li"><a href="">Metodos de Pago</a></li>
                         </ul>
                     </li>
                     <li class="sidepanel-li">
-                        <a href="#">Cerrar Sesión</a>
+                        <a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar Sesión</a>
                     </li>
                 </ul>
             </div>
@@ -211,7 +218,7 @@
     @yield('custom-js')
     <script type="text/javascript">
         function openNav() {
-            document.getElementById("mySidepanel").style.width = "250px";
+            document.getElementById("mySidepanel").style.width = "100%";
         }
 
         function closeNav() {
