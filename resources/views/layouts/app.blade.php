@@ -50,11 +50,13 @@
 </style>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        
+        <nav id="" class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            
             <div class="container dataPosition">
                <div class="row ancho">
                 <div id="one" class="col-md-2">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    <button  onclick="openNav()" class="navbar-toggler" type="button" data-toggle="" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="{{ __('Toggle navigation') }}">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <a class="navbar-brand" href="{{ url('/') }}">
@@ -173,6 +175,31 @@
 
             </div>
         </nav>
+        <div id="mySidepanel" class="sidepanel">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+            <div class="">
+                <ul id="menu-responsive" class="menu-responsive">
+                    <li class="sidepanel-li">
+                        <a href="#">Nosotros</a>
+                    </li>
+                    <li class="sidepanel-li">
+                        <a href="#">Productos</a>
+                    </li>
+                    <li class="sidepanel-li-sub">
+                        <a href="#">Perfil</a>
+                        <ul class="sub-menu-responsive">
+                            <li class="sidepanel-li">Ordenes</li>
+                            <li class="sidepanel-li">Lista de Deseos</li>
+                            <li class="sidepanel-li">Direcciones</li>
+                            <li class="sidepanel-li">Metodos de Pago</li>
+                        </ul>
+                    </li>
+                    <li class="sidepanel-li">
+                        <a href="#">Cerrar Sesión</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
         <div id="megamenu">
             @include('layouts.menu2')
         </div>
@@ -182,5 +209,14 @@
     </div>
     @include('layouts.footer')
     @yield('custom-js')
+    <script type="text/javascript">
+        function openNav() {
+            document.getElementById("mySidepanel").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidepanel").style.width = "0";
+        }
+    </script>
 </body>
 </html>

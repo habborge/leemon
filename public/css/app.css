@@ -30,7 +30,107 @@
   --font-family-sans-serif: "AcuminVariableConcept2";
   --font-family-monospace: "AcuminVariableConcept2";
 }
+.sidepanel  {
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  height: 450px;
+  top: 0;
+  left: 0;
+  background-color: #403d38;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
 
+.sidepanel a {
+  padding: 0px 8px 0px 32px;
+  text-decoration: none;
+  font-size: 15px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidepanel a:hover {
+  color: #ffffff;
+  
+}
+ul#menu-responsive ul{
+  display: none;
+  background-color: #403d38;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 10px;
+  list-style: none;
+}
+ul#menu-responsive li:hover ul ul,ul#menu-responsive li:hover ul ul ul,ul#menu-responsive li.iehover ul ul,ul#menu-responsive li.iehover ul ul ul {
+  display: none;
+  cursor:pointer;
+
+ }
+   
+ ul#menu-responsive li:hover ul,ul#menu-responsive ul li:hover ul,ul#menu-responsive ul ul li:hover ul,ul#menu-responsive li.iehover ul,ul#menu-responsive ul li.iehover ul,ul#menu-responsive ul ul li.iehover ul {
+  display: block;
+  cursor:pointer;
+  background-color: #a5a5a5;
+ }
+.menu-responsive{
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+}
+.menu-responsive li{
+  /* list-style: none;
+  margin: 0; */
+  width: 100%;
+}
+.sub-menu-responsive{
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+}
+.sub-menu-responsive li{
+  /* list-style: none;
+  margin: 0; */
+  width: 100%;
+}
+.sidepanel-li{
+  
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-top: 1px solid #6c757d;
+}
+.sidepanel-li-sub{
+  
+  padding-top: 10px;
+  border-top: 1px solid #6c757d;
+}
+.sidepanel-li:hover, .sidepanel-li-sub:hover{
+  background-color: #a8f29e;
+  
+}
+.sidepanel .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color:#444;
+}
 *,
 *::before,
 *::after {
