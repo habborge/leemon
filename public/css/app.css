@@ -30,6 +30,15 @@
   --font-family-sans-serif: "AcuminVariableConcept2";
   --font-family-monospace: "AcuminVariableConcept2";
 }
+.carousel-indicators li {
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 100%;
+  background-color: #dfdfdf !important;
+  }
+  .carousel-indicators li.active {
+    background-color: #869791 !important;
+  }
 .sidepanel  {
   width: 0;
   position: fixed;
