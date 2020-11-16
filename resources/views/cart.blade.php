@@ -104,9 +104,9 @@
                                                                                         <div class="row">
                                                                                             <div class="input-group input-group-sm mb-3">
                                                                                                 <div class="input-group-prepend">
-                                                                                                  <span class="input-group-text" id="inputGroup-sizing-sm">Cantidad</span>
+                                                                                                  <span class="input-group-text" id="inputGroup-sizing-sm">Cant:</span>
                                                                                                 </div>
-                                                                                                <input class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  id="Quantity_{{$id}}" type="number" value="{{ $details['quantity'] }}">
+                                                                                                <input class="form-control update-cart" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  data-id="{{ $id }}"  id="Quantity_{{$id}}" type="number" value="{{ $details['quantity'] }}">
                                                                                               </div>
                                                                                             
                                                                                             
@@ -115,20 +115,21 @@
                                                                                             @endif
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="col-2 col-md-2" data-th="">
+                                                                                    {{-- <div class="col-2 col-md-2" data-th="">
                                                                                         <div class="row">
                                                                                             <button id="" class="btn btn-info btn-sm update-cart" data-id="{{ $id }}"><i class="fa fa-refresh"></i></button>
                                                                                         </div>
+                                                                                    </div> --}}
+                                                                                    <div class="col-3 col-md-2">
+                                                                                        <div class="row">
+                                                                                            <button class="btn btn-danger btn-sm remove-from-cart" data-id="{{ $id }}"><i class="fa fa-trash-o"></i> Eliminar</button>
+                                                                                        </div>
+                                                                                        
                                                                                     </div>
                                                                                 </div>
                                                                                 
                                                                             </div>
-                                                                            <div class="col-4 col-md-12">
-                                                                                <div class="row">
-                                                                                    <button class="btn btn-danger btn-sm remove-from-cart" data-id="{{ $id }}"><i class="fa fa-trash-o"></i> Eliminar</button>
-                                                                                </div>
-                                                                                
-                                                                            </div>
+                                                                            
                                                                             
                                                                         </div>
                                                                     </div>
@@ -198,7 +199,7 @@
                                                 <div class="row">
                                                     <div class="col-6 col-md-6">
                                                         <a href="{{ url('/') }}" class="btn btn-leemon-back">
-                                                            Continua de Compras
+                                                            Seguir Comprando
                                                         </a>
                                                     </div>
                                                     
@@ -251,7 +252,7 @@
 @section('custom-js')
 <script type="text/javascript">
     $(document).ready(function(){
-        $(".update-cart").click(function (e) {
+        $(".update-cart").change(function (e) {
             e.preventDefault();
             
             var ele = $(this);

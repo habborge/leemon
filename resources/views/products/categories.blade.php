@@ -82,7 +82,7 @@
                 </ul>   
                 <hr>             
             </div>
-            <div class="refinement brand" data-analyticsevent="ShopByPrice">
+            {{-- <div class="refinement brand" data-analyticsevent="ShopByPrice">
                 <h6 class="toggle active price price-color">
                 Rango de Precios
                 </h6>
@@ -136,7 +136,7 @@
                         </li>
                     
                 </ul>                
-            </div>
+            </div> --}}
         </div>
 
     </div>

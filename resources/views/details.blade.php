@@ -102,7 +102,7 @@
         <div class="row">
           <div class="col-md-12">
             <hr class="mb-4">
-            <h3>Tambien Querras Comprar</h3>
+            <h3>Te podria Interesar</h3>
           </div>
         </div>
         <div class="owl-carousel owl-theme owl-loaded owl-drag">
