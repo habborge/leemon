@@ -61,13 +61,18 @@
 
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link brand-font" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
+                                        {{ __('Olvidaste tu contraseña?') }}
                                     </a>
                                 @endif
                             </div>
                         </div>
                     </form>
                 </div>
+            </div>
+
+            <div>
+                <div class="a-divide a-divider"><h5>¿Eres nuevo en Leemon?</h5>
+                <a href="{{ route('register') }}" class="btn btn-info btn-sm btn-block" >Crea una Cuenta en Leemon</a> </div>
             </div>
         </div>
     </div>

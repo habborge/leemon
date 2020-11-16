@@ -57,16 +57,16 @@
                         </div>
 
                         <div class="form-group row">
-                            
-
                             <div class="col-md-12">
                                 <label for="password-confirm" class="col-form-label text-md-right text-register">{{ __('Confirma la contraseña') }}</label>
                                 <input id="password-confirm" type="password" class="form-control form-control-sm" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
+
                         <div class="form-group row">
                             <div class="col-md-12 text-register2">Al crear una cuenta, aceptas los <a href="">terminos y condiciones</a> , asi el como la <a href="">Privacidad de datos</a> en Leemon.com.co.</div>
                         </div>
+
                         <div class="form-group row mb-0">
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-success btn-block">
@@ -74,7 +74,12 @@
                                 </button>
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12 text-register3">¿Ya tienes tu cuenta? <a href="">Iniciar sesión en Leemon</a></div>
+                        </div>
                     </form>
+
                 </div>
             </div>
         </div>
