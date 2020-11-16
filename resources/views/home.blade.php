@@ -237,7 +237,7 @@
                                 </button>
                               </a>
                             </div>
-                            <div class="col-md-5 text-right">
+                            <div class="col-md-5 text-rightgi">
                               <img src="/img/Garlic(1).png" class="img-responsive" width="120">
                             </div>
                           </div>
@@ -247,6 +247,17 @@
                 </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="album py-5 bg-light">
+      <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              
+                <img src="/img/50off.jpg" width="100%" class="rounded" alt="">
+              
+            </div>
+          </div>
       </div>
     </div>
     <div class="album py-5 bg-light">
@@ -273,17 +284,7 @@
         </div>
       </div>
     </div>
-    <div class="album py-5 bg-light">
-      <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-              
-                <img src="/img/50off.jpg" width="100%" class="rounded" alt="">
-              
-            </div>
-          </div>
-      </div>
-    </div>
+    
     
   </main>
 
