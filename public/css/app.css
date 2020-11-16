@@ -33,7 +33,7 @@
 .carousel-indicators li {
   width: 10px !important;
   height: 10px !important;
-  border-radius: 100%;
+  border-radius: 100% !important;
   background-color: #dfdfdf !important;
   }
   .carousel-indicators li.active {
