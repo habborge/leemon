@@ -182,37 +182,69 @@
       <div class="container">
         <div class="row">
           <div class="col-md-6">
-            <div class="card">
-              
-              <div class="card-body">
-                <div class="col-md-12">
-                  <h5 class="card-title text-left">PROMOCION DE PRODUCTO ESCOGIDO 1</h5>
-                </div>
-                <div class="col-md-12">
-                    <div class="row">
-                      <div class="col-md-7">
-                        
-                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        
+                <div class="row">
+                  
+                  <div class="card no-line-left line-right">
+                    <div class="card-body">
+                      <div class="col-md-12">
+                        <h5 class="card-title text-left">PROMOCION DE PRODUCTO ESCOGIDO 1<br>
+                          <small>Descripcion de promocion del producto</small>
+                        </h5>
+                        <br>
+                      </div>
+                      <div class="col-md-12">
+                          <div class="row">
+                            <div class="col-md-7">
+                              <p class="card-text">
+                                Some quick example text to build on the card title and make up the bulk of the card's content.
+                              </p>
+                              
+                              <a href="{{ url('add-to-cart/'.$product->id) }}">
+                                <button type="button" class="btn btn-leemon-green">
+                                  <i class="czi-cart font-size-sm mr-1"></i>Comprar Ahora
+                                </button>
+                              </a>
+                            </div>
+                            <div class="col-md-5 text-right">
+                              <img src="/img/Garlic(1).png" class="img-responsive" width="120">
+                            </div>
+                          </div>
+                      </div>
                     </div>
-                    <div class="col-md-5 text-center">
-                      <img src="/img/Garlic(1).png" class="img-responsive" width="120">
-                    </div>
-                    </div>
-                </div>
+                  </div>
                 
-                
-              </div>
-            </div>
+                </div>
           </div>
           <div class="col-md-6">
-            <div class="card">
-              
-              <div class="card-body">
-                <h5 class="card-title text-left">PROMOCION DE PRODUCTO ESCOGIDO 2</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              </div>
-            </div>
+                <div class="row">
+                  <div class="card no-line-right line-left">
+                    <div class="card-body">
+                      <div class="col-md-12">
+                        <h5 class="card-title text-left">PROMOCION DE PRODUCTO ESCOGIDO 1<br>
+                          <small>Descripcion de promocion del producto</small>
+                        </h5>
+                        <br>
+                      </div>
+                      <div class="col-md-12">
+                          <div class="row">
+                            <div class="col-md-7">
+                              <p class="card-text">
+                                Some quick example text to build on the card title and make up the bulk of the card's content.
+                              </p>
+                              <a href="{{ url('add-to-cart/'.$product->id) }}">
+                                <button type="button" class="btn btn-leemon-green">
+                                  <i class="czi-cart font-size-sm mr-1"></i>Comprar Ahora
+                                </button>
+                              </a>
+                            </div>
+                            <div class="col-md-5 text-right">
+                              <img src="/img/Garlic(1).png" class="img-responsive" width="120">
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
           </div>
         </div>
       </div>

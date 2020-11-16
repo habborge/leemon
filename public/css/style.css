@@ -59,17 +59,17 @@
 }
 .class-100002{
     /* display: inline !important;  */
-    width: 800px;
+    width: 750px;
     /* left: 190px; */
 }
 .class-100003{
     /* display: inline !important;  */
-    width: 700px;
+    width: 600px;
     /* left: 190px; */
 }
 .class-100004{
     /* display: inline !important;  */
-    width: 800px;
+    width: 750px;
     left: 30%; 
 }
 .class-100005{
@@ -111,7 +111,9 @@
     display: block;
   }
 /* Create three equal columns that floats next to each other */
-
+.line-left{
+    border-left: 1px solid #d6d6d6;
+}
 .columna-100001{
     width: 33% !important;
 }

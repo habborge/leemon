@@ -43,9 +43,11 @@
                                                     @endforeach
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
-                                                <div class="columna-img">
-                                                    <img src="/img/Garlic(1).png" class="img-responsive" width="120">
+                                            <div class="col-md-3 align-self-center">
+                                                <div class="row">
+                                                    <div class="col-md-12 columna-img text-center line-left">
+                                                        <img src="/img/Garlic(1).png" class="img-responsive" width="120">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
