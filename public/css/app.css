@@ -6943,6 +6943,7 @@ a.close.disabled {
   margin-right: 15%;
   margin-left: 15%;
   list-style: none;
+  
 }
 
 .carousel-indicators li {
@@ -6960,6 +6961,7 @@ a.close.disabled {
   border-bottom: 10px solid transparent;
   opacity: 0.5;
   transition: opacity 0.6s ease;
+  border-radius: 100% !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
