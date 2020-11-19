@@ -7,7 +7,7 @@
             <div id="routeCat"class="breadcrumb hidden-xs" itemprop="breadcrumb">
                 Home | {{ $gfather }} | {{ $father }} |  <a class="" href="/products/{{ str_replace(" ", "-",$gfather) }}/{{str_replace(" ", "-",$father)}}/{{str_replace(" ", "-",$son)}}_{{$subcat_id}}">{{ $son }} </a>
             </div>
-            </div>
+        </div>
         <div id="primary" class="primary-content col-md-9 col-sm-12 col-xs-12 pull-right no-padding-md no-padding-lg no-padding-sm-xs">
             <div class="container">
                 <div class="row">
@@ -22,8 +22,8 @@
                                         <div class="card mb-4 shadow-sm shadow-global">
                                             <a href="/product/{{$product->id}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $product->reference }}/{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product2" alt=""></a>
                                             <div class="card-body text-center">
-                                                <h6>{{ucwords($product->brand)}} </h6>
-                                                <span  class="brand-font">{{ucwords($product->name)}} </span>
+                                                <span class="brand-font">{{ucwords($product->brand)}} </span>
+                                                <h6>{{ucwords($product->name)}} </h6>
                                                 <h6>
                                                     @if ($product->prom == 1) 
                                                         <span class="badge badge-warning">Paga 2 Lleva 3</span>

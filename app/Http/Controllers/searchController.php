@@ -10,8 +10,11 @@ class searchController extends Controller
     public function searchProducts(Request $request){
        
         $products = Product::where('name', 'LIKE', "%$request->search%")->orWhere('brand', 'LIKE', "%$request->search%")->orderBy('id', 'desc')->paginate(20);
+
+        $brand = Product::select('brand')->groupBy('brand')->get();
         return view('result',[
-            'search' => $products 
+            'search' => $products,
+            'brands' => $brand,
         ]);
 
     }
