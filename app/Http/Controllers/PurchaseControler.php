@@ -24,11 +24,15 @@ class PurchaseControler extends Controller
     }
 
     private function verifyInsert($request){
-        return $p = Validator::make($request->all(), [
+        
+        $rules = [
             'firstname' => 'required|string',
             'lastname' => 'required|string',
             'email' => 'required|email|unique:members,email',
-            'address' => 'required',
+            'address_1' => 'required',
+            'address_2' => 'required',
+            'address_3' => 'required',
+            'address_4' => 'required',
             'city'  => 'required', 
             'dpt' => 'required',  
             'country' => 'required',  
@@ -37,7 +41,17 @@ class PurchaseControler extends Controller
             'cc_number' => 'required|string|min:16|max:20',
             'cc_expiration' => 'required|string|min:5',
             'cc_cvv' => 'required|string|min:3'
-        ] );
+        ];
+
+        if (!isset($request->sameaddress)){
+            
+            $rules['address_1b'] = 'required';
+            $rules['address_2b'] = 'required';
+            $rules['address_3b'] = 'required';
+            $rules['address_4b'] = 'required';
+        }
+        
+        return $p = Validator::make($request->all(), $rules);
     }
 
     //--------------------------------------------------------------------------------------------------------------    
@@ -73,27 +87,60 @@ class PurchaseControler extends Controller
             if ($info){
                 $infosaved = 1;
             }
-
+            
             if ($p->fails()){
-                //dd($forType);
                 return view('purchase', [
                     'completeRequest' => $request,
                     'infosaved' => $infosaved,
-                    'info' => $info
+                    'info' => $info,
+                    'checkbox' => $request->sameaddress
                 ])->withErrors($p);
             }else{
-                $user_info = New Member();
-            
-                $rs = $user_info->set($request);
+                $res = $this->luhnCheck($request->cc_number);
+                if ($res == true){
+                    $user_info = New Member();
+                    $rs = $user_info->set($request);
     
-                if($rs){
-                    return redirect('cart')->with('success', 'Usuario creado de manera Exitosa!!');
-                }else{
-                    return back()->with('notice', 'Un error ha ocurrido!!');
+                    if($rs){
+                        return redirect('cart')->with('success', 'Usuario creado de manera Exitosa!!');
+                    }else{
+                        return back()->with('notice', 'Un error ha ocurrido!!');
+                    }
                 }
+                
             }
            
         }
+
+        public function luhnCheck($number) {
+
+            // Strip any non-digits (useful for credit card numbers with spaces and hyphens)
+            $number=preg_replace('/\D/', '', $number);
+          
+            // Set the string length and parity
+            $number_length=strlen($number);
+            $parity=$number_length % 2;
+          
+            // Loop through each digit and do the maths
+            $total=0;
+            for ($i=0; $i<$number_length; $i++) {
+              $digit=$number[$i];
+              // Multiply alternate digits by two
+              if ($i % 2 == $parity) {
+                $digit*=2;
+                // If the sum is two digits, add them together (in effect)
+                if ($digit > 9) {
+                  $digit-=9;
+                }
+              }
+              // Total up the digits
+              $total+=$digit;
+            }
+          
+            // If the total mod 10 equals 0, the number is valid
+            return ($total % 10 == 0) ? TRUE : FALSE;
+          
+          }
     //--------------------------------------------------------------------------------------------------------------
     //
     //--------------------------------------------------------------------------------------------------------------
