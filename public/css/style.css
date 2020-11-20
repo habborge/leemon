@@ -607,6 +607,26 @@ padding: 0 8px 0 7px;
 .a-divide {
 	border-bottom: 1px solid #ddd
 }
+#cc_cvv::placeholder, #cc_number::placeholder, #cc_name::placeholder, #address_d::placeholder, #firstname::placeholder, #lastname::placeholder, #n_doc::placeholder, #email::placeholder, #address_db::placeholder, #zipcode::placeholder, #zipcode_e::placeholder {
+    color:rgb(212, 212, 212);
+}
+
+#cc_cvv::-webkit-input-placeholder, #cc_number::-webkit-input-placeholder {
+    color:rgb(212, 212, 212);
+}
+#cc_cvv::-moz-placeholder, #cc_number::-moz-placeholder {
+    color:rgb(212, 212, 212);
+}
+#cc_cvv:-ms-input-placeholder, #cc_number::-ms-input-placeholder {
+    color:rgb(212, 212, 212);
+}
+#cc_cvv:-moz-placeholder, #cc_number::-moz-placeholder {
+    color:rgb(212, 212, 212);
+}
+
+.select-holder{
+    color:rgb(212, 212, 212);
+}
 /* ---------------------------------------------------------------------------------
    -- resposive design
 ---------------------------------------------------------------------------------- */

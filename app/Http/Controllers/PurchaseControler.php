@@ -28,7 +28,7 @@ class PurchaseControler extends Controller
         $rules = [
             'firstname' => 'required|string',
             'lastname' => 'required|string',
-            'email' => 'required|email|unique:members,email',
+            
             'address_1' => 'required',
             'address_2' => 'required',
             'address_3' => 'required',
@@ -38,9 +38,9 @@ class PurchaseControler extends Controller
             'country' => 'required',  
             'n_doc' => 'required',
             'cc_name' => 'required|string',
-            'cc_number' => 'required|string|min:16|max:20',
-            'cc_expiration' => 'required|string|min:5',
-            'cc_cvv' => 'required|string|min:3'
+            'cc_number' => 'required|string|min:15|max:20',
+            'cc_expiration' => 'required|string|min:5|max:5',
+            'cc_cvv' => 'required|string|min:3|max:4'
         ];
 
         if (!isset($request->sameaddress)){
@@ -49,6 +49,9 @@ class PurchaseControler extends Controller
             $rules['address_2b'] = 'required';
             $rules['address_3b'] = 'required';
             $rules['address_4b'] = 'required';
+            $rules['city_e'] = 'required';
+            $rules['dpt_e'] = 'required'; 
+            $rules['country_e'] = 'required'; 
         }
         
         return $p = Validator::make($request->all(), $rules);
@@ -60,7 +63,7 @@ class PurchaseControler extends Controller
     public function purchase(){
         $infosaved = 0;
         $id = Auth::user()->id;
-        
+       
         $info = Member::where('user_id', $id)->first();
 
         if ($info){
@@ -78,10 +81,10 @@ class PurchaseControler extends Controller
     //--------------------------------------------------------------------------------------------------------------
         public function addInfoUser(Request $request){
             
-            $p = $this->verifyInsert($request);
+            
             $infosaved = 0;
             $id = Auth::user()->id;
-            
+            $p = $this->verifyInsert($request);
             $info = Member::where('user_id', $id)->first();
     
             if ($info){
@@ -97,7 +100,9 @@ class PurchaseControler extends Controller
                 ])->withErrors($p);
             }else{
                 $res = $this->luhnCheck($request->cc_number);
+
                 if ($res == true){
+
                     $user_info = New Member();
                     $rs = $user_info->set($request);
     
@@ -112,6 +117,9 @@ class PurchaseControler extends Controller
            
         }
 
+        //--------------------------------------------------------------------------------------------------------------
+        //
+        //--------------------------------------------------------------------------------------------------------------
         public function luhnCheck($number) {
 
             // Strip any non-digits (useful for credit card numbers with spaces and hyphens)
