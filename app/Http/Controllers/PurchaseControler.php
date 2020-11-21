@@ -15,6 +15,7 @@ use Mail;
 use App\Mail\OrderShipped;
 use File;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class PurchaseControler extends Controller
 {
@@ -39,7 +40,8 @@ class PurchaseControler extends Controller
             'n_doc' => 'required',
             'cc_name' => 'required|string',
             'cc_number' => 'required|string|min:15|max:20',
-            'cc_expiration' => 'required|string|min:5|max:5',
+            'cc_expiration_m' => 'required|string|min:2|max:2',
+            'cc_expiration_y' => 'required|string|min:2|max:2',
             'cc_cvv' => 'required|string|min:3|max:4'
         ];
 
@@ -111,6 +113,15 @@ class PurchaseControler extends Controller
                     }else{
                         return back()->with('notice', 'Un error ha ocurrido!!');
                     }
+                }else{
+                    $error = ['notice' => 'Número de tarjeta inexistente!!'];
+                    return view('purchase', [
+                        'completeRequest' => $request,
+                        'infosaved' => $infosaved,
+                        'info' => $info,
+                        'checkbox' => $request->sameaddress,
+                        
+                    ])->withErrors($error);     
                 }
                 
             }

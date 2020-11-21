@@ -162,26 +162,32 @@
                                     <div class="row">
                                         <div class="col-12 col-md-12">
                                             <div class="visible-xs">
-                                                <div>
+                                                
+                                                <div class="col-md-12 mb-3">
+
                                                     @if ($answer == 1)
-                                                        <h6><b>Información de Envio</b></h6>
-                                                        <span class="info-small"><b>Dirección de Envio:</b> {{ $member_info[0]->delivery_address }}<br>
-                                                        <b>Cliente:</b> {{ $member_info[0]->firstname }} {{ $member_info[0]->lastname }}<br>
-                                                        <b>Email:</b> {{ $member_info[0]->email }}<br>
-                                                        <b>No de ID:</b> {{ $member_info[0]->n_doc }}<br></span>
-                                                        
+                                                        <div class="card bg-light mb-3" style="max-width: 18rem;">
+                                                            <div class="card-header">Información de Envio</div>
+                                                            <div class="card-body">
+                                                                <span class="info-small"><b>Dirección de Envio:</b> {{ $address[0]->address }}<br>
+                                                                    <b>Detalle:</b> {{ $address[0]->details }}<br>
+                                                                    <b>Lugar:</b> {{ $address[0]->city }}({{ $address[0]->dpt }}), {{ $address[0]->country }}<br>
+                                                                    <b>Código Postal:</b> {{ $address[0]->zipcode }}<br></span>
+                                                            </div>
+                                                        </div>
                                                     @endif
                                                 </div>
-                                                <div colspan="2" class="hidden-xs">
+                                                <div colspan="2" class="col-md-12 mb-3 hidden-xs">
                                                     @if ($answer == 1)
-                                                        <h6><b>Información de Pago</b></h6>
-                                                        <span class="info-small"><b>Cliente:</b>  {{ $member_info[0]->fullname }}<br>
-                                                        <b>Metodo de Pago:</b> Credit Card<br>
-                                                        @php
-                                                            $number = substr($member_info[0]->cardnumber, -4, 4);
-                                                        @endphp
-                                                        <b>No de Tarjeta:</b> **********{{$number}}<br>
-                                                        <b>vence:</b> {{ $member_info[0]->expiration }}<br></span>
+                                                        <div class="card bg-light mb-3" style="max-width: 18rem;">
+                                                            <div class="card-header">Información de Pago</div>
+                                                            <div class="card-body">
+                                                                <span class="info-small"><b>Cliente:</b>  {{ $card[0]->fullname }}<br>
+                                                                    <b>Metodo de Pago:</b> Credit Card<br>
+                                                                    <b>No de Tarjeta:</b> **********{{$card[0]->last4num}}<br>
+                                                                    <b>vence:</b> {{ $card[0]->expiration }}<br></span>
+                                                            </div>
+                                                        </div>
                                                     @endif
                                                 </div>
                                                 <div class="text-right">
@@ -239,6 +245,19 @@
                                 <div class="card-body">
                                     <span>Cantidad de articulos: {{ $q_prod }}<br>
                                     <b>Total a Pagar $ {{ $total + $delivery }}</b></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="card-footer col-md-12">
+                                    @guest
+                                        <a class="btn btn-leemon-warning" href="{{ route('login') }}">Iniciar Sesión</a>
+                                    @else
+                                        @if ($answer == 0)
+                                            <a href="{{ url('purchase') }}" class="btn btn-leemon-method">Metodo de Pago</a>
+                                        @elseif ($answer == 1)
+                                            <a href="{{ url('confirm') }}" class="btn btn-primary btn-block">Confirmar Pago</a>
+                                        @endif
+                                    @endguest
                                 </div>
                             </div>
                         </div>

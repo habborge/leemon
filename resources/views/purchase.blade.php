@@ -13,7 +13,14 @@
                         </div>
                     </div>
                 
-                    {{-- @if ($errors) {{ $errors }} @endif --}}
+                    @if ($errors->any()) 
+                        <div class="alert alert-danger" role="alert">
+                            Revise el formulario que contine errores!! <br> 
+                            @if ($errors->has('notice'))
+                                {{ $errors->first('notice') }}
+                            @endif
+                        </div>
+                    @endif
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-2"></div>
@@ -308,10 +315,11 @@
                                     
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="text-register" for="cc-number">Numero Tarjeta de Credito</label>
-                                        <input type="text" class="form-control @if ($errors-> has('cc_number'))  is-invalid @endif" name="cc_number" id="cc_number" value="@if(!empty($completeRequest->cc_number)){{$completeRequest->cc_number}}@endif" placeholder="Ej: 123456789212" required>
+                                        <label class="text-register" for="cc-number">Número Tarjeta de Credito</label>
+                                        <input type="text" class="form-control @if ($errors-> has('cc_number'))  is-invalid @elseif ($errors-> has('notice')) is-invalid @endif" name="cc_number" id="cc_number" value="@if(!empty($completeRequest->cc_number)){{$completeRequest->cc_number}}@endif" placeholder="Ej: 123456789212" required>
                                         <div class="invalid-feedback">
-                                            Numero de Tarjeta es requerida.
+                                            @if ($errors-> has('cc_number')) Número de Tarjeta es requerida. @endif
+                                            @if ($errors-> has('notice')) Número de Tarjeta es Invalido. @endif
                                         </div>
                                     </div>
                                 </div>

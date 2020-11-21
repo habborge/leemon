@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Product;
 use Auth;
 use App\Member;
+use App\Creditcard;
+use App\Address;
 use App\WishList;
 use Illuminate\Support\Facades\DB;
 
@@ -19,17 +21,21 @@ class ProductController extends Controller
     {
         $answer = 0;
         $member_info = null;
+        $card = null;
+        $address = null;
 
         if (Auth::user()){
             $id = Auth::user()->id;
-            $query = DB::table('members as m')
-            ->select('m.email as email', 'm.firstname','m.lastname','m.address', 'm.delivery_address', 'm.city', 'm.dpt', 'm.country', 'm.n_doc', 'c.fullname','c.cardnumber', 'c.expiration', 'c.cvv')
-            ->join('creditcards as c', 'm.user_id', '=', 'c.user_id' )
-            ->where('m.user_id', $id)->get();
+            // $query = Member::select('members.email as email', 'members.firstname','members.lastname','members.address', 'members.delivery_address', 'members.city', 'members.dpt', 'members.country', 'members.n_doc', 'c.fullname','c.cardnumber', 'c.last4num', 'c.expiration', 'c.cvv')
+            // ->join('creditcards as c', 'members.user_id', '=', 'c.user_id' )
+            // ->where('members.user_id', $id)->get();
 
-            if ($query->count() >0){
+            $card = Creditcard::where('user_id', $id)->where('default', 1)->get();
+            $address = Address::where('user_id', $id)->where('default', 1)->get();
+
+            if (($card->count() >0) and ($address->count() >0)){
                 $answer = 1;
-                $member_info = $query;
+                //$member_info = $query;
             }
 
         }
@@ -37,7 +43,9 @@ class ProductController extends Controller
 
         return view('cart', [
             'answer' => $answer,
-            'member_info' => $member_info
+            'member_info' => $member_info,
+            'card' => $card,
+            'address' => $address
         ]);
     }
 
