@@ -57,6 +57,8 @@ class Member extends Model
         $iv = substr( Hash::make( env('APP_SERIAL')."~".md5(Auth::user()->id."~".Auth::user()->email)), 0, 16 );
         $dataEncrypt = base64_encode( openssl_encrypt( $request->cc_number, config('app.cipher'), $key, 0, $iv ) );
 
+        //$dataDecrypt = openssl_decrypt(base64_decode($dataEncrypt), config('app.cipher'), $key, 0, $iv );
+
         $dataCard = $this->validateCardBrand($Tcard);
 
         $last4num = $dataCard[1];
