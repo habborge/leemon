@@ -166,7 +166,7 @@
                                                 <div class="col-md-12 mb-3">
 
                                                     @if ($answer == 1)
-                                                        <div class="card bg-light mb-3" style="max-width: 18rem;">
+                                                        <div class="card bg-light mb-3 h-card">
                                                             <div class="card-header">Información de Envio</div>
                                                             <div class="card-body">
                                                                 <span class="info-small"><b>Dirección de Envio:</b> {{ $address[0]->address }}<br>
@@ -179,7 +179,7 @@
                                                 </div>
                                                 <div colspan="2" class="col-md-12 mb-3 hidden-xs">
                                                     @if ($answer == 1)
-                                                        <div class="card bg-light mb-3" style="max-width: 18rem;">
+                                                        <div class="card bg-light mb-3 h-card">
                                                             <div class="card-header">Información de Pago</div>
                                                             <div class="card-body">
                                                                 <span class="info-small"><b>Cliente:</b>  {{ $card[0]->fullname }}<br>
@@ -192,10 +192,10 @@
                                                 </div>
                                                 <div class="text-right">
                                                     SubTotal $ {{ $total }}<br>
-                                                    @if ($answer == 1)
+                                                    {{-- @if ($answer == 1)
                                                         Costo de Entrega $ {{ $delivery }}<br>
-                                                <b>Total a Pagar $ {{ $total + $delivery }}</b>
-                                                    @endif    
+                                                        <b>Total a Pagar $ {{ $total + $delivery }}</b>
+                                                    @endif     --}}
                                                 
                                                 </div>
                                             </div>
@@ -217,7 +217,7 @@
                                                             @if ($answer == 0)
                                                                 <a href="{{ url('purchase') }}" class="btn btn-leemon-method">Metodo de Pago</a>
                                                             @elseif ($answer == 1)
-                                                                <a href="{{ url('confirm') }}" class="btn btn-primary">Confirmar Pago</a>
+                                                                <a href="{{ url('confirm') }}" class="btn btn-success">Proceder con el Pago</a>
                                                             @endif
                                                         @endguest
                                                     </div>
@@ -238,13 +238,14 @@
                         <div class="card col-md-12">
                             <div class="row">
                                 <div class="card-header col-md-12">
-                                    Total Compra
+                                    Subtotal Compra
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="card-body">
                                     <span>Cantidad de articulos: {{ $q_prod }}<br>
-                                    <b>Total a Pagar $ {{ $total + $delivery }}</b></span>
+                                    <b>Subtotal a Pagar $ {{ $total }}</b></span>
+                                    {{-- {{ $total + $delivery }} --}}
                                 </div>
                             </div>
                             <div class="row">
@@ -255,7 +256,7 @@
                                         @if ($answer == 0)
                                             <a href="{{ url('purchase') }}" class="btn btn-leemon-method">Metodo de Pago</a>
                                         @elseif ($answer == 1)
-                                            <a href="{{ url('confirm') }}" class="btn btn-primary btn-block">Confirmar Pago</a>
+                                            <a href="{{ url('confirm') }}" class="btn btn-success btn-block">Proceder con el Pago</a>
                                         @endif
                                     @endguest
                                 </div>

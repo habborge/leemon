@@ -67,7 +67,12 @@
                             <div class="col-xl-2" data-th="Quantity">
                                 <div class="row">
                                     Cantidad:
-                                    <input type="number" value="1" class="form-control quantity" />
+                                    <select class="form-control quantity" name="" id="">
+                                        @for ($i = 1; $i <= $prod_info->stockquantity; $i++)
+                                            <option value="{{ $i }}">{{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                {{-- <input type="number" value="" class="form-control quantity" /> --}}
                                 </div>
                                 
                             </div>

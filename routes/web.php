@@ -21,7 +21,7 @@ Route::get('/', function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/product/{id}', 'ProductController@details')->name('productdetails');
-Route::get('cart', 'ProductController@cart');
+Route::get('cart', 'ProductController@cart')->name('cart');
 Route::get('add-to-cart/{id}', 'ProductController@addToCart');
 Route::patch('update-cart', 'ProductController@update');
 Route::post('add-to-cart-quantity', 'ProductController@addToCartQuantity');
