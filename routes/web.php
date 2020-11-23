@@ -39,8 +39,11 @@ Route::group([
     Route::get('purchase', 'PurchaseControler@purchase');
     Route::post('add-info-user', 'PurchaseControler@addInfoUser')->name('saveinfo');
     Route::get('confirm', 'PurchaseControler@confirm');
+    Route::get('methods', 'PurchaseControler@methods');
     Route::post('generateimg', 'PurchaseControler@generateimg')->name('generateimg');
     Route::get('thanks', 'ProductController@thanks');
+
+    Route::resource('addresses', AddressController::class);
 });
 
 Auth::routes();

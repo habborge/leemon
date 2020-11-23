@@ -105,6 +105,18 @@
                                         </a>
         
                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                            <a href="" class="dropdown-item">
+                                                Perfil
+                                            </a>
+                                            <a href="" class="dropdown-item">
+                                                Mis Ordenes
+                                            </a>
+                                            <a href="/addresses" class="dropdown-item">
+                                                Mis Direcciones
+                                            </a>
+                                            <a href="" class="dropdown-item">
+                                                Metodo de Pago
+                                            </a>
                                             <a class="dropdown-item" href="{{ route('logout') }}"
                                                onclick="event.preventDefault();
                                                              document.getElementById('logout-form').submit();">
@@ -199,7 +211,7 @@
                         <ul class="sub-menu-responsive">
                             <li class="sidepanel-li"><a href="">Ordenes</a></li>
                             <li class="sidepanel-li"><a href="">Lista de Deseos</a></li>
-                            <li class="sidepanel-li"><a href="">Direcciones</a></li>
+                            <li class="sidepanel-li"><a href="/addresses">Direcciones</a></li>
                             <li class="sidepanel-li"><a href="">Metodos de Pago</a></li>
                         </ul>
                     </li>

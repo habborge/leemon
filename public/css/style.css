@@ -630,6 +630,30 @@ padding: 0 8px 0 7px;
 .h-card{
     max-width: 50%;
 }
+.h-card-address{
+    max-width: 100%;
+    min-height: 260px !important;
+}
+.p-right{
+    padding-right: 10px;
+}
+.p-bottom{
+    position: absolute !important;
+    bottom: 10px;
+    left: 5px;
+}
+.p-bottom a{
+    color: #4a8b41;
+}
+.p-bottom a:hover{
+    color: #27691f;
+}
+.p-option a{
+    color: #4a8b41;
+}
+.p-option a:hover{
+    color: #27691f;
+}
 /* ---------------------------------------------------------------------------------
    -- resposive design
 ---------------------------------------------------------------------------------- */
@@ -641,5 +665,12 @@ padding: 0 8px 0 7px;
     }
     .h-card{
         max-width: 100%;
+    }
+    .h-card-address{
+        max-width: 100%;
+        min-height: 211px;
+    }
+    .p-right{
+        padding-right: 0px;
     }
 }

@@ -30,10 +30,11 @@ class ProductController extends Controller
             // ->join('creditcards as c', 'members.user_id', '=', 'c.user_id' )
             // ->where('members.user_id', $id)->get();
 
-            $card = Creditcard::where('user_id', $id)->where('default', 1)->get();
+            //$card = Creditcard::where('user_id', $id)->where('default', 1)->get();
             $address = Address::where('user_id', $id)->where('default', 1)->get();
 
-            if (($card->count() >0) and ($address->count() >0)){
+            // (($card->count() >0) and ($address->count() >0))
+            if ($address->count() >0){
                 $answer = 1;
                 //$member_info = $query;
             }
@@ -44,7 +45,7 @@ class ProductController extends Controller
         return view('cart', [
             'answer' => $answer,
             'member_info' => $member_info,
-            'card' => $card,
+            // 'card' => $card,
             'address' => $address
         ]);
     }

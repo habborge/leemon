@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer(['home', 'cart', 'result', 'auth/login', 'auth/register', 'details', 'products/categories', 'purchase', 'auth/passwords/reset',  'auth/passwords/email'], function($view) {
+        view()->composer(['home', 'cart', 'result', 'auth/login', 'auth/register', 'details', 'products/categories', 'purchase', 'auth/passwords/reset',  'auth/passwords/email', 'method', 'profile/addresses', 'profile/newaddress', 'profile/editaddress'], function($view) {
             $view->with('menus', Category::menus());
         });
 
