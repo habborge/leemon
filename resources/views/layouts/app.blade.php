@@ -114,7 +114,7 @@
                                             <a href="/addresses" class="dropdown-item">
                                                 Mis Direcciones
                                             </a>
-                                            <a href="" class="dropdown-item">
+                                            <a href="/secure/methods" class="dropdown-item">
                                                 Metodo de Pago
                                             </a>
                                             <a class="dropdown-item" href="{{ route('logout') }}"
@@ -212,7 +212,7 @@
                             <li class="sidepanel-li"><a href="">Ordenes</a></li>
                             <li class="sidepanel-li"><a href="">Lista de Deseos</a></li>
                             <li class="sidepanel-li"><a href="/addresses">Direcciones</a></li>
-                            <li class="sidepanel-li"><a href="">Metodos de Pago</a></li>
+                            <li class="sidepanel-li"><a href="/secure/methods">Metodos de Pago</a></li>
                         </ul>
                     </li>
                     <li class="sidepanel-li">

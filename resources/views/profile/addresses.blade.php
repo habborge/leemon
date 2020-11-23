@@ -35,7 +35,7 @@
                                                                         <span class="info-small">
                                                                             <a href="/addresses/{{$address->id }}/edit">Editar</a> | <a href="/addresses/{{$address->id }}/">Eliminar</a>
                                                                             @if ($address->default == 0)
-                                                                                | <a href="/addresses/{{$address->id }}/">Predeterminar</a>
+                                                                                | <a href="/addresses/default/{{$address->id }}/">Predeterminar</a>
                                                                             @endif
                                                                         </span>
                                                                     </div>

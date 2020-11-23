@@ -167,4 +167,21 @@ class AddressController extends Controller
     {
         //
     }
+
+    public function default($id){
+        
+        $preview = Address::where('user_id', Auth::user()->id)->where('default', 1)->first();
+        $preview->default = 0;
+        $preview->save();
+
+        $address = Address::find($id);
+        $address->default = 1;
+        $rs = $rs = $address->save();
+
+        if($rs){
+            return redirect('addresses')->with('success', 'Dirección actualizada manera Exitosa!!');
+        }else{
+            return redirect('addresses')->withErrors('error', 'No se pudo actualizar la dirección por defecto!!');
+        }
+    }
 }

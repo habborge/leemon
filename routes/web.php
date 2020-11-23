@@ -43,7 +43,12 @@ Route::group([
     Route::post('generateimg', 'PurchaseControler@generateimg')->name('generateimg');
     Route::get('thanks', 'ProductController@thanks');
 
+    //------- my addresses -------------------------------------------
     Route::resource('addresses', AddressController::class);
+    Route::get('addresses/default/{id}', 'AddressController@default');
+
+    //------- my methods ---------------------------------------------
+    Route::resource('secure/methods', CreditcardController::class);
 });
 
 Auth::routes();

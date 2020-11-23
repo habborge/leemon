@@ -607,7 +607,7 @@ padding: 0 8px 0 7px;
 .a-divide {
 	border-bottom: 1px solid #ddd
 }
-#cc_cvv::placeholder, #cc_number::placeholder, #cc_name::placeholder, #address_d::placeholder, #firstname::placeholder, #lastname::placeholder, #n_doc::placeholder, #email::placeholder, #address_db::placeholder, #zipcode::placeholder, #zipcode_e::placeholder {
+#cc_cvv::placeholder, #cc_number::placeholder, #cc_name::placeholder, #address_d::placeholder, #firstname::placeholder, #lastname::placeholder, #n_doc::placeholder, #email::placeholder, #address_db::placeholder, #zipcode::placeholder, #zipcode_e::placeholder, #phone::placeholder, #contact::placeholder {
     color:rgb(212, 212, 212);
 }
 
@@ -634,6 +634,10 @@ padding: 0 8px 0 7px;
     max-width: 100%;
     min-height: 260px !important;
 }
+.h-card-credit{
+    max-width: 100%;
+    min-height: 160px !important;
+}
 .p-right{
     padding-right: 10px;
 }
@@ -654,6 +658,10 @@ padding: 0 8px 0 7px;
 .p-option a:hover{
     color: #27691f;
 }
+.card-father {
+    display: flex;
+    align-items: center;
+ }
 /* ---------------------------------------------------------------------------------
    -- resposive design
 ---------------------------------------------------------------------------------- */
