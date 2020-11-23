@@ -105,6 +105,18 @@
                                         </a>
         
                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                            <a href="" class="dropdown-item">
+                                                Perfil
+                                            </a>
+                                            <a href="" class="dropdown-item">
+                                                Mis Ordenes
+                                            </a>
+                                            <a href="/addresses" class="dropdown-item">
+                                                Mis Direcciones
+                                            </a>
+                                            <a href="/secure/methods" class="dropdown-item">
+                                                Metodo de Pago
+                                            </a>
                                             <a class="dropdown-item" href="{{ route('logout') }}"
                                                onclick="event.preventDefault();
                                                              document.getElementById('logout-form').submit();">
@@ -129,6 +141,7 @@
                             <button type="button" class="btn btn-info" data-toggle="dropdown">
                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span id="littleCart">Carrito</span><span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
                             </button>
+                            @if(session('cart'))
                             <div class="dropdown-menu">
                                 <div class="row total-header-section">
                                     <div class="col-lg-6 col-sm-6 col-6">
@@ -144,7 +157,7 @@
                                     </div>
                                 </div>
      
-                                @if(session('cart'))
+                                
                                     @foreach(session('cart') as $id => $details)
                                         <div class="row cart-detail">
                                             <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
@@ -158,7 +171,7 @@
                                         </div>
                                         
                                     @endforeach
-                                @endif
+                                
     
                                 <div class="row">
                                     <div class="col-lg-12 col-sm-12 col-12 text-center">
@@ -167,6 +180,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -197,8 +211,8 @@
                         <ul class="sub-menu-responsive">
                             <li class="sidepanel-li"><a href="">Ordenes</a></li>
                             <li class="sidepanel-li"><a href="">Lista de Deseos</a></li>
-                            <li class="sidepanel-li"><a href="">Direcciones</a></li>
-                            <li class="sidepanel-li"><a href="">Metodos de Pago</a></li>
+                            <li class="sidepanel-li"><a href="/addresses">Direcciones</a></li>
+                            <li class="sidepanel-li"><a href="/secure/methods">Metodos de Pago</a></li>
                         </ul>
                     </li>
                     <li class="sidepanel-li">

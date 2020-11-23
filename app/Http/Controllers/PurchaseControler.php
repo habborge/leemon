@@ -8,6 +8,7 @@ use App\Member;
 use App\Http\Requests\StoreMembers;
 use Image;
 use Illuminate\Support\Facades\DB;
+use App\Address;
 use App\Order;
 use App\Order_detail;
 use PDF;
@@ -168,6 +169,33 @@ class PurchaseControler extends Controller
         // $valor_almacenado = session('cart');
         // dd($valor_almacenado);
         return view('confirm');
+    }
+
+    //--------------------------------------------------------------------------------------------------------------
+    //
+    //--------------------------------------------------------------------------------------------------------------
+    public function methods()
+    {
+        $answer = 0;
+        $member_info = null;
+        $card = null;
+        $address = null;
+
+        if (Auth::user()){
+            $id = Auth::user()->id;
+            $address = Address::where('user_id', $id)->where('default', 1)->get();
+
+            if ($address->count() >0){
+                $answer = 1;
+            }
+        }
+        
+        
+        return view('method', [
+            'answer' => $answer,
+            'member_info' => $member_info,
+            'address' => $address
+        ]);
     }
 
     //--------------------------------------------------------------------------------------------------------------

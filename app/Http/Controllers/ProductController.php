@@ -30,21 +30,22 @@ class ProductController extends Controller
             // ->join('creditcards as c', 'members.user_id', '=', 'c.user_id' )
             // ->where('members.user_id', $id)->get();
 
-            $card = Creditcard::where('user_id', $id)->where('default', 1)->get();
+            //$card = Creditcard::where('user_id', $id)->where('default', 1)->get();
             $address = Address::where('user_id', $id)->where('default', 1)->get();
 
-            if (($card->count() >0) and ($address->count() >0)){
+            // (($card->count() >0) and ($address->count() >0))
+            if ($address->count() >0){
                 $answer = 1;
                 //$member_info = $query;
             }
 
         }
         
-
+        
         return view('cart', [
             'answer' => $answer,
             'member_info' => $member_info,
-            'card' => $card,
+            // 'card' => $card,
             'address' => $address
         ]);
     }
@@ -146,7 +147,7 @@ class ProductController extends Controller
                         "name" => $product->name,
                         "quantity" => $cant,
                         "price" => $product->price,
-                        "photo" => $product->img1,
+                        "photo" => env('AWS_URL')."/".env('BUCKET_SUBFOLDER')."/products/".$product->reference."/".$product->img1,
                         "prom" => $product->prom,
                         "delivery_cost" => $product->delivery_cost,
                         "hash" => $hash
@@ -174,7 +175,7 @@ class ProductController extends Controller
             "name" => $product->name,
             "quantity" => $cant,
             "price" => $product->price,
-            "photo" => $product->img1,
+            "photo" => env('AWS_URL')."/".env('BUCKET_SUBFOLDER')."/products/".$product->reference."/".$product->img1,
             "prom" => $product->prom,
             "delivery_cost" => $product->delivery_cost,
             "hash" => $hash
@@ -242,7 +243,17 @@ class ProductController extends Controller
     public function details(Request $request)
     {
         $pro_id = $request->id;
-        $product = Product::find($pro_id);
+        $product = Product::select('products.id', 'products.reference', 'products.name', 'products.brand', 'products.subcategory_id', 'products.description', 'products.price', 'products.img1','products.prom', 'l.id as lot_id')
+        ->leftJoin('lots as l', 'products.id', 'l.product_id')
+        ->leftJoin('stocks as s', 's.lot_id', 'l.id')
+        ->selectRaw('sum(s.quantity) as stockquantity, l.id as lot2')
+        ->groupBy('l.id')
+        ->groupBy('products.id')
+        ->orderBy('products.id')
+        ->where('products.id', $pro_id)
+        ->first();
+
+
 
         $similar = Product::where('subcategory_id', '=',$product->subcategory_id)->where('id', '<>', $product->id)->paginate(12);
         

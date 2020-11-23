@@ -36,14 +36,14 @@ class Member extends Model
     public function set($request){
 
         if (isset($request->sameaddress)){
-            $delivery_ad = $request->address_1." ".$request->address_2." ".$request->address_3." ".$request->address_4;
+            $delivery_ad = $request->address_1."~".$request->address_2."~".$request->address_3."~".$request->address_4;
             $details = $request->address_d;
             $coutry = $request->country;
             $dpt = $request->dpt;
             $city = $request->city;
             $zipcode = $request->zipcode;
         }else{
-            $delivery_ad = $request->address_1b." ".$request->address_2b." ".$request->address_3b." ".$request->address_4b;
+            $delivery_ad = $request->address_1b."~".$request->address_2b."~".$request->address_3b."~".$request->address_4b;
             $details = $request->address_db;
             $coutry = $request->country_e;
             $dpt = $request->dpt_e;
