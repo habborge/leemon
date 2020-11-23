@@ -48,7 +48,7 @@ Route::group([
     Route::get('addresses/default/{id}', 'AddressController@default');
 
     //------- my methods ---------------------------------------------
-    Route::resource('secure/methods', CreditcardController::class);
+    Route::resource('secure/methods', CreditCardController::class);
 });
 
 Auth::routes();
