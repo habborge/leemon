@@ -90,6 +90,7 @@
      left: 190px; */
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1000;
+    border: 1px solid #7a7b7c;;
 }
 .dropdown-mega-content .header-mega {
     background: #ffffff;
