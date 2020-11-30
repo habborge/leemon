@@ -18,11 +18,51 @@ class AddressController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // "id" => 17305
+    //       "user_id" => 2
+    //       "address" => "Clle~43~no~34 - 45"
+    //       "country" => "47"
+    //       "dpt" => "5"
+    //       "city" => "17305"
+    //       "zipcode" => "54545454"
+    //       "phone" => ""
+    //       "contact" => "juan esteban perez garcia"
+    //       "details" => "casa blanca de rejas negras"
+    //       "default" => 1
+    //       "created_at" => "2020-11-29 19:27:52"
+    //       "updated_at" => "2020-11-29 19:27:52"
+    //       "country_master_id" => 47
+    //       "country_master_name" => "Colombia"
+    //       "country_master_sig" => "CO"
+    //       "country_flag" => "Colombia.png"
+    //       "code" => 5
+    //       "continent_id" => 1
+    //       "language" => "es"
+    //       "department" => "ANTIOQUIA"
+    //       "country_id" => 47
+    //       "dane_o" => "8001000"
+    //       "city__o_id" => "BARRANQUILLA"
+    //       "dpt_o" => "ATLANTICO"
+    //       "dane_d" => "5021000"
+    //       "city_d_id" => "ALEJANDRIA"
+    //       "dpt_d" => "5"
+    //       "type_pack" => "RX"
+    //       "cost_pack" => 1886
+    //       "type_mess" => "O"
+    //       "cost_m_1k" => 15300
+    //       "cost_m_2k" => 19550
+    //       "cost_m_3k" => 24550
+    //       "cost_m_4k" => 29250
+    //       "cost_m_5k" => 34050
     public function index()
     {
         $user_id = Auth::user()->id;
-        $addresses = Address::where('user_id', $user_id)->orderBy('default', 'desc')->paginate(12);
-
+        $addresses = Address::select('addresses.id as addressId', 'addresses.address', 'addresses.zipcode', 'addresses.contact', 'addresses.details', 'c.country_master_name', 'd.department', 'ct.city_d_id')->where('user_id', $user_id)
+            ->join('countries as c', 'c.country_master_id', 'addresses.country')
+            ->join('departments as d', 'd.code', 'addresses.dpt')
+            ->join('cost_tcc as ct', 'ct.id', 'addresses.city')
+            ->orderBy('default', 'desc')->paginate(12);
+           
         return view('profile.addresses', [
             'addresses' => $addresses
         ]);
@@ -100,8 +140,13 @@ class AddressController extends Controller
      */
     public function edit($id)
     {
-        $address = Address::find($id);
-
+        $address = Address::select('addresses.id as addressId', 'addresses.address', 'addresses.zipcode', 'addresses.contact', 'addresses.details', 'c.country_master_id as countryId', 'c.country_master_name as country', 'd.code', 'd.department', 'ct.id as cityId', 'ct.city_d_id')
+        ->where('addresses.id', $id)
+        ->join('countries as c', 'c.country_master_id', 'addresses.country')
+        ->join('departments as d', 'd.code', 'addresses.dpt')
+        ->join('cost_tcc as ct', 'ct.id', 'addresses.city')
+        ->first();
+//dd($address);
         return view('profile.editaddress',[
             'completeRequest' => $address,
         ]);
@@ -132,10 +177,8 @@ class AddressController extends Controller
         $p = Validator::make($request->all(), $rules);
 
         if ($p->fails()){
-            return view('profile.editaddress', [
-                'completeRequest' => $request,
-            ])->withErrors($p);
-        }else{
+            return back()->withInput()->withErrors($p);
+         }else{
             $address = Address::find($id);
             $address->address = $request->address_1."~".$request->address_2."~".$request->address_3."~".$request->address_4;
             $address->country = $request->country;

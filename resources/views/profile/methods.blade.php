@@ -99,7 +99,7 @@
                             </div>
                             <div class="row">
                                 <div class="card-body">
-                                    <a class="btn btn-success btn-block" href="/addresses/create">Adicionar Dirección</a>
+                                    <a class="btn btn-success btn-block" href="secure/methods/create">Adicionar Tarjeta de Credito</a>
                                 </div>
                             </div>
                             <div class="row">

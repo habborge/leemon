@@ -46,7 +46,36 @@
         font-family: "AcuminVariableConcept";
         src: url("{{ env('APP_URL') }}/css/AcuminVariableConcept.otf") format('opentype');
     }
+    #loading_web{
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #5a5a5aa3;
+        z-index: 99999;
+        display: none;
+    }
 
+    #loading_web2, #loading_web3{
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        /* background: #5a5a5aa3; */
+        z-index: 99999;
+        display: none;
+    }
+    #img_loading{
+        max-width: 60px;
+        z-index: 9999;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+    }
 </style>
 <body>
     <div id="app">
@@ -224,11 +253,15 @@
         <div id="megamenu">
             @include('layouts.menu2')
         </div>
-        
+        <div id="loading_web">
+			<img src="/img/preloader.gif" id="img_loading" alt="">
+		</div>
             @yield('content')
         
     </div>
+    <script src="{{ asset('js/jquery.validate.min.js') }}" defer></script>
     @include('layouts.footer')
+
     @yield('custom-js')
     <script type="text/javascript">
         function openNav() {
@@ -239,5 +272,6 @@
             document.getElementById("mySidepanel").style.width = "0";
         }
     </script>
+    
 </body>
 </html>

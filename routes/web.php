@@ -47,6 +47,10 @@ Route::group([
     Route::resource('addresses', AddressController::class);
     Route::get('addresses/default/{id}', 'AddressController@default');
 
+    //------- Regions ------------------------------------------------
+    Route::post('/region/dpt', 'regionController@dpt');
+    Route::post('/region/city', 'regionController@city');
+
     //------- my methods ---------------------------------------------
     Route::resource('secure/methods', CreditCardController::class);
 });

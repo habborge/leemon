@@ -1,21 +1,92 @@
 @extends('layouts.app')
 
 @section('content')
+@include('modal.creditCard')
 <div id="main" class="tabs clearfix">
     <div class="container no-padding-sm-xs dataPosition2">
         <div class="row ">
             <div id="primary2" class=" col-md-9 col-sm-12 col-xs-12 pull-left no-padding-md no-padding-lg no-padding-sm-xs">
                 <div class="primary-content2">
                     <div class="row">
+                        @if ($answer == 1)
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="accordion accord-width" id="accordionExample">
+                                        
+                                            <div class="card col-md-12 bg-light mb-3">
+                                                <div class="card-header row" id="headingOne">
+                                                  
+                                                    <a class="text-left a-size-methods" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                          Dirección de Envio
+                                                    </a>
+                                                  
+                                                </div>
+                                            
+                                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                    <div class="card-body">
+                                                        <h6>{{ ucwords($address[0]->contact) }}</h6>
+                                                        <p class="info-small">
+                                                            @php
+                                                                $my_address = str_replace("~", " ", $address[0]->address)
+                                                            @endphp
+                                                            {{ $my_address }}, {{ $address[0]->zipcode }} Código Postal<br>
+                                                            {{ ucwords($address[0]->details) }}<br>
+                                                            {{ ucwords($address[0]->city_d_id) }} ({{ ucwords($address[0]->department) }}), {{ ucwords($address[0]->country_master_name) }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="card col-md-12 bg-light mb-3">
+                                        <div class="card-header row">Metodo de Pago</div>
+                                        <div class="card-body">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                                                <label class="form-check-label" for="exampleRadios1">
+                                                    Tarjeta de Credito
+                                                    @if ($cardexist == 2)
+                                                        terminada en ************{{ $card[0]->last4num }}
+                                                    @else
+                                                        <a href="/secure/methods/create" id="creditcard" class="btn btn-dark btn-sm" type='button'>Agregar una Tarjeta</a>
+                                                    @endif
+                                                </label>
+                                                
+                                              </div>
+                                              <hr>
+                                              <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                                                <label class="form-check-label" for="exampleRadios2">
+                                                  PSE
+                                                </label>
+                                              </div>
+                                              <hr>
+                                              <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                                                <label class="form-check-label" for="exampleRadios2">
+                                                  Otros metodos
+                                                </label>
+                                              </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                             </div>
+                        @endif
+
                         <div class="card col-md-12 ">
                             <div class="row">
                                 <div class="card-header col-md-12">
                                     <div class="row">
                                         <div class="col-md-8">
-                                            Product
+                                            Articulos
                                         </div>
                                         <div id="purchase-details" class="col-md-4">
-                                            Price
+                                            Precio
                                         </div>
                                     </div>
                                     
@@ -163,19 +234,9 @@
                                         <div class="col-12 col-md-12">
                                             <div class="visible-xs">
                                                 
-                                                <div class="col-md-12 mb-3">
-
-                                                    @if ($answer == 1)
-                                                        <div class="card bg-light mb-3 h-card">
-                                                            <div class="card-header">Información de Envio</div>
-                                                            <div class="card-body">
-                                                                <span class="info-small"><b>Dirección de Envio:</b> {{ $address[0]->address }}<br>
-                                                                    <b>Detalle:</b> {{ $address[0]->details }}<br>
-                                                                    <b>Lugar:</b> {{ ucwords($address[0]->city) }} ({{ ucwords($address[0]->dpt) }}), {{ ucwords($address[0]->country) }}<br>
-                                                                    <b>Código Postal:</b> {{ $address[0]->zipcode }}<br></span>
-                                                            </div>
-                                                        </div>
-                                                    @endif
+                                                
+                                                <div class="col-12 col-md-12">
+                                                    <hr>
                                                 </div>
                                                 {{-- <div colspan="2" class="col-md-12 mb-3 hidden-xs">
                                                     @if ($answer == 1)
@@ -190,18 +251,108 @@
                                                         </div>
                                                     @endif
                                                 </div> --}}
-                                                <div class="text-right">
-                                                    SubTotal $ {{ $total }}<br>
-                                                    {{-- @if ($answer == 1)
-                                                        Costo de Entrega $ {{ $delivery }}<br>
-                                                        <b>Total a Pagar $ {{ $total + $delivery }}</b>
-                                                    @endif     --}}
                                                 
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="card-title col-md-12">
+                                                            Subtotal Compra
+                                                            <hr>
+                                                        </div>
+                                                        
+                                                        <div class="card-body info-small">
+                                                            <div class="col-md-12">
+                                                                <div class="row">
+                                                                    <div class="col-md-9">
+                                                                        <div class="row">
+                                                                            Cantidad de articulos:
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <div class="row float-right">
+                                                                            {{ $q_prod }}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="row">
+                                                                    <div class="col-md-8">
+                                                                        <div class="row">
+                                                                            Subtotal a Pagar:
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="row float-right">
+                                                                            $ {{ number_format($total, 0) }}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="row">
+                                                                    <div class="col-md-8">
+                                                                        <div class="row">
+                                                                            Envío:
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="row float-right">
+                                                                            {{ number_format(0,0) }}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="row">
+                                                                    <div class="col-md-9">
+                                                                        <div class="row">
+                                                                            Antes de Impuestos:
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <div class="row float-right">
+                                                                            {{ number_format($total,0) }}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="row">
+                                                                    <div class="col-md-9">
+                                                                        <div class="row">
+                                                                            Impuestos:
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <div class="row float-right">
+                                                                            {{ number_format($total * 0.19, 0) }}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <hr>
+                                                            <div class="col-md-12">
+                                                                <div class="row">
+                                                                    <div class="col-md-8">
+                                                                        <div class="row">
+                                                                            Total
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="row float-right">
+                                                                            {{ number_format($total + ($total * 0.19), 0) }}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            {{-- {{ $total + $delivery }} --}}
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             
                                         
-                                            <div class="visible-xs">
+                                            <div class="col-md-12">
                                                 <div class="row">
                                                     <div class="col-6 col-md-6">
                                                         <a href="{{ url('/') }}" class="btn btn-leemon-back">
@@ -215,7 +366,7 @@
                                                             <a class="btn btn-leemon-warning" href="{{ route('login') }}">Iniciar Sesión</a>
                                                         @else
                                                             @if ($answer == 0)
-                                                                <a href="{{ url('purchase') }}" class="btn btn-leemon-method">Metodo de Pago</a>
+                                                                <a href="{{ url('purchase') }}" class="btn btn-leemon-method">Información de Facturación</a>
                                                             @elseif ($answer == 1)
                                                                 <a href="{{ url('methods') }}" class="btn btn-success">Proceder con el Pago</a>
                                                             @endif
@@ -242,9 +393,93 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="card-body">
-                                    <span>Cantidad de articulos: {{ $q_prod }}<br>
-                                    <b>Subtotal a Pagar $ {{ $total }}</b></span>
+                                <div class="card-body info-small">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-9">
+                                                <div class="row">
+                                                    Cantidad de articulos:
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="row float-right">
+                                                    {{ $q_prod }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="row">
+                                                    Subtotal a Pagar:
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="row float-right">
+                                                    {{ $total }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="row">
+                                                    Envío:
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="row float-right">
+                                                    --
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-9">
+                                                <div class="row">
+                                                    Antes de Impuestos:
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="row float-right">
+                                                    --
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-9">
+                                                <div class="row">
+                                                    Impuestos:
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="row float-right">
+                                                    --
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="row">
+                                                    
+                                                    Total:
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="row float-right">
+                                                    --
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     {{-- {{ $total + $delivery }} --}}
                                 </div>
                             </div>
@@ -254,7 +489,7 @@
                                         <a class="btn btn-leemon-warning btn-block" href="{{ url('/login') }}">Iniciar Sesión</a>
                                     @else
                                         @if ($answer == 0)
-                                            <a href="{{ url('purchase') }}" class="btn btn-leemon-method btn-block">Metodo de Pago</a>
+                                            <a href="{{ url('purchase') }}" class="btn btn-leemon-method btn-block">Información de Facturación</a>
                                         @elseif ($answer == 1)
                                             <a href="{{ url('methods') }}" class="btn btn-success btn-block">Proceder con el Pago</a>
                                         @endif
@@ -271,6 +506,48 @@
 @endsection
 @section('custom-js')
 <script type="text/javascript">
+    // function submitForm(){
+    //     var fullname = $("#cc_name").val();
+    //     var number = $("#cc_number").val();
+    //     var month = $("#cc_expiration_m").val();
+    //     var year = $("#cc_expiration_y").val();
+    //     var cvv = $("#cc_cvv").val();
+
+    //     $.ajax({
+    //         type:'POST',
+    //         dataType:'json',
+    //         url:'secure/methods/',
+    //         data:  $("#form_edit_info_card").serialize(),
+    //         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+    //         beforeSend: function(x){
+    //             $('#loading_web').show();
+    //         },
+    //         success:function(data){
+    //             if(data.status==200){
+    //                 // swal({
+    //                 //     title: data.message,
+    //                 //     text: data.message,
+    //                 //     icon: "success",
+    //                 // }); 
+                    
+    //                 $('#loading_web').hide();
+    //                 window.location.reload(true);
+                    
+    //             }else if(data.status==403){
+    //                 $.each(data.errors, function( index, value ) {
+    //                 toastr.error(value, 'Error!', {  timeOut: 5e3});
+    //                 });
+    //                 $('#loading_web').hide();
+    //                 return  false;
+    //             }else{              
+    //                 $('#loading_web').hide();
+    //                 // toastr.error(data.message, "Error!");
+    //                 alert("error");
+    //                 return  false;
+    //             }
+    //         }
+    //     });
+    // }
     $(document).ready(function(){
         $(".update-cart").change(function (e) {
             e.preventDefault();
@@ -305,6 +582,35 @@
                 });
             }
         });
+
+        $('#creditcard').click(function () {
+            
+            $.ajax({
+            type:'GET',   
+            dataType:'json',      
+            url:'secure/methods/create',
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            beforeSend: function(x){
+                $('#loading_web').show();
+            },
+            success:function(data){
+                if(data.status==200){
+                    $('#loading_web').hide(); 
+                    $('#modalCard').modal('show');        
+                }else if(data.status==403){
+                    $('#loading_web').hide(); 
+                    $.each(data.errors, function( index, value ) {         
+                        toastr.error(value, 'Error!', {  timeOut: 5e3});
+                    });  
+                }else{ 
+                    $('#loading_web').hide(); 
+                    toastr.error(data.message, "Error!");      
+                }  
+            }
+            });
+        });
+
+        
     });
 </script>
 @endsection

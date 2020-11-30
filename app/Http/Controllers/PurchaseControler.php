@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Member;
+use App\CreditCard;
 use App\Http\Requests\StoreMembers;
 use Image;
 use Illuminate\Support\Facades\DB;
@@ -39,15 +40,11 @@ class PurchaseControler extends Controller
             'dpt' => 'required',  
             'country' => 'required',  
             'n_doc' => 'required',
-            'cc_name' => 'required|string',
-            'cc_number' => 'required|string|min:15|max:20',
-            'cc_expiration_m' => 'required|string|min:2|max:2',
-            'cc_expiration_y' => 'required|string|min:2|max:2',
-            'cc_cvv' => 'required|string|min:3|max:4'
         ];
 
         if (!isset($request->sameaddress)){
             
+            $rules['contact'] = 'required';
             $rules['address_1b'] = 'required';
             $rules['address_2b'] = 'required';
             $rules['address_3b'] = 'required';
@@ -61,7 +58,7 @@ class PurchaseControler extends Controller
     }
 
     //--------------------------------------------------------------------------------------------------------------    
-    //
+    // Verify auth , then allow to register billing information
     //--------------------------------------------------------------------------------------------------------------
     public function purchase(){
         $infosaved = 0;
@@ -80,14 +77,17 @@ class PurchaseControler extends Controller
     }
 
     //--------------------------------------------------------------------------------------------------------------
-    //
+    // Save costumer Information in members table and addresses table
     //--------------------------------------------------------------------------------------------------------------
         public function addInfoUser(Request $request){
             
             
             $infosaved = 0;
             $id = Auth::user()->id;
+
+            // call function that check form inputs data
             $p = $this->verifyInsert($request);
+            
             $info = Member::where('user_id', $id)->first();
     
             if ($info){
@@ -102,65 +102,30 @@ class PurchaseControler extends Controller
                     'checkbox' => $request->sameaddress
                 ])->withErrors($p);
             }else{
-                $res = $this->luhnCheck($request->cc_number);
+                //$res = $this->luhnCheck($request->cc_number);
+                
+                $user_info = New Member();
+                $rs = $user_info->set($request);
 
-                if ($res == true){
-
-                    $user_info = New Member();
-                    $rs = $user_info->set($request);
-    
-                    if($rs){
-                        return redirect('cart')->with('success', 'Usuario creado de manera Exitosa!!');
-                    }else{
-                        return back()->with('notice', 'Un error ha ocurrido!!');
-                    }
+                if($rs){
+                    return redirect('cart')->with('success', 'Usuario creado de manera Exitosa!!');
                 }else{
-                    $error = ['notice' => 'Número de tarjeta inexistente!!'];
+                    //return back()->with('notice', 'Un error ha ocurrido!!');
+
+                    $error = ['notice' => 'No se pudo procesar la información!!'];
                     return view('purchase', [
                         'completeRequest' => $request,
                         'infosaved' => $infosaved,
                         'info' => $info,
                         'checkbox' => $request->sameaddress,
                         
-                    ])->withErrors($error);     
+                    ])->withErrors($error);    
                 }
-                
             }
            
         }
 
-        //--------------------------------------------------------------------------------------------------------------
-        //
-        //--------------------------------------------------------------------------------------------------------------
-        public function luhnCheck($number) {
-
-            // Strip any non-digits (useful for credit card numbers with spaces and hyphens)
-            $number=preg_replace('/\D/', '', $number);
-          
-            // Set the string length and parity
-            $number_length=strlen($number);
-            $parity=$number_length % 2;
-          
-            // Loop through each digit and do the maths
-            $total=0;
-            for ($i=0; $i<$number_length; $i++) {
-              $digit=$number[$i];
-              // Multiply alternate digits by two
-              if ($i % 2 == $parity) {
-                $digit*=2;
-                // If the sum is two digits, add them together (in effect)
-                if ($digit > 9) {
-                  $digit-=9;
-                }
-              }
-              // Total up the digits
-              $total+=$digit;
-            }
-          
-            // If the total mod 10 equals 0, the number is valid
-            return ($total % 10 == 0) ? TRUE : FALSE;
-          
-          }
+        
     //--------------------------------------------------------------------------------------------------------------
     //
     //--------------------------------------------------------------------------------------------------------------
@@ -176,25 +141,34 @@ class PurchaseControler extends Controller
     //--------------------------------------------------------------------------------------------------------------
     public function methods()
     {
-        $answer = 0;
+        $answer = 1;
+        $cardExist = 0;
         $member_info = null;
         $card = null;
         $address = null;
 
         if (Auth::user()){
             $id = Auth::user()->id;
-            $address = Address::where('user_id', $id)->where('default', 1)->get();
+            $address = Address::where('user_id', $id)->where('default', 1)
+            ->join('countries as c', 'c.country_master_id', 'addresses.country')
+            ->join('departments as d', 'd.code', 'addresses.dpt')
+            ->join('cost_tcc as ct', 'ct.id', 'addresses.city')
+            ->get();
+            
+            $card = CreditCard::where('user_id', $id)->where('default', 1)->get();
 
-            if ($address->count() >0){
-                $answer = 1;
+            if ($card->count() >0){
+                $cardExist = 2;
             }
         }
         
         
         return view('method', [
             'answer' => $answer,
+            'cardexist' => $cardExist,
             'member_info' => $member_info,
-            'address' => $address
+            'address' => $address,
+            'card' => $card
         ]);
     }
 

@@ -106,17 +106,20 @@
                                         <label class="text-register" for="country">País</label>
                                         <select class="custom-select d-block w-100 @if ($errors-> has('country'))  is-invalid @endif" name="country" id="country" required>
                                             <option value="">Escojer...</option>
-                                            <option value="colombia" @if (!empty($completeRequest->country)) @if (($completeRequest->country) == 'colombia') selected @endif @endif>Colombia</option>
+                                            <option value="47" @if (!empty($completeRequest->country)) @if (($completeRequest->country) == 'colombia') selected @endif @endif>Colombia</option>
                                         </select>
                                         <div class="invalid-feedback">
                                             Seleccione un país valido.
                                         </div>
                                     </div>
                                     <div class="col-md-4 mb-3">
+                                        <div id="loading_web2">
+                                            <img src="/img/preloader.gif" id="img_loading" alt="">
+                                        </div>
                                         <label class="text-register" for="dpt">Departamento</label>
-                                        <select class="custom-select d-block w-100 @if ($errors-> has('dpt'))  is-invalid @endif" name="dpt" id="dpt" required>
+                                        <select class="custom-select d-block w-100 @if ($errors-> has('dpt'))  is-invalid @endif" name="dpt" id="dpt" disabled required>
                                             <option value="">Escojer...</option>
-                                            <option value="atlantico"  @if (!empty($completeRequest->dpt)) @if (($completeRequest->dpt) == 'atlantico') selected @endif @endif>Atlántico</option>
+                                            {{-- <option value="atlantico"  @if (!empty($completeRequest->dpt)) @if (($completeRequest->dpt) == 'atlantico') selected @endif @endif>Atlántico</option> --}}
                                         </select>
                                         <div class="invalid-feedback">
                                             Seleccione un valido departamento.
@@ -124,7 +127,11 @@
                                     </div>
                                     <div class="col-md-3 mb-3">
                                         <label class="text-register" for="city">Ciudad</label>
-                                        <input type="text" class="form-control @if ($errors-> has('city'))  is-invalid @endif" name="city" id="city" value="@if(!empty($completeRequest->city)){{$completeRequest->city}}@endif" placeholder="" required>
+                                        {{-- <input type="text" class="form-control @if ($errors-> has('city'))  is-invalid @endif" name="city" id="city" value="@if(!empty($completeRequest->city)){{$completeRequest->city}}@endif" placeholder="" required> --}}
+                                        <select class="custom-select d-block w-100 @if ($errors-> has('city'))  is-invalid @endif" name="city" id="city" disabled required>
+                                            <option value="">Escojer...</option>
+                                            {{-- <option value="atlantico"  @if (!empty($completeRequest->dpt)) @if (($completeRequest->dpt) == 'atlantico') selected @endif @endif>Atlántico</option> --}}
+                                        </select>
                                         <div class="invalid-feedback">
                                             Ciudad es requerida.
                                         </div>
@@ -187,7 +194,101 @@
 @section('custom-js')
 <script type="text/javascript">
     $(document).ready(function(){
+        $('#country').change(function(){
+            var countryId = $(this).val();
+            bringDpts(countryId, "#dpt", 2);
+            
+        });
 
+        $('#country_e').change(function(){
+            var countryId = $(this).val();
+            bringDpts(countryId, "#dpt_e", 3);
+        });
+
+        $('#dpt').change(function(){
+            var dptId = $(this).val();
+            bringCities(dptId, "#city", 2);
+        });
+
+        $('#dpt_e').change(function(){
+            var dptId = $(this).val();
+            bringCities(dptId, "#city_e", 3);
+        });
     });
+
+    function bringDpts(id, se, loading){
+        
+        var countryId = id;
+            
+            $.ajax({
+                type:'POST',   
+                dataType:'json',      
+                url:'/region/dpt',
+                data: {'id':countryId},
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                beforeSend: function(x){
+                    $('#loading_web'+loading).show();
+                },
+                success:function(data){
+                    if(data.status==200){
+                        $('#loading_web'+loading).hide(); 
+
+                        var dptsList = '<option value="">Seleccione el Departamento</option>'
+                        for (var i=0; i<data.dpts.length;i++){
+                            dptsList +='<option value="'+data.dpts[i].code+'">'+data.dpts[i].department+'</option>';
+                        }
+                        $(se).removeAttr('disabled');    
+                        $(se).html(dptsList);
+                        
+                    }else if(data.status==403){
+                        $('#loading_web' + loading).hide(); 
+                        $.each(data.errors, function( index, value ) {         
+                            toastr.error(value, 'Error!', {  timeOut: 5e3});
+                        });  
+                    }else{ 
+                        $('#loading_web' + loading).hide(); 
+                        toastr.error(data.message, "Error!");      
+                    }  
+                }
+            });
+    }
+
+    function bringCities(id, se, loading){
+        
+        var dptId = id;
+            
+            $.ajax({
+                type:'POST',   
+                dataType:'json',      
+                url:'/region/city',
+                data: {'id':dptId},
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                beforeSend: function(x){
+                    $('#loading_web'+loading).show();
+                },
+                success:function(data){
+                    if(data.status==200){
+                        $('#loading_web'+loading).hide(); 
+
+                        var cityList = '<option value="">Seleccione Ciudad o Municipio</option>'
+                        for (var i=0; i<data.city.length;i++){
+                            cityList +='<option value="'+data.city[i].id+'">'+data.city[i].city_d_id+'</option>';
+                        }
+
+                        $(se).removeAttr('disabled');      
+                        $(se).html(cityList);
+                         
+                    }else if(data.status==403){
+                        $('#loading_web' + loading).hide(); 
+                        $.each(data.errors, function( index, value ) {         
+                            toastr.error(value, 'Error!', {  timeOut: 5e3});
+                        });  
+                    }else{ 
+                        $('#loading_web' + loading).hide(); 
+                        toastr.error(data.message, "Error!");      
+                    }  
+                }
+            });
+    }
 </script>
 @endsection

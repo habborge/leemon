@@ -31,8 +31,12 @@ class ProductController extends Controller
             // ->where('members.user_id', $id)->get();
 
             //$card = Creditcard::where('user_id', $id)->where('default', 1)->get();
-            $address = Address::where('user_id', $id)->where('default', 1)->get();
-
+            $address = Address::where('user_id', $id)->where('default', 1)
+            ->join('countries as c', 'c.country_master_id', 'addresses.country')
+            ->join('departments as d', 'd.code', 'addresses.dpt')
+            ->join('cost_tcc as ct', 'ct.id', 'addresses.city')
+            ->get();
+            //dd($address);
             // (($card->count() >0) and ($address->count() >0))
             if ($address->count() >0){
                 $answer = 1;

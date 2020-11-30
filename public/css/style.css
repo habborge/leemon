@@ -393,7 +393,7 @@
     font-family: "AcuminVariableConcept";
     /* font-weight:700; */
     color:#fff;
-    padding:5px;
+    /* padding:5px; */
   }
   
   .tabs li{
@@ -663,6 +663,25 @@ padding: 0 8px 0 7px;
     display: flex;
     align-items: center;
  }
+ .accord-width{
+     width: 100%;
+ }
+
+ .a-size-methods{
+    font-size: 1rem !important;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+    color: #212529 !important;
+ }
+ .bg-color-b{
+    background-color: #403d38;
+    color: #d2d2d2 !important;
+ }
+ 
+ .x-close{
+     color: #d2d2d2 !important;
+ }
+
 /* ---------------------------------------------------------------------------------
    -- resposive design
 ---------------------------------------------------------------------------------- */

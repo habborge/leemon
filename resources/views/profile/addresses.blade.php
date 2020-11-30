@@ -5,48 +5,56 @@
     <div class="container no-padding-sm-xs dataPosition2 py-5">
         <div class="row">
             <div class="col-md-12">
-              <h3>Mis Direcciones de Entrega</h3>
+                <div class="row">
+                    <div style="width: 100%">
+                        <h3>Mis Direcciones de Entrega</h3>
+                        <hr>
+                    </div>
+                    
+                </div>
             </div>
-          </div>
+            
+        </div>
+        
         <div class="row ">
             <div id="primary2" class=" col-md-9 col-sm-12 col-xs-12 pull-left no-padding-md no-padding-lg no-padding-sm-xs">
                 <div class="primary-content2">
                     <div class="row">
                         
-                                        @foreach($addresses as $address)
-                                        <div class="col-md-4 mb-3">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="row p-right">
-                                                        <div class="card bg-light col-md-12 h-card-address">
-                                                            <div class="row">
-                                                                @if ($address->default == 1)
-                                                                    <div class="card-header  col-md-12"><span class="info-small"><b>Dirección Predeterminada</b></span></div>
-                                                                @endif
-                                                                    <div class="card-body  col-md-12">
-                                                                        <span class="info-small"><b>{{ ucwords($address->contact) }}</b> <br>
-                                                                            {{ str_replace("~", " ", $address->address) }}<br>
-                                                                            {{ $address->details }}<br>
-                                                                            {{ ucwords($address->city) }}, {{ ucwords($address->dpt) }} {{ $address->zipcode }}<br>
-                                                                            {{ ucwords($address->country) }}<br>
-                                                                        </span>
-                                                                    </div>
-                                                                    <div class="col-md-12 p-bottom">
-                                                                        <span class="info-small">
-                                                                            <a href="/addresses/{{$address->id }}/edit">Editar</a> | <a href="/addresses/{{$address->id }}/">Eliminar</a>
-                                                                            @if ($address->default == 0)
-                                                                                | <a href="/addresses/default/{{$address->id }}/">Predeterminar</a>
-                                                                            @endif
-                                                                        </span>
-                                                                    </div>
-                                                            </div>
+                        @foreach($addresses as $address)
+                            <div class="col-md-4 mb-3">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row p-right">
+                                            <div class="card bg-light col-md-12 h-card-address">
+                                                <div class="row">
+                                                    @if ($address->default == 1)
+                                                        <div class="card-header  col-md-12"><span class="info-small"><b>Dirección Predeterminada</b></span></div>
+                                                    @endif
+                                                        <div class="card-body  col-md-12">
+                                                            <span class="info-small"><b>{{ ucwords($address->contact) }}</b> <br>
+                                                                {{ str_replace("~", " ", $address->address) }}<br>
+                                                                {{ $address->details }}<br>
+                                                                {{ ucwords($address->city_d_id) }} ({{ ucwords($address->department) }}), {{ $address->zipcode }}
+                                                                <br>
+                                                                {{ ucwords($address->country_master_name) }}<br>
+                                                            </span>
                                                         </div>
-                                                    </div>
+                                                        <div class="col-md-12 p-bottom">
+                                                            <span class="info-small">
+                                                                <a href="/addresses/{{$address->addressId }}/edit">Editar</a> | <a href="/addresses/{{$address->addressId }}/">Eliminar</a>
+                                                                @if ($address->default == 0)
+                                                                    | <a href="/addresses/default/{{$address->addressId }}/">Predeterminar</a>
+                                                                @endif
+                                                            </span>
+                                                        </div>
                                                 </div>
                                             </div>
-                                            
                                         </div>
-                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                                     
                     </div>
                 </div>
