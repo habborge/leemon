@@ -69,8 +69,9 @@ class ProductController extends Controller
  
         $cart = session()->get('cart');
         
-        $hash = md5(env('SECRETPASS')."~".$product->name."~".$product->price."~".$product->prom);
+        $hash = md5(env('SECRETPASS')."~".$product->name."~".$product->price."~".$product->prom."~".$product->fee."~".$product->width."~".$product->height."~".$product->length."~".$product->weight);
 
+        // $vol = $product->width."~".$product->height."~".$product->length."~".$product->weight;
         // if cart is empty then this the first product
         if(!$cart) {
             
@@ -81,9 +82,13 @@ class ProductController extends Controller
                         "name" => $product->name,
                         "quantity" => 1,
                         "price" => $product->price,
+                        "fee" => $product->fee,
                         "photo" =>  env('AWS_URL')."/".env('BUCKET_SUBFOLDER')."/products/".$product->reference."/".$product->img1,
                         "prom" => $product->prom,
-                        "delivery_cost" => $product->delivery_cost,
+                        "width" => $product->width,
+                        "length" => $product->length,
+                        "height" => $product->height,
+                        "weight" => $product->weight,
                         "hash" => $hash
                     ]
             ];
@@ -109,9 +114,13 @@ class ProductController extends Controller
             "name" => $product->name,
             "quantity" => 1,
             "price" => $product->price,
+            "fee" => $product->fee,
             "photo" =>  env('AWS_URL')."/".env('BUCKET_SUBFOLDER')."/products/".$product->reference."/".$product->img1,
             "prom" => $product->prom,
-            "delivery_cost" => $product->delivery_cost,
+            "width" => $product->width,
+            "length" => $product->length,
+            "height" => $product->height,
+            "weight" => $product->weight,
             "hash" => $hash
         ];
  
@@ -139,7 +148,9 @@ class ProductController extends Controller
  
         $cart = session()->get('cart');
         
-        $hash = md5(env('SECRETPASS')."~".$product->name."~".$product->price."~".$product->prom);
+        $hash = md5(env('SECRETPASS')."~".$product->name."~".$product->price."~".$product->prom."~".$product->fee."~".$product->width."~".$product->height."~".$product->length."~".$product->weight);
+
+        $vol = $product->width."~".$product->height."~".$product->length."~".$product->weight;
 
         // if cart is empty then this the first product
         if(!$cart) {
@@ -151,9 +162,13 @@ class ProductController extends Controller
                         "name" => $product->name,
                         "quantity" => $cant,
                         "price" => $product->price,
+                        "fee" => $product->fee,
                         "photo" => env('AWS_URL')."/".env('BUCKET_SUBFOLDER')."/products/".$product->reference."/".$product->img1,
                         "prom" => $product->prom,
-                        "delivery_cost" => $product->delivery_cost,
+                        "width" => $product->width,
+                        "length" => $product->length,
+                        "height" => $product->height,
+                        "weight" => $product->weight,
                         "hash" => $hash
                     ]
             ];
@@ -179,9 +194,13 @@ class ProductController extends Controller
             "name" => $product->name,
             "quantity" => $cant,
             "price" => $product->price,
+            "fee" => $product->fee,
             "photo" => env('AWS_URL')."/".env('BUCKET_SUBFOLDER')."/products/".$product->reference."/".$product->img1,
             "prom" => $product->prom,
-            "delivery_cost" => $product->delivery_cost,
+            "width" => $product->width,
+            "length" => $product->length,
+            "height" => $product->height,
+            "weight" => $product->weight,
             "hash" => $hash
         ];
  

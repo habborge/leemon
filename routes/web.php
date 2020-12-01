@@ -46,6 +46,8 @@ Route::group([
     //------- my addresses -------------------------------------------
     Route::resource('addresses', AddressController::class);
     Route::get('addresses/default/{id}', 'AddressController@default');
+    Route::post('addresses/list', 'AddressController@addressList');
+    Route::post('addresses/listchange', 'AddressController@addressChange');
 
     //------- Regions ------------------------------------------------
     Route::post('/region/dpt', 'regionController@dpt');
@@ -53,6 +55,9 @@ Route::group([
 
     //------- my methods ---------------------------------------------
     Route::resource('secure/methods', CreditCardController::class);
+    Route::get('secure/methods/default/{id}', 'CreditCardController@default');
+    Route::post('secure/methods/list', 'CreditCardController@creditCardList');
+    Route::post('secure/methods/listchange', 'CreditCardController@creditCardChange');
 });
 
 Auth::routes();

@@ -263,6 +263,7 @@
     @include('layouts.footer')
 
     @yield('custom-js')
+    @yield('modal-js')
     <script type="text/javascript">
         function openNav() {
             document.getElementById("mySidepanel").style.width = "100%";

@@ -227,4 +227,76 @@ class AddressController extends Controller
             return redirect('addresses')->withErrors('error', 'No se pudo actualizar la dirección por defecto!!');
         }
     }
+
+    public function addressList(){
+        $addresses = Address::select('addresses.id as addressId', 'addresses.address', 'addresses.zipcode', 'addresses.contact', 'addresses.details', 'addresses.default', 'c.country_master_name', 'd.department', 'ct.city_d_id')->where('user_id', Auth::user()->id)
+        ->join('countries as c', 'c.country_master_id', 'addresses.country')
+        ->join('departments as d', 'd.code', 'addresses.dpt')
+        ->join('cost_tcc as ct', 'ct.id', 'addresses.city')
+        ->orderBy('default', 'desc')->get();
+        
+        $html="";
+        foreach ($addresses as $address)
+		{
+            if ($address->default == 1){
+                $html.= "<div class='alert alert-success info-small' role='alert'>".$address->contact."<br>".$address->address.", ".$address->zipcode." Código Postal<br>";
+                if ($address->details){ 
+                    $html.= ucwords($address->details)."<br>"; 
+                }
+                $html.= ucwords($address->city_d_id)." (".ucwords($address->department)."), ".ucwords($address->country_master_name)."</div>";
+
+            }else{
+                $html.= "<div class='alert alert-secondary info-small' role='alert'>
+                            <div class='col-md-12'>
+                                <div class='row'>
+                                    <div class='col-md-8'>
+                                        <div class='row'>
+                                            <p>".$address->contact."<br>".$address->address.", ".$address->zipcode." Código Postal<br>";
+                                            if ($address->details){ 
+                                                $html.= ucwords($address->details)."<br>"; 
+                                            }
+                                                $html.= ucwords($address->city_d_id)." (".ucwords($address->department)."), ".ucwords($address->country_master_name)."
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class='col-md-4'>
+                                        <div class='row float-right'>
+                                
+                                            <button id='' class='btn btn-dark btn-sm select-add' data-id='".$address->addressId."' onclick='changeAddress(".$address->addressId.")'>Seleccionar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>";
+            }
+        }
+
+        return response()->json(['status'=>200,'info'=>$html]);
+
+    }
+
+    public function addressChange(Request $request){
+        $user_id = Auth::user()->id;
+
+        $data = Address::find($request->id);
+
+        if ($user_id == $data->user_id){
+            $preview = Address::where('user_id', Auth::user()->id)->where('default', 1)->first();
+
+            $preview->default = 0;
+            $preview->save();
+
+            $data->default = 1;
+            $rs = $rs = $data->save();
+
+            if($rs){
+                return response()->json(['status'=>200]);
+            }else{
+                return response()->json(['status'=>500]);
+            }
+        }else{
+            return response()->json(['status'=>520]);
+        }
+        
+    }
 }

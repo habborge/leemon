@@ -35,7 +35,7 @@
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="row float-right">
-                                                                    <a href="" class="btn btn-dark btn-sm">Cambiar Dirección</a>
+                                                                    <button class="btn btn-dark btn-sm" data-toggle="modal" id="changeAddress">Cambiar Dirección</button>
                                                                 </div>
                                                             </div>
                                                 </div>
@@ -80,7 +80,10 @@
                                                 $h = 0;
                                                 $discount = 0;
                                                 
-                                                if (($details['prom'] == 1) and ($details['quantity'] >= 2 )){
+                                                $hash = md5(env('SECRETPASS')."~".$details['name']."~".$details['price']."~".$details['prom']."~".$details['fee']."~".$details['width']."~".$details['height']."~".$details['length']."~".$details['weight']);
+
+                                                if ($hash == $details['hash']){
+                                                    if (($details['prom'] == 1) and ($details['quantity'] >= 2 )){
                                                     $whole = (int) ($details['quantity'] / 2);
                                                     $h = (2 * $whole) + $whole;
                                                     $nq = $details['quantity'] + ($h - $details['quantity']);
@@ -96,9 +99,12 @@
                                                 }
                                                     $q_prod += $details['quantity'];
                                                     $total += ($details['price'] * $nq) - $half - $discount;
-                                                    $delivery += $details['delivery_cost'] * $nq;
+                                                    // $delivery += $details['delivery_cost'] * $nq;
                                                     $total_d += $half + $discount;
-                                                    $subTotal += ($details['price'] * $nq)
+                                                    $subTotal += ($details['price'] * $nq);
+                                                }
+                                                
+                                                
                                                 ?>
                     
                                                 <div class="col-12 col-md-12">
@@ -254,26 +260,12 @@
                                                                 <div class="row">
                                                                     <div class="col-md-8">
                                                                         <div class="row">
-                                                                            Subtotal a Pagar:
+                                                                            Subtotal:
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-4">
                                                                         <div class="row float-right">
-                                                                            {{ number_format($subTotal,0) }}
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12">
-                                                                <div class="row">
-                                                                    <div class="col-md-8">
-                                                                        <div class="row">
-                                                                            Envío:
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-4">
-                                                                        <div class="row float-right">
-                                                                            --
+                                                                            COP$ {{ number_format($subTotal,0) }}
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -287,7 +279,7 @@
                                                                     </div>
                                                                     <div class="col-md-3">
                                                                         <div class="row float-right">
-                                                                            <span class="text-danger">({{ number_format($total_d, 0) }})</span>
+                                                                            <span class="text-danger">-{{ number_format($total_d, 0) }}</span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -320,6 +312,20 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="col-md-12">
+                                                                <div class="row">
+                                                                    <div class="col-md-8">
+                                                                        <div class="row">
+                                                                            Envío:
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="row float-right">
+                                                                            --
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                             <hr>
                                                             <div class="col-md-12">
                                                                 <div class="row">
@@ -331,7 +337,7 @@
                                                                     </div>
                                                                     <div class="col-md-4">
                                                                         <div class="row float-right">
-                                                                           --
+                                                                            COP$ --
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -403,30 +409,31 @@
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <div class="row">
-                                                    Subtotal a Pagar:
+                                                    Subtotal:
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="row float-right">
-                                                    {{ $total }}
+                                                    COP$ {{ number_format($subTotal, 0) }}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="row">
-                                            <div class="col-md-8">
+                                            <div class="col-md-9">
                                                 <div class="row">
-                                                    Envío:
+                                                    Descuento:
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="row float-right">
-                                                    --
+                                                    <span class="text-danger">-{{ number_format($total_d, 0) }}</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    
                                     <div class="col-md-12">
                                         <div class="row">
                                             <div class="col-md-9">
@@ -436,7 +443,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="row float-right">
-                                                    --
+                                                    {{ number_format($total,0) }}
                                                 </div>
                                             </div>
                                         </div>
@@ -455,6 +462,20 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="row">
+                                                    Envío:
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="row float-right">
+                                                    --
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <hr>
                                     <div class="col-md-12">
                                         <div class="row">
@@ -466,7 +487,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="row float-right">
-                                                    --
+                                                    COP$ --
                                                 </div>
                                             </div>
                                         </div>
@@ -494,6 +515,7 @@
         </div>
     </div>
 </div>
+@include('modal.my_address')
 @endsection
 @section('custom-js')
 <script type="text/javascript">
@@ -531,6 +553,35 @@
                 });
             }
         });
+
+        $(document).on('click', '#changeAddress', function () {
+      
+            $.ajax({
+                type:'POST',
+                dataType:'json',
+                url:'/addresses/list',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                beforeSend: function(x){
+                $('#loading_web').show();
+                },
+                success:function(data){
+                if(data.status==200){
+                    showdata(data);
+                    $('#loading_web').hide(); 
+                    $('#selectionaddress').modal('show');
+                }else if(data.status==403){
+                    $('#loading_web').hide(); 
+                    $.each(data.errors, function( index, value ){
+                    toastr.error(value, 'Error!', {  timeOut: 5e3});
+                    });  
+                }else{ 
+                    $('#loading_web').hide(); 
+                    toastr.error(data.message, "Error!");
+                }  
+                }
+            });
+        });
+        
     });
 </script>
 @endsection

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@include('modal.creditCard')
+
 <div id="main" class="tabs clearfix">
     <div class="container no-padding-sm-xs dataPosition2">
         <div class="row ">
@@ -46,31 +46,47 @@
                                         <div class="card-header row">Metodo de Pago</div>
                                         <div class="card-body">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                                                <label class="form-check-label" for="exampleRadios1">
-                                                    Tarjeta de Credito
-                                                    @if ($cardexist == 2)
-                                                        terminada en ************{{ $card[0]->last4num }}
-                                                    @else
-                                                        <a href="/secure/methods/create" id="creditcard" class="btn btn-dark btn-sm" type='button'>Agregar una Tarjeta</a>
-                                                    @endif
-                                                </label>
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            <div class="row">
+                                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                                                                <label class="form-check-label" for="exampleRadios1">
+                                                                    Tarjeta de Credito
+                                                                    @if ($cardexist == 2)
+                                                                        terminada en ************{{ $card[0]->last4num }}
+                                                                    @else
+                                                                        <a href="/secure/methods/create" id="creditcard" class="btn btn-dark btn-sm" type='button'>Agregar una Tarjeta</a>
+                                                                    @endif
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="row float-right">
+                                                                @if ($cardexist == 2)
+                                                                    <button class="btn btn-dark btn-sm" data-toggle="modal" id="changeCard">Cambiar Tarjeta</button>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 
-                                              </div>
-                                              <hr>
-                                              <div class="form-check">
+                                                
+                                            </div>
+                                            <hr>
+                                            <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
                                                 <label class="form-check-label" for="exampleRadios2">
-                                                  PSE
+                                                PSE
                                                 </label>
-                                              </div>
-                                              <hr>
-                                              <div class="form-check">
+                                            </div>
+                                            <hr>
+                                            <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
                                                 <label class="form-check-label" for="exampleRadios2">
-                                                  Otros metodos
+                                                Otros metodos
                                                 </label>
-                                              </div>
+                                            </div>
 
                                         </div>
                                     </div>
@@ -96,9 +112,12 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <?php 
+                                            $subTotal = 0;
                                             $total = 0;
                                             $q_prod = 0;
                                             $delivery = 0;
+                                            $total_d = 0;
+                                            $fee = 0;
                                         ?>
                                         @if(session('cart'))
                                             @foreach(session('cart') as $id => $details)
@@ -126,7 +145,9 @@
                                                 }
                                                     $q_prod += $details['quantity'];
                                                     $total += ($details['price'] * $nq) - $half - $discount;
-                                                    $delivery += $details['delivery_cost'] * $nq;
+                                                    // $delivery += $details['delivery_cost'] * $nq;
+                                                    $total_d += $half + $discount;
+                                                    $subTotal += ($details['price'] * $nq)
                                                 ?>
                     
                                                 <div class="col-12 col-md-12">
@@ -210,22 +231,26 @@
                                                         </div>
                                                         
                                                         <div id="subtotal" data-th="Subtotal" class="col-3 col-md-3 text-right">
-                                                            <h4 class="nomargin">
-                                                                $ {{ number_format($details['price'] * $nq,0)}}
-                                                            </h4> 
-                                                            @if ($half > 0)
-                                                                <br> <span class="text-danger">Descuento $ {{ number_format($half,0) }}</span>
-                                                            @elseif ($discount > 0)
-                                                                <br> <span class="text-danger">Descuento $ {{ number_format($discount,0) }}</span>
-                                                            @else
-                                                            @endif
-                                                                <br>A pagar $ {{ number_format(($details['price'] * $nq) - $half - $discount,0) }}
+                                                            <div class="col-md-12">
+                                                                <h4 class="nomargin">
+                                                                    $ {{ number_format($details['price'] * $nq,0)}}
+                                                                </h4> 
+                                                                @if ($half > 0)
+                                                                    <br> <span class="text-danger">Descuento $ {{ number_format($half,0) }}</span>
+                                                                @elseif ($discount > 0)
+                                                                    <br> <span class="text-danger">Descuento $ {{ number_format($discount,0) }}</span>
+                                                                @else
+                                                                @endif
+                                                                    <br>A pagar $ {{ number_format(($details['price'] * $nq) - $half - $discount,0) }}
+                                                            </div>
                                                         </div>
                                                         
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-md-12">
-                                                    <hr>
+                                                    <div class="col-md-12">
+                                                        <hr>
+                                                    </div>
                                                 </div>
                                             @endforeach
                                         @endif
@@ -278,26 +303,26 @@
                                                                 <div class="row">
                                                                     <div class="col-md-8">
                                                                         <div class="row">
-                                                                            Subtotal a Pagar:
+                                                                            Subtotal:
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-4">
                                                                         <div class="row float-right">
-                                                                            $ {{ number_format($total, 0) }}
+                                                                            COP$ {{ number_format($subTotal,0) }}
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <div class="row">
-                                                                    <div class="col-md-8">
+                                                                    <div class="col-md-9">
                                                                         <div class="row">
-                                                                            Envío:
+                                                                            Descuento:
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-md-3">
                                                                         <div class="row float-right">
-                                                                            {{ number_format(0,0) }}
+                                                                            <span class="text-danger">-{{ number_format($total_d, 0) }}</span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -330,6 +355,20 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="col-md-12">
+                                                                <div class="row">
+                                                                    <div class="col-md-8">
+                                                                        <div class="row">
+                                                                            Envío:
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="row float-right">
+                                                                            {{ number_format(0,0) }}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                             <hr>
                                                             <div class="col-md-12">
                                                                 <div class="row">
@@ -340,7 +379,7 @@
                                                                     </div>
                                                                     <div class="col-md-4">
                                                                         <div class="row float-right">
-                                                                            {{ number_format($total + ($total * 0.19), 0) }}
+                                                                            COP$ {{ number_format($total + ($total * 0.19), 0) }}
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -412,26 +451,26 @@
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <div class="row">
-                                                    Subtotal a Pagar:
+                                                    Subtotal:
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="row float-right">
-                                                    {{ $total }}
+                                                    COP$ {{ number_format($subTotal, 0) }}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="row">
-                                            <div class="col-md-8">
+                                            <div class="col-md-9">
                                                 <div class="row">
-                                                    Envío:
+                                                    Descuento:
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="row float-right">
-                                                    --
+                                                    <span class="text-danger">-{{ number_format($total_d, 0) }}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -445,7 +484,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="row float-right">
-                                                    --
+                                                    {{ number_format($total / 1.19, 0) }}
                                                 </div>
                                             </div>
                                         </div>
@@ -459,7 +498,21 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="row float-right">
-                                                    --
+                                                    {{ number_format(($total / 1.19) * 0.19, 0) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="row">
+                                                    Envío:
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="row float-right">
+                                                    {{ number_format(0,0) }}
                                                 </div>
                                             </div>
                                         </div>
@@ -475,7 +528,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="row float-right">
-                                                    --
+                                                    COP$ {{ number_format($total,0) }}
                                                 </div>
                                             </div>
                                         </div>
@@ -503,6 +556,7 @@
         </div>
     </div>
 </div>
+@include('modal.my_methods')
 @endsection
 @section('custom-js')
 <script type="text/javascript">
@@ -608,6 +662,35 @@
                 }  
             }
             });
+        });
+
+        $(document).on('click', '#changeCard', function () {
+      
+            $.ajax({
+                type:'POST',
+                dataType:'json',
+                url:'secure/methods/list',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                beforeSend: function(x){
+                    $('#loading_web').show();
+                },
+                success:function(data){
+                if(data.status==200){
+                    showdata(data);
+                    $('#loading_web').hide(); 
+                    $('#selectioncard').modal('show');
+                }else if(data.status==403){
+                    $('#loading_web').hide(); 
+                    $.each(data.errors, function( index, value ){
+                    toastr.error(value, 'Error!', {  timeOut: 5e3});
+                    });  
+                }else{ 
+                    $('#loading_web').hide(); 
+                    toastr.error(data.message, "Error!");
+                }  
+                }
+            });
+
         });
 
         

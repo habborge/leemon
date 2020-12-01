@@ -167,5 +167,63 @@ class CreditCardController extends Controller
             // If the total mod 10 equals 0, the number is valid
             return ($total % 10 == 0) ? TRUE : FALSE;
           
-          }
+        }
+
+        public function creditCardList(){
+            
+            $cards = Creditcard::where('user_id', Auth::user()->id)->orderBy('default', 'desc')->get();
+        
+            $html="";
+            foreach ($cards as $card)
+            {
+                if ($card->default == 1){
+                    $html.= "<div class='alert alert-success info-small' role='alert'>Tarjeta ".$card->brand." Terminada en ************".$card->last4num."<br>Caduca: ".$card->expiration."<br>Nombre: ".$card->fullname."</div>";
+
+                }else{
+                $html.= "<div class='alert alert-secondary info-small' role='alert'>
+                            <div class='col-md-12'>
+                                <div class='row'>
+                                    <div class='col-md-8'>
+                                        <div class='row'>
+                                            <p>Tarjeta ".$card->brand." Terminada en ************".$card->last4num."<br>Caduca: ".$card->expiration."<br>Nombre: ".$card->fullname."</p>
+                                        </div>
+                                    </div>
+                                    <div class='col-md-4'>
+                                        <div class='row float-right'>
+                                
+                                            <button id='' class='btn btn-dark btn-sm select-add' data-id='".$card->id."' onclick='changeCard(".$card->id.")'>Seleccionar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>";
+            }
+        }
+
+        return response()->json(['status'=>200,'info'=>$html]);
+        }
+
+        public function creditCardChange(Request $request){
+            $user_id = Auth::user()->id;
+
+            $data = Creditcard::find($request->id);
+
+        if ($user_id == $data->user_id){
+            $preview = Creditcard::where('user_id', Auth::user()->id)->where('default', 1)->first();
+
+            $preview->default = 0;
+            $preview->save();
+
+            $data->default = 1;
+            $rs = $rs = $data->save();
+
+            if($rs){
+                return response()->json(['status'=>200]);
+            }else{
+                return response()->json(['status'=>500]);
+            }
+        }else{
+            return response()->json(['status'=>520]);
+        }
+        }
 }
