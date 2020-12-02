@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Member;
-use App\CreditCard;
+use App\Creditcard;
 use App\Http\Requests\StoreMembers;
 use Image;
 use Illuminate\Support\Facades\DB;
@@ -155,7 +155,7 @@ class PurchaseControler extends Controller
             ->join('cost_tcc as ct', 'ct.id', 'addresses.city')
             ->get();
             
-            $card = CreditCard::where('user_id', $id)->where('default', 1)->get();
+            $card = Creditcard::where('user_id', $id)->where('default', 1)->get();
 
             if ($card->count() >0){
                 $cardExist = 2;
