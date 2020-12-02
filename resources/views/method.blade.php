@@ -50,8 +50,8 @@
                                                     <div class="row">
                                                         <div class="col-md-8">
                                                             <div class="row">
-                                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                                                                <label class="form-check-label" for="exampleRadios1">
+                                                                <input class="form-check-input" type="radio" name="methodPay" id="TC" value="1" checked>
+                                                                <label class="form-check-label" for="TC">
                                                                     Tarjeta de Credito
                                                                     @if ($cardexist == 2)
                                                                         terminada en ************{{ $card[0]->last4num }}
@@ -75,15 +75,15 @@
                                             </div>
                                             <hr>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                                                <label class="form-check-label" for="exampleRadios2">
+                                                <input class="form-check-input" type="radio" name="methodPay" id="PSE" value="2">
+                                                <label class="form-check-label" for="PSE">
                                                 PSE
                                                 </label>
                                             </div>
                                             <hr>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                                                <label class="form-check-label" for="exampleRadios2">
+                                                <input class="form-check-input" type="radio" name="methodPay" id="OTH" value="3">
+                                                <label class="form-check-label" for="OTH">
                                                 Otros metodos
                                                 </label>
                                             </div>
@@ -407,7 +407,7 @@
                                                             @if ($answer == 0)
                                                                 <a href="{{ url('purchase') }}" class="btn btn-leemon-method">Información de Facturación</a>
                                                             @elseif ($answer == 1)
-                                                                <a href="{{ url('methods') }}" class="btn btn-success">Proceder con el Pago</a>
+                                                                <button id="proccess" class="btn btn-success btn-sm">Proceder con el Pago</button>
                                                             @endif
                                                         @endguest
                                                     </div>
@@ -693,7 +693,35 @@
 
         });
 
-        
+        $("#proccess").click(function () {
+            var methodPay = $('input:radio[name=methodPay]:checked').val()   
+
+            $.ajax({
+                type:'POST',
+                dataType:'json',
+                data: {_token: '{{ csrf_token() }}', methodPay: methodPay},
+                url:'secure/methods/paynow',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                beforeSend: function(x){
+                    $('#loading_web').show();
+                },
+                success:function(data){
+                if(data.status==200){
+                    showdata(data);
+                    $('#loading_web').hide(); 
+                    $('#selectioncard').modal('show');
+                }else if(data.status==403){
+                    $('#loading_web').hide(); 
+                    $.each(data.errors, function( index, value ){
+                    toastr.error(value, 'Error!', {  timeOut: 5e3});
+                    });  
+                }else{ 
+                    $('#loading_web').hide(); 
+                    toastr.error(data.message, "Error!");
+                }  
+                }
+            });
+        });
     });
 </script>
 @endsection

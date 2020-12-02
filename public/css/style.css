@@ -395,6 +395,10 @@
     color:#fff;
     /* padding:5px; */
   }
+
+  .tabs button{
+    font-size: 12px;
+  }
   
   .tabs li{
     background-color:rgb(255, 255, 255);

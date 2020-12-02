@@ -58,6 +58,9 @@ Route::group([
     Route::get('secure/methods/default/{id}', 'CreditCardController@default');
     Route::post('secure/methods/list', 'CreditCardController@creditCardList');
     Route::post('secure/methods/listchange', 'CreditCardController@creditCardChange');
+
+    //------- Payment process ----------------------------------------
+    Route::post('secure/methods/paynow', 'PaymentController@paymentProcess');
 });
 
 Auth::routes();
