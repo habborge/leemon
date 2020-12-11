@@ -31,17 +31,19 @@ class HomeController extends Controller
         ->groupBy('l.id')
         ->groupBy('products.id')
         ->orderBy('products.id')
-        ->where('prom', '1')
+        ->where('prom', '4')
         ->paginate(10);
-        $prom_1 = "Promo Paga 2 Lleva 3";
+        
+        $prom_1 = "Productos Destacados";
 
-        $products_2 = Product::where('prom', '2')->orderBy('id')->paginate(12);
-        $prom_2 = "Paga el 2do con el 50% Off";
+        // $products_2 = Product::where('prom', '2')->orderBy('id')->paginate(12);
+        // $prom_2 = "Paga el 2do con el 50% Off";
+
         return view('home',[
             'products_1' => $products_1,
             'prom_1' => $prom_1,
-            'products_2' => $products_2,
-            'prom_2' => $prom_2,
+            // 'products_2' => $products_2,
+            // 'prom_2' => $prom_2,
            /* 'name' => $products->name, 
             'brand' => $products->brand, 
             'description' => $products->description, 

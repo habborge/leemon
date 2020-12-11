@@ -84,19 +84,20 @@
 
                                                 if ($hash == $details['hash']){
                                                     if (($details['prom'] == 1) and ($details['quantity'] >= 2 )){
-                                                    $whole = (int) ($details['quantity'] / 2);
-                                                    $h = (2 * $whole) + $whole;
-                                                    $nq = $details['quantity'] + ($h - $details['quantity']);
-                                                    $discount = round($details['price'] * $whole);
-                                                    //$details['quantity'] = $nq;
+                                                        $whole = (int) ($details['quantity'] / 2);
+                                                        $h = (2 * $whole) + $whole;
+                                                        $nq = $details['quantity'] + ($h - $details['quantity']);
+                                                        $discount = round($details['price'] * $whole);
+                                                        //$details['quantity'] = $nq;
                     
-                                                }else if (($details['prom'] == 2) and ($details['quantity'] >= 2)){
-                                                    $whole = (int) ($details['quantity'] / 2);
-                                                    $half = round(($details['price'] / 2) * $whole);
-                                                    $nq = $details['quantity'];
-                                                }else{
-                                                    $nq = $details['quantity'];
-                                                }
+                                                    }else if (($details['prom'] == 2) and ($details['quantity'] >= 2)){
+                                                        $whole = (int) ($details['quantity'] / 2);
+                                                        $half = round(($details['price'] / 2) * $whole);
+                                                        $nq = $details['quantity'];
+                                                    }else{
+                                                        $nq = $details['quantity'];
+                                                    }
+                                                    
                                                     $q_prod += $details['quantity'];
                                                     $total += ($details['price'] * $nq) - $half - $discount;
                                                     // $delivery += $details['delivery_cost'] * $nq;

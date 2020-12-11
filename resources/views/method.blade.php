@@ -128,26 +128,33 @@
                                                 $nq = 0;
                                                 $h = 0;
                                                 $discount = 0;
+
+                                                $hash = md5(env('SECRETPASS')."~".$details['name']."~".$details['price']."~".$details['prom']."~".$details['fee']."~".$details['width']."~".$details['height']."~".$details['length']."~".$details['weight']);
+
+                                                if ($hash == $details['hash']){
                                                 
-                                                if (($details['prom'] == 1) and ($details['quantity'] >= 2 )){
-                                                    $whole = (int) ($details['quantity'] / 2);
-                                                    $h = (2 * $whole) + $whole;
-                                                    $nq = $details['quantity'] + ($h - $details['quantity']);
-                                                    $discount = round($details['price'] * $whole);
-                                                    //$details['quantity'] = $nq;
-                    
-                                                }else if (($details['prom'] == 2) and ($details['quantity'] >= 2)){
-                                                    $whole = (int) ($details['quantity'] / 2);
-                                                    $half = round(($details['price'] / 2) * $whole);
-                                                    $nq = $details['quantity'];
-                                                }else{
-                                                    $nq = $details['quantity'];
-                                                }
+                                                    if (($details['prom'] == 1) and ($details['quantity'] >= 2 )){
+                                                        $whole = (int) ($details['quantity'] / 2);
+                                                        $h = (2 * $whole) + $whole;
+                                                        $nq = $details['quantity'] + ($h - $details['quantity']);
+                                                        $discount = round($details['price'] * $whole);
+                                                        //$details['quantity'] = $nq;
+                        
+                                                    }else if (($details['prom'] == 2) and ($details['quantity'] >= 2)){
+                                                        $whole = (int) ($details['quantity'] / 2);
+                                                        $half = round(($details['price'] / 2) * $whole);
+                                                        $nq = $details['quantity'];
+                                                    }else{
+                                                        $nq = $details['quantity'];
+                                                    }
+
                                                     $q_prod += $details['quantity'];
                                                     $total += ($details['price'] * $nq) - $half - $discount;
                                                     // $delivery += $details['delivery_cost'] * $nq;
                                                     $total_d += $half + $discount;
-                                                    $subTotal += ($details['price'] * $nq)
+                                                    $subTotal += ($details['price'] * $nq);
+
+                                                }
                                                 ?>
                     
                                                 <div class="col-12 col-md-12">
@@ -336,7 +343,7 @@
                                                                     </div>
                                                                     <div class="col-md-3">
                                                                         <div class="row float-right">
-                                                                            {{ number_format($total,0) }}
+                                                                            {{ number_format($total / 1.19, 0) }}
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -379,7 +386,7 @@
                                                                     </div>
                                                                     <div class="col-md-4">
                                                                         <div class="row float-right">
-                                                                            COP$ {{ number_format($total + ($total * 0.19), 0) }}
+                                                                            COP$ {{ number_format($total,0) }}
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -707,9 +714,10 @@
                 },
                 success:function(data){
                 if(data.status==200){
-                    showdata(data);
+                    
                     $('#loading_web').hide(); 
-                    $('#selectioncard').modal('show');
+                    //$('#selectioncard').modal('show');
+                    window.open(data.url, '_blank');
                 }else if(data.status==403){
                     $('#loading_web').hide(); 
                     $.each(data.errors, function( index, value ){

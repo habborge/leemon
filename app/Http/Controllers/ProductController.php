@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Product;
 use Auth;
 use App\Member;
@@ -10,9 +11,23 @@ use App\Creditcard;
 use App\Address;
 use App\WishList;
 use Illuminate\Support\Facades\DB;
+use DateTime;
 
 class ProductController extends Controller
 {
+    //--------------------------------------------------------------------------------------------------------------
+    //
+    //--------------------------------------------------------------------------------------------------------------
+
+    private function quickRandom()
+    {
+        $length = 16;
+        $dt = new DateTime();
+        $date = $dt->format('Y-m-d H:i:s');
+        $pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+        return substr(str_shuffle(str_repeat($pool, 5)), 0, $length)."~".$date;
+    }
     //--------------------------------------------------------------------------------------------------------------
     //
     //--------------------------------------------------------------------------------------------------------------
@@ -72,13 +87,18 @@ class ProductController extends Controller
         $hash = md5(env('SECRETPASS')."~".$product->name."~".$product->price."~".$product->prom."~".$product->fee."~".$product->width."~".$product->height."~".$product->length."~".$product->weight);
 
         // $vol = $product->width."~".$product->height."~".$product->length."~".$product->weight;
+        
         // if cart is empty then this the first product
         if(!$cart) {
             
-            
+            $str_code = $this->quickRandom();
+            $code_hash = hash('ripemd160', $str_code);
+
+            session()->put('codehash', $code_hash);
 
             $cart = [
                     $id => [
+                        "product_id" => $id,
                         "name" => $product->name,
                         "quantity" => 1,
                         "price" => $product->price,
@@ -111,6 +131,7 @@ class ProductController extends Controller
  
         // if item not exist in cart then add to cart with quantity = 1
         $cart[$id] = [
+            "product_id" => $id,
             "name" => $product->name,
             "quantity" => 1,
             "price" => $product->price,
@@ -155,10 +176,14 @@ class ProductController extends Controller
         // if cart is empty then this the first product
         if(!$cart) {
             
-            
+            $str_code = $this->quickRandom();
+            $code_hash = hash('ripemd160', $str_code);
+
+            session()->put('codehash', $code_hash);
 
             $cart = [
                     $id => [
+                        "product_id" => $id,
                         "name" => $product->name,
                         "quantity" => $cant,
                         "price" => $product->price,
@@ -191,6 +216,7 @@ class ProductController extends Controller
  
         // if item not exist in cart then add to cart with quantity = 1
         $cart[$id] = [
+            "product_id" => $id,
             "name" => $product->name,
             "quantity" => $cant,
             "price" => $product->price,
