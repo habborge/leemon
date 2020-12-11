@@ -228,7 +228,7 @@ class PaymentController extends Controller
                 
                 // curl_close($ch);
         
-               // dd($response, json_encode($data));
+               dd($response, json_encode($data));
 
                 return response()->json(['status'=>200, 'url' => $response->json()['str_url']]);
             }else{
