@@ -126,7 +126,7 @@ class PaymentController extends Controller
                     "InformacionPago" => [
                         "flt_total_con_iva" => $total,
                         "flt_valor_iva" => $fee,
-                        "str_id_pago" => "34546565",
+                        "str_id_pago" => "100498-".$rs[1],
                         "str_descripcion_pago" => "Compra de Productos Naturales",
                         "str_email" => $member->email,
                         "str_id_cliente" => $member->n_doc,
