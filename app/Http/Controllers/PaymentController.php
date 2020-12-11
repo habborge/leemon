@@ -214,7 +214,7 @@ class PaymentController extends Controller
 
                // return redirect()->to($response->json()['str_url']);
                 
-                //dd($response->json(),json_encode($data),$response->json()['str_url']);
+                dd($response->json(),json_encode($data),$response->json()['str_url']);
 
                 // $ch = curl_init();
                 // curl_setopt($ch, CURLOPT_URL,'https://www.zonapagos.com/Apis_CicloPago/api/InicioPago');
@@ -228,7 +228,7 @@ class PaymentController extends Controller
                 
                 // curl_close($ch);
         
-               dd($response, json_encode($data));
+               // dd($response, json_encode($data));
 
                 return response()->json(['status'=>200, 'url' => $response->json()['str_url']]);
             }else{
