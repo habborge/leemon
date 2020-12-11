@@ -113,14 +113,14 @@ class PaymentController extends Controller
                         //$order_id=$rs->id;
                         $new_details = New Order_detail();
                         $ds = $new_details->insert($rs[1], $new_array);
-                        $order_id = $rs[1];
+                        $orderId = $rs[1];
                         
                     }else{
                         return back()->with('notice', 'Un error ha ocurrido!!');
                     }
                 }else{
                     $order = Order::select('id')->where('user_id', $user_id)->where('code_hash', session('codehash'))->first();
-                    $order_id = $order->id;
+                    $orderId = $order->id;
                 }   
                 //new class to insert new order
                 
