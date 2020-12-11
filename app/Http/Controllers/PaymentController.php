@@ -113,11 +113,15 @@ class PaymentController extends Controller
                         //$order_id=$rs->id;
                         $new_details = New Order_detail();
                         $ds = $new_details->insert($rs[1], $new_array);
+                        $order_id = $rs[1];
                         
                     }else{
                         return back()->with('notice', 'Un error ha ocurrido!!');
                     }
-                }    
+                }else{
+                    $order = Order::select('id')->where('user_id', $user_id)->where('code_hash', session('codehash'))->first();
+                    $order_id = $order->id;
+                }   
                 //new class to insert new order
                 
                 $reference = $user_id."~";
@@ -126,7 +130,7 @@ class PaymentController extends Controller
                     "InformacionPago" => [
                         "flt_total_con_iva" => $total,
                         "flt_valor_iva" => $fee,
-                        "str_id_pago" => "100498-".$rs[1],
+                        "str_id_pago" => "100498-".$orderId,
                         "str_descripcion_pago" => "Compra de Productos Naturales",
                         "str_email" => $member->email,
                         "str_id_cliente" => $member->n_doc,
