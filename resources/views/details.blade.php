@@ -156,12 +156,12 @@
                     <div class="col-md-12">
                       <div class="rom">
                         <div class="card mb-4 shadow-sm">
-                          <a href="/product/{{$similar->id}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $similar->reference }}/{{$similar->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
+                          <a href="/product/{{$similar->proId}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $similar->reference }}/{{$similar->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
                           <div class="card-body text-center">
                             
                             
                             <span class="brand-font">{{ucwords($similar->brand)}} </span>
-                            <h6>{{ucwords($similar->name)}} </h6>
+                            <h6>{{ucwords($similar->proName)}} </h6>
                 
                             
                             <h6>
@@ -172,8 +172,8 @@
                             @endif
                           </h6> 
                           <span class="brand-font2"><b>$ {{number_format($similar->price, 0)}} COP</b></span><br><br>
-                                                 <!-- <a href="/product/{{$similar->id}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
-                               <a href="{{ url('add-to-cart/'.$similar->id) }}"> <button type="button" class="btn btn-sm btn-leemon-green"><i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito</button></a>
+                                                 <!-- <a href="/product/{{$similar->proId}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
+                               <a href="{{ url('add-to-cart/'.$similar->proId) }}"> <button type="button" class="btn btn-sm btn-leemon-green"><i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito</button></a>
                             
                               
                             
