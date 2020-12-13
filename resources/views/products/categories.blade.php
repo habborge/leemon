@@ -20,10 +20,10 @@
                                 <div class="col-md-3">
                                     <div class="row">
                                         <div class="card mb-4 shadow-sm shadow-global">
-                                            <a href="/product/{{$product->id}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $product->reference }}/{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product2" alt=""></a>
+                                            <a href="/product/{{$product->proId}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $product->reference }}/{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product2" alt=""></a>
                                             <div class="card-body text-center">
                                                 <span class="brand-font">{{ucwords($product->brand)}} </span>
-                                                <h6>{{ucwords($product->name)}} </h6>
+                                                <h6>{{ucwords($product->proName)}} </h6>
                                                 <h6>
                                                     @if ($product->prom == 1) 
                                                         <span class="badge badge-warning">Paga 2 Lleva 3</span>
@@ -32,12 +32,12 @@
                                                     @endif
                                                 </h6> 
                                                 <h6>$ {{number_format($product->price, 0)}} COP</h6>
-                                                <!-- <a href="/product/{{$product->id}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
-                                                <a href="{{ url('add-to-cart/'.$product->id) }}"> <button type="button" class="btn btn-sm btn-leemon-green"><i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito</button></a>
+                                                <!-- <a href="/product/{{$product->proId}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
+                                                <a href="{{ url('add-to-cart/'.$product->proId) }}"> <button type="button" class="btn btn-sm btn-leemon-green"><i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito</button></a>
                                                 @guest
                 
                                                 @else
-                                                    <br><a class="favorites update-wishlist" href="#"  data-id="{{ $product->id }}">Enviar a Favoritos</a>
+                                                    <br><a class="favorites update-wishlist" href="#"  data-id="{{ $product->proId }}">Enviar a Favoritos</a>
                                                 @endguest
                                             </div>
                                         </div>
@@ -82,9 +82,9 @@
                 </ul>   
                 <hr>             
             </div>
-            {{-- <div class="refinement brand" data-analyticsevent="ShopByPrice">
+             <div class="refinement brand" data-analyticsevent="ShopByPrice">
                 <h6 class="toggle active price price-color">
-                Rango de Precios
+                Orden de Precios
                 </h6>
                 <ul id="ref-price" class="refinementcontainer scrollable">
                     <div class="search-filters" style="display:none">
@@ -98,7 +98,7 @@
                             <a class="refinementlink add brand-size" href="" title="Futurebiotics">
                                 <span class="square-check"><i class="fa fa-square-o fa-lg"></i></span>
                                 <span class="text-ref ">
-                                    10.000 a 20.000
+                                   DEL MÁS BAJO AL MÁS ALTO
                                 </span>
                             </a>
                         </li>
@@ -106,37 +106,13 @@
                             <a class="refinementlink add brand-size" href="" title="Futurebiotics">
                                 <span class="square-check"><i class="fa fa-square-o fa-lg"></i></span>
                                 <span class="text-ref ">
-                                    20.000 a 30.000
-                                </span>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a class="refinementlink add brand-size" href="" title="Futurebiotics">
-                                <span class="square-check"><i class="fa fa-square-o fa-lg"></i></span>
-                                <span class="text-ref ">
-                                    30.000 a 40.000
-                                </span>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a class="refinementlink add brand-size" href="" title="Futurebiotics">
-                                <span class="square-check"><i class="fa fa-square-o fa-lg"></i></span>
-                                <span class="text-ref ">
-                                    40.000 a 50.000
-                                </span>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a class="refinementlink add brand-size" href="" title="Futurebiotics">
-                                <span class="square-check"><i class="fa fa-square-o fa-lg"></i></span>
-                                <span class="text-ref ">
-                                    Mas de 50.000
+                                    DEL MÁS ALTO AL MÁS BAJO
                                 </span>
                             </a>
                         </li>
                     
                 </ul>                
-            </div> --}}
+            </div> 
         </div>
 
     </div>

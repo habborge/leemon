@@ -10,8 +10,11 @@ use App\Member;
 use App\Creditcard;
 use App\Address;
 use App\WishList;
+use App\Category;
 use Illuminate\Support\Facades\DB;
 use DateTime;
+use Illuminate\Support\Facades\Storage;
+use Aws\S3\S3MultiRegionClient;
 
 class ProductController extends Controller
 {
@@ -302,14 +305,37 @@ class ProductController extends Controller
         ->where('products.id', $pro_id)
         ->first();
 
+        $categories = Category::select('categories.id as catId', 'categories.name as catName', 'cf.name as fName', 'cgf.name as gfName' )
+        ->join('product_categories as pc', 'categories.id', 'pc.category_id')
+        ->leftJoin('categories as cf', 'cf.id', 'categories.father_id')
+        ->leftJoin('categories as cgf', 'cgf.id', 'cf.father_id')
+        ->where('pc.product_id', $pro_id)
+        ->get();
 
+        //dd($categories);
 
-        $similar = Product::where('subcategory_id', '=',$product->subcategory_id)->where('id', '<>', $product->id)->paginate(12);
+        //$similar = Product::where('subcategory_id', '=',$product->subcategory_id)->where('id', '<>', $product->id)->paginate(12);
+        $similar = Product::select('products.id as proId', 'products.reference','products.name as proName','products.brand','products.description','products.price','products.img1','products.prom','products.health_register','products.width','products.length','products.height','products.weight','products.fee')
+        ->join('product_categories as pc', 'products.id', 'pc.product_id')
+        ->where('pc.category_id', '=',$product->subcategory_id)
+        ->where('products.id', '<>', $product->id)
+        ->paginate(12);
+
+        $url = env('BUCKET_SUBFOLDER')."/products/".$product->reference."/";
+        //dd($url);
+        $disk = Storage::disk('s3');
+        $images = $disk->allFiles($url);
         
+        $key_a = array_search($url.$product->img1, $images);
+        unset($images[$key_a]);
+        
+        //dd($images);
         return view('details',[
             'prod_id' => $pro_id,
             'prod_info' => $product,
             'similars' => $similar,
+            'categories' => $categories,
+            'images' => $images
         ]);
     }
 
@@ -325,12 +351,19 @@ class ProductController extends Controller
         $subCategory_id = $string[1];
         $son = $string[0];
 
-        $products = Product::where('subcategory_id', $subCategory_id)->orderBy('name')->paginate(24);
-        $brand = Product::select('brand')->where('subcategory_id', $subCategory_id)
+        $products = Product::select('products.id as proId', 'products.reference','products.name as proName','products.brand','products.description','products.price','products.img1','products.prom','products.health_register','products.width','products.length','products.height','products.weight','products.fee')
+        ->join('product_categories as pc', 'products.id', 'pc.product_id')
+        ->where('pc.category_id', $subCategory_id)
+        ->orderBy('products.restrictions', 'DESC')
+        ->orderBy('name')
+        ->paginate(24);
+
+        $brand = Product::select('brand')
+        ->join('product_categories as pc', 'products.id', 'pc.product_id')
+        ->where('pc.category_id', $subCategory_id)
         ->groupBy('brand')
         ->selectRaw('count(brand) as total_brand, brand')->get();
 
-        
         return view('products.categories', [
             'gfather' => str_replace("-", " ", $Gfather),
             'father' => str_replace("-", " ", $father),
@@ -385,12 +418,21 @@ class ProductController extends Controller
 
         $brandName = mb_strtoupper(str_replace("-", " ",$request->brand)); 
 
-        $products = Product::where('subcategory_id', $subCategory_id)->where('brand', $brandName)->orderBy('name')->paginate(24);
-        $brand = Product::select('brand')->where('subcategory_id', $subCategory_id)
+        //$products = Product::where('subcategory_id', $subCategory_id)->where('brand', $brandName)->orderBy('name')->paginate(24);
+        $products = Product::select('products.id as proId', 'products.reference','products.name as proName','products.brand','products.description','products.price','products.img1','products.prom','products.health_register','products.width','products.length','products.height','products.weight','products.fee')
+        ->join('product_categories as pc', 'products.id', 'pc.product_id')
+        ->where('pc.category_id', $subCategory_id)
+        ->where('brand', $brandName)
+        ->orderBy('products.restrictions', 'DESC')
+        ->orderBy('name')
+        ->paginate(24);
+
+        $brand = Product::select('brand')
+        ->join('product_categories as pc', 'products.id', 'pc.product_id')
+        ->where('pc.category_id', $subCategory_id)
         ->groupBy('brand')
         ->selectRaw('count(brand) as total_brand, brand')->get();
-
-        
+                
         return view('products.categories', [
             'gfather' => str_replace("-", " ", $Gfather),
             'father' => str_replace("-", " ", $father),

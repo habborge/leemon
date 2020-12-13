@@ -117,6 +117,7 @@
                                             $q_prod = 0;
                                             $delivery = 0;
                                             $total_d = 0;
+                                            $beforeFee = 0;
                                             $fee = 0;
                                         ?>
                                         @if(session('cart'))
@@ -153,7 +154,13 @@
                                                     // $delivery += $details['delivery_cost'] * $nq;
                                                     $total_d += $half + $discount;
                                                     $subTotal += ($details['price'] * $nq);
-
+                                                    
+                                                    if ($details['fee'] == 1){
+                                                        $beforeFee += (($details['price'] * $nq) - $half - $discount) / 1.19;
+                                                        $fee += ((($details['price'] * $nq) - $half - $discount) / 1.19) * 0.19;
+                                                    }else{
+                                                        $beforeFee += (($details['price'] * $nq) - $half - $discount);
+                                                    }
                                                 }
                                                 ?>
                     
@@ -343,7 +350,7 @@
                                                                     </div>
                                                                     <div class="col-md-3">
                                                                         <div class="row float-right">
-                                                                            {{ number_format($total / 1.19, 0) }}
+                                                                            {{ number_format($beforeFee) }}
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -357,7 +364,7 @@
                                                                     </div>
                                                                     <div class="col-md-3">
                                                                         <div class="row float-right">
-                                                                            {{ number_format($total * 0.19, 0) }}
+                                                                            {{ number_format($fee) }}
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -491,7 +498,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="row float-right">
-                                                    {{ number_format($total / 1.19, 0) }}
+                                                    {{ number_format($beforeFee) }}
                                                 </div>
                                             </div>
                                         </div>
@@ -505,7 +512,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="row float-right">
-                                                    {{ number_format(($total / 1.19) * 0.19, 0) }}
+                                                    {{ number_format($fee) }}
                                                 </div>
                                             </div>
                                         </div>
