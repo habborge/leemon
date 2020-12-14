@@ -32,6 +32,8 @@ class PaymentController extends Controller
         if (session('cart')){
             
             //$cart = session()->get('cart');
+            $codehash = session()->get('codehash');
+
             foreach (session('cart') as $id => $details){
                 $whole = 0;
                 $half = 0;
@@ -86,9 +88,15 @@ class PaymentController extends Controller
                     ->join('creditcards as c', 'members.user_id', '=', 'c.user_id' )
                     ->where('members.user_id', $user_id)
                     ->where('c.default', 1)->first();
+                    
+                    $int_codigo = 50;
+                    $methodCode = "0";
 
                 }else{
                     $member = Member::where('user_id', $user_id)->first();
+
+                    $int_codigo = 50;
+                    $methodCode = "2701";
                 }
                 
                 $address = Address::select('addresses.id as addressId', 'addresses.address', 'addresses.zipcode', 'addresses.contact', 'addresses.details', 'c.country_master_name', 'd.department', 'ct.city_d_id')->where('user_id', $user_id)
@@ -162,8 +170,8 @@ class PaymentController extends Controller
                     ],
                     "AdicionalesConfiguracion" => [
                         [
-                            "int_codigo" => 50,
-                            "str_valor" => "2701"
+                            "int_codigo" => $int_codigo,
+                            "str_valor" => $methodCode
                         ],
                         [
                             "int_codigo" => 100,
