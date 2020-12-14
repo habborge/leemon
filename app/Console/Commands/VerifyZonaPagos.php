@@ -75,10 +75,12 @@ class VerifyZonaPagos extends Command
                     payment_error::insertarError($response);
                 }
             }
+
             $rs = new payment_error();
             $rs->reference_code = "fdfdfd";
             $rs->order_id = 12;
             $rs->description = $info;
+            $rs->save();
         }
         //return 0;
     }
