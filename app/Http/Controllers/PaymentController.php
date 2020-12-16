@@ -153,8 +153,8 @@ class PaymentController extends Controller
                         "str_opcional5" => "opcion 15"
                     ],
                     "InformacionSeguridad" => [
-                        "int_id_comercio" => 30364,
-                        "str_usuario" => "Leemon",
+                        "int_id_comercio" => env('ZV_ID'),
+                        "str_usuario" => env('ZV_CO'),
                         "str_clave" => env('ZV_PA'),
                         "int_modalidad" => 1
                     ],
