@@ -88,14 +88,11 @@ class PaymentController extends Controller
                     ->join('creditcards as c', 'members.user_id', '=', 'c.user_id' )
                     ->where('members.user_id', $user_id)
                     ->where('c.default', 1)->first();
-                    
-                    $int_codigo = 50;
-                    $methodCode = "0";
+
+                    $methodCode = "0"
 
                 }else{
                     $member = Member::where('user_id', $user_id)->first();
-
-                    $int_codigo = 50;
                     $methodCode = "2701";
                 }
                 
@@ -153,8 +150,8 @@ class PaymentController extends Controller
                         "str_opcional5" => "opcion 15"
                     ],
                     "InformacionSeguridad" => [
-                        "int_id_comercio" => env('ZV_ID'),
-                        "str_usuario" => env('ZV_CO'),
+                        "int_id_comercio" => 30364,
+                        "str_usuario" => "Leemon",
                         "str_clave" => env('ZV_PA'),
                         "int_modalidad" => 1
                     ],
@@ -170,8 +167,8 @@ class PaymentController extends Controller
                     ],
                     "AdicionalesConfiguracion" => [
                         [
-                            "int_codigo" => $int_codigo,
-                            "str_valor" => $methodCode
+                            "int_codigo" => 50,
+                            "str_valor" => "2701"
                         ],
                         [
                             "int_codigo" => 100,
