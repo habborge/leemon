@@ -725,7 +725,7 @@
                     
                     $('#loading_web').hide(); 
                     //$('#selectioncard').modal('show');
-                    window.open(data.url);
+                    window.open(data.url, '_blank');
                 }else if(data.status==403){
                     $('#loading_web').hide(); 
                     $.each(data.errors, function( index, value ){
