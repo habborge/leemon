@@ -708,6 +708,7 @@
         });
 
         $("#proccess").click(function () {
+            
             var methodPay = $('input:radio[name=methodPay]:checked').val()   
 
             $.ajax({
@@ -724,7 +725,7 @@
                     
                     $('#loading_web').hide(); 
                     //$('#selectioncard').modal('show');
-                    window.open(data.url, '_blank');
+                    window.open(data.url);
                 }else if(data.status==403){
                     $('#loading_web').hide(); 
                     $.each(data.errors, function( index, value ){

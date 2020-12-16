@@ -32,8 +32,6 @@ class PaymentController extends Controller
         if (session('cart')){
             
             //$cart = session()->get('cart');
-            $codehash = session()->get('codehash');
-
             foreach (session('cart') as $id => $details){
                 $whole = 0;
                 $half = 0;
@@ -89,11 +87,8 @@ class PaymentController extends Controller
                     ->where('members.user_id', $user_id)
                     ->where('c.default', 1)->first();
 
-                    $methodCode = "0";
-
                 }else{
                     $member = Member::where('user_id', $user_id)->first();
-                    $methodCode = "2701";
                 }
                 
                 $address = Address::select('addresses.id as addressId', 'addresses.address', 'addresses.zipcode', 'addresses.contact', 'addresses.details', 'c.country_master_name', 'd.department', 'ct.city_d_id')->where('user_id', $user_id)
@@ -118,15 +113,11 @@ class PaymentController extends Controller
                         //$order_id=$rs->id;
                         $new_details = New Order_detail();
                         $ds = $new_details->insert($rs[1], $new_array);
-                        $orderId = $rs[1];
                         
                     }else{
                         return back()->with('notice', 'Un error ha ocurrido!!');
                     }
-                }else{
-                    $order = Order::select('id')->where('user_id', $user_id)->where('code_hash', session('codehash'))->first();
-                    $orderId = $order->id;
-                }   
+                }    
                 //new class to insert new order
                 
                 $reference = $user_id."~";
