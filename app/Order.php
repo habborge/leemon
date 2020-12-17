@@ -37,4 +37,21 @@ class Order extends Model
        
         return array($rs, $id);
     }
+
+    public static function reject_order($order){
+        $rs = Order::find($order);
+        $rs->status = "Reject";
+        $rs->save();
+
+        return $rs;
+    }
+
+    public static function approval_order($order){
+        $rs = Order::find($order);
+        $rs->status = "Approved";
+        $rs->status_after_approved = "Stock";
+        $rs->save();
+
+        return $rs;
+    }
 }

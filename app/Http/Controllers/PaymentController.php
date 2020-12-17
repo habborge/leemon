@@ -150,8 +150,8 @@ class PaymentController extends Controller
                         "str_opcional5" => "opcion 15"
                     ],
                     "InformacionSeguridad" => [
-                        "int_id_comercio" => 30364,
-                        "str_usuario" => "Leemon",
+                        "int_id_comercio" => env('ZV_ID'),
+                        "str_usuario" => env('ZV_CO'),
                         "str_clave" => env('ZV_PA'),
                         "int_modalidad" => 1
                     ],
@@ -168,7 +168,7 @@ class PaymentController extends Controller
                     "AdicionalesConfiguracion" => [
                         [
                             "int_codigo" => 50,
-                            "str_valor" => "2701"
+                            "str_valor" => $methodCode
                         ],
                         [
                             "int_codigo" => 100,
@@ -218,7 +218,7 @@ class PaymentController extends Controller
         
                 ];
             
-                
+               
                 $response = Http::post('https://www.zonapagos.com/Apis_CicloPago/api/InicioPago', $data);
 
                // return redirect()->to($response->json()['str_url']);

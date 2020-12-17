@@ -24,8 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
-        $schedule->command('payment:verify')->everyFifteenMinutes();
+        // $schedule->command('inspire')->hourly(); everyFiveMinutes
+        $schedule->command('payment:verify')->everyMinute();
     }
 
     /**
