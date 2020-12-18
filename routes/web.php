@@ -62,6 +62,9 @@ Route::group([
 
     //------- Payment process ----------------------------------------
     Route::post('secure/methods/paynow', 'PaymentController@paymentProcess');
+
+    //------- Send Email to friend -----------------------------------
+    Route::post('send-email-friend', 'SendingEmailController@sendToFriend');
 });
 
 Auth::routes();

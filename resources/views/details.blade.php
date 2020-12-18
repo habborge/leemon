@@ -109,12 +109,12 @@
                                 <div class="form-group">
                                     <div class="col-xl-12">
                                         <div class="row">
-                                            <div class="col-xl-8">
+                                            <div class="col-xl-7">
                                                 <div class="row">
                                                     <button id="" class="btn btn-purchase btn-block update-cart"  data-id="{{ $prod_id }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
                                                 </div>
                                             </div>
-                                            <div class="col-xl-4">
+                                            <div class="col-xl-5">
                                                 <div class="row">
                                                     @guest
                                                     @else
@@ -129,24 +129,24 @@
                                 <div class="form-group">
                                     @guest
                                     @else
-                                    <div class="col-xl-12">
-                                        <div class="row">
-                                            <div class="alert alert-email" role="alert">
-                                                <h5 class="alert-heading">Enviaselo a un Amigo!</h5>
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                      <span class="input-group-text" id="basic-addon1">@</span>
+                                        <div class="col-xl-12">
+                                            <div class="row">
+                                                <div class="alert alert-email" role="alert" style="width: 100%">
+                                                    <h6 class="alert-heading">Enviaselo a un Amigo!</h6>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">@</span>
+                                                        </div>
+                                                        <input id="email" name="email" type="email" class="form-control" placeholder="email de tu amigo" aria-label="email" aria-describedby="basic-addon1" required>
+                                                        <div class="input-group-append">
+                                                            <button id="sendEmail" class="btn btn-dark" type="button">Enviar articulo</button>
+                                                        </div>
                                                     </div>
-                                                    <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-                                                    <div class="input-group-append">
-                                                        <button class="btn btn-secondary" type="button">  Enviar  </button>
-                                                      </div>
+                                                    <div id="mm"></div>
+
                                                 </div>
-                                                <hr>
-                                                <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
-                                              </div>
+                                            </div>
                                         </div>
-                                    </div>
                                     @endguest
                                 </div>
                             </form>
@@ -275,25 +275,42 @@
 
         $('.owl-carousel').owlCarousel({
       
-      loop:true,
-      margin:10,
-      responsiveClass:true,
-      responsive:{
-          0:{
-              items:1,
-              nav:true
-          },
-          600:{
-              items:3,
-              nav:false
-          },
-          1000:{
-              items:5,
-              nav:true,
-              loop:false
-          }
-      }
-    });
+            loop:true,
+            margin:10,
+            responsiveClass:true,
+            responsive:{
+                0:{
+                    items:1,
+                    nav:true
+                },
+                600:{
+                    items:3,
+                    nav:false
+                },
+                1000:{
+                    items:5,
+                    nav:true,
+                    loop:false
+                }
+            }
+        });
+
+        $("#sendEmail").click(function(){
+            if($("#email").val().indexOf('@', 0) == -1 || $("#email").val().indexOf('.', 0) == -1) {
+                $("#mm").text("Ingrese un email valido!!");
+                return false;
+            }
+
+            $.ajax({
+                url: "{{ url('send-email-friend')}}",
+                method: "post",
+                data: {_token: '{{ csrf_token() }}', id: '{{ $prod_id }}', proName: '{{$prod_info->name}}', img: "{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}", email: $("#email").val()},
+                success: function (response) {
+                    // window.location.reload();
+                }
+            });
+            
+        });
     });
 </script>
 @endsection

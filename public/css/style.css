@@ -397,7 +397,8 @@
   }
 
   .tabs button{
-    font-size: 12px;
+    font-family: "AcuminVariableConcept2";
+    font-size: 14px;
   }
   
   .tabs li{
@@ -448,19 +449,22 @@
     background-color: #4a8b41 !important;
     border: 1px solid #33642c !important;
     color: #fcfcfc !important;
-    border-radius: 0% !important;
+    border-radius: .25rem !important;
     margin-right: 5px;
+    font-family: "AcuminVariableConcept2";
+    font-size: 14px;
 }
 .btn-purchase:hover{
     background-color: #246e1b !important;
     border: 1px solid #33642c !important;
     color: #fff !important;
+    
 }
 .btn-wishlist{
     background-color: #fba38f !important;
     border: 1px solid #d8806c !important;
     color: #fcfcfc !important;
-    border-radius: 0% !important;
+    border-radius: .25rem !important;
     margin-right: 5px;
 }
 .btn-wishlist:hover{
@@ -710,8 +714,8 @@ padding: 0 8px 0 7px;
 
 .alert-email{
     color: #ffffff !important;
-background-color: #403d38 !important;
-border-color: #292724 !important;
+background-color: #7c7c7c !important;
+border-color: #646464 !important;
 }
 /* ---------------------------------------------------------------------------------
    -- resposive design
