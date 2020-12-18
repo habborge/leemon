@@ -109,12 +109,12 @@
                                 <div class="form-group">
                                     <div class="col-xl-12">
                                         <div class="row">
-                                            <div class="col-xl-6">
+                                            <div class="col-xl-8">
                                                 <div class="row">
                                                     <button id="" class="btn btn-purchase btn-block update-cart"  data-id="{{ $prod_id }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
                                                 </div>
                                             </div>
-                                            <div class="col-xl-6">
+                                            <div class="col-xl-4">
                                                 <div class="row">
                                                     @guest
                                                     @else
@@ -124,6 +124,30 @@
                                             </div>
                                         </div>
                                     </div>
+                                    
+                                </div>
+                                <div class="form-group">
+                                    @guest
+                                    @else
+                                    <div class="col-xl-12">
+                                        <div class="row">
+                                            <div class="alert alert-email" role="alert">
+                                                <h5 class="alert-heading">Enviaselo a un Amigo!</h5>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                      <span class="input-group-text" id="basic-addon1">@</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-secondary" type="button">  Enviar  </button>
+                                                      </div>
+                                                </div>
+                                                <hr>
+                                                <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+                                              </div>
+                                        </div>
+                                    </div>
+                                    @endguest
                                 </div>
                             </form>
                         </div>
@@ -158,12 +182,8 @@
                         <div class="card mb-4 shadow-sm">
                           <a href="/product/{{$similar->proId}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $similar->reference }}/{{$similar->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
                           <div class="card-body text-center">
-                            
-                            
                             <span class="brand-font">{{ucwords($similar->brand)}} </span>
                             <h6>{{ucwords($similar->proName)}} </h6>
-                
-                            
                             <h6>
                               @if ($similar->prom == 1) 
                               <span class="badge badge-warning">Paga 2 Lleva 3</span>

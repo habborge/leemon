@@ -76,6 +76,9 @@
         transform: translate(-50%, -50%);
         -webkit-transform: translate(-50%, -50%);
     }
+    .otro{
+        width: 100% !important;
+    }
 </style>
 <body>
     <div id="app">
@@ -97,11 +100,17 @@
                     <form  name="form" id="form" action="/result" class="search-form" method="GET">
                         @csrf
                         
-                        <div class="input-group mb-3">
-                            <input name="search" type="search" class="form-control" aria-label="search" aria-describedby="" placeholder="Search">
-                            <div class="input-group-append">
-                              
-                              <button class="btn btn-outline-success" type="submit">Search</button>
+                        <div class="col-md-12 col-12 input-group mb-3">
+                            <div id="prefetch" class="col-md-10 col-9">
+                                <div class="row">
+                                    <input id="search" name="search" type="search" class="form-control typeahead" aria-label="search" aria-describedby="" placeholder="Search" style="">
+                                </div>
+                            </div>
+                            
+                            <div class="input-group-append col-md-2 col-3">
+                              <div class="row">
+                                <button class="btn btn-outline-success" type="submit">Search</button>
+                              </div>
                             </div>
                             
                           </div>
@@ -264,6 +273,7 @@
 
     @yield('custom-js')
     @yield('modal-js')
+    <script src="{{ asset('js/typeahead.bundle.js') }}" defer></script>
     <script type="text/javascript">
         function openNav() {
             document.getElementById("mySidepanel").style.width = "100%";
@@ -272,6 +282,28 @@
         function closeNav() {
             document.getElementById("mySidepanel").style.width = "0";
         }
+
+        $(document).ready(function(){
+            // Defining the local dataset
+            
+            
+            // Constructing the suggestion engine
+            var list = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.whitespace,
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            // url points to a json file that contains an array of country names, see
+            // https://github.com/twitter/typeahead.js/blob/gh-pages/data/countries.json
+            prefetch: '../js/list.json'
+            });
+
+            // passing in `null` for the `options` arguments will result in the default
+            // options being used
+            $('#prefetch .typeahead').typeahead(null, {
+            name: 'list',
+            source: list
+            });
+                    });
+
     </script>
     
 </body>
