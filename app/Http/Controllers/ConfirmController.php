@@ -5,18 +5,21 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Mail\SendPurchase;
 use App\payment_error;
+use App\Member;
 use App\Order;
 use DateTime;
+use Mail;
 
 class ConfirmController extends Controller
 {
     public function ConfirmTrans(Request $request){
         
-        // $commerce_id = $request->id_comercio;
-        // $payment_id = $request->id_pago;
-        $commerce_id = 30364;
-        $payment_id = "100498-34";
+        $commerce_id = $request->id_comercio;
+        $payment_id = $request->id_pago;
+        // $commerce_id = 30364;
+        // $payment_id = "100498-34";
 
         if ($commerce_id == env('ZV_ID')){
 
@@ -110,6 +113,7 @@ class ConfirmController extends Controller
                             // $newDate = date("Y-m-d H:i:s", strtotime($data_info[19]));
 
                             $rs = new payment_error();
+
                             $rs->reference_code = $order->code_hash;
                             $rs->user_id = $order->user_id;
                             $rs->order_id = $order->id;
@@ -152,6 +156,11 @@ class ConfirmController extends Controller
 
                             if ($approval == 1){
                                 $order_change = Order::approval_order($order->id);
+
+                                $member = Member::select('user_id','firstname','lastname','email')->where('user_id', $order->user_id)->first();
+
+                                $sending = Mail::to($member->email)->send(new SendPurchase($order, $member, $rs));
+
                             }else{
                                 $order_change = Order::reject_order($order->id);
                             }

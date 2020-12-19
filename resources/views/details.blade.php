@@ -134,10 +134,13 @@
                                                 <div class="alert alert-email" role="alert" style="width: 100%">
                                                     <h6 class="alert-heading">Enviaselo a un Amigo!</h6>
                                                     <div class="input-group mb-3">
+                                                        <div id="loading_sendtofriend">
+                                                            <img src="/img/preloader.gif" id="img_loading" alt="">
+                                                        </div>
                                                         <div class="input-group-prepend">
                                                         <span class="input-group-text" id="basic-addon1">@</span>
                                                         </div>
-                                                        <input id="email" name="email" type="email" class="form-control" placeholder="email de tu amigo" aria-label="email" aria-describedby="basic-addon1" required>
+                                                        <input id="email" name="email" type="email" class="form-control" placeholder="email de tu amigo" aria-label="email" aria-describedby="basic-addon1" value="" required>
                                                         <div class="input-group-append">
                                                             <button id="sendEmail" class="btn btn-dark" type="button">Enviar articulo</button>
                                                         </div>
@@ -221,6 +224,7 @@
     @endif
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script defer src="../js/owl.carousel.min.js"></script>
+<script defer src="../js/sweetalert/sweetalert.all.js"></script>
 <script type="text/javascript">
     
 
@@ -305,7 +309,19 @@
                 url: "{{ url('send-email-friend')}}",
                 method: "post",
                 data: {_token: '{{ csrf_token() }}', id: '{{ $prod_id }}', proName: '{{$prod_info->name}}', img: "{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}", email: $("#email").val()},
+                beforeSend: function(x){
+                    $('#loading_sendtofriend').show();
+                },
                 success: function (response) {
+                    $('#loading_sendtofriend').hide();
+                    $("#email").val('');
+                    //toast('Success Toast','success');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Correo Enviado',
+                        text: 'El email ha sido enviado al amigo deseado',
+                    })
+                    //swal("Buen trabajo!", data.mensaje, "success");
                     // window.location.reload();
                 }
             });

@@ -15,11 +15,13 @@
         <script src="{{ secure_asset('js/scripts.js') }}" defer></script>
         <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ secure_asset('css/style.css') }}" rel="stylesheet">
+        <link href="{{ secure_asset('js/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
     @else
         <script src="{{ asset('js/app.js') }}" defer></script>
         <script src="{{ asset('js/scripts.js') }}" defer></script>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+        <link href="{{ asset('js/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
        
         
     @endif
@@ -35,6 +37,7 @@
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
     @yield('custom-css')
 </head>
 <style>
@@ -57,7 +60,7 @@
         display: none;
     }
 
-    #loading_web2, #loading_web3{
+    #loading_web2, #loading_web3, #loading_sendtofriend{
         position: absolute;
         top: 0;
         left: 0;
@@ -274,6 +277,7 @@
     @yield('custom-js')
     @yield('modal-js')
     <script src="{{ asset('js/typeahead.bundle.js') }}" defer></script>
+    <script src="{{ asset('js/sweetalert2/sweetalert2.all.min.js') }}"></script>
     <script type="text/javascript">
         function openNav() {
             document.getElementById("mySidepanel").style.width = "100%";
