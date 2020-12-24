@@ -20,7 +20,10 @@ class ConfirmController extends Controller
         $payment_id = $request->id_pago;
         // $commerce_id = 30364;
         // $payment_id = "100498-34";
-
+        $message = "";
+        $sw = 0;
+        $approval = 0;
+        
         if ($commerce_id == env('ZV_ID')){
 
             $data = [
@@ -46,9 +49,8 @@ class ConfirmController extends Controller
                         $info = $response->json()['str_res_pago'];
                         $data_info = explode("|", $info);
                         
-                        $sw = 0;
-                        $approval = 0;
-                        $message = "";
+                        
+                        
                         // PREGUNTAMOS POR LSO RESULATDOS
                         switch ($data_info[4]) {
                             case 200:
@@ -108,61 +110,69 @@ class ConfirmController extends Controller
                         if ($sw == 1){
                             
                             $orderId = explode("-", $payment_id);
-                            $order = Order::where('id', $orderId[1])->where('status', 'Open')->first();
-                            //16/12/2020 9:23:39 PM
-                            // $newDate = date("Y-m-d H:i:s", strtotime($data_info[19]));
+                            $orderPre = Order::where('id', $orderId[1])->where('status', 'Open');
 
-                            $rs = new payment_error();
+                            if ($orderPre->exists()){
+                                $order = $orderPre->first();
+                                                       
+                                //16/12/2020 9:23:39 PM
+                                // $newDate = date("Y-m-d H:i:s", strtotime($data_info[19]));
 
-                            $rs->reference_code = $order->code_hash;
-                            $rs->user_id = $order->user_id;
-                            $rs->order_id = $order->id;
-                            $rs->description = "100498-".$order->id."~".$response;
-                            $rs->pedido_num = $data_info[0];
-                            $rs->payment_num = $data_info[1];
-                            $rs->partial_payment = $data_info[2];
-                            $rs->finish_payment = $data_info[3];
-                            $rs->status_payment = $data_info[4];
-                            $rs->amount_paid = $data_info[5];
-                            $rs->total_paid = $data_info[6];
-                            $rs->fee_paid = $data_info[7];
-                            $rs->purchase_desc = $data_info[8];
-                            $rs->n_doc = $data_info[9];
-                            $rs->fullname = $data_info[10]." ".$data_info[11];
-                        
-                            $rs->phone = $data_info[12];
-                            $rs->email = $data_info[13];
-                            $rs->options = $data_info[14]."~".$data_info[15]."~".$data_info[16]."~".$data_info[17]."~".$data_info[18];
-                            $rs->purchase_date = $data_info[19];
-                            $rs->id_forma_pago = $data_info[20];
+                                $rs = new payment_error();
 
-                            if ($data_info[20] == 29){
-                                $rs->ticket_id = $data_info[21];
-                                $rs->service_code = $data_info[22];
-                                $rs->bank_code = $data_info[23];
-                                $rs->bank_name = $data_info[24];
-                                $rs->transaction_code = $data_info[25];
-                                $rs->transaction_cycle = $data_info[26];
-                                
-                            }else if ($data_info[20] == 32){
-                                $rs->ticket_id = $data_info[21];
-                                $rs->last4num = $data_info[22];
-                                $rs->cc_franchise = $data_info[23];
-                                $rs->approval_code = $data_info[24];
-                                $rs->number_received = $data_info[25];
-                            }
+                                $rs->reference_code = $order->code_hash;
+                                $rs->user_id = $order->user_id;
+                                $rs->order_id = $order->id;
+                                $rs->description = "100498-".$order->id."~".$response;
+                                $rs->pedido_num = $data_info[0];
+                                $rs->payment_num = $data_info[1];
+                                $rs->partial_payment = $data_info[2];
+                                $rs->finish_payment = $data_info[3];
+                                $rs->status_payment = $data_info[4];
+                                $rs->amount_paid = $data_info[5];
+                                $rs->total_paid = $data_info[6];
+                                $rs->fee_paid = $data_info[7];
+                                $rs->purchase_desc = $data_info[8];
+                                $rs->n_doc = $data_info[9];
+                                $rs->fullname = $data_info[10]." ".$data_info[11];
+                            
+                                $rs->phone = $data_info[12];
+                                $rs->email = $data_info[13];
+                                $rs->options = $data_info[14]."~".$data_info[15]."~".$data_info[16]."~".$data_info[17]."~".$data_info[18];
+                                $rs->purchase_date = $data_info[19];
+                                $rs->id_forma_pago = $data_info[20];
 
-                            $rs->save();
+                                if ($data_info[20] == 29){
+                                    $rs->ticket_id = $data_info[21];
+                                    $rs->service_code = $data_info[22];
+                                    $rs->bank_code = $data_info[23];
+                                    $rs->bank_name = $data_info[24];
+                                    $rs->transaction_code = $data_info[25];
+                                    $rs->transaction_cycle = $data_info[26];
+                                    
+                                }else if ($data_info[20] == 32){
+                                    $rs->ticket_id = $data_info[21];
+                                    $rs->last4num = $data_info[22];
+                                    $rs->cc_franchise = $data_info[23];
+                                    $rs->approval_code = $data_info[24];
+                                    $rs->number_received = $data_info[25];
+                                }
 
-                            if ($approval == 1){
-                                $order_change = Order::approval_order($order->id);
+                                $rs->save();
 
-                                $member = Member::select('user_id','firstname','lastname','email')->where('user_id', $order->user_id)->first();
+                                if ($approval == 1){
+                                    $order_change = Order::approval_order($order->id);
 
-                                $sending = Mail::to($member->email)->send(new SendPurchase($order, $member, $rs));
+                                    $member = Member::select('user_id','firstname','lastname','email')->where('user_id', $order->user_id)->first();
 
+                                    $sending = Mail::to($member->email)->send(new SendPurchase($order, $member, $rs));
+
+                                    
+                                }else{
+                                    $order_change = Order::reject_order($order->id);
+                                }
                             }else{
-                                $order_change = Order::reject_order($order->id);
+                                
                             }
                         }
 
@@ -183,5 +193,9 @@ class ConfirmController extends Controller
                 }
             }
         }
+        return view('confirmPurchase', [
+            'approval' => $approval,
+            'message' => $message
+        ]);
     }
 }
