@@ -718,32 +718,37 @@
     function connectZonPagos(){
         var methodPay = $('input:radio[name=methodPay]:checked').val()   
 
-            $.ajax({
-                type:'POST',
-                dataType:'json',
-                data: {_token: '{{ csrf_token() }}', methodPay: methodPay},
-                url:'secure/methods/paynow',
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                beforeSend: function(x){
-                    $('#loading_web').show();
-                },
-                success:function(data){
-                if(data.status==200){
-                    
-                    $('#loading_web').hide(); 
-                    //$('#selectioncard').modal('show');
-                    window.open(data.url, '_blank');
-                }else if(data.status==403){
-                    $('#loading_web').hide(); 
-                    $.each(data.errors, function( index, value ){
-                    toastr.error(value, 'Error!', {  timeOut: 5e3});
-                    });  
-                }else{ 
-                    $('#loading_web').hide(); 
-                    toastr.error(data.message, "Error!");
-                }  
-                }
-            });
+            if (methodPay ==2){
+                $.ajax({
+                    type:'POST',
+                    dataType:'json',
+                    data: {_token: '{{ csrf_token() }}', methodPay: methodPay},
+                    url:'secure/methods/paynow',
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    beforeSend: function(x){
+                        $('#loading_web').show();
+                    },
+                    success:function(data){
+                    if(data.status==200){
+                        
+                        $('#loading_web').hide(); 
+                        //$('#selectioncard').modal('show');
+                        window.open(data.url, '_blank');
+                    }else if(data.status==403){
+                        $('#loading_web').hide(); 
+                        $.each(data.errors, function( index, value ){
+                        toastr.error(value, 'Error!', {  timeOut: 5e3});
+                        });  
+                    }else{ 
+                        $('#loading_web').hide(); 
+                        toastr.error(data.message, "Error!");
+                    }  
+                    }
+                });
+            }else{
+                
+            }
+            
     }
 </script>
 @endsection

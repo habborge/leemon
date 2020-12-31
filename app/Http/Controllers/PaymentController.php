@@ -134,6 +134,8 @@ class PaymentController extends Controller
                     $order = Order::select('id')->where('user_id', $user_id)->where('code_hash', session('codehash'))->first();
                     $orderId = $order->id;
                 }   
+
+                session()->put('myorder', $orderId);
                 //new class to insert new order
                 
                 $reference = $user_id."~";

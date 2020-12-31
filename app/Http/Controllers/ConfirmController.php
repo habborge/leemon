@@ -173,7 +173,8 @@ class ConfirmController extends Controller
                                     $order_change = Order::reject_order($order->id);
                                 }
 
-                                session()->put('MyOrderId', $order->id);
+                                
+
                             }else{
                                 
                             }
@@ -204,14 +205,19 @@ class ConfirmController extends Controller
     //--------------------------------------------------------------------------------------------------------------------------------
 
     public function BackToCommerce(){
+        
+        $message = "";
+        $sw = 0;
+        $approval = 0;
+
         $user_id = Auth::user()->id;
-        $orderIdSession = session()->get('MyOrderId');
+        $orderIdSession = session()->get('myorder');
 
         $openOrder = Order::where('user_id', $user_id)->where('id', $orderIdSession);
-
+        //dd($orderIdSession);
         if ($openOrder->exists()){
 
-            $order = $orderPre->first();
+            $order = $openOrder->first();
 
             $data = [
                 "int_id_comercio" => env('ZV_ID'),
@@ -222,6 +228,7 @@ class ConfirmController extends Controller
             ];
     
             $response = Http::post('https://www.zonapagos.com/Apis_CicloPago/api/VerificacionPago', $data);
+            dd($response->json());
             // if int_estado = 1 then API ran good
             if ($response->json()['int_estado'] == 1){ 
 
