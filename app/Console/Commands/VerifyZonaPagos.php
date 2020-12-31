@@ -255,6 +255,7 @@ class VerifyZonaPagos extends Command
 
                         }else if ($response->json()['int_cantidad_pagos'] > 1){
                             $info = explode(";", $response->json()['str_res_pago']);
+                            $order_change = Order::reject_order($order->id);
                         }
                     }else{
                         // payment_error::insertarError($response);

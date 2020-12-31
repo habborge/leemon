@@ -20,6 +20,7 @@ class PaymentController extends Controller
     public function paymentProcess(Request $request){
 
         $method = $request->methodPay;
+        
 
         $subTotal = 0;
         $total = 0;
@@ -109,7 +110,7 @@ class PaymentController extends Controller
                 ->join('cost_tcc as ct', 'ct.id', 'addresses.city')
                 ->where('user_id', $user_id)
                 ->where('default', 1)->first();
-
+                
                 //bring product array from cart
                 $valor_almacenado = session('cart');
                 $new_array = array_values($valor_almacenado);
@@ -226,10 +227,10 @@ class PaymentController extends Controller
                     ]
         
                 ];
-            
+                
                
                 $response = Http::post('https://www.zonapagos.com/Apis_CicloPago/api/InicioPago', $data);
-
+                
                // return redirect()->to($response->json()['str_url']);
                 
                 //dd($response->json(),json_encode($data),$response->json()['str_url']);
