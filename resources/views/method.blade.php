@@ -558,7 +558,7 @@
                                         @if ($answer == 0)
                                             <a href="{{ url('purchase') }}" class="btn btn-leemon-method btn-block">Información de Facturación</a>
                                         @elseif ($answer == 1)
-                                            <a href="{{ url('methods') }}" class="btn btn-success btn-block">Proceder con el Pago</a>
+                                            <button id="proccess2" class="btn btn-success btn-sm btn-block">Proceder con el Pago</button>
                                         @endif
                                     @endguest
                                 </div>
@@ -708,8 +708,15 @@
         });
 
         $("#proccess").click(function () {
-            
-            var methodPay = $('input:radio[name=methodPay]:checked').val()   
+            connectZonPagos();
+        });
+        $("#proccess2").click(function () {
+            connectZonPagos();
+        });
+    });
+
+    function connectZonPagos(){
+        var methodPay = $('input:radio[name=methodPay]:checked').val()   
 
             $.ajax({
                 type:'POST',
@@ -737,7 +744,6 @@
                 }  
                 }
             });
-        });
-    });
+    }
 </script>
 @endsection

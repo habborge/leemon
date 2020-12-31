@@ -31,7 +31,12 @@ Route::get('/result', 'searchController@searchProducts');
 Route::get('/products/{gfather}/{father}/{son}', 'ProductController@groupSon');
 Route::get('/products/{gfather}/{father}/{son}/{brand}', 'ProductController@groupByBand');
 Route::get('/products/{gfather}','ProductController@groupGfa');
+
+// get Confirm from zonaPagos
 Route::get('/secure/methods/zp/response', 'ConfirmController@ConfirmTrans');
+
+// back to commerce from zonaPagos
+Route::get('/secure/methods/zp/back', 'ConfirmController@BackToCommerce');
 
 Route::group([
     'middleware' => ['auth']

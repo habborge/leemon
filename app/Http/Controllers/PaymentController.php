@@ -26,6 +26,7 @@ class PaymentController extends Controller
         $q_prod = 0;
         $delivery = 0;
         $total_d = 0;
+        $beforeFee = 0;
         $fee = 0;
         $sw = 0;
 
@@ -66,6 +67,12 @@ class PaymentController extends Controller
                     $total_d += $half + $discount;
                     $subTotal += ($details['price'] * $nq);
 
+                    if ($details['fee'] == 1){
+                        $beforeFee += (($details['price'] * $nq) - $half - $discount) / 1.19;
+                        $fee += ((($details['price'] * $nq) - $half - $discount) / 1.19) * 0.19;
+                    }else{
+                        $beforeFee += (($details['price'] * $nq) - $half - $discount);
+                    }
                    
 
                 }else{
@@ -188,7 +195,7 @@ class PaymentController extends Controller
                         ],
                         [
                             "int_codigo" => 104,
-                            "str_valor" => "http://127.0.0.1:8000/secure/methods/zp/response"
+                            "str_valor" => env('APP_URL')."/secure/methods/zp/back"
                         ],
                         [
                             "int_codigo" => 105,
