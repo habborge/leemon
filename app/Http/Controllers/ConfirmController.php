@@ -229,6 +229,7 @@ class ConfirmController extends Controller
     
             $response = Http::post('https://www.zonapagos.com/Apis_CicloPago/api/VerificacionPago', $data);
             // dd($response->json());
+            // dd(session()->all());
             // if int_estado = 1 then API ran good
             if ($response->json()['int_estado'] == 1){ 
 
@@ -295,6 +296,7 @@ class ConfirmController extends Controller
                                 $sw = 1;
                                 $approval = 1;
                                 $message = "Su transacción ha sido Aprovada!!";
+                                session()->forget(['cart', 'myorder', 'codehash']);
                                 break;
                         }
                     }else if ($response->json()['int_cantidad_pagos'] > 1){
