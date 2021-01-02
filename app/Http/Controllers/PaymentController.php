@@ -144,7 +144,7 @@ class PaymentController extends Controller
                 $data = [
                     "InformacionPago" => [
                         "flt_total_con_iva" => $total,
-                        "flt_valor_iva" => $fee,
+                        "flt_valor_iva" => 0,
                         "str_id_pago" => "100498-".$orderId,
                         "str_descripcion_pago" => "Compra de Productos Naturales",
                         "str_email" => $member->email,

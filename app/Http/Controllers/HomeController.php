@@ -36,6 +36,21 @@ class HomeController extends Controller
         
         $prom_1 = "Productos Destacados";
 
+        // $pros = Product::all();
+        
+        // foreach ($pros as $pro) {
+        //     $price = 0;
+        //     if ($pro->price == 0){
+        //         $pre = random_int(10000, 99900);
+        //     }else{
+        //         $pre = $pro->price;
+        //     }
+        //     $price = round($pre/100.0,0)*100;
+
+        //     $pro->price = $price;
+        //     $pro->save();
+        // }
+
         // $products_2 = Product::where('prom', '2')->orderBy('id')->paginate(12);
         // $prom_2 = "Paga el 2do con el 50% Off";
 
@@ -52,4 +67,6 @@ class HomeController extends Controller
             'price' => $products->price*/
         ]);
     }
+
+
 }

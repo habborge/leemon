@@ -228,7 +228,7 @@ class ConfirmController extends Controller
             ];
     
             $response = Http::post('https://www.zonapagos.com/Apis_CicloPago/api/VerificacionPago', $data);
-            dd($response->json());
+            // dd($response->json());
             // if int_estado = 1 then API ran good
             if ($response->json()['int_estado'] == 1){ 
 

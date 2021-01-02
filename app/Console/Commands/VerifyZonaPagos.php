@@ -156,7 +156,7 @@ class VerifyZonaPagos extends Command
                                 case 4001:
                                     $sw = 0;
                                     if ($data_info[20] == 32){
-                                        $message = "En este momento su Número de Referencia o Factura (100498-".$payment_id.") presenta un proceso de pago cuya
+                                        $message = "En este momento su Número de Referencia o Factura (100498-) presenta un proceso de pago cuya
                                         transacción se encuentra PENDIENTE de recibir confirmación por parte de su entidad financiera, por favor
                                         espere unos minutos y vuelva a consultar más tarde para verificar si su pago fue confirmado de forma exitosa.
                                         Si desea mayor información sobre el estado actual de su operación puede comunicarse a nuestras líneas de
@@ -166,7 +166,7 @@ class VerifyZonaPagos extends Command
                                 case 999:
                                     $sw = 0;
                                     if ($data_info[20] == 29){
-                                        $message = "En este momento su Numero de Referencia o Factura (100498-".$payment_id.") presenta un proceso de pago cuya
+                                        $message = "En este momento su Numero de Referencia o Factura (100498-) presenta un proceso de pago cuya
                                         transacción se encuentra PENDIENTE de recibir confirmación por parte de su entidad financiera, por favor
                                         espere unos minutos y vuelva a consultar más tarde para verificar si su pago fue confirmado de forma exitosa.
                                         Si desea mayor información sobre el estado actual de su operación puede comunicarse a nuestras líneas de
@@ -255,7 +255,7 @@ class VerifyZonaPagos extends Command
 
                         }else if ($response->json()['int_cantidad_pagos'] > 1){
                             $info = explode(";", $response->json()['str_res_pago']);
-                            $order_change = Order::reject_order($order->id);
+                            
                         }
                     }else{
                         // payment_error::insertarError($response);
