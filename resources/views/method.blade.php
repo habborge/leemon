@@ -731,7 +731,7 @@
                     success:function(data){
                     if(data.status==200){
                         //alert(data.url);
-                        $('#loading_web').hide(); 
+                        //$('#loading_web').hide(); 
                         //$('#selectioncard').modal('show');
                         //window.open(data.url, '_blank');
                         $(location).attr('href',data.url);

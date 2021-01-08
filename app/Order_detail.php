@@ -12,20 +12,16 @@ class Order_detail extends Model
 
     public function insert($order_id, $array)
     {
-        $i = 0;
-        
-        for ($i=0; $i < count($array); $i++ ){
-            $this->order_id = $order_id;
-            $this->product_id = $array[$i]['product_id'];
-            $this->name = $array[$i]['name'];
-            $this->description = "Descripción del producto";
-            $this->quantity = $array[$i]['quantity'];
-            $this->price = $array[$i]['price'];
-            $this->img1 = $array[$i]['photo'];
-            $this->prom = $array[$i]['prom'];
-            $this->save();
-        }
-
+        $this->order_id = $order_id;
+        $this->product_id = $array['product_id'];
+        $this->name = $array['name'];
+        $this->description = "Descripción del producto";
+        $this->quantity = $array['quantity'];
+        $this->price = $array['price'];
+        $this->img1 = $array['photo'];
+        $this->prom = $array['prom'];
+        $this->save();
+       
         return true;
     }
 }

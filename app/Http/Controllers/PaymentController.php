@@ -124,8 +124,11 @@ class PaymentController extends Controller
                 
                     if($rs[0]){
                         //$order_id=$rs->id;
-                        $new_details = New Order_detail();
-                        $ds = $new_details->insert($rs[1], $new_array);
+                        for ($i=0; $i < count($new_array); $i++ ){
+                            $new_details = New Order_detail();
+                            
+                            $ds = $new_details->insert($rs[1], $new_array[$i]);
+                        }
                         $orderId = $rs[1];
                         
                     }else{
