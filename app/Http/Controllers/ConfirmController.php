@@ -166,7 +166,7 @@ class ConfirmController extends Controller
 
                                     $member = Member::select('user_id','firstname','lastname','email')->where('user_id', $order->user_id)->first();
 
-                                    $sending = Mail::to($member->email)->send(new SendPurchase($order, $member, $rs));
+                                    $sending = Mail::to($member->email)->subject('Compra en Leemon')->send(new SendPurchase($order, $member, $rs));
 
                                     
                                 }else{
