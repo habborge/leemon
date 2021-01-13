@@ -9,7 +9,7 @@
     @endif
 @endsection
 @section('content')
-<div class="tabs">
+<div class="tabs2">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -24,8 +24,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-12">
+            </div> 
+            <div class="tabs col-md-12">
                 <div class="row">
                     <div class="col-xl-1 xzoom-thumbs">
                         <ul class="nav nav-pills nav-stacked flex-column">
@@ -66,8 +66,7 @@
                             <form action="{{ route('generateimg') }}" method="POST" name="formaut" id="formRegisterwithdrawal">
                                 @csrf
                                 <div class="form-group">
-                                    
-                                  <h2><small class="info-small">{{ $prod_info->brand }}</small><br>{{ $prod_info->name }}</h2>
+                                   <h2><small class="info-small">{{ $prod_info->brand }}</small><br>{{ $prod_info->name }}</h2>
                                   <hr class="mb-4">
                                 </div>
                                 <div class="form-group">
@@ -86,7 +85,8 @@
                                    
                                     <p>
                                         <span class="price-color">Precio: </span><br>
-                                        <span class="price text-danger">Ahora $ {{ number_format($prod_info->price, 0) }} COP</span>
+                                        <span class="price">Ahora $ {{ number_format($prod_info->price, 0) }} COP</span><br>
+                                        {{-- <span><del>Antes $ {{ number_format(($prod_info->price * 0.15) + $prod_info->price, 0) }} COP</del></span>  --}}
                                     </p>
                                     <hr class="mb-4">
                                     {{-- <span class="price-color">Costo de Envio:</span><br> $ {{ number_format($prod_info->delivery_cost, 0) }} COP<br>
@@ -157,20 +157,53 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12">
+            <div class="tabs3 col-md-12">
                 <hr class="mb-4">
-                <p>
-                    <span class="price-color">Sobre este Articulo</span> <br> <span class="text-justify">{{ $prod_info->description }}</span> 
-                </p>
+                <h3 class="h3color">Sobre este Articulo</h3> <br>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <a class="nav-link active" id="desc-tab" data-toggle="tab" href="#desc" role="tab" aria-controls="desc" aria-selected="true">Descripción</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <a class="nav-link" id="cara-tab" data-toggle="tab" href="#cara" role="tab" aria-controls="cara" aria-selected="false">Caracteristicas</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <a class="nav-link" id="ingr-tab" data-toggle="tab" href="#ingr" role="tab" aria-controls="ingr" aria-selected="false">Ingredientes</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="indi-tab" data-toggle="tab" href="#indi" role="tab" aria-controls="indi" aria-selected="false">Indicaciones de uso</a>
+                      </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="desc" role="tabpanel" aria-labelledby="desc-tab">
+                        <p class="text-justify">
+                            {{ $prod_info->description }}
+                        </p>
+                    </div>
+                    <div class="tab-pane fade" id="cara" role="tabpanel" aria-labelledby="cara-tab">
+                        <p class="text-justify">
+                            {{ $prod_info->characteristics }}
+                        </p>
+                    </div>
+                    <div class="tab-pane fade" id="ingr" role="tabpanel" aria-labelledby="ingr-tab">
+                        <p class="text-justify">
+                            {{ $prod_info->ingredients }}
+                        </p>
+                    </div>
+                    <div class="tab-pane fade" id="indi" role="tabpanel" aria-labelledby="indi-tab">
+                        <p class="text-justify">
+                            {{ $prod_info->use }}
+                        </p>
+                    </div>
+                </div>
             </div>
-            
         </div>
-    </div>
+    </div><br>
     <div class="container">
         <div class="row">
           <div class="col-md-12">
             <hr class="mb-4">
-            <h3>Te podria Interesar</h3>
+            <h3 class="h3color">Te podria Interesar</h3><br>
           </div>
         </div>
         <div class="owl-carousel owl-theme owl-loaded owl-drag">

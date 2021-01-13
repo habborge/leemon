@@ -295,7 +295,7 @@ class ProductController extends Controller
     public function details(Request $request)
     {
         $pro_id = $request->id;
-        $product = Product::select('products.id', 'products.reference', 'products.name', 'products.brand', 'products.subcategory_id', 'products.description', 'products.price', 'products.img1','products.prom', 'l.id as lot_id')
+        $product = Product::select('products.id', 'products.reference', 'products.name', 'products.brand', 'products.subcategory_id', 'products.description', 'products.characteristics', 'products.ingredients','products.use','products.price', 'products.img1','products.prom', 'l.id as lot_id')
         ->leftJoin('lots as l', 'products.id', 'l.product_id')
         ->leftJoin('stocks as s', 's.lot_id', 'l.id')
         ->selectRaw('sum(s.quantity) as stockquantity, l.id as lot2')
