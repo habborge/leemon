@@ -32,6 +32,7 @@ class HomeController extends Controller
         ->groupBy('products.id')
         ->orderBy('products.id')
         ->where('prom', '4')
+        ->where('price', '>', 0)
         ->paginate(10);
         
         $prom_1 = "Productos Destacados";

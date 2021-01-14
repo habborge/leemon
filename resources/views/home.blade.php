@@ -208,7 +208,7 @@
                               </div>
                               <div class="col-md-12 button-topline">
                                 <div class="row">
-                                  <a href="{{ url('add-to-cart/'.$product->id) }}">
+                                  <a href="{{ url('add-to-cart/') }}">
                                     <button type="button" class="btn btn-leemon-green">
                                       <i class="czi-cart font-size-sm mr-1"></i>Comprar Ahora
                                     </button>
@@ -248,7 +248,7 @@
                               </div>
                               <div class="col-md-12 button-topline">
                                 <div class="row">
-                                  <a href="{{ url('add-to-cart/'.$product->id) }}">
+                                  <a href="{{ url('add-to-cart/') }}">
                                     <button type="button" class="btn btn-leemon-green">
                                       <i class="czi-cart font-size-sm mr-1"></i>Comprar Ahora
                                     </button>
