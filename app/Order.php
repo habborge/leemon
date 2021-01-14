@@ -38,6 +38,14 @@ class Order extends Model
         return array($rs, $id);
     }
 
+    public static function pending_order($order){
+        $rs = Order::find($order);
+        $rs->status = "Processing";
+        $rs->save();
+
+        return $rs;
+    }
+
     public static function reject_order($order){
         $rs = Order::find($order);
         $rs->status = "Reject";
