@@ -16,14 +16,16 @@
         <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ secure_asset('css/style.css') }}" rel="stylesheet">
         <link href="{{ secure_asset('js/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
+        <link href="{{ secure_asset('js/toastr/toastr.min.css') }}" rel="stylesheet">
+        <script src="{{ secure_asset('js/toastr/toastr.min.js') }}" defer></script>
     @else
         <script src="{{ asset('js/app.js') }}" defer></script>
         <script src="{{ asset('js/scripts.js') }}" defer></script>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-        <link href="{{ asset('js/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
-       
-        
+        <link href="{{ asset('js/toastr/toastr.min.css') }}" rel="stylesheet">
+        <script src="{{ asset('js/toastr/toastr.min.js') }}" defer></script>
+               
     @endif
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -183,49 +185,49 @@
                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span id="littleCart">Carrito</span><span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
                             </button>
                             @if(session('cart'))
-                            <div class="dropdown-menu">
-                                <div class="row total-header-section">
-                                    <div class="col-lg-6 col-sm-6 col-6">
-                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
+                                <div class="dropdown-menu">
+                                    <div class="row total-header-section">
+                                        <div class="col-lg-6 col-sm-6 col-6">
+                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
+                                        </div>
+                                        <?php $total = 0 ?>
+                                        @foreach((array) session('cart') as $id => $details)
+                                            <?php $total += $details['price'] * $details['quantity'] ?>
+                                        @endforeach
+        
+                                        <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
+                                            <p>Total: <span class="text-info">$ {{ number_format($total,0) }}</span></p>
+                                        </div>
                                     </div>
-                                    <?php $total = 0 ?>
-                                    @foreach((array) session('cart') as $id => $details)
-                                        <?php $total += $details['price'] * $details['quantity'] ?>
-                                    @endforeach
-     
-                                    <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
-                                        <p>Total: <span class="text-info">$ {{ number_format($total,0) }}</span></p>
-                                    </div>
-                                </div>
-     
-                                
-                                    @foreach(session('cart') as $id => $details)
-                                        <div class="row cart-detail">
-                                            <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
-                                                <img src="{{ $details['photo'] }}" />
-                                            </div>
-                                            <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
-                                                <p class="brand-font">{{ $details['name'] }}</p>
-                                                <span class="price text-info"> $ {{ number_format($details['price'],0) }}</span> <span class="count"> Cantidad:{{ $details['quantity'] }}</span>
+        
+                                    
+                                        @foreach(session('cart') as $id => $details)
+                                            <div class="row cart-detail">
+                                                <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
+                                                    <img src="{{ $details['photo'] }}" />
+                                                </div>
+                                                <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
+                                                    <p class="brand-font">{{ $details['name'] }}</p>
+                                                    <span class="price text-info"> $ {{ number_format($details['price'],0) }}</span> <span class="count"> Cantidad:{{ $details['quantity'] }}</span>
+                                                </div>
+                                                
                                             </div>
                                             
+                                        @endforeach
+                                    
+        
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-12 text-center">
+                                            <hr class="mb-4">
+                                            <a href="{{ url('cart') }}" class="btn btn-purchase btn-block">Ver completo</a>
                                         </div>
-                                        
-                                    @endforeach
-                                
-    
-                                <div class="row">
-                                    <div class="col-lg-12 col-sm-12 col-12 text-center">
-                                        <hr class="mb-4">
-                                        <a href="{{ url('cart') }}" class="btn btn-purchase btn-block">Ver completo</a>
                                     </div>
                                 </div>
-                            </div>
                             @endif
                         </div>
                     </div>
                 </div>
-               </div>
+            </div>
                 
 
             </div>

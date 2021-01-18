@@ -1,4 +1,4 @@
-.quantity {
+.qua {
     position: relative;
   }
   
@@ -14,7 +14,7 @@
     -moz-appearance: textfield;
   }
   
-  .quantity input {
+  .qua input {
     width: 100px;
     height: 42px;
     line-height: 1.65;
@@ -26,17 +26,17 @@
     border: 1px solid #eee;
   }
   
-  .quantity input:focus {
+  .qua input:focus {
     outline: 0;
   }
   
-  .quantity-nav {
+  .qua-nav {
     float: left;
     position: relative;
     height: 42px;
   }
   
-  .quantity-button {
+  .qua-button {
     position: relative;
     cursor: pointer;
     border-left: 1px solid #eee;
@@ -55,14 +55,14 @@
     user-select: none;
   }
   
-  .quantity-button.quantity-up {
+  .qua-button.qua-up {
     position: absolute;
     height: 50%;
     top: 0;
     border-bottom: 1px solid #eee;
   }
   
-  .quantity-button.quantity-down {
+  .qua-button.qua-down {
     position: absolute;
     bottom: -1px;
     height: 50%;
