@@ -1,7 +1,8 @@
 @extends('layouts.app')
 @section('custom-css')
-<link rel="stylesheet" href="../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
     <link rel="stylesheet" href="../css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="../css/buttonquantity.css">
     @if (env('APP_ENV') == "production")    
         <link href="{{ secure_asset('css/xzoom.css') }}" rel="stylesheet">
     @else 
@@ -96,11 +97,14 @@
                                     <div class="col-xl-2" data-th="Quantity">
                                         <div class="row">
                                             Cantidad:
-                                            <select class="form-control quantity" name="" id="">
+                                            <div class="quantity">
+                                                <input type="number" min="1" max="{{$prod_info->stockquantity}}" step="1" value="1">
+                                              </div>
+                                            {{-- <select class="form-control quantity" name="" id="">
                                                 @for ($i = 1; $i <= $prod_info->stockquantity; $i++)
                                                     <option value="{{ $i }}">{{ $i }}</option>
                                                 @endfor
-                                            </select>
+                                            </select> --}}
                                         {{-- <input type="number" value="" class="form-control quantity" /> --}}
                                         </div>
                                         
@@ -109,19 +113,31 @@
                                 <div class="form-group">
                                     <div class="col-xl-12">
                                         <div class="row">
-                                            <div class="col-xl-7">
+                                            <div class="col-xl-auto">
                                                 <div class="row">
-                                                    <button id="" class="btn btn-purchase btn-block update-cart"  data-id="{{ $prod_id }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
+                                                    <button id="" class="btn btn-purchase update-cart"  data-id="{{ $prod_id }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
                                                 </div>
-                                            </div>
-                                            <div class="col-xl-5">
-                                                <div class="row">
-                                                    @guest
+                                            </div>@guest
                                                     @else
-                                                    <button id="" class="btn btn-wishlist btn-block update-wishlist"  data-id="{{ $prod_id }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar a Lista Deseada</button>
-                                                    @endguest
+                                            <div class="col-xl-auto">
+                                                <div class="row">
+                                                    
+                                                    <button id="" class="btn btn-wishlist update-wishlist"  data-id="{{ $prod_id }}"><i class="fa fa-heart" aria-hidden="true"></i></button>
+                                                    
+                                                    
                                                 </div>
                                             </div>
+                                            <div class="col-xl-auto">
+                                                <div class="row">
+                                                    <a id="linkWeb" data-id="{{ $prod_id }}" href="https://web.whatsapp.com/send?text=Visita%20el%20blog%20de%20Parzibyte%20en%20https://develop.leemon.com.co" target="_blank">
+                                                        <img src="/img/whatsappIcon.png" width="35px" alt="">
+                                                    </a>
+                                                    <a id="linkApp" data-id="{{ $prod_id }}" href="https://api.whatsapp.com/send?text=Visita%20el%20blog%20de%20Parzibyte%20en%20https://develop.leemon.com.co" target="_blank">
+                                                        <img src="/img/whatsappIcon.png" width="35px" alt="">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            @endguest
                                         </div>
                                     </div>
                                     
@@ -159,7 +175,7 @@
             </div>
             <div class="tabs3 col-md-12">
                 <hr class="mb-4">
-                <h3 class="h3color">Sobre este Articulo</h3> <br>
+                <h3 class="h3color">Sobre este Articulo <small>(Información suministrada por el Proveedor)</small></h3> <br>
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
                       <a class="nav-link active" id="desc-tab" data-toggle="tab" href="#desc" role="tab" aria-controls="desc" aria-selected="true">Descripción</a>
@@ -360,6 +376,39 @@
             });
             
         });
+
+        $('<div class="quantity-nav"><div class="quantity-button quantity-up">+</div><div class="quantity-button quantity-down">-</div></div>').insertAfter('.quantity input');
+        $('.quantity').each(function() {
+            var spinner = $(this),
+            input = spinner.find('input[type="number"]'),
+            btnUp = spinner.find('.quantity-up'),
+            btnDown = spinner.find('.quantity-down'),
+            min = input.attr('min'),
+            max = input.attr('max');
+
+            btnUp.click(function() {
+                var oldValue = parseFloat(input.val());
+                if (oldValue >= max) {
+                var newVal = oldValue;
+                } else {
+                var newVal = oldValue + 1;
+                }
+                spinner.find("input").val(newVal);
+                spinner.find("input").trigger("change");
+            });
+
+            btnDown.click(function() {
+                var oldValue = parseFloat(input.val());
+                if (oldValue <= min) {
+                var newVal = oldValue;
+                } else {
+                var newVal = oldValue - 1;
+                }
+                spinner.find("input").val(newVal);
+                spinner.find("input").trigger("change");
+            });
+        });
     });
+    
 </script>
 @endsection

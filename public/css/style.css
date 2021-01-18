@@ -749,6 +749,9 @@ padding: 0 8px 0 7px;
 background-color: #7c7c7c !important;
 border-color: #646464 !important;
 }
+#linkApp{
+    display: none;
+}
 /* ---------------------------------------------------------------------------------
    -- resposive design
 ---------------------------------------------------------------------------------- */
@@ -767,5 +770,11 @@ border-color: #646464 !important;
     }
     .p-right{
         padding-right: 0px;
+    }
+    #linkWeb{
+        display: none;
+    }
+    #linkApp{
+        display: inline;
     }
 }
