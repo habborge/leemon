@@ -137,6 +137,11 @@
                                                     </a>
                                                 </div>
                                             </div>
+                                            <div class="col-xl-auto">
+                                                <div class="row">
+                                                    <button id="" class="btn btn-dark"  data-id="{{ $prod_id }}"><i class="fa fa-envelope" aria-hidden="true"></i></button>
+                                                </div>
+                                            </div>
                                             @endguest
                                         </div>
                                     </div>
@@ -273,7 +278,7 @@
     @endif
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script defer src="../js/owl.carousel.min.js"></script>
-<script defer src="../js/sweetalert/sweetalert.all.js"></script>
+
 <script type="text/javascript">
     
 
@@ -323,7 +328,8 @@
                 method: "post",
                 data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id")},
                 success: function (response) {
-                    window.location.reload();
+                    //window.location.reload();
+                    toastr.success("Ha agregado un nuevo articulo a su lista deseada!!", "Articulo Agregado");
                 }
             });
         });

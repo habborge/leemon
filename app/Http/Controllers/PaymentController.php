@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Http\Traits\PurchaseTrait;
 use App\Member;
 use App\Address;
 use App\Order;
@@ -12,6 +13,8 @@ use Auth;
 
 class PaymentController extends Controller
 {
+    use PurchaseTrait;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -35,6 +38,15 @@ class PaymentController extends Controller
             
             //$cart = session()->get('cart');
             $codehash = session()->get('codehash');
+            
+            
+            if (session('myorder')){
+                $orderExists = session()->get('myorder');
+                $resp_pending = $this->validatePending($orderExists);
+                if (($resp_pending[0] == 200) and ($resp_pending[1] == 2)){ 
+                    return response()->json(['status'=>506, 'url' => '', 'order_exists' => $orderExists, 'status_pse' => $resp_pending[2][4], 'message' => $resp_pending[3]]);
+                }
+            }
 
             foreach (session('cart') as $id => $details){
                 $whole = 0;

@@ -164,7 +164,7 @@ class ConfirmController extends Controller
                 // if int_error = 0 then API found payments
                 if ($response->json()['int_error'] == 0){
                     $orderId = explode("-", $payment_id);
-                    $orderPre = Order::where('id', $orderId[1])->where('status', 'Open');
+                    $orderPre = Order::where('id', $orderId[1]);
 
                     if ($response->json()['int_cantidad_pagos'] == 1){
 
@@ -338,6 +338,7 @@ class ConfirmController extends Controller
                         // $output->writeln("<info>Converting".$response->json()['str_res_pago']."</info>");
 
                         $order_status = 0;
+
                         for ($i=0; $i < count($info) -1; $i++) { 
                             $result = [];
                             $result = $this->verifyInfo($info[$i], $order->id);
@@ -345,8 +346,14 @@ class ConfirmController extends Controller
                             $order_status = $result[0];
                             $order_message = $result[2];
                         }
+
                         $approval = $order_status;
                         $message = $order_message;
+                    }
+
+                    if ($approval == 1){
+                        //session()->flush();
+                        session()->forget('cart', 'myorder', 'codehash');
                     }
                 }else{
                     $message = "No se encontro Información relacionada al pago";                  
@@ -362,4 +369,6 @@ class ConfirmController extends Controller
         ]);
 
     }
+
+    
 }

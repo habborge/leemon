@@ -223,7 +223,7 @@ class VerifyZonaPagos extends Command
                         }
                     }else{
                         // payment_error::insertarError($response);
-                        $order_change = Order::reject_order($order->id);
+                        // $order_change = Order::reject_order($order->id);
 
                         $rs = new payment_error();
                         $rs->reference_code = $order->reference_code;

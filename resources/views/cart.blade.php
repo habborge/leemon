@@ -285,34 +285,8 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-12">
-                                                                <div class="row">
-                                                                    <div class="col-md-9">
-                                                                        <div class="row">
-                                                                            Antes de Impuestos:
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-3">
-                                                                        <div class="row float-right">
-                                                                            {{ number_format($total,0) }}
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12">
-                                                                <div class="row">
-                                                                    <div class="col-md-9">
-                                                                        <div class="row">
-                                                                            Impuestos:
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-3">
-                                                                        <div class="row float-right">
-                                                                            --
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            
+                                                            
                                                             <div class="col-md-12">
                                                                 <div class="row">
                                                                     <div class="col-md-8">
@@ -435,34 +409,7 @@
                                         </div>
                                     </div>
                                     
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-9">
-                                                <div class="row">
-                                                    Antes de Impuestos:
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="row float-right">
-                                                    {{ number_format($total,0) }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-9">
-                                                <div class="row">
-                                                    Impuestos:
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="row float-right">
-                                                    --
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                     <div class="col-md-12">
                                         <div class="row">
                                             <div class="col-md-8">

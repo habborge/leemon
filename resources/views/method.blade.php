@@ -341,34 +341,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-12">
-                                                                <div class="row">
-                                                                    <div class="col-md-9">
-                                                                        <div class="row">
-                                                                            Antes de Impuestos:
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-3">
-                                                                        <div class="row float-right">
-                                                                            {{ number_format($beforeFee) }}
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12">
-                                                                <div class="row">
-                                                                    <div class="col-md-9">
-                                                                        <div class="row">
-                                                                            Impuestos:
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-3">
-                                                                        <div class="row float-right">
-                                                                            {{ number_format($fee) }}
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            
                                                             <div class="col-md-12">
                                                                 <div class="row">
                                                                     <div class="col-md-8">
@@ -489,34 +462,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-9">
-                                                <div class="row">
-                                                    Antes de Impuestos:
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="row float-right">
-                                                    {{ number_format($beforeFee) }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-9">
-                                                <div class="row">
-                                                    Impuestos:
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="row float-right">
-                                                    {{ number_format($fee) }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
+                                    
                                     <div class="col-md-12">
                                         <div class="row">
                                             <div class="col-md-8">
@@ -740,6 +687,16 @@
                         $.each(data.errors, function( index, value ){
                         toastr.error(value, 'Error!', {  timeOut: 5e3});
                         });  
+                    }else if(data.status==506){
+                        $('#loading_web').hide(); 
+                        // $.each(data.errors, function( index, value ){
+                        // toastr.error(value, 'Error!', {  timeOut: 5e3});
+                        // });  
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: data.message + data.order_exists + ' ' + data.status_pse,
+                        });
                     }else{ 
                         $('#loading_web').hide(); 
                         toastr.error(data.message, "Error!");
