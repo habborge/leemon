@@ -695,7 +695,7 @@
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
-                            text: data.message + data.order_exists + ' ' + data.status_pse,
+                            text: data.message + data.order_exists,
                         });
                     }else{ 
                         $('#loading_web').hide(); 
