@@ -156,7 +156,11 @@ class VerifyZonaPagos extends Command
                                     if ($result[0] == 1){
                                         $order_change = Order::approval_order($order->id);
                                     }else{
-                                        $order_change = Order::reject_order($order->id);
+                                        // int_pago_terminado => 1: Terminado => 2: Pendiente: En caso de que el pago sea mixto. El pago no ha sido terminado en su totalidad. => 200 Pago iniciado
+                                        if ($data_info[3] == 1){
+                                            $order_change = Order::reject_order($order->id);
+                                        }
+                                    
                                     }
                                 }
                                 

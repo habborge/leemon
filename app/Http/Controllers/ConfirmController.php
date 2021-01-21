@@ -191,7 +191,10 @@ class ConfirmController extends Controller
                                         $member = Member::select('user_id','firstname','lastname','email')->where('user_id', $order->user_id)->first();
                                         $sending = Mail::to($member->email)->send(new SendPurchase($order, $member, $rs));
                                     }else{
-                                        $order_change = Order::reject_order($order->id);
+                                        // int_pago_terminado => 1: Terminado => 2: Pendiente: En caso de que el pago sea mixto. El pago no ha sido terminado en su totalidad. => 200 Pago iniciado
+                                        if ($data_info[3] == 1){
+                                            $order_change = Order::reject_order($order->id);
+                                        }
                                     }
                                 }
                             }else{
