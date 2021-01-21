@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('custom-css')
+    
+@endsection
 @section('content')
 <div id="main" role="main" class="clearfix">
     <div class="container no-padding-sm-xs">
@@ -33,7 +35,9 @@
                                                 </h6> 
                                                 <h6>$ {{number_format($product->price, 0)}} COP</h6>
                                                 <!-- <a href="/product/{{$product->proId}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
-                                                <a href="{{ url('add-to-cart/'.$product->proId) }}"> <button type="button" class="btn btn-sm btn-leemon-green"><i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito</button></a>
+                                                {{-- <a href="{{ url('add-to-cart/'.$product->proId) }}"> <button type="button" class="btn btn-sm btn-leemon-green"><i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito</button></a> --}}
+                                                
+                                                <button id="" class="btn btn-sm btn-leemon-green update-cart"  data-id="{{ $product->proId }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
                                                 @guest
                 
                                                 @else
@@ -123,18 +127,41 @@
   $(document).ready(function(){
     $(".update-wishlist").click(function (e) {
             
-            e.preventDefault();
-            var ele = $(this);
+        e.preventDefault();
+        var ele = $(this);
 
-            $.ajax({
-                url: "{{ url('add-to-wishlist')}}",
-                method: "post",
-                data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id")},
-                success: function (response) {
-                    window.location.reload();
-                }
-            });
+        $.ajax({
+            url: "{{ url('add-to-wishlist')}}",
+            method: "post",
+            data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id")},
+            success: function (response) {
+                window.location.reload();
+            }
         });
+    });
+
+    $(".update-cart").click(function (e) {
+        e.preventDefault();
+
+        var ele = $(this);
+
+        $.ajax({
+            url: "{{ url('add-to-cart-quantity')}}",
+            method: "post",
+            data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id"), quantity: 1},
+            beforeSend: function(x){
+                ele.before("<div id='loadPro'><i class='fa fa-refresh fa-spin'></i>Loading</div>");
+                ele.hide();
+            },
+            success: function (response) {
+                // window.location.reload();
+                $('#litlecart').load(location.href + " #litlecart");
+                toastr.success("Ha agregado un nuevo articulo al carrito!!", "Articulo Agregado");
+                ele.show();
+                $("#loadPro").remove();
+            }
+        });
+    });
   });
 </script>
 @endsection

@@ -1,43 +1,12 @@
 @extends('layouts.app')
-
+@section('custom-css')
+  <!-- Bootstrap core CSS -->
+ 
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+@endsection
 @section('content')
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Jekyll v4.1.1">
-    <title>Leemon e-commerce</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
-
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" href="/docs/4.5/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
-    <link rel="icon" href="/docs/4.5/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-    <link rel="icon" href="/docs/4.5/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-    <link rel="manifest" href="/docs/4.5/assets/img/favicons/manifest.json">
-    <link rel="mask-icon" href="/docs/4.5/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
-    <link rel="icon" href="/docs/4.5/assets/img/favicons/favicon.ico">
-    <meta name="msapplication-config" content="/docs/4.5/assets/img/favicons/browserconfig.xml">
-    <meta name="theme-color" content="#563d7c">
-
-
-    <!-- Custom styles for this template 
-    <link href="album.css" rel="stylesheet">-->
-  </head>
-  @section('custom-css')
-    <style type="text/css">
-      
-      
-    </style>
-  @endsection
-  <body>
   <main role="main">
     {{-- images in slide --}}
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -71,8 +40,8 @@
     <div class="album py-5 bg-light">
       <div class="container">
         <div class="row">
-          <div class="col-md-12">
-            <h3>{{ $prom_1 }}</h3>
+          <div class="aline-title col-md-12">
+            <h3 class="aline-span">{{ $prom_1 }}</h3>
           </div>
         </div>
         <div class="owl-carousel owl-theme owl-loaded owl-drag">
@@ -98,11 +67,12 @@
                               </h6> 
                               <span class="brand-font2"><b>$ {{number_format($product->price, 0)}} COP</b></span><br><br>
                               <!-- <a href="/product/{{$product->id}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
-                              <a href="{{ url('add-to-cart/'.$product->id) }}">
+                              {{-- <a href="{{ url('add-to-cart/'.$product->id) }}">
                                 <button type="button" class="btn btn-sm btn-leemon-green">
                                   <i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito
                                 </button>
-                              </a>
+                              </a> --}}
+                              <button id="" class="btn btn-sm btn-leemon-green update-cart"  data-id="{{ $product->id }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
                             </div>
                           </div>
                         </div>
@@ -126,9 +96,22 @@
     <div class="album py-5 bg-light">
       <div class="container">
           <div class="row">
-            <div class="col-md-12">
+            <div class="aline-title col-md-12">
+              <h3 class="aline-span">{{ $catTitle }}</h3>
+            </div>
+            <div class=" col-md-12">
               
-                <img src="/img/promo3.jpg" width="100%" class="rounded" alt="">
+                <div class="row">
+                  @foreach ($cat_pri as $category)
+                    <div class="col-md-4 category_style">
+                        
+                        <img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/categories/cat_{{ $category->id }}.jpg" class="card-img-top rounded mx-auto d-block" alt="">
+                        <div class = "carousel-caption" >
+                          <h5> {{$category->name}}</h5>
+                          </div>
+                    </div>
+                  @endforeach
+                </div>
               
             </div>
           </div>
@@ -310,9 +293,6 @@
   </main>
 
 
-
-</body>
-</html>
 @endsection
 @section('custom-js')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -349,6 +329,22 @@
       
       
     });
+    $(".update-cart").click(function (e) {
+            e.preventDefault();
+
+            var ele = $(this);
+
+            $.ajax({
+                url: "{{ url('add-to-cart-quantity')}}",
+                method: "post",
+                data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id"), quantity: 1},
+                success: function (response) {
+                   // window.location.reload();
+                   $('#litlecart').load(location.href + " #litlecart");
+                   toastr.success("Ha agregado un nuevo articulo al carrito!!", "Articulo Agregado");
+                }
+            });
+        });
     
   });
   $(window).load()

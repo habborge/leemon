@@ -84,6 +84,7 @@
     .otro{
         width: 100% !important;
     }
+     
 </style>
 <body>
     <div id="app">

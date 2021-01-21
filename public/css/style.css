@@ -752,6 +752,30 @@ border-color: #646464 !important;
 #linkApp{
     display: none;
 }
+.aline-title{
+    text-align: center;
+    border-bottom: 1px solid rgba(0,0,0,.2);
+    position: relative;
+    height: 20px;
+    margin-bottom: 40px;
+    max-width: 59%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.aline-span{
+    color: #333;
+    background: #f8f9fa;
+    font-weight: 400;
+    display: inline-block;
+    position: relative;
+    top: 4px;
+    padding: 0 10px;
+    font-size: 23px;
+    letter-spacing: .1em;
+}
+.category_style{
+    padding-bottom: 30px;
+}
 /* ---------------------------------------------------------------------------------
    -- resposive design
 ---------------------------------------------------------------------------------- */

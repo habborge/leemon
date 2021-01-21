@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\Category;
 
 class HomeController extends Controller
 {
@@ -55,9 +56,14 @@ class HomeController extends Controller
         // $products_2 = Product::where('prom', '2')->orderBy('id')->paginate(12);
         // $prom_2 = "Paga el 2do con el 50% Off";
 
+        $cat_pri = Category::where('level_status', 1)->get();
+        $cat_pri_t = "Categorias Principales";
+
         return view('home',[
             'products_1' => $products_1,
             'prom_1' => $prom_1,
+            'catTitle' => $cat_pri_t,
+            'cat_pri' => $cat_pri
             // 'products_2' => $products_2,
             // 'prom_2' => $prom_2,
            /* 'name' => $products->name, 
