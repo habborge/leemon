@@ -2,14 +2,14 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /var/www/html/leemon
+    destination: /var/www/html/
 permissions:
-  - object: /var/www/html/leemon
+  - object: /var/www/html/
     user: ec2-user
     mode: 755
     type:
       - directory
-  - object: /var/www/html/leemon
+  - object: /var/www/html/
     user: ec2-user
     mode: 644
     type:
