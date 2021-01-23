@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use DateTime;
 use Illuminate\Support\Facades\Storage;
 use Aws\S3\S3MultiRegionClient;
+use Illuminate\Support\Facades\Http;
 
 class ProductController extends Controller
 {

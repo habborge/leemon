@@ -18,7 +18,6 @@ Route::get('/', function () {
 });
 
 
-
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/product/{id}', 'ProductController@details')->name('productdetails');
 Route::get('cart', 'ProductController@cart')->name('cart');
@@ -31,6 +30,10 @@ Route::get('/result', 'searchController@searchProducts');
 Route::get('/products/{gfather}/{father}/{son}', 'ProductController@groupSon');
 Route::get('/products/{gfather}/{father}/{son}/{brand}', 'ProductController@groupByBand');
 Route::get('/products/{gfather}','ProductController@groupGfa');
+
+// Landing page
+Route::get('/giveaway/registry', 'GiveawayController@index');
+Route::post('/giveaway/registry', 'GiveawayController@savingData');
 
 // get Confirm from zonaPagos
 Route::get('/secure/methods/zp/response', 'ConfirmController@ConfirmTrans');
