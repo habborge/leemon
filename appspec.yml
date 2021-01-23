@@ -1,0 +1,25 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /var/www/laravel
+permissions:
+  - object: /var/www/laravel
+    user: ec2-user
+    mode: 755
+    type:
+      - directory
+  - object: /var/www/laravel
+    user: ec2-user
+    mode: 644
+    type:
+      - file
+hooks:
+  AfterInstall:
+    - location: deploy/install.sh
+      timeout: 300
+      runas: ec2-user
+  ApplicationStart:
+    - location: deploy/start.sh
+      timeout: 300
+      runas: ec2-user

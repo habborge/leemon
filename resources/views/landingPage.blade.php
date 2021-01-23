@@ -28,7 +28,7 @@
     <div class="body-wrap boxed-container">
         <header class="site-header">
 			<div class="header-shape header-shape-1">
-				<svg width="337" height="222" viewBox="0 0 337 222" xmlns="http://www.w3.org/2000/svg">
+				{{-- <svg width="337" height="222" viewBox="0 0 337 222" xmlns="http://www.w3.org/2000/svg">
 				    <defs>
 				        <linearGradient x1="50%" y1="55.434%" x2="50%" y2="0%" id="header-shape-1">
 				            <stop stop-color="#E0E1FE" stop-opacity="0" offset="0%"/>
@@ -36,7 +36,8 @@
 				        </linearGradient>
 				    </defs>
 				    <path d="M1103.21 0H1440v400h-400c145.927-118.557 166.997-251.89 63.21-400z" transform="translate(-1103)" fill="url(#header-shape-1)" fill-rule="evenodd"/>
-				</svg>
+                </svg> --}}
+                <img src="../img/5.png" alt="" width="350px">
 			</div>
 			<div class="header-shape header-shape-2">
 				<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
@@ -64,7 +65,7 @@
 
         <main>
             
-			<section class="hero">
+			<section class="hero" style="background: url('../img/background_landing.png')">
 				<div class="container">
 					<div class="features-header text-center">
 						<div class="container-sm">
@@ -111,9 +112,23 @@
 						</div>
 					</div>
 				</div>
-
+                <br><br>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="row">
+                                <img src="../img/1.png" alt="" width="350px">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <img src="../img/3.png" alt="" width="350px">
+                            </div>
+                        </div>
+                    </div>
+                </div>
 			</section>
-           <br><br>
+          
 
 			<section class="newsletter section text-light">
                 
