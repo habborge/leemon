@@ -107,7 +107,7 @@
 						<div class="features-header text-center">
 							<div class="container-sm">
 								<h2 class="section-title mt-0">Estas a un paso de poder participar de nuestro Give Away</h2>
-								<p class="section-paragraph">Registra tus datos a continuación. ¡Te deseamos suerte!</p>
+								<p class="section-paragraph">Registra tus datos a continuación. ¡Te deseamos suerte!<br><small>Fecha de Inicio: 24 de enero 2021<br>Fecha Final: 3 de febrero 2021<br>Fecha de Sorteo: 4 febrero 2021</small></p>
 							</div>
 						</div>
 						

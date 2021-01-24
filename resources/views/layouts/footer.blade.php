@@ -126,8 +126,9 @@
           <p>
             <i class="fas fa-home mr-3"></i> Barranquilla, 080002, Colombia<br>
             <i class="fas fa-envelope mr-3"></i> info@leemon.com.co<br>
-            <i class="fas fa-phone mr-3"></i> + 57 234 567 88<br>
-            <i class="fas fa-print mr-3"></i> + 57 234 567 89</p>
+            {{-- <i class="fas fa-phone mr-3"></i> + 57 234 567 88<br>
+            <i class="fas fa-print mr-3"></i> + 57 234 567 89 --}}
+          </p>
   
         </div>
         <!-- Grid column -->
