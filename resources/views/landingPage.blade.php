@@ -113,20 +113,7 @@
 					</div>
 				</div>
                 <br><br>
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="row">
-                                <img src="../img/1.png" alt="" width="350px">
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="row">
-                                <img src="../img/3.png" alt="" width="350px">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 			</section>
           
 
