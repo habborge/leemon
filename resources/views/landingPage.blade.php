@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Leemon Marketing</title>
+    <title>Leemon Give Away</title>
     
     <link rel="stylesheet" href="../css/landing/style.css">
 	<script src="https://unpkg.com/animejs@2.2.0/anime.min.js"></script>
@@ -22,7 +22,16 @@
     @font-face {
         font-family: "AcuminVariableConcept";
         src: url("{{ env('APP_URL') }}/css/AcuminVariableConcept.otf") format('opentype');
-    }
+	}
+	.btn-giveaway{
+    color: #fff;
+    background-color: #89b882;
+}
+.btn-giveaway:hover {
+    color: #fff;
+    background-color: #5b8b54;
+    border-color: #89b882;
+}
 </style>
 <body class="is-boxed has-animations">
     <div class="body-wrap boxed-container">
@@ -67,53 +76,81 @@
             
 			<section class="hero" style="background: url('../img/background_landing.png')">
 				<div class="container">
-					<div class="features-header text-center">
-						<div class="container-sm">
-							<h2 class="section-title mt-0">Estas a un paso de poder participar de nuestro Give Away</h2>
-							<p class="section-paragraph">Registra tus datos a continuación. ¡Te deseamos suerte!</p>
-						</div>
+					@if (session('success'))
+				<div class="alert alert-success alert-dismissible mb-2" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					{{ session('success') }}
+				</div>
+				@endif
+
+
+				@if (session('error'))
+					<div class="alert alert-error">
+						{{ session('error') }}
 					</div>
-					
-                    <div class="hero ">
-						
-						
-						<br>
-						<div class="mb-3 control control-expanded">
-							<label for="exampleFormControlInput1" class="form-label">Nombre</label>
-							<input type="email" class="input" id="exampleFormControlInput1" placeholder="Nombre Completo">
-						</div>
-						<br>
-						<div class="mb-3 control control-expanded">
-						<label for="exampleFormControlInput1" class="form-label">Movil</label>
-						<input type="email" class="input" id="exampleFormControlInput1" placeholder="Número de Celular">
-						</div>
-						<br>
-						<div class="mb-3 control control-expanded">
-						<label for="exampleFormControlInput1" class="form-label">email</label>
-						<input type="email" class="input" id="exampleFormControlInput1" placeholder="Correo electronico">
-						</div>
-						<br>
-						<div class="mb-3 control control-expanded">
-						<label for="exampleFormControlInput1" class="form-label">Ciudad</label>
-						<input type="email" class="input" id="exampleFormControlInput1" placeholder="Ciudad o Municipio">
-						</div>
-						<br>
-						<div class="control">
-							<div class="form-check">
-							  <label class="form-check-label">
-								<input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" checked>
-								Acepto terminos y condiciónes, Politica deprivacidad de datos, asi como la politica de tratamieto y protección de datos perosnales.
-							  </label>
+				@endif
+
+				@if ($errors->any())
+				<div class="alert alert-danger">
+					<br>
+					<ul>
+						@foreach ($errors->all() as $error)
+						<li>{{ $error }}</li>
+						@endforeach
+					</ul>
+				</div>
+				@endif
+					<form action="" method="POST">
+						@csrf
+						<div class="features-header text-center">
+							<div class="container-sm">
+								<h2 class="section-title mt-0">Estas a un paso de poder participar de nuestro Give Away</h2>
+								<p class="section-paragraph">Registra tus datos a continuación. ¡Te deseamos suerte!</p>
 							</div>
 						</div>
-						<br>
-						<div class="control">
-							<a class="button button-primary button-block" href="#">Enviar</a>
+						
+						<div class="hero ">
+							
+							<div class="mb-3 control control-expanded">
+								<label for="exampleFormControlInput1" class="form-label">Nombre</label>
+								<input type="text" class="input" id="name" name="name" placeholder="Nombre Completo" required>
+							</div>
+							<br>
+							<div class="mb-3 control control-expanded">
+							<label for="exampleFormControlInput1" class="form-label">Movil</label>
+							<input type="text" class="input" id="phone" name="phone" placeholder="Número de Celular" required>
+							</div>
+							<br>
+							<div class="mb-3 control control-expanded">
+							<label for="exampleFormControlInput1" class="form-label">email</label>
+							<input type="email" class="input" id="email" name="email" placeholder="Correo electronico" required>
+							</div>
+							<br>
+							<div class="mb-3 control control-expanded">
+							<label for="exampleFormControlInput1" class="form-label">Ciudad</label>
+							<input type="text" class="input" id="city" name="city" placeholder="Ciudad o Municipio" required>
+							</div>
+							<br>
+							<div class="control">
+								<div class="form-check">
+								  <label class="form-check-label">
+									<input type="checkbox" class="form-check-input" name="terms" id="terms" value="1" required>
+									Acepto terminos y condiciónes, Politica deprivacidad de datos, asi como la politica de tratamieto y protección de datos perosnales.
+								  </label>
+								</div>
+							</div>
+							<br>
+							<div class="control">
+								<input type="submit" class="btn btn-giveaway btn-block" value="Enviar">
+							</div>
 						</div>
-					</div>
+					</form>
+					
 				</div>
                 <br><br>
-                
+                <br><br>
 			</section>
           
 
