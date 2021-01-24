@@ -137,8 +137,8 @@
 								<div class="form-check">
 								  <label class="form-check-label">
 									<input type="checkbox" class="form-check-input" name="terms" id="terms" value="1" required>
-									Acepto terminos y condiciónes, Politica deprivacidad de datos, asi como la politica de tratamieto y protección de datos perosnales.
-								  </label>
+										Acepto Terminos y Condicines, Política de Privacidad de datos, asi como la Política de Tratamiento y Protección de Datos personales.
+								  	</label>
 								</div>
 							</div>
 							<br>
