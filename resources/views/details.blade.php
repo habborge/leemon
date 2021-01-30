@@ -78,12 +78,9 @@
                                         <h2> <span class="badge badge-success">2nd 50% off</span></h2><br>
                                         @endif
                                     </p>
-                                    
                                     <p>
                                         <span class="price-color">Referencia:</span> <br>{{ $prod_info->reference }}
                                     </p>
-                                    
-                                   
                                     <p>
                                         <span class="price-color">Precio: </span><br>
                                         <span class="price">Ahora $ {{ number_format($prod_info->price, 0) }} COP</span><br>
@@ -109,7 +106,7 @@
                                         </div>
                                         
                                     </div>
-                                </div>
+                                </div>|
                                 <div class="form-group">
                                     <div class="col-xl-12">
                                         <div class="row">
