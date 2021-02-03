@@ -17,13 +17,13 @@
       </ol>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="img/promo.jpg" class="d-block w-100" alt="...">
+          <img src="img/promo.jpg" height="500px" class="d-block w-100" alt="...">
         </div>
         <div class="carousel-item">
-          <img src="img/promo_1B.jpg" class="d-block w-100" alt="...">
+          <img src="img/promo_1B.jpg" height="500px" class="d-block w-100" alt="...">
         </div>
         <div class="carousel-item">
-          <img src="img/promo2.jpg" class="d-block w-100" alt="...">
+          <img src="img/promo2.jpg" height="500px" class="d-block w-100" alt="...">
         </div>
       </div>
       <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -36,61 +36,7 @@
       </a>
     </div>
     {{-- close slide --}}
-    {{-- product list --}}
-    <div class="album py-5 bg-light">
-      <div class="container">
-        <div class="row">
-          <div class="aline-title col-md-12">
-            <h3 class="aline-span">{{ $prom_1 }}</h3>
-          </div>
-        </div>
-        <div class="owl-carousel owl-theme owl-loaded owl-drag">
-          <div class="owl-stage-outer">
-            <div class="owl-stage" style="transform: translate3d(-1386px, 0px, 0px); transition: all 0.25s ease 0s; width: 2376px;">
-              @foreach ($products_1 as $product)
-                <div class="owl-item" style="width: 200px; margin-right: 10px;">
-                  <div class="item">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="rom">
-                          <div class="card mb-4 shadow-sm">
-                            <a href="/product/{{$product->id}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $product->reference }}/{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
-                            <div class="card-body text-center">
-                              <span class="brand-font">{{ucwords($product->brand)}} </span>
-                              <h6>{{ucwords($product->name)}} </h6>
-                              <h6>
-                                @if ($product->prom == 1) 
-                                  <span class="badge badge-warning">Paga 2 Lleva 3</span>
-                                @elseif ($product->prom == 2)
-                                  <span class="badge badge-success">2nd 50% off</span>
-                                @endif
-                              </h6> 
-                              <span class="brand-font2"><b>$ {{number_format($product->price, 0)}} COP</b></span><br><br>
-                              <!-- <a href="/product/{{$product->id}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
-                              {{-- <a href="{{ url('add-to-cart/'.$product->id) }}">
-                                <button type="button" class="btn btn-sm btn-leemon-green">
-                                  <i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito
-                                </button>
-                              </a> --}}
-                              <button id="" class="btn btn-sm btn-leemon-green update-cart"  data-id="{{ $product->id }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              @endforeach
-            </div>
-          </div>
-        </div>
-      </div>
-      @if (count($products_1))
-        <div class="d-flex justify-content-center">
-            {{-- {{ $products -> links() }} --}}
-        </div>
-      @endif
-    </div>
+    
 
     {{-- product of the month --}}
     <div class="album py-5 bg-light">
@@ -118,7 +64,61 @@
       </div>
     </div>
     {{-- end product of the month --}}
-
+{{-- product list --}}
+<div class="album py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="aline-title col-md-12">
+        <h3 class="aline-span">{{ $prom_1 }}</h3>
+      </div>
+    </div>
+    <div class="owl-carousel owl-theme owl-loaded owl-drag">
+      <div class="owl-stage-outer">
+        <div class="owl-stage" style="transform: translate3d(-1386px, 0px, 0px); transition: all 0.25s ease 0s; width: 2376px;">
+          @foreach ($products_1 as $product)
+            <div class="owl-item" style="width: 200px; margin-right: 10px;">
+              <div class="item">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="rom">
+                      <div class="card mb-4 shadow-sm">
+                        <a href="/product/{{$product->id}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $product->reference }}/{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
+                        <div class="card-body text-center">
+                          <span class="brand-font">{{ucwords($product->brand)}} </span>
+                          <h6>{{ucwords($product->name)}} </h6>
+                          <h6>
+                            @if ($product->prom == 1) 
+                              <span class="badge badge-warning">Paga 2 Lleva 3</span>
+                            @elseif ($product->prom == 2)
+                              <span class="badge badge-success">2nd 50% off</span>
+                            @endif
+                          </h6> 
+                          <span class="brand-font2"><b>$ {{number_format($product->price, 0)}} COP</b></span><br><br>
+                          <!-- <a href="/product/{{$product->id}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
+                          {{-- <a href="{{ url('add-to-cart/'.$product->id) }}">
+                            <button type="button" class="btn btn-sm btn-leemon-green">
+                              <i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito
+                            </button>
+                          </a> --}}
+                          <button id="" class="btn btn-sm btn-leemon-green update-cart"  data-id="{{ $product->id }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          @endforeach
+        </div>
+      </div>
+    </div>
+  </div>
+  @if (count($products_1))
+    <div class="d-flex justify-content-center">
+        {{-- {{ $products -> links() }} --}}
+    </div>
+  @endif
+</div>
     {{-- <div class="album py-5 bg-light">
       <div class="container">
         <div class="row">
