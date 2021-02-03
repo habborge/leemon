@@ -113,7 +113,7 @@ class PaymentController extends Controller
 
                 }else{
                     $member = Member::where('user_id', $user_id)->first();
-                    $methodCode = "2701";
+                    $methodCode = env('METHOD_PSE');
                 }
                 
                 $address = Address::select('addresses.id as addressId', 'addresses.address', 'addresses.zipcode', 'addresses.contact', 'addresses.details', 'c.country_master_name', 'd.department', 'ct.city_d_id')->where('user_id', $user_id)
