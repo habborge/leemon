@@ -84,6 +84,9 @@
     .otro{
         width: 100% !important;
     }
+    #nodis{
+        display: none;
+    }
      
 </style>
 <body>

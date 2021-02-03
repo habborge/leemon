@@ -91,35 +91,74 @@
                                     <hr class="mb-4"> --}}
                                 </div>
                                 <div class="form-group">
-                                    <div class="col-xl-2" data-th="Quantity">
+                                    <div class="col-xl-12" data-th="Quantity">
                                         <div class="row">
-                                            Cantidad:
-                                            <div class="qua">
-                                                <input class="quantity" type="number" min="1" max="{{$prod_info->stockquantity}}" step="1" value="1">
-                                              </div>
-                                            {{-- <select class="form-control quantity" name="" id="">
-                                                @for ($i = 1; $i <= $prod_info->stockquantity; $i++)
-                                                    <option value="{{ $i }}">{{ $i }}</option>
-                                                @endfor
-                                            </select> --}}
-                                        {{-- <input type="number" value="" class="form-control quantity" /> --}}
+                                            Cantidad: 
+                                            
+                                            @if (isset(session('cart')[$prod_info->id])) 
+                                                @if (($prod_info->stockquantity - session('cart')[$prod_info->id]["quantity"]) > 0)
+                                                    <div class="qua col-xl-2">
+                                                        <span id="cant">
+                                                            <input class="quantity" type="number" min="1" max="{{$prod_info->stockquantity - session('cart')[$prod_info->id]["quantity"] }}" step="1" value="1">
+                                                        </span>
+                                                    </div>
+                                                @else
+                                                    <div class="col-md-12">
+                                                       No Disponible, pero no te preocupes LEEMON te notificará cuando el producto se encuentre disponible.
+                                                    </div> 
+                                                @endif
+
+                                            @else
+                                                <div class="qua col-xl-2">
+                                                    <span id="cant">
+                                                        <input class="quantity" type="number" min="1" max="{{ $prod_info->stockquantity }}" step="1" value="1">
+                                                    </span>
+                                                </div>
+                                            @endif
+                                                
+                                            <div id="nodis"  class="col-md-12">
+                                                No Disponible, pero no te preocupes LEEMON te notificará cuando el producto se encuentre disponible
+                                            </div>
+                                               
+                                                
+                                            
+                                                {{-- <select class="form-control quantity" name="" id="">
+                                                    @for ($i = 1; $i <= $prod_info->stockquantity; $i++)
+                                                        <option value="{{ $i }}">{{ $i }}</option>
+                                                    @endfor
+                                                </select> --}}
+                                                {{-- <input type="number" value="" class="form-control quantity" /> --}}
                                         </div>
                                         
                                     </div>
-                                </div>|
+                                </div>
                                 <div class="form-group">
                                     <div class="col-xl-12">
                                         <div class="row">
-                                            <div class="col-xl-auto">
-                                                <div class="row">
-                                                    <button id="" class="btn btn-purchase update-cart"  data-id="{{ $prod_id }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
+                                            @if (isset(session('cart')[$prod_info->id])) 
+                                                @if (($prod_info->stockquantity - session('cart')[$prod_info->id]["quantity"]) > 0)
+                                                    <div id="nodis-button" class="col-xl-auto">
+                                                        <div class="row">
+                                                            <button id="" class="btn btn-purchase update-cart"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->stockquantity - session('cart')[$prod_info->id]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
+                                                        </div>
+                                                    </div>
+                                                @endif
+
+                                            @else
+                                                <div id="nodis-button" class="col-xl-auto">
+                                                    <div class="row">
+                                                        <button id="" class="btn btn-purchase update-cart"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->stockquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
+                                                    </div>
                                                 </div>
-                                            </div>@guest
-                                                    @else
+                                            @endif  
+
+                                            @guest
+                                                    
+                                            @else
                                             <div class="col-xl-auto">
                                                 <div class="row">
                                                     
-                                                    <button id="" class="btn btn-wishlist update-wishlist"  data-id="{{ $prod_id }}"><i class="fa fa-heart" aria-hidden="true"></i></button>
+                                                    <button id="" class="btn btn-wishlist update-wishlist"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->stockquantity }}"><i class="fa fa-heart" aria-hidden="true"></i></button>
                                                     
                                                     
                                                 </div>
@@ -280,6 +319,7 @@
     
 
     $(document).ready(function(){
+        var max = 0;
         $(".xzoom, #xzoom-default").xzoom({tint: '#333', Xoffset: 15, position: 'right' });
         $(".xzoom_0, #xzoom-default_0").xzoom({tint: '#333', Xoffset: 15, position: 'right' });
         $(".xzoom_1, #xzoom-default_1").xzoom({tint: '#333', Xoffset: 15, position: 'right' });
@@ -302,11 +342,12 @@
             e.preventDefault();
 
             var ele = $(this);
-
+            var diff = ele.attr("data-dif");
+            var dataQuant = ele.parents("div").find(".quantity").val();
             $.ajax({
                 url: "{{ url('add-to-cart-quantity')}}",
                 method: "post",
-                data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id"), quantity: ele.parents("div").find(".quantity").val()},
+                data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id"), quantity: dataQuant},
                 beforeSend: function(x){
                     ele.before("<div id='loadPro'><i class='fa fa-refresh fa-spin'></i>Loading</div>");
                     ele.hide();
@@ -317,6 +358,22 @@
                     toastr.success("Ha agregado un nuevo articulo al carrito!!", "Articulo Agregado");
                     ele.show();
                     $("#loadPro").remove();
+                    //alert(diff - dataQuant);
+                    if (diff - dataQuant < 1){
+                        $("#cant").hide();
+                        $("#nodis-button").hide();
+                        $("#nodis").show();
+                        
+                    }else{
+                        ele.parents("div").find(".quantity").attr('max', diff - dataQuant);
+                        ele.parents("div").find(".quantity").val(1);
+                    }
+                    
+                    
+                    
+                },
+                error: function (jqXHR, textStatus, errorThrown) { 
+                     
                 }
             });
         });
@@ -396,10 +453,11 @@
             btnDown = spinner.find('.qua-down'),
             min = input.attr('min'),
             max = input.attr('max');
-
+            
             btnUp.click(function() {
+                
                 var oldValue = parseFloat(input.val());
-                if (oldValue >= max) {
+                if (oldValue >= input.attr('max')) {
                 var newVal = oldValue;
                 } else {
                 var newVal = oldValue + 1;
@@ -410,7 +468,7 @@
 
             btnDown.click(function() {
                 var oldValue = parseFloat(input.val());
-                if (oldValue <= min) {
+                if (oldValue <= input.attr('min')) {
                 var newVal = oldValue;
                 } else {
                 var newVal = oldValue - 1;
