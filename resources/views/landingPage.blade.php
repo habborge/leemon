@@ -107,7 +107,7 @@
 						@csrf
 						<div class="features-header text-center">
 							<div class="container-sm">
-								<h2 class="section-title mt-0">¡Giveaway Termiando!</h2>
+								<h2 class="section-title mt-0">¡Giveaway Terminado!</h2>
 								<p class="section-paragraph">¡Te deseamos suerte!<br><small>Fecha de Inicio: 24 de enero 2021<br>Fecha Final: 3 de febrero 2021</small></p>
 							</div>
 						</div>
