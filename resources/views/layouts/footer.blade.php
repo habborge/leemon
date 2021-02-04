@@ -65,9 +65,7 @@
           <!-- Content -->
         <img src="{{ env('APP_URL') }}/img/logo_leemon_small_white.png" alt="" class="leemonlogo">
           {{-- <hr class="hr-color accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;"> --}}
-          <p class="line-footer">Here you can use rows and columns to organize your footer content. Lorem ipsum dolor sit amet,
-            consectetur
-            adipisicing elit.</p>
+          <p class="line-footer"></p>
   
         </div>
         <!-- Grid column -->

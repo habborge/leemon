@@ -102,16 +102,17 @@
 					</ul>
 				</div>
 				@endif
-					<form action="" method="POST">
+
+					 <form action="" method="POST">
 						@csrf
 						<div class="features-header text-center">
 							<div class="container-sm">
-								<h2 class="section-title mt-0">Estas a un paso de poder participar de nuestro Give Away</h2>
-								<p class="section-paragraph">Registra tus datos a continuación. ¡Te deseamos suerte!<br><small>Fecha de Inicio: 24 de enero 2021<br>Fecha Final: 3 de febrero 2021<br>Fecha de Sorteo: 4 febrero 2021</small></p>
+								<h2 class="section-title mt-0">¡Giveaway Termiando!</h2>
+								<p class="section-paragraph">¡Te deseamos suerte!<br><small>Fecha de Inicio: 24 de enero 2021<br>Fecha Final: 3 de febrero 2021</small></p>
 							</div>
 						</div>
 						
-						<div class="hero ">
+					{{--	<div class="hero ">
 							
 							<div class="mb-3 control control-expanded">
 								<label for="exampleFormControlInput1" class="form-label">Nombre</label>
@@ -145,9 +146,14 @@
 							<div class="control">
 								<input type="submit" class="btn btn-giveaway btn-block" value="Enviar">
 							</div>
-						</div>
-					</form>
-					
+						</div>--}}
+					</form> 
+					<div class="alert alert-success" role="alert">
+						<h4 class="alert-heading">¡Gracias por Participar!</h4>
+						<p>El Giveaway ha cerrado inscripciones. </p>
+						<hr>
+						<p class="mb-0">Muy pronto Leemon.com.co estará disponible online.</p>
+					</div>
 				</div>
                 <br><br>
                 <br><br>
