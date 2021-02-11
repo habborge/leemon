@@ -32,7 +32,7 @@
                         <ul class="nav nav-pills nav-stacked flex-column">
                         <li class="active">
                             <a href="#tab_a" data-toggle="pill">
-                                <img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}" class="img-tam xzoom-gallery" alt="" xpreview="../{{ $prod_info->img1 }}">
+                                <img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}" class="img-tam xzoom-gallery_" alt="" xpreview="../{{ $prod_info->img1 }}">
                             </a>
                         </li>
                         @for ($i = 0; $i <= count($images); $i++)
@@ -53,7 +53,7 @@
                             @for ($i = 0; $i <= count($images); $i++)
                                 @if (!empty($images[$i]))
                                     <div class="tab-pane" id="tab_{{$i}}">
-                                        <img id="thumb_{{$i}}" src="{{ env('AWS_URL') }}/{{ $images[$i] }}" class="img-tam2 xzoom_{{$i}}" xoriginal="{{ env('AWS_URL') }}/{{ $images[$i] }}" alt="">
+                                        <img id="thumb_{{$i}}" src="{{ env('AWS_URL') }}/{{ $images[$i] }}" class="img-tam2 xzoom" xoriginal="{{ env('AWS_URL') }}/{{ $images[$i] }}" alt="">
                                     </div>
                                 @endif
                             @endfor
@@ -93,13 +93,13 @@
                                 <div class="form-group">
                                     <div class="col-xl-12" data-th="Quantity">
                                         <div class="row">
-                                            Cantidad: 
+                                            Cantidad:  
                                             
                                             @if (isset(session('cart')[$prod_info->id])) 
-                                                @if (($prod_info->stockquantity - session('cart')[$prod_info->id]["quantity"]) > 0)
+                                                @if (($prod_info->webquantity - session('cart')[$prod_info->id]["quantity"]) > 0)
                                                     <div class="qua col-xl-2">
                                                         <span id="cant">
-                                                            <input class="quantity" type="number" min="1" max="{{$prod_info->stockquantity - session('cart')[$prod_info->id]["quantity"] }}" step="1" value="1">
+                                                            <input class="quantity" type="number" min="1" max="{{$prod_info->webquantity - session('cart')[$prod_info->id]["quantity"] }}" step="1" value="1">
                                                         </span>
                                                     </div>
                                                 @else
@@ -111,7 +111,7 @@
                                             @else
                                                 <div class="qua col-xl-2">
                                                     <span id="cant">
-                                                        <input class="quantity" type="number" min="1" max="{{ $prod_info->stockquantity }}" step="1" value="1">
+                                                        <input class="quantity" type="number" min="1" max="{{ $prod_info->webquantity }}" step="1" value="1">
                                                     </span>
                                                 </div>
                                             @endif
@@ -123,7 +123,7 @@
                                                 
                                             
                                                 {{-- <select class="form-control quantity" name="" id="">
-                                                    @for ($i = 1; $i <= $prod_info->stockquantity; $i++)
+                                                    @for ($i = 1; $i <= $prod_info->webquantity; $i++)
                                                         <option value="{{ $i }}">{{ $i }}</option>
                                                     @endfor
                                                 </select> --}}
@@ -136,10 +136,10 @@
                                     <div class="col-xl-12">
                                         <div class="row">
                                             @if (isset(session('cart')[$prod_info->id])) 
-                                                @if (($prod_info->stockquantity - session('cart')[$prod_info->id]["quantity"]) > 0)
+                                                @if (($prod_info->webquantity - session('cart')[$prod_info->id]["quantity"]) > 0)
                                                     <div id="nodis-button" class="col-xl-auto">
                                                         <div class="row">
-                                                            <button id="" class="btn btn-purchase update-cart"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->stockquantity - session('cart')[$prod_info->id]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
+                                                            <button id="" class="btn btn-purchase update-cart"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity - session('cart')[$prod_info->id]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</button>
                                                         </div>
                                                     </div>
                                                 @endif
@@ -147,7 +147,7 @@
                                             @else
                                                 <div id="nodis-button" class="col-xl-auto">
                                                     <div class="row">
-                                                        <button id="" class="btn btn-purchase update-cart"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->stockquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
+                                                        <button id="" class="btn btn-purchase update-cart" data-cart="1"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
                                                     </div>
                                                 </div>
                                             @endif  
@@ -158,7 +158,7 @@
                                             <div class="col-xl-auto">
                                                 <div class="row">
                                                     
-                                                    <button id="" class="btn btn-wishlist update-wishlist"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->stockquantity }}"><i class="fa fa-heart" aria-hidden="true"></i></button>
+                                                    <button id="" class="btn btn-wishlist update-wishlist"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity }}"><i class="fa fa-heart" aria-hidden="true"></i></button>
                                                     
                                                     
                                                 </div>
@@ -273,21 +273,40 @@
                     <div class="col-md-12">
                       <div class="rom">
                         <div class="card mb-4 shadow-sm">
-                          <a href="/product/{{$similar->proId}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $similar->reference }}/{{$similar->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
-                          <div class="card-body text-center">
-                            <span class="brand-font">{{ucwords($similar->brand)}} </span>
-                            <h6>{{ucwords($similar->proName)}} </h6>
-                            <h6>
-                              @if ($similar->prom == 1) 
-                              <span class="badge badge-warning">Paga 2 Lleva 3</span>
-                            @elseif ($similar->prom == 2)
-                              <span class="badge badge-success">2nd 50% off</span>
-                            @endif
-                          </h6> 
-                          <span class="brand-font2"><b>$ {{number_format($similar->price, 0)}} COP </b></span><br><br>
-                                                 <!-- <a href="/product/{{$similar->proId}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
-                               {{-- <a href="{{ url('add-to-cart/'.$similar->proId) }}"> <button type="button" class="btn btn-sm btn-leemon-green"><i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito</button></a> --}}
-                               <button id="" class="btn btn-sm btn-leemon-green update-cart"  data-id="{{ $similar->proId }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
+                            <a href="/product/{{$similar->proId}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $similar->reference }}/{{$similar->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
+                            <div class="card-body text-center">
+                                <span class="brand-font">{{ucwords($similar->brand)}} </span>
+                                <h6>{{ucwords($similar->proName)}} </h6>
+                                <h6>
+                                    @if ($similar->prom == 1) 
+                                        <span class="badge badge-warning">Paga 2 Lleva 3</span>
+                                    @elseif ($similar->prom == 2)
+                                        <span class="badge badge-success">2nd 50% off</span>
+                                    @endif
+                                </h6> 
+                                <span class="brand-font2"><b>$ {{number_format($similar->price, 0)}} COP </b></span><br><br>
+                                                 
+                                    {{-- <button id="" class="btn btn-sm btn-leemon-green update-cart" data-cart="2"  data-id="{{ $similar->proId }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button> --}}
+
+                                @if (isset(session('cart')[$similar->proId])) 
+                                    @if (($similar->webquantity - session('cart')[$similar->proId]["quantity"]) > 0)
+                                        <div id="nodis-button" class="col-xl-auto">
+                                        <div class="row">
+                                            <button id="" class="btn btn-sm btn-leemon-green update-cart btn-block" data-cart="2" data-id="{{ $similar->proId }}" data-dif="{{ $similar->webquantity - session('cart')[$similar->proId]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
+                                        </div>
+                                        </div>
+                                    @else
+                                        <div class="col-md-12">
+                                            No Disponible
+                                        </div>
+                                    @endif
+                                @else
+                                    <div id="nodis-button" class="col-xl-auto">
+                                        <div class="row">
+                                        <button id="" class="btn btn-sm btn-leemon-green update-cart btn-block"  data-id="{{ $similar->proId }}" data-dif="{{ $similar->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
+                                        </div>
+                                    </div>
+                                @endif
                               
                             
                           </div>
@@ -342,14 +361,21 @@
             e.preventDefault();
 
             var ele = $(this);
+            var option = ele.attr("data-cart");
             var diff = ele.attr("data-dif");
-            var dataQuant = ele.parents("div").find(".quantity").val();
+            if (option == 1){
+                var dataQuant = ele.parents("div").find(".quantity").val();
+            }else{
+                var dataQuant = 1;
+            }
+            
+            
             $.ajax({
                 url: "{{ url('add-to-cart-quantity')}}",
                 method: "post",
                 data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id"), quantity: dataQuant},
                 beforeSend: function(x){
-                    ele.before("<div id='loadPro'><i class='fa fa-refresh fa-spin'></i>Loading</div>");
+                    ele.before("<div id='loadPro' class='col-12 text-center'><i class='fa fa-refresh fa-spin'></i> Agregando</div>");
                     ele.hide();
                 },
                 success: function (response) {
@@ -360,13 +386,21 @@
                     $("#loadPro").remove();
                     //alert(diff - dataQuant);
                     if (diff - dataQuant < 1){
-                        $("#cant").hide();
-                        $("#nodis-button").hide();
-                        $("#nodis").show();
-                        
+                        if (option == 1){
+                            $("#cant").hide();
+                            $("#nodis-button").hide();
+                            $("#nodis").show();
+                        }else{
+                            ele.hide();
+                            ele.before("<div class='col-md-12'>No Disponible</div>");
+                        }
                     }else{
-                        ele.parents("div").find(".quantity").attr('max', diff - dataQuant);
-                        ele.parents("div").find(".quantity").val(1);
+                        
+                        ele.attr("data-dif", diff - dataQuant);
+                        if (option == 1){
+                            ele.parents("div").find(".quantity").attr('max', diff - dataQuant);
+                            ele.parents("div").find(".quantity").val(1);
+                        }
                     }
                     
                     
@@ -402,16 +436,19 @@
             responsive:{
                 0:{
                     items:1,
-                    nav:true
+                    nav:true,
+                    navText : ['<div class="carousel-control-prev-icon"></div>','<div class="carousel-control-next-icon"></div>']
                 },
                 600:{
                     items:3,
-                    nav:false
+                    nav:false,
+                    navText : ['<div class="carousel-control-prev-icon"></div>','<div class="carousel-control-next-icon"></div>']
                 },
                 1000:{
                     items:5,
                     nav:true,
-                    loop:false
+                    loop:false,
+                    navText : ['<div class="carousel-control-prev-icon"></div>','<div class="carousel-control-next-icon"></div>']
                 }
             }
         });

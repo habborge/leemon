@@ -24,14 +24,14 @@
                                             
                                                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                                                     <div class="card-body">
-                                                        <h6>{{ ucwords($address[0]->contact) }}</h6>
+                                                        <h6>{{ ucwords($address->contact) }}</h6>
                                                         <p class="info-small">
                                                             @php
-                                                                $my_address = str_replace("~", " ", $address[0]->address)
+                                                                $my_address = str_replace("~", " ", $address->address)
                                                             @endphp
-                                                            {{ $my_address }}, {{ $address[0]->zipcode }} Código Postal<br>
-                                                            {{ ucwords($address[0]->details) }}<br>
-                                                            {{ ucwords($address[0]->city_d_id) }} ({{ ucwords($address[0]->department) }}), {{ ucwords($address[0]->country_master_name) }}
+                                                            {{ $my_address }}, {{ $address->zipcode }} Código Postal<br>
+                                                            {{ ucwords($address->details) }}<br>
+                                                            {{ ucwords($address->city_d_id) }} ({{ ucwords($address->department) }}), {{ ucwords($address->country_master_name) }}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -351,7 +351,9 @@
                                                                     </div>
                                                                     <div class="col-md-4">
                                                                         <div class="row float-right">
-                                                                            {{ number_format(0,0) }}
+                                                                            @if (session('tcc'))
+                                                                                {{ number_format(session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
+                                                                            @endif
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -366,7 +368,7 @@
                                                                     </div>
                                                                     <div class="col-md-4">
                                                                         <div class="row float-right">
-                                                                            COP$ {{ number_format($total,0) }}
+                                                                            COP$ {{ number_format($total + session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -473,7 +475,9 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="row float-right">
-                                                    {{ number_format(0,0) }}
+                                                    @if (session('tcc'))
+                                                        {{ number_format(session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -489,7 +493,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="row float-right">
-                                                    COP$ {{ number_format($total,0) }}
+                                                    COP$ {{ number_format($total + session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
                                                 </div>
                                             </div>
                                         </div>

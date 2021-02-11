@@ -37,7 +37,27 @@
                                                 <!-- <a href="/product/{{$product->proId}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
                                                 {{-- <a href="{{ url('add-to-cart/'.$product->proId) }}"> <button type="button" class="btn btn-sm btn-leemon-green"><i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito</button></a> --}}
                                                 
-                                                <button id="" class="btn btn-sm btn-leemon-green update-cart"  data-id="{{ $product->proId }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
+                                                {{-- <button id="" class="btn btn-sm btn-leemon-green update-cart"  data-id="{{ $product->proId }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button> --}}
+
+                                                @if (isset(session('cart')[$product->proId])) 
+                                                    @if (($product->webquantity - session('cart')[$product->proId]["quantity"]) > 0)
+                                                        <div id="nodis-button" class="col-xl-auto">
+                                                            <div class="row">
+                                                            <button id="" class="btn btn-sm btn-leemon-green update-cart btn-block"  data-id="{{ $product->proId }}" data-dif="{{ $product->webquantity - session('cart')[$product->proId]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        <div class="col-md-12">
+                                                            No Disponible
+                                                        </div>
+                                                    @endif
+                                                @else
+                                                    <div id="nodis-button" class="col-xl-auto">
+                                                    <div class="row">
+                                                        <button id="" class="btn btn-sm btn-leemon-green update-cart btn-block"  data-id="{{ $product->proId }}" data-dif="{{ $product->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
+                                                    </div>
+                                                    </div>
+                                                @endif 
                                                 @guest
                 
                                                 @else
@@ -144,13 +164,14 @@
         e.preventDefault();
 
         var ele = $(this);
+        var diff = ele.attr("data-dif");
 
         $.ajax({
             url: "{{ url('add-to-cart-quantity')}}",
             method: "post",
             data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id"), quantity: 1},
             beforeSend: function(x){
-                ele.before("<div id='loadPro'><i class='fa fa-refresh fa-spin'></i>Loading</div>");
+                ele.before("<div id='loadPro' class='col-12 text-center'><i class='fa fa-refresh fa-spin'></i> Agregando</div>");
                 ele.hide();
             },
             success: function (response) {
@@ -159,6 +180,12 @@
                 toastr.success("Ha agregado un nuevo articulo al carrito!!", "Articulo Agregado");
                 ele.show();
                 $("#loadPro").remove();
+                if (diff - 1 < 1){
+                    ele.hide();
+                    ele.before("<div class='col-md-12'>No Disponible</div>");
+                }else{
+                    ele.attr("data-dif", diff -1 );
+                }
             }
         });
     });

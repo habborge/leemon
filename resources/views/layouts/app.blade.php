@@ -95,145 +95,157 @@
         <nav id="" class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             
             <div class="container dataPosition">
-               <div class="row ancho">
-                <div id="one" class="col-md-2">
-                    <button  onclick="openNav()" class="navbar-toggler" type="button" data-toggle="" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="{{ __('Toggle navigation') }}">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        <img src="/img/logo_leemon_small_black.png" alt="" class="leemonlogo">
-                    </a>
-                </div>
-                
-                <div id="two" class="col-md-6">
-                    <form  name="form" id="form" action="/result" class="search-form" method="GET">
-                        @csrf
-                        
-                        <div class="col-md-12 col-12 input-group mb-3">
-                            <div id="prefetch" class="col-md-10 col-9">
-                                <div class="row">
-                                    <input id="search" name="search" type="search" class="form-control typeahead" aria-label="search" aria-describedby="" placeholder="Search" style="">
-                                </div>
+                <div class="col-12 col xl-12">
+                    <div class="row ancho">
+                        <div id="one" class="col-auto">
+                            <div class="row">
+                                <button  onclick="openNav()" class="navbar-toggler" type="button" data-toggle="" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="{{ __('Toggle navigation') }}">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <a class="navbar-brand" href="{{ url('/') }}">
+                                    <img src="/img/logo_leemon_small_black.png" alt="" class="leemonlogo">
+                                </a>
                             </div>
-                            
-                            <div class="input-group-append col-md-2 col-3">
-                              <div class="row">
-                                <button class="btn btn-outline-success" type="submit">Search</button>
-                              </div>
-                            </div>
-                            
-                          </div>
-                    </form>
-                </div>
-            
-                <div id="three" class="col-md-2">
-                    <div class="row">
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <!-- Left Side Of Navbar -->
-                            <ul class="navbar-nav mr-auto">
-                            </ul>
-        
-                            <!-- Right Side Of Navbar -->
-                            <ul class="navbar-nav ml-auto">
-                                <!-- Authentication Links -->
-                                @guest
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('login') }}">{{ __('Log in') }}</a>
-                                    </li>
-                                    @if (Route::has('register'))
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('register') }}">{{ __('Registrate') }}</a>
-                                        </li>
-                                    @endif
-                                @else
-                                    <li class="nav-item dropdown">
-                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                            {{ Auth::user()->name }} <span class="caret"></span>
-                                        </a>
-        
-                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                            <a href="" class="dropdown-item">
-                                                Perfil
-                                            </a>
-                                            <a href="" class="dropdown-item">
-                                                Mis Ordenes
-                                            </a>
-                                            <a href="/addresses" class="dropdown-item">
-                                                Mis Direcciones
-                                            </a>
-                                            <a href="/secure/methods" class="dropdown-item">
-                                                Metodo de Pago
-                                            </a>
-                                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                               onclick="event.preventDefault();
-                                                             document.getElementById('logout-form').submit();">
-                                                {{ __('Logout') }}
-                                            </a>
-        
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                                @csrf
-                                            </form>
-                                        </div>
-                                    </li>
-                                @endguest
-                            </ul>
                         </div>
-                        
-                    </div>
                     
-                </div>
-                <div id="four" class="col-md-2">
-                    <div id="litlecart" class="main-section">
-                        <div class="dropdown">
-                            <button type="button" class="btn btn-info" data-toggle="dropdown">
-                                <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span id="littleCart">Carrito</span><span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
-                            </button>
-                            @if(session('cart'))
-                                <div class="dropdown-menu">
-                                    <div class="row total-header-section">
-                                        <div class="col-lg-6 col-sm-6 col-6">
-                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
-                                        </div>
-                                        <?php $total = 0 ?>
-                                        @foreach((array) session('cart') as $id => $details)
-                                            <?php $total += $details['price'] * $details['quantity'] ?>
-                                        @endforeach
-        
-                                        <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
-                                            <p>Total: <span class="text-info">$ {{ number_format($total,0) }}</span></p>
-                                        </div>
-                                    </div>
-        
+                        <div id="two" class="col-md-7">
+                            <div class="row">
+                                <form  name="form" id="form" action="/result" class="search-form" method="GET">
+                                    @csrf
                                     
-                                        @foreach(session('cart') as $id => $details)
-                                            <div class="row cart-detail">
-                                                <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
-                                                    <img src="{{ $details['photo'] }}" />
-                                                </div>
-                                                <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
-                                                    <p class="brand-font">{{ $details['name'] }}</p>
-                                                    <span class="price text-info"> $ {{ number_format($details['price'],0) }}</span> <span class="count"> Cantidad:{{ $details['quantity'] }}</span>
-                                                </div>
-                                                
+                                    <div class="col-md-12 col-12 input-group mb-3">
+                                        <div id="prefetch" class="col-md-10 col-9">
+                                            <div class="row">
+                                                <input id="search" name="search" type="search" class="form-control input-search-ra typeahead" aria-label="search" aria-describedby="" placeholder="Hacer una busqueda..." style="" required>
                                             </div>
-                                            
-                                        @endforeach
-                                    
-        
-                                    <div class="row">
-                                        <div class="col-lg-12 col-sm-12 col-12 text-center">
-                                            <hr class="mb-4">
-                                            <a href="{{ url('cart') }}" class="btn btn-purchase btn-block">Ver completo</a>
                                         </div>
+                                        
+                                        <div class="input-group-append col-md-2 col-3">
+                                        <div class="row">
+                                            <button class="btn btn-outline-success btn-search-ra" type="submit">Buscar</button>
+                                        </div>
+                                        </div>
+                                        
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        {{-- 3 --}}
+                        <div id="three" class="col-auto mr-auto">
+                            <div class="row">
+                                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                    <!-- Left Side Of Navbar -->
+                                    <ul class="navbar-nav mr-auto">
+                                    </ul>
+                
+                                    <!-- Right Side Of Navbar -->
+                                    <ul class="navbar-nav ml-auto">
+                                        <!-- Authentication Links -->
+                                        @guest
+                                            <li class="nav-item dropdown">
+                                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" v-pre>
+                                                Identificarse<span class="caret"></span>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-position-center dropdown-menu-center text-center" aria-labelledby="navbarDropdown">
+                                                    <a class="btn btn-success btn-sm btn-block" href="{{ route('login') }}">{{ __('Log in') }}</a>
+                                                    @if (Route::has('register'))
+                                                        <span class="title-tam3">¿Eres nuevo en Leemon? </span><a class="title-tam2" href="{{ route('register') }}">{{ __('Unete aquí.') }}</a>
+                                                    @endif
+                                                </div>
+                                                {{--  --}}
+                                            </li>
+                                            
+                                        @else
+                                            <li class="nav-item dropdown">
+                                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre><img src="/img/PERFIL.png" width="30px" alt="">
+                                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                                </a>
+                
+                                                <div class="dropdown-menu dropdown-menu-position-center dropdown-menu-center" aria-labelledby="navbarDropdown">
+                                                    <a href="" class="dropdown-item dropdown-item-text-size">
+                                                        <i class="fa fa-user-circle-o" aria-hidden="true"></i> Perfil
+                                                    </a>
+                                                    <hr>
+                                                    <a href="" class="dropdown-item dropdown-item-text-size">
+                                                        <i class="fa fa-shopping-basket" aria-hidden="true"></i> Mis Pedidos
+                                                    </a>
+                                                    <a href="/addresses" class="dropdown-item dropdown-item-text-size">
+                                                        <i class="fa fa-address-book" aria-hidden="true"></i> Mis Direcciones
+                                                    </a>
+                                                    <a href="/secure/methods" class="dropdown-item dropdown-item-text-size">
+                                                        <i class="fa fa-credit-card-alt" aria-hidden="true"></i> Metodo de Pago
+                                                    </a>
+                                                    <hr>
+                                                    <a class="dropdown-item dropdown-item-text-size" href="{{ route('logout') }}"
+                                                    onclick="event.preventDefault();
+                                                                    document.getElementById('logout-form').submit();"><i class="fa fa-sign-out" aria-hidden="true"></i>
+                                                        {{ __('Cerrar Sesión') }}
+                                                    </a>
+                
+                                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                        @csrf
+                                                    </form>
+                                                </div>
+                                            </li>
+                                        @endguest
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- 4 --}}
+                        <div id="four" class="col-auto">
+                            <div class="row">
+                                <div id="litlecart" class="main-section">
+                                    <div class="dropdown">
+                                        <button type="button" class="btn btn-info" data-toggle="dropdown">
+                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span id="littleCart">Carrito</span><span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
+                                        </button>
+                                        @if(session('cart'))
+                                            <div class="dropdown-menu dropdown-menu-position">
+                                                <div class="row total-header-section">
+                                                    <div class="col-lg-6 col-sm-6 col-6">
+                                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
+                                                    </div>
+                                                    <?php $total = 0 ?>
+                                                    @foreach((array) session('cart') as $id => $details)
+                                                        <?php $total += $details['price'] * $details['quantity'] ?>
+                                                    @endforeach
+                    
+                                                    <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
+                                                        <p>Total: <span class="text-info">$ {{ number_format($total,0) }}</span></p>
+                                                    </div>
+                                                </div>
+                    
+                                                
+                                                    @foreach(session('cart') as $id => $details)
+                                                        <div class="row cart-detail">
+                                                            <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
+                                                                <img src="{{ $details['photo'] }}" />
+                                                            </div>
+                                                            <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
+                                                                <p class="brand-font">{{ $details['name'] }}</p>
+                                                                <span class="price text-info"> $ {{ number_format($details['price'],0) }}</span> <span class="count"> Cantidad:{{ $details['quantity'] }}</span>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        
+                                                    @endforeach
+                                                
+                    
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-sm-12 col-12 text-center">
+                                                        <hr class="mb-4">
+                                                        <a href="{{ url('cart') }}" class="btn btn-purchase btn-block">Ver completo</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
-                            @endif
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-                
-
             </div>
         </nav>
         <div id="mySidepanel" class="sidepanel">
