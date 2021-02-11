@@ -190,48 +190,51 @@ class PurchaseControler extends Controller
                 if ($card->count() >0){
                     $cardExist = 2;
                 }
-            }
 
-            $wsdl = "http://clientes.tcc.com.co/preservicios/liquidacionacuerdos.asmx?wsdl";
-            $parameters = [
-                'Clave' => 'CLIENTETCC608W3A61CJ',
-                'Liquidacion' => [
-                    'tipoenvio' => 2,
-                    'idciudadorigen' => '08001000',
-                    'idciudaddestino' => '0'.$address->dane_d,
-                    'valormercancia' => $totalprice,
-                    'boomerang' => 0,
-                    'cuenta' => 0,
-                    'fecharemesa' => '05/02-2021',
-                    'idunidadestrategicanegocio' => 2,
-                    'unidades' => [
-                        'unidad' => [
-                            'numerounidades' => 1,
-                            'pesoreal' => $weight,
-                            'pesovolumen' => $volweight,
-                            
-                            'tipoempaque' => '1'
+                $wsdl = "http://clientes.tcc.com.co/preservicios/liquidacionacuerdos.asmx?wsdl";
+                $parameters = [
+                    'Clave' => 'CLIENTETCC608W3A61CJ',
+                    'Liquidacion' => [
+                        'tipoenvio' => 2,
+                        'idciudadorigen' => '08001000',
+                        'idciudaddestino' => '0'.$address->dane_d,
+                        'valormercancia' => $totalprice,
+                        'boomerang' => 0,
+                        'cuenta' => 0,
+                        'fecharemesa' => '05/02-2021',
+                        'idunidadestrategicanegocio' => 2,
+                        'unidades' => [
+                            'unidad' => [
+                                'numerounidades' => 1,
+                                'pesoreal' => $weight,
+                                'pesovolumen' => $volweight,
+                                
+                                'tipoempaque' => '1'
+                            ]
                         ]
                     ]
-                ]
 
-            ];
+                ];
 
-            $soap = new SoapClient($wsdl);
-            $re = $soap->__soapCall("ConsultarLiquidacion", array($parameters));
-        
-                       
-            dd($re, $weight, $volweight, $re->consultarliquidacionResult->total->totaldespacho);
+                $soap = new SoapClient($wsdl);
+                $re = $soap->__soapCall("ConsultarLiquidacion", array($parameters));
             
-        
-        
-        return view('method', [
-            'answer' => $answer,
-            'cardexist' => $cardExist,
-            'member_info' => $member_info,
-            'address' => $address,
-            'card' => $card
-        ]);
+                session()->put('tcc', $re);  
+                
+                    
+                //dd($re, $weight, $volweight, $re->consultarliquidacionResult->total->totaldespacho);
+                return view('method', [
+                    'answer' => $answer,
+                    'cardexist' => $cardExist,
+                    'member_info' => $member_info,
+                    'address' => $address,
+                    'card' => $card
+                ]);
+            }else{
+               
+            }
+
+            
         }
         
     }

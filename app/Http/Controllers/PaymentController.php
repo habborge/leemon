@@ -153,14 +153,15 @@ class PaymentController extends Controller
 
                 session()->put('myorder', $orderId);
                 //new class to insert new order
-                
+                $re = session()->get('tcc'); 
+                $totalFinal =  $total + $re->consultarliquidacionResult->total->totaldespacho;
                 $reference = $user_id."~";
 
                 $data = [
                     "InformacionPago" => [
-                        "flt_total_con_iva" => $total,
+                        "flt_total_con_iva" => $totalFinal,
                         "flt_valor_iva" => 0,
-                        "str_id_pago" => "100498-".$orderId,
+                        "str_id_pago" => "ORD-10".$orderId,
                         "str_descripcion_pago" => "Compra de Productos Naturales",
                         "str_email" => $member->email,
                         "str_id_cliente" => $member->n_doc,
