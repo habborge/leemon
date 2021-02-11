@@ -8,64 +8,64 @@
 @section('content')
 
   <main role="main">
-    {{-- images in slide --}}
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-      <ol class="carousel-indicators">
-        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-      </ol>
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="img/promo.jpg" height="500px" class="d-block w-100" alt="...">
+    <div>
+      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="img/promo.jpg" height="500px" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="img/promo_1B.jpg" height="500px" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="img/promo2.jpg" height="500px" class="d-block w-100" alt="...">
+          </div>
         </div>
-        <div class="carousel-item">
-          <img src="img/promo_1B.jpg" height="500px" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-          <img src="img/promo2.jpg" height="500px" class="d-block w-100" alt="...">
-        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
       </div>
-      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
-    </div>
-    {{-- close slide --}}
+      {{-- close slide --}}
     
 
-    {{-- product of the month --}}
-    <div class="album py-5 bg-light">
-      <div class="container">
-          <div class="row">
-            <div class="aline-title col-md-12">
-              <h3 class="aline-span">{{ $catTitle }}</h3>
+      {{-- MAIN CATEGORIES --}}
+      <div class="album py-5 ">
+        <div class="container">
+            <div class="row">
+              <div class="aline-title col-md-12">
+                <h3 class="aline-span">{{ $catTitle }}</h3>
+              </div>
+              <div class=" col-md-12">
+                
+                  <div class="row">
+                    @foreach ($cat_pri as $category)
+                      <div class="col-md-4 category_style">
+                          
+                          <img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/categories/cat_{{ $category->id }}.jpg" class="card-img-top rounded mx-auto d-block" alt="">
+                          <div class = "carousel-caption" >
+                            <h5 style="text-shadow: 2px 2px #202020;"> {{$category->name}}</h5>
+                            </div>
+                      </div>
+                    @endforeach
+                  </div>
+                
+              </div>
             </div>
-            <div class=" col-md-12">
-              
-                <div class="row">
-                  @foreach ($cat_pri as $category)
-                    <div class="col-md-4 category_style">
-                        
-                        <img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/categories/cat_{{ $category->id }}.jpg" class="card-img-top rounded mx-auto d-block" alt="">
-                        <div class = "carousel-caption" >
-                          <h5> {{$category->name}}</h5>
-                          </div>
-                    </div>
-                  @endforeach
-                </div>
-              
-            </div>
-          </div>
+        </div>
       </div>
-    </div>
-    {{-- end product of the month --}}
-{{-- product list --}}
-<div class="album py-5 bg-light">
+      {{-- end product of the month --}}
+      {{-- product list --}}
+<div class="album py-5 ">
   <div class="container">
     <div class="row">
       <div class="aline-title col-md-12">
@@ -100,7 +100,26 @@
                               <i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito
                             </button>
                           </a> --}}
-                          <button id="" class="btn btn-sm btn-leemon-green update-cart"  data-id="{{ $product->id }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
+                          @if (isset(session('cart')[$product->id])) 
+                            @if (($product->webquantity - session('cart')[$product->id]["quantity"]) > 0)
+                              <div id="nodis-button" class="col-xl-auto">
+                                <div class="row">
+                                  <button id="" class="btn btn-sm btn-leemon-green update-cart btn-block"  data-id="{{ $product->id }}" data-dif="{{ $product->webquantity - session('cart')[$product->id]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
+                                </div>
+                              </div>
+                            @else
+                              <div class="col-md-12">
+                                  No Disponible
+                              </div>
+                            @endif
+                          @else
+                            <div id="nodis-button" class="col-xl-auto">
+                              <div class="row">
+                                <button id="" class="btn btn-sm btn-leemon-green update-cart btn-block"  data-id="{{ $product->id }}" data-dif="{{ $product->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
+                              </div>
+                            </div>
+                          @endif 
+                            
                         </div>
                       </div>
                     </div>
@@ -119,7 +138,7 @@
     </div>
   @endif
 </div>
-    {{-- <div class="album py-5 bg-light">
+    {{-- <div class="album py-5 ">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
@@ -165,7 +184,7 @@
         </div>
       </div>
     </div> --}}
-    <div class="album py-5 bg-light">
+    <div class="album py-5 ">
       <div class="container">
         <div class="row">
           <div class="col-md-6">
@@ -253,7 +272,7 @@
         </div>
       </div>
     </div>
-    <div class="album py-5 bg-light">
+    <div class="album py-5 ">
       <div class="container">
           <div class="row">
             <div class="col-md-12">
@@ -264,7 +283,7 @@
           </div>
       </div>
     </div>
-    <div class="album py-5 bg-light">
+    {{-- <div class="album py-5 ">
       <div class="container">
         <div class="row">
           <div class="col-md-6">
@@ -287,9 +306,10 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> --}}
     
-    
+  </div>
+  {{-- images in slide --}}  
   </main>
 
 
@@ -330,21 +350,35 @@
       
     });
     $(".update-cart").click(function (e) {
-            e.preventDefault();
+      e.preventDefault();
 
-            var ele = $(this);
+      var ele = $(this);
+      var diff = ele.attr("data-dif");
 
-            $.ajax({
-                url: "{{ url('add-to-cart-quantity')}}",
-                method: "post",
-                data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id"), quantity: 1},
-                success: function (response) {
-                   // window.location.reload();
-                   $('#litlecart').load(location.href + " #litlecart");
-                   toastr.success("Ha agregado un nuevo articulo al carrito!!", "Articulo Agregado");
-                }
-            });
-        });
+      $.ajax({
+          url: "{{ url('add-to-cart-quantity')}}",
+          method: "post",
+          data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id"), quantity: 1},
+          beforeSend: function(x){
+            ele.before("<div id='loadPro' class='col-12 text-center'><i class='fa fa-refresh fa-spin'></i> Agregando</div>");
+            ele.hide();
+          },
+          success: function (response) {
+            // window.location.reload();
+            
+            $('#litlecart').load(location.href + " #litlecart");
+            toastr.success("Ha agregado un nuevo articulo al carrito!!", "Articulo Agregado");
+            ele.show();
+            $("#loadPro").remove();
+            if (diff - 1 < 1){
+              ele.hide();
+              ele.before("<div class='col-md-12'>No Disponible</div>");
+            }else{
+              ele.attr("data-dif", diff -1 );
+            }
+          }
+      });
+    });
     
   });
   $(window).load()

@@ -34,11 +34,36 @@
                               </h6> 
                               <h6>$ {{number_format($product->price, 0)}} COP</h6>
                                                   <!-- <a href="/product/{{$product->id}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
-                              <a href="{{ url('add-to-cart/'.$product->id) }}">
+                              {{-- <a href="{{ url('add-to-cart/'.$product->id) }}">
                                 <button type="button" class="btn btn-sm btn-leemon-green">
                                   <i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito
                                 </button>
-                              </a>
+                              </a> --}}
+                              @if (isset(session('cart')[$product->id])) 
+                                @if (($product->quantity - session('cart')[$product->id]["quantity"]) > 0)
+                                  <div id="nodis-button" class="col-xl-auto">
+                                    <div class="row">
+                                      <button id="" class="btn btn-sm btn-leemon-green update-cart btn-block"  data-id="{{ $product->id }}" data-dif="{{ $product->quantity - session('cart')[$product->id]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
+                                    </div>
+                                  </div>
+                                @else
+                                  <div class="col-md-12">
+                                      No Disponible
+                                  </div>
+                                @endif
+                              @else
+                                  @if ($product->quantity >0)
+                                    <div id="nodis-button" class="col-xl-auto">
+                                      <div class="row">
+                                        <button id="" class="btn btn-sm btn-leemon-green update-cart btn-block"  data-id="{{ $product->id }}" data-dif="{{ $product->quantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
+                                      </div>
+                                    </div>
+                                  @else
+                                    <div class="col-md-12">
+                                      No Disponible
+                                    </div>
+                                  @endif
+                              @endif 
                             </div>
                           </div>
                         </div>
@@ -83,7 +108,7 @@
   </div>
         @if (count($search))
                 <div class="d-flex justify-content-center">
-                    {{ $search -> links() }}
+                    {{ $search->appends(Request::all())->links() }}
                 </div>
             @endif
             <footer class="text-muted">
@@ -96,4 +121,40 @@
                 </div>
               </footer>
     
+@endsection
+@section('custom-js')
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $(".update-cart").click(function (e) {
+        e.preventDefault();
+
+        var ele = $(this);
+        var diff = ele.attr("data-dif");
+
+        $.ajax({
+            url: "{{ url('add-to-cart-quantity')}}",
+            method: "post",
+            data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id"), quantity: 1},
+            beforeSend: function(x){
+              ele.before("<div id='loadPro' class='col-12 text-center'><i class='fa fa-refresh fa-spin'></i> Agregando</div>");
+              ele.hide();
+            },
+            success: function (response) {
+              // window.location.reload();
+              
+              $('#litlecart').load(location.href + " #litlecart");
+              toastr.success("Ha agregado un nuevo articulo al carrito!!", "Articulo Agregado");
+              ele.show();
+              $("#loadPro").remove();
+              if (diff - 1 < 1){
+                ele.hide();
+                ele.before("<div class='col-md-12'>No Disponible</div>");
+              }else{
+                ele.attr("data-dif", diff -1 );
+              }
+            }
+        });
+      });
+    });
+  </script>
 @endsection

@@ -113,7 +113,8 @@ class ProductController extends Controller
                         "length" => $product->length,
                         "height" => $product->height,
                         "weight" => $product->weight,
-                        "hash" => $hash
+                        "maxqua" => $product->quantity,
+                        "hash" => $hash,
                     ]
             ];
  
@@ -146,6 +147,7 @@ class ProductController extends Controller
             "length" => $product->length,
             "height" => $product->height,
             "weight" => $product->weight,
+            "maxqua" => $product->quantity,
             "hash" => $hash
         ];
  
@@ -198,6 +200,7 @@ class ProductController extends Controller
                         "length" => $product->length,
                         "height" => $product->height,
                         "weight" => $product->weight,
+                        "maxqua" => $product->quantity,
                         "hash" => $hash
                     ]
             ];
@@ -231,6 +234,7 @@ class ProductController extends Controller
             "length" => $product->length,
             "height" => $product->height,
             "weight" => $product->weight,
+            "maxqua" => $product->quantity,
             "hash" => $hash
         ];
  
@@ -296,7 +300,7 @@ class ProductController extends Controller
     public function details(Request $request)
     {
         $pro_id = $request->id;
-        $product = Product::select('products.id', 'products.reference', 'products.name', 'products.brand', 'products.subcategory_id', 'products.description', 'products.characteristics', 'products.ingredients','products.use','products.price', 'products.img1','products.prom', 'l.id as lot_id')
+        $product = Product::select('products.id', 'products.reference', 'products.name', 'products.brand', 'products.subcategory_id', 'products.description', 'products.characteristics', 'products.quantity as webquantity', 'products.ingredients','products.use','products.price', 'products.img1','products.prom', 'l.id as lot_id')
         ->leftJoin('lots as l', 'products.id', 'l.product_id')
         ->leftJoin('stocks as s', 's.lot_id', 'l.id')
         ->selectRaw('sum(s.quantity) as stockquantity, l.id as lot2')
@@ -316,7 +320,7 @@ class ProductController extends Controller
         //dd($categories);
 
         //$similar = Product::where('subcategory_id', '=',$product->subcategory_id)->where('id', '<>', $product->id)->paginate(12);
-        $similar = Product::select('products.id as proId', 'products.reference','products.name as proName','products.brand','products.description','products.price','products.img1','products.prom','products.health_register','products.width','products.length','products.height','products.weight','products.fee')
+        $similar = Product::select('products.id as proId', 'products.reference','products.name as proName','products.brand','products.description','products.price','products.img1','products.prom','products.quantity as webquantity','products.health_register','products.width','products.length','products.height','products.weight','products.fee')
         ->join('product_categories as pc', 'products.id', 'pc.product_id')
         ->where('pc.category_id', '=',$product->subcategory_id)
         ->where('products.id', '<>', $product->id)
@@ -352,12 +356,12 @@ class ProductController extends Controller
         $subCategory_id = $string[1];
         $son = $string[0];
 
-        $products = Product::select('products.id as proId', 'products.reference','products.name as proName','products.brand','products.description','products.price','products.img1','products.prom','products.health_register','products.width','products.length','products.height','products.weight','products.fee')
+        $products = Product::select('products.id as proId', 'products.reference','products.name as proName','products.brand','products.description','products.price','products.img1','products.prom','products.quantity as webquantity','products.health_register','products.width','products.length','products.height','products.weight','products.fee')
         ->join('product_categories as pc', 'products.id', 'pc.product_id')
         ->where('pc.category_id', $subCategory_id)
         ->orderBy('products.restrictions', 'DESC')
         ->orderBy('name')
-        ->paginate(24);
+        ->paginate(16);
 
         $brand = Product::select('brand')
         ->join('product_categories as pc', 'products.id', 'pc.product_id')
@@ -420,7 +424,7 @@ class ProductController extends Controller
         $brandName = mb_strtoupper(str_replace("-", " ",$request->brand)); 
 
         //$products = Product::where('subcategory_id', $subCategory_id)->where('brand', $brandName)->orderBy('name')->paginate(24);
-        $products = Product::select('products.id as proId', 'products.reference','products.name as proName','products.brand','products.description','products.price','products.img1','products.prom','products.health_register','products.width','products.length','products.height','products.weight','products.fee')
+        $products = Product::select('products.id as proId', 'products.reference','products.name as proName','products.brand','products.description','products.price','products.img1','products.prom','products.quantity as webquantity','products.health_register','products.width','products.length','products.height','products.weight','products.fee')
         ->join('product_categories as pc', 'products.id', 'pc.product_id')
         ->where('pc.category_id', $subCategory_id)
         ->where('brand', $brandName)

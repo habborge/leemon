@@ -46,7 +46,7 @@
                                             <div class="col-md-3 align-self-center">
                                                 <div class="row">
                                                     <div class="col-md-12 columna-img text-center line-left">
-                                                        <img src="/img/Garlic(1).png" class="img-responsive" width="120">
+                                                        <img src="/img/category_{{ $item['id']}}.png" class="img-responsive" width="120">
                                                     </div>
                                                 </div>
                                             </div>

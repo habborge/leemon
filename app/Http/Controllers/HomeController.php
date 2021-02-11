@@ -25,7 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $products_1 = Product::select('products.id', 'products.reference', 'products.name', 'products.brand', 'products.subcategory_id', 'products.description', 'products.price', 'products.img1','products.prom', 'l.id as lot_id')
+        $products_1 = Product::select('products.id', 'products.reference', 'products.name', 'products.brand', 'products.subcategory_id', 'products.description', 'products.price',  'products.quantity as webquantity', 'products.img1','products.prom', 'l.id as lot_id')
         ->leftJoin('lots as l', 'products.id', 'l.product_id')
         ->leftJoin('stocks as s', 's.lot_id', 'l.id')
         ->selectRaw('sum(s.quantity) as stockquantity, l.id as lot2')

@@ -38,7 +38,7 @@
                                         <a href="#">Selenium</a>
                                     </div>
                                     <div class="columna">
-                                        <img src="img/Garlic(1).png" class="img-responsive" width="120">
+                                        <img src="img/Vitamins.png" class="img-responsive" width="120">
                                     </div>
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                                         
                                     </div>
                                     <div class="columna">
-                                        <img src="img/Garlic(1).png" class="img-responsive" width="120">
+                                        <img src="img/suplements.png" class="img-responsive" width="120">
                                     </div>
                                     
                                 </div>

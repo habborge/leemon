@@ -156,7 +156,7 @@
                                                                                                 <div class="input-group-prepend">
                                                                                                   <span class="input-group-text" id="inputGroup-sizing-sm">Cant:</span>
                                                                                                 </div>
-                                                                                                <input class="form-control update-cart" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  data-id="{{ $id }}"  id="Quantity_{{$id}}" type="number" value="{{ $details['quantity'] }}">
+                                                                                                <input class="form-control update-cart" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  data-id="{{ $id }}"  id="Quantity_{{$id}}" type="number" value="{{ $details['quantity'] }}" max="{{ $details['maxqua'] }}">
                                                                                               </div>
                                                                                             
                                                                                             
