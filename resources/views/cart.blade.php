@@ -211,6 +211,12 @@
                                                     </div>
                                                 </div>
                                             @endforeach
+
+                                        @else
+                                        <?php
+                                        header('Location: /home');
+                                        exit;
+                                        ?>
                                         @endif
                                     </div>
                                     <div class="row">
@@ -324,28 +330,30 @@
                                             </div>
                                             
                                         
-                                            <div class="col-md-12">
-                                                <div class="row">
-                                                    <div class="col-6 col-md-6">
-                                                        <a href="{{ url('/') }}" class="btn btn-leemon-back">
-                                                            Seguir Comprando
-                                                        </a>
-                                                    </div>
-                                                    
-                                                    <!--<div class="hidden-xs text-right"><strong>Total $ {{ $total }}</strong></div>-->
-                                                    <div class="col-6 col-md-6 text-right">
-                                                        @guest
-                                                            <a class="btn btn-leemon-warning" href="{{ route('login') }}">Iniciar Sesión</a>
-                                                        @else
-                                                            @if ($answer == 0)
-                                                                <a href="{{ url('purchase') }}" class="btn btn-leemon-method">Información de Facturación</a>
-                                                            @elseif ($answer == 1)
-                                                                <a href="{{ url('methods') }}" class="btn btn-primary">Methodo de Pago</a>
-                                                            @endif
-                                                        @endguest
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer col-md-12">
+                                    <div class="row">
+                                        <div class="col-6 col-md-6">
+                                            <a href="{{ url('/') }}" class="btn btn-leemon-back">
+                                                Seguir Comprando
+                                            </a>
+                                        </div>
+                                        
+                                        <!--<div class="hidden-xs text-right"><strong>Total $ {{ $total }}</strong></div>-->
+                                        <div class="col-6 col-md-6 text-right">
+                                            @guest
+                                                <a class="btn btn-leemon-warning" href="{{ route('login') }}">Iniciar Sesión</a>
+                                                <span class="title-tam3">¿Eres nuevo en Leemon? </span><a class="title-tam2" href="{{ route('register') }}">{{ __('Unete aquí.') }}</a>
+                                            @else
+                                                @if ($answer == 0)
+                                                    <a href="{{ url('purchase') }}" class="btn btn-leemon-method">Información de Facturación</a>
+                                                @elseif ($answer == 1)
+                                                    <a href="{{ url('methods') }}" class="btn btn-primary">Methodo de Pago</a>
+                                                @endif
+                                            @endguest
                                         </div>
                                     </div>
                                 </div>
@@ -443,10 +451,13 @@
                                     {{-- {{ $total + $delivery }} --}}
                                 </div>
                             </div>
+                            
                             <div class="row">
-                                <div class="card-footer col-md-12">
+                                
+                                <div class="card-footer text-center col-md-12">
                                     @guest
                                         <a class="btn btn-leemon-warning btn-block" href="{{ url('/login') }}">Iniciar Sesión</a>
+                                        <span class="title-tam3">¿Eres nuevo en Leemon? </span><a class="title-tam2" href="{{ route('register') }}">{{ __('Unete aquí.') }}</a>
                                     @else
                                         @if ($answer == 0)
                                             <a href="{{ url('purchase') }}" class="btn btn-leemon-method btn-block">Información de Facturación</a>

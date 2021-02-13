@@ -474,4 +474,26 @@ class ProductController extends Controller
             'brands' => [],
         ]);
     }
+
+    public function groupCategory(Request $request){
+        $id = $request->id;
+
+        $products = Product::join('categories as c', 'c.id', '=', 'products.subcategory_id')
+        ->join('categories as c2', 'c2.id', '=', 'c.father_id')
+        ->join('categories as c3', 'c3.id', '=', 'c2.father_id')
+        ->where('c3.id', $id)
+        ->where('price', '>', 0)->orderBy('products.name')->paginate(24);
+
+        $subcategories = Category::where('father_id', $id)->get();
+
+        return view('products.categoryFather', [
+            'gfather_id' => $request->id,
+            'gfather' => str_replace("-", " ", $request->category),
+            'father' => '',
+            'son' => '',
+            'subcategories' => $subcategories,
+            'products' => $products,
+            'brands' => [],
+        ]);
+    }
 }

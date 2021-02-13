@@ -14,13 +14,13 @@
                                     <div class="accordion accord-width" id="accordionExample">
                                         
                                             <div class="card col-md-12 bg-light mb-3">
-                                                <div class="card-header row" id="headingOne">
+                                                
                                                   
                                                     <a class="text-left a-size-methods" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                          Dirección de Envio
+                                                        <div class="card-header row" id="headingOne"> Dirección de Envio</div>
                                                     </a>
                                                   
-                                                </div>
+                                                
                                             
                                                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                                                     <div class="card-body">

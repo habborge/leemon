@@ -49,13 +49,17 @@
                 
                   <div class="row">
                     @foreach ($cat_pri as $category)
+                    
                       <div class="col-md-4 category_style">
-                          
-                          <img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/categories/cat_{{ $category->id }}.jpg" class="card-img-top rounded mx-auto d-block" alt="">
-                          <div class = "carousel-caption" >
-                            <h5 style="text-shadow: 2px 2px #202020;"> {{$category->name}}</h5>
-                            </div>
-                      </div>
+                        <a href="/categories/{{ str_replace(" ", "-",$category->name) }}/{{ $category->id }}">
+                        <img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/categories/cat_{{ $category->id }}.jpg" class="card-img-top rounded mx-auto d-block" alt="">
+                        <div class = "carousel-caption" >
+                          <h5 style="text-shadow: 2px 2px #202020;"> {{$category->name}}</h5>
+                          </div>
+                        </a>
+                    </div>
+                    
+                      
                     @endforeach
                   </div>
                 

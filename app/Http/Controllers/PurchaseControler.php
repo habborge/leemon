@@ -37,6 +37,7 @@ class PurchaseControler extends Controller
             'address_2' => 'required',
             'address_3' => 'required',
             'address_4' => 'required',
+            'birthday' => 'required',
             'city'  => 'required', 
             'dpt' => 'required',  
             'country' => 'required',  
@@ -82,7 +83,7 @@ class PurchaseControler extends Controller
     //--------------------------------------------------------------------------------------------------------------
         public function addInfoUser(Request $request){
             
-            
+            //dd($request);
             $infosaved = 0;
             $id = Auth::user()->id;
 
@@ -184,7 +185,7 @@ class PurchaseControler extends Controller
                 ->join('departments as d', 'd.code', 'addresses.dpt')
                 ->join('cost_tcc as ct', 'ct.id', 'addresses.city')
                 ->first();
-                
+                //dd($address);
                 $card = Creditcard::where('user_id', $id)->where('default', 1)->get();
 
                 if ($card->count() >0){
@@ -197,7 +198,7 @@ class PurchaseControler extends Controller
                     'Liquidacion' => [
                         'tipoenvio' => 2,
                         'idciudadorigen' => '08001000',
-                        'idciudaddestino' => '0'.$address->dane_d,
+                        'idciudaddestino' => $address->dane_d,
                         'valormercancia' => $totalprice,
                         'boomerang' => 0,
                         'cuenta' => 0,
@@ -218,11 +219,33 @@ class PurchaseControler extends Controller
 
                 $soap = new SoapClient($wsdl);
                 $re = $soap->__soapCall("ConsultarLiquidacion", array($parameters));
+
+                if ($re->consultarliquidacionResult){
+                    if ($re->consultarliquidacionResult->idliquidacion){
+                        session()->put('tcc', $re);  
+                    }else{
+                        $re->consultarliquidacionResult->respuesta;
+                    }
+                }
+                
+                // if ($re->consultarliquidacionResult->respuesta){
+                    // {#1290 ▼
+                    //     +"consultarliquidacionResult": {#1302 ▼
+                    //         +"respuesta": {#1317 ▼
+                    //           +"codigo": "-1"
+                    //           +"mensaje": "Actualmente NO se tiene habilitado el servicio para la ruta y tipo de transporte seleccionados."
+                    //           +"codigointerno": "-1"
+                    //           +"mensajeinterno": "No se envio un origen valido"
+                    //         }
+                    //       }
+                    //     }
+                // }
             
-                session()->put('tcc', $re);  
+                
                 
                     
                 //dd($re, $weight, $volweight, $re->consultarliquidacionResult->total->totaldespacho);
+
                 return view('method', [
                     'answer' => $answer,
                     'cardexist' => $cardExist,

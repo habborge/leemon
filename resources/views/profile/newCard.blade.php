@@ -35,6 +35,7 @@
                                             <div class="col-md-6 mb-3">
                                                 <label class="text-register" for="cc_number">Número Tarjeta de Credito</label>
                                                 <input type="text" class="form-control @if ($errors-> has('cc_number'))  is-invalid @elseif ($errors-> has('notice')) is-invalid @endif" name="cc_number" id="cc_number" value="@if(!empty($completeRequest->cc_number)){{$completeRequest->cc_number}}@endif" placeholder="Ej: 123456789212" required>
+                                                <input id="cc_number2" type="hidden">
                                                 <div class="invalid-feedback">
                                                     @if ($errors-> has('cc_number')) Número de Tarjeta es requerida. @endif
                                                     @if ($errors-> has('notice')) Número de Tarjeta es Invalido. @endif
@@ -149,23 +150,47 @@
 @endsection
 @section('custom-js')
   <script>
+    // String.prototype.toCardFormat = function () {
+    //     return this.replace(/[^0-9]/g, "").substr(0, 16).split("").reduce(cardFormat, "");
+    //     function cardFormat(str, l, i) {
+    //         return str + ((!i || (i % 4)) ? "" : "-") + l;
+    //     }
+    // };
     $(document).ready(function(){
         $('#cc_number').bind('keyup input', function(){
             
-            var cant = $(this).val().length;
-            if(cant >= 4){
+            
 
+            
+            var num_c1 = $(this).val().replace('-', '');
+                        
+            var cant = $(this).val().length;
+
+            if(cant >= 4){
+                
                 if($(this).val().match(/^(?:4[0-9]{12}(?:[0-9]{3})?)$/)){
+                    
                     $('#nameCard').text('Visa');
+                    $("#cc_cvv").attr('maxlength','3');
+                    
                 }else if($(this).val().match(/^(?:5[1-5][0-9]{14})$/)){
                     $('#nameCard').text('MasterCard'); 
+                    $("#cc_cvv").attr('maxlength','3');
                 }else if($(this).val().match(/^(?:3[47][0-9]{13})$/)){
                     $('#nameCard').text('American Express'); 
+                    $("#cc_cvv").attr('maxlength','4');
                 }else if($(this).val().match(/^(?:6(?:011|5[0-9][0-9])[0-9]{12})$/)){
                     $('#nameCard').text('Discover');
+                    $("#cc_cvv").attr('maxlength','4');
                 }
                 
             }
+           // $(this).val($(this).val().toCardFormat());
+
+        });
+
+        $('#cc_cvv').on('input', function () { 
+            this.value = this.value.replace(/[^0-9]/g,'');
         });
     });
     </script>
