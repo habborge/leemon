@@ -65,6 +65,9 @@
   color: #ffffff;
   
 }
+.ul-width, .li-width{
+  width: 100%;
+}
 ul#menu-responsive ul{
   display: none;
   background-color: #403d38;
@@ -179,6 +182,9 @@ body {
   color: #212529;
   text-align: left;
   background-color: #FFFFF5 !important;
+}
+.body-cart{
+  color: #5c5a59 !important;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -2269,9 +2275,12 @@ pre code {
 .form-control:focus {
   color: #495057;
   background-color: #fff;
-  border-color: #a1cbef;
+  border-color: #80DA76 !important;
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
+  box-shadow:none !important;
+}
+.form-unfocus:required{
+   box-shadow:none !important;
 }
 
 .form-control::-moz-placeholder {
@@ -2914,15 +2923,21 @@ fieldset:disabled a.btn {
 }
 
 .btn-info {
-  color: #ffffff !important;
-  background-color: #403d38 !important;
-  border-color: #292724 !important;
+  color: #494949 !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+  
 }
 
+.cart-size{
+  font-size: 30px !important;
+}
+
+
 .btn-info:hover {
-  color: #fff;
-  background-color: #292724 !important;
-  border-color: #403d38 !important;
+  color: #272727;
+  background-color: transparent !important;
+  border-color: transparent !important;
 }
 
 .btn-info:focus,
@@ -3530,10 +3545,10 @@ input[type=button].btn-block {
   color: #212529;
   text-align: left;
   list-style: none;
-  background-color: #fff;
+  background-color: #DDDDDD !important;
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 0.25rem;
+  border-radius: 1rem !important;
 }
 
 .dropdown-menu-left {
@@ -3714,7 +3729,7 @@ input[type=button].btn-block {
 .dropdown-item:focus {
   color: #16181b;
   text-decoration: none;
-  background-color: #f8f9fa;
+  background-color: #4a8048;
 }
 
 .dropdown-item.active,
@@ -3752,6 +3767,7 @@ input[type=button].btn-block {
 .dropdown-item-text-size{
   font-family: "AcuminVariableConcept2";
   font-size: 12px;
+  color: #565654 !important;
 }
 .btn-group,
 .btn-group-vertical {
@@ -5072,6 +5088,15 @@ input[type=button].btn-block {
   border-radius: 0.25rem;
   height: auto !important;
 }
+.card-rounded{
+  border-radius: 1rem !important;
+}
+.card-round-header{
+  border-radius: 1rem 1rem 0rem 0rem !important;
+}
+.card-round-footer{
+  border-radius: 0rem 0rem 1rem 1rem !important;
+}
 
 .card > hr {
   margin-right: 0;
@@ -5105,6 +5130,9 @@ input[type=button].btn-block {
   min-height: 1px;
   padding: 1.25rem;
 }
+.card-body-yellow{
+  background-color: #F4F4DC !important;
+}
 
 .card-title {
   margin-bottom: 0.75rem;
@@ -5130,7 +5158,7 @@ input[type=button].btn-block {
 .card-header {
   padding: 0.75rem 1.25rem;
   margin-bottom: 0;
-  background-color: rgba(0, 0, 0, 0.03);
+  background-color: #E3DFC4 !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 
@@ -5430,7 +5458,10 @@ input[type=button].btn-block {
   border-top-right-radius: 0.2rem;
   border-bottom-right-radius: 0.2rem;
 }
-
+.cart {
+  position: relative;
+  float: right;
+}
 .badge {
   display: inline-block;
   padding: 0.25em 0.4em;
@@ -5442,6 +5473,21 @@ input[type=button].btn-block {
   vertical-align: baseline;
   border-radius: 0.25rem;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+#cart_menu_num {
+  position: absolute;
+  top: 10px;
+  left: 55%;
+  background: red;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  padding: 2px;
+  font-size: 12px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -7086,6 +7132,9 @@ a.close.disabled {
 
 .bg-primary {
   background-color: #3490dc !important;
+}
+.bg-leemon-pro {
+  background-color: #FFF7EA !important;
 }
 
 a.bg-primary:hover,
@@ -11101,8 +11150,12 @@ a.text-dark:focus {
   background-color: transparent !important;
 }
 .img-purchase{
-  width: 180px;
-  height: 180px;
+  width: 150px;
+  height: 150px;
+}
+.img-purchase2{
+  width: 60px;
+  height: 60px;
 }
 #cart_responsive{
   display:none;
@@ -11126,6 +11179,12 @@ a.text-dark:focus {
 
 .line-right{
   border-right: 0px solid #adb5bd !important;
+}
+.line-right-profile{
+  border-right: 1px solid #737379 !important;
+}
+.line-right-cart{
+  border-right: 2px solid #dddddd !important;
 }
 
 .line-left{
@@ -11188,10 +11247,7 @@ a.text-dark:focus {
   #purchase-details{
     display: none;
   }
-  .img-purchase{
-    width: 100px;
-    height: 100px;
-  }
+  
   #subtotal{
     display: none;
   }

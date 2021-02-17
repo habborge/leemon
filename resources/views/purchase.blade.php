@@ -8,13 +8,13 @@
         @if ($infosaved == 0)
             <form class="needs-validation" action="{{ route('saveinfo') }}" method="POST" name="formaut" id="formRegisterwithdrawal" novalidate>
                 @csrf
-                <div class="card">
-                    <div class="card-header col-md-12">
+                <div class="card card-rounded">
+                    <div class="card-header col-md-12  card-round-header">
                         <div class="">
                             Formulario de Pago
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body card-body-yellow card-round-footer">
                         <div class="row">
                             <div class="col-md-12">
                                 @if ($errors->any()) 
@@ -50,7 +50,7 @@
                                 <div class="row">
                                     <div class="col-md-4 mb-3">
                                         <label class="text-register" for="birthday">Fecha de Nacimiento</label>
-                                        <input type="text" class="form-control @if ($errors-> has('birthday'))  is-invalid @endif" name="birthday" id="birthday" placeholder="Click para escojer fecha" value="@if(!empty($completeRequest->birthday)){{$completeRequest->birthday}}@endif" readonly>
+                                        <input type="text" class="form-control bg-white @if ($errors-> has('birthday'))  is-invalid @endif" name="birthday" id="birthday" placeholder="Click para escojer fecha" value="@if(!empty($completeRequest->birthday)){{$completeRequest->birthday}}@endif" readonly>
                                         <div class="invalid-feedback">
                                             La fecha de nacimiento es requerida.
                                         </div>

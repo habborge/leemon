@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div id="main" class="tabs clearfix">
+<div id="main" class="tabs clearfix body-cart">
     <div class="container no-padding-sm-xs dataPosition2">
         <div class="row ">
             <div id="primary2" class=" col-md-9 col-sm-12 col-xs-12 pull-left no-padding-md no-padding-lg no-padding-sm-xs">
@@ -11,16 +11,16 @@
                          @if ($answer == 1)
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="card col-md-12 bg-light mb-3">
-                                        <div class="card-header row">Dirección de Envio</div>
-                                        <div class="card-body">
+                                    <div class="card col-md-12 bg-light mb-3 card-rounded">
+                                        <div class="card-header row card-round-header"><b>Dirección de Envio</b></div>
+                                        <div class="card-body card-body-yellow row card-round-footer">
                                             <div class="col-md-12">
                                                 <div class="row">
                                                             <div class="col-md-8">
                                                                 <div class="row">
                                                                     
                                                                     <p>
-                                                                        {{ ucwords($address[0]->contact) }}<br>
+                                                                        <b>{{ ucwords($address[0]->contact) }}</b><br>
                                                                         @php
                                                                             $my_address = str_replace("~", " ", $address[0]->address)
                                                                         @endphp
@@ -35,7 +35,7 @@
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="row float-right">
-                                                                    <button class="btn btn-dark btn-sm" data-toggle="modal" id="changeAddress">Cambiar Dirección</button>
+                                                                    <a class="btn btn-leemon-back" data-toggle="modal" id="changeAddress">Cambiar Dirección</a>
                                                                 </div>
                                                             </div>
                                                 </div>
@@ -46,22 +46,22 @@
                              </div>
                         @endif
 
-                        <div class="card col-md-12 ">
+                        <div class="card col-md-12 card-rounded">
                             <div class="row">
-                                <div class="card-header col-md-12">
+                                <div class="card-header col-md-12 card-round-header">
                                     <div class="row">
-                                        <div class="col-md-8">
-                                            Articulos
+                                        <div class="col-md-8 ">
+                                            <b>Articulos</b>
                                         </div>
-                                        <div id="purchase-details" class="col-md-4">
-                                            Precio
+                                        <div id="purchase-details" class="col-md-4 text-center">
+                                            <b>Precio</b>
                                         </div>
                                     </div>
                                     
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="card-body">
+                                <div class="card-body card-body-yellow card-round-footer">
                                     <div class="row">
                                         <?php 
                                             $subTotal = 0;
@@ -110,26 +110,26 @@
                     
                                                 <div class="col-12 col-md-12">
                                                     <div class="row">
-                                                        <div class="col-md-9" data-th="Product">
+                                                        <div class="col-8 col-md-8 line-right-cart py-3" data-th="Product">
                                                             <div class="row">
                                                                 <div class="col-3 col-sm-4 hidden-xs">
                                                                     <div class="row text-center">
                                                                         <img src="{{ $details['photo'] }}"  class="img-purchase img-responsive mx-auto d-block"/>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-9 col-sm-8">
+                                                                <div class="col-9 col-sm-8 mt-3">
                                                                     <div id="cart_1" class="col-md-12">
                                                                         <div class="row">
                                                                             <div class="col-md-12">
                                                                                 <div class="row">
-                                                                                    <span class="nomargin">{{ $details['name'] }}</span>
+                                                                                    <small><span class="nomargin">{{ $details['name'] }}</span></small>
                                                                                     
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-md-12">
                                                                                 <div class="row">
                                                                                     <span data-th="Price">
-                                                                                        ${{ number_format($details['price'],0) }}
+                                                                                       <small><b>$ {{ number_format($details['price'],0) }} COP</b></small>
                                                                                     </span>
                                                                                 </div>
                                                                             </div>
@@ -188,18 +188,19 @@
                                                             </div>
                                                         </div>
                                                         
-                                                        <div id="subtotal" data-th="Subtotal" class="col-3 col-md-3 text-right">
-                                                            <div class="col-md-12">
-                                                                <h4 class="nomargin">
-                                                                    $ {{ number_format($details['price'] * $nq,0)}}
-                                                                </h4> 
+                                                        <div id="subtotal" data-th="Subtotal" class="col-4 col-md-4 text-right  py-3">
+                                                            <div class="col-md-12 mt-3">
+                                                                <span class="nomargin">
+                                                                   <b> $ {{ number_format($details['price'] * $nq,0)}}</b>
+                                                                </span> <br>
                                                                 @if ($half > 0)
-                                                                    <br> <span class="text-danger">Descuento $ {{ number_format($half,0) }}</span>
+                                                                    <span class="text-danger">Descuento $ {{ number_format($half,0) }}</span><br>
                                                                 @elseif ($discount > 0)
-                                                                    <br> <span class="text-danger">Descuento $ {{ number_format($discount,0) }}</span>
+                                                                    <span class="text-danger">Descuento $ {{ number_format($discount,0) }}</span><br>
                                                                 @else
+                                                                    
                                                                 @endif
-                                                                    <br>A pagar $ {{ number_format(($details['price'] * $nq) - $half - $discount,0) }}
+                                                                    <small>A pagar $ {{ number_format(($details['price'] * $nq) - $half - $discount,0) }}</small>
                                                             </div>
                                                         </div>
                                                         
@@ -207,7 +208,7 @@
                                                 </div>
                                                 <div class="col-12 col-md-12">
                                                     <div class="col-md-12">
-                                                        <hr>
+                                                        
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -223,32 +224,20 @@
                                         <div class="col-12 col-md-12">
                                             <div class="visible-xs">
                                                 
-                                                
-                                                <div class="col-12 col-md-12">
-                                                    <hr>
-                                                </div>
-                                                {{-- <div colspan="2" class="col-md-12 mb-3 hidden-xs">
-                                                    @if ($answer == 1)
-                                                        <div class="card bg-light mb-3 h-card">
-                                                            <div class="card-header">Información de Pago</div>
-                                                            <div class="card-body">
-                                                                <span class="info-small"><b>Cliente:</b>  {{ $card[0]->fullname }}<br>
-                                                                <b>Metodo de Pago:</b> Credit Card<br>
-                                                                <b>No de Tarjeta:</b> **********{{$card[0]->last4num}}<br>
-                                                                <b>vence:</b> {{ $card[0]->expiration }}<br></span>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div> --}}
-                                                
-                                                <div class="col-md-12">
+                                                <div class="col-md-12 mt-4">
                                                     <div class="row">
-                                                        <div class="card-title col-md-12">
-                                                            Subtotal Compra
-                                                            <hr>
+                                                        <div class="card-title col-md-12 text-center">
+                                                            <div class="row justify-content-md-center">
+                                                                <div class="col-4 col-md-4 bg-title-cart">
+                                                                    <div class="mt-2 mb-2"><b>Subtotal Compra</b></div>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                            
+                                                            
                                                         </div>
                                                         
-                                                        <div class="card-body info-small">
+                                                        <div class="card-body info-small card-body-yellow">
                                                             <div class="col-md-12">
                                                                 <div class="row">
                                                                     <div class="col-md-9">
@@ -312,13 +301,12 @@
                                                                 <div class="row">
                                                                     <div class="col-md-8">
                                                                         <div class="row">
-                                                                            
-                                                                            Total:
+                                                                            <b>Total:</b>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-4">
                                                                         <div class="row float-right">
-                                                                            COP$ --
+                                                                           <b>COP$ --</b>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -333,30 +321,31 @@
                                             
                                         </div>
                                     </div>
-                                </div>
-                                <div class="card-footer col-md-12">
-                                    <div class="row">
-                                        <div class="col-6 col-md-6">
-                                            <a href="{{ url('/') }}" class="btn btn-leemon-back">
-                                                Seguir Comprando
-                                            </a>
-                                        </div>
-                                        
-                                        <!--<div class="hidden-xs text-right"><strong>Total $ {{ $total }}</strong></div>-->
-                                        <div class="col-6 col-md-6 text-right">
-                                            @guest
-                                                <a class="btn btn-leemon-warning" href="{{ route('login') }}">Iniciar Sesión</a>
-                                                <span class="title-tam3">¿Eres nuevo en Leemon? </span><a class="title-tam2" href="{{ route('register') }}">{{ __('Unete aquí.') }}</a>
-                                            @else
-                                                @if ($answer == 0)
-                                                    <a href="{{ url('purchase') }}" class="btn btn-leemon-method">Información de Facturación</a>
-                                                @elseif ($answer == 1)
-                                                    <a href="{{ url('methods') }}" class="btn btn-primary">Methodo de Pago</a>
-                                                @endif
-                                            @endguest
+                                    <div class="col-md-12 mt-4">
+                                        <div class="row">
+                                            <div class="col-6 col-md-6">
+                                                <a href="{{ url('/') }}" class="btn btn-leemon-back">
+                                                    Seguir Comprando
+                                                </a>
+                                            </div>
+                                            
+                                            <!--<div class="hidden-xs text-right"><strong>Total $ {{ $total }}</strong></div>-->
+                                            <div class="col-6 col-md-6 text-right">
+                                                @guest
+                                                    <a class="btn btn-leemon-green" href="{{ route('login') }}">Iniciar Sesión</a><br>
+                                                    <span class="title-tam3">¿Eres nuevo en Leemon? </span><a class="title-tam2" href="{{ route('register') }}">{{ __('Unete aquí.') }}</a>
+                                                @else
+                                                    @if ($answer == 0)
+                                                        <a href="{{ url('purchase') }}" class="btn btn-leemon-info">Información de Usuario</a>
+                                                    @elseif ($answer == 1)
+                                                        <a href="{{ url('methods') }}" class="btn btn-leemon-method">Methodo de Pago</a>
+                                                    @endif
+                                                @endguest
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                
                             </div>
                             
                         </div>
@@ -366,14 +355,14 @@
             <div id="secondary2" class="refinements col-md-3 pull-right no-padding-md no-padding-lg hidden-xs hidden-sm">
                 <div class="primary-content2">
                     <div class="row">
-                        <div class="card col-md-12">
+                        <div class="card col-md-12 card-rounded">
                             <div class="row">
-                                <div class="card-header col-md-12">
+                                <div class="card-header col-md-12 card-round-header">
                                     Subtotal Compra
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="card-body info-small">
+                                <div class="card-body info-small card-body-yellow card-round-footer">
                                     <div class="col-md-12">
                                         <div class="row">
                                             <div class="col-md-9">
@@ -433,7 +422,7 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    <div class="col-md-12">
+                                    <div class="col-md-12 mb-4">
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <div class="row">
@@ -449,24 +438,27 @@
                                         </div>
                                     </div>
                                     {{-- {{ $total + $delivery }} --}}
+                                    <div class="col-md-12">
+                                    <div class="row">
+                                
+                                        <div class="text-center col-md-12">
+                                            @guest
+                                                <a class="btn btn-leemon-green btn-block" href="{{ url('/login') }}">Iniciar Sesión</a>
+                                                <span class="title-tam3">¿Eres nuevo en Leemon? </span><a class="title-tam2" href="{{ route('register') }}">{{ __('Unete aquí.') }}</a>
+                                            @else
+                                                @if ($answer == 0)
+                                                    <a href="{{ url('purchase') }}" class="btn btn-leemon-info btn-block">Información de Facturación</a>
+                                                @elseif ($answer == 1)
+                                                    <a href="{{ url('methods') }}" class="btn btn-leemon-method btn-block">Methodo de Pago</a>
+                                                @endif
+                                            @endguest
+                                        </div>
+                                    </div>
+                                    </div>
                                 </div>
                             </div>
                             
-                            <div class="row">
-                                
-                                <div class="card-footer text-center col-md-12">
-                                    @guest
-                                        <a class="btn btn-leemon-warning btn-block" href="{{ url('/login') }}">Iniciar Sesión</a>
-                                        <span class="title-tam3">¿Eres nuevo en Leemon? </span><a class="title-tam2" href="{{ route('register') }}">{{ __('Unete aquí.') }}</a>
-                                    @else
-                                        @if ($answer == 0)
-                                            <a href="{{ url('purchase') }}" class="btn btn-leemon-method btn-block">Información de Facturación</a>
-                                        @elseif ($answer == 1)
-                                            <a href="{{ url('methods') }}" class="btn btn-primary btn-block">Methodo de Pago</a>
-                                        @endif
-                                    @endguest
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -500,8 +492,22 @@
             e.preventDefault();
 
             var ele = $(this);
-
-            if(confirm("Are you sure")) {
+            Swal.fire({
+                title: 'Seguro quieres eliminar el articulo del carrito?',
+                text: "No podras revertir esta acción!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#6CC4F6',
+                cancelButtonColor: '#403d38',
+                confirmButtonText: 'Sí, Borrar del carrito',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                // Swal.fire(
+                // 'Deleted!',
+                // 'Your file has been deleted.',
+                // 'success'
+                // )
                 $.ajax({
                     url: "{{ env('APP_URL')}}/remove-from-cart",
                     method: "DELETE",
@@ -511,6 +517,10 @@
                     }
                 });
             }
+            })
+            // if(confirm("Are you sure")) {
+                
+            // }
         });
 
         $(document).on('click', '#changeAddress', function () {
