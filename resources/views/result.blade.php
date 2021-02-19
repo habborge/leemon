@@ -16,10 +16,10 @@
                 </div>
                 <div class="col-md-12">
                   <div class="row">
-                    @foreach ($search as $product)
+                    @foreach ($pro as $product)
                       <div class="col-md-3">
                         <div class="row">
-                          <div class="card mb-4 shadow-sm shadow-global">
+                          <div class="card mb-4 shadow-sm shadow-global bg-leemon-pro card-rounded">
                             <a href="/product/{{$product->id}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $product->reference }}/{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product2" alt=""></a>
                             <div class="card-body text-center">
                                       
@@ -89,16 +89,44 @@
                     </label>
                     <input type="text" id="Search by  price" placeholder="Search by  price" class="txtRefinement" data-list="price">
                 </div>
-                @foreach ($brands as $brand) 
+                @if (count($brands) > 0)
+                  @foreach ($brands as $brand) 
                     <li class="">
-                        <a class="refinementlink add brand-size" href="/result" title="Futurebiotics">
-                            <span class="square-check"><i class="fa fa-square-o fa-lg"></i></span>
-                            <span class="text-ref ">
-                                {{ $brand->brand}}
-                            </span>
-                        </a>
+                      @if ($brand->brand != $brandname)
+                          <a class="refinementlink add brand-size" href="/result/brand/{{ mb_strtolower(str_replace(" ", "-", $brand->brand))}}/{{ mb_strtolower(str_replace(" ", "-", $search))}}" title="Futurebiotics">
+                      @else
+                          <span class="brand-size"><b>         
+                      @endif
+                          <span class="square-check">
+                              @if ($brand->brand == $brandname)
+                                  <i class="fa fa-check-square-o" aria-hidden="true"></i>
+
+                              @else
+                                  <i class="fa fa-square-o fa-lg"></i>
+                              @endif
+                          </span>
+                          <span class="text-ref ">
+                              {{ $brand->brand}}
+                              <span class="hits" style="color:#333333">({{$brand->total_brand}})</span>
+                          </span>
+                      @if ($brand->brand != $brandname)
+                          </a>
+                      @else
+                      </b></span>
+                      @endif
                     </li>
-                @endforeach
+                  @endforeach
+                @else 
+                  <li class="">
+                    <span class="brand-size"><b> 
+                      <span class="square-check"><i class="fa fa-check-square-o" aria-hidden="true"></i></span>
+                      <span class="text-ref ">
+                        {{ strtoupper($search) }}
+                      </span>
+                      </b>
+                    </span>
+                  </li>
+                @endif
             </ul>   
             <hr>             
         </div>
@@ -106,20 +134,12 @@
             
     </div>
   </div>
-        @if (count($search))
+        @if (count($pro))
                 <div class="d-flex justify-content-center">
-                    {{ $search->appends(Request::all())->links() }}
+                    {{ $pro->appends(Request::all())->links() }}
                 </div>
             @endif
-            <footer class="text-muted">
-                <div class="container">
-                  <p class="float-right">
-                    <a href="#">Regresar Arriba</a>
-                  </p>
-                  <p>Leemon Team</p>
-                  <p></p>
-                </div>
-              </footer>
+
     
 @endsection
 @section('custom-js')

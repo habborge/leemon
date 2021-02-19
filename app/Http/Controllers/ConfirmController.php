@@ -373,44 +373,44 @@ class ConfirmController extends Controller
             $dataTransaction = "error";
         }
 
-        // $data_info[0] = 31; 
-        // $data_info[1] = 3772; //reference
-        // $data_info[2] = 1;  
-        // $data_info[3] = 200;
-        // $data_info[4] = 1002; 
-        // $data_info[5] = 12500; 
-        // $data_info[6] = 12500;
-        // $data_info[7] = 13;
-        // $data_info[8] = "Compra de Productos Naturales";
-        // $data_info[9] = 72005823; //docuemnto
-        // $data_info[10] = "Cristina";
-        // $data_info[11] = "Vargas";
-        // $data_info[12] = 319632555648; //tel
-        // $data_info[13] = "soporte9@zonavirtual.com";
-        // $data_info[14] = "str_opcional1";
-        // $data_info[15] = "str_opcional2";
-        // $data_info[16] = "str_opcional3";
-        // $data_info[17] = "str_opcional4";
-        // $data_info[18] = "str_opcional5";
-        // $data_info[19] = "9/11/2018 12:58:41 PM";
-        // $data_info[20] = 29; 
+        $data_info[0] = 31; 
+        $data_info[1] = 3772; //reference
+        $data_info[2] = 1;  
+        $data_info[3] = 200;
+        $data_info[4] = 1002; 
+        $data_info[5] = 12500; 
+        $data_info[6] = 12500;
+        $data_info[7] = 13;
+        $data_info[8] = "Compra de Productos Naturales";
+        $data_info[9] = 72005823; //docuemnto
+        $data_info[10] = "Cristina";
+        $data_info[11] = "Vargas";
+        $data_info[12] = 319632555648; //tel
+        $data_info[13] = "soporte9@zonavirtual.com";
+        $data_info[14] = "str_opcional1";
+        $data_info[15] = "str_opcional2";
+        $data_info[16] = "str_opcional3";
+        $data_info[17] = "str_opcional4";
+        $data_info[18] = "str_opcional5";
+        $data_info[19] = "9/11/2018 12:58:41 PM";
+        $data_info[20] = 29; 
 
-        // if ($data_info[20] == 29){
-        //     $data_info[21] = 18092100031;
-        //     $data_info[22] = 2701;
-        //     $data_info[23] = 1022; 
-        //     $data_info[24] = "BANCO UNION COLOMBIANO"; 
-        //     $data_info[25] = 1468228; 
-        //     $data_info[26] = 3;
-        // }else{
-        //     $data_info[21] = "18092100031";
-        //     $data_info[22] = 2701;
-        //     $data_info[23] = "Diners Club, American Express, Visa, Master Card"; 
-        //     $data_info[24] = 56844; 
-        //     $data_info[25] = 4532211566;
-        // }
-        // $approval = 1;
-        // $dataTransaction = $data_info;
+        if ($data_info[20] == 29){
+            $data_info[21] = 18092100031;
+            $data_info[22] = 2701;
+            $data_info[23] = 1022; 
+            $data_info[24] = "BANCO UNION COLOMBIANO"; 
+            $data_info[25] = 1468228; 
+            $data_info[26] = 3;
+        }else{
+            $data_info[21] = "18092100031";
+            $data_info[22] = 2701;
+            $data_info[23] = "Diners Club, American Express, Visa, Master Card"; 
+            $data_info[24] = 56844; 
+            $data_info[25] = 4532211566;
+        }
+        $approval = 1;
+        $dataTransaction = $data_info;
         
         return view('confirmPurchase', [
             'approval' => $approval,

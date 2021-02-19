@@ -21,7 +21,7 @@
                             @foreach ($products as $product)
                                 <div class="col-md-3">
                                     <div class="row">
-                                        <div class="card mb-4 shadow-sm shadow-global">
+                                        <div class="card mb-4 shadow-sm shadow-global bg-leemon-pro card-rounded">
                                             <a href="/product/{{$product->proId}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $product->reference }}/{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product2" alt=""></a>
                                             <div class="card-body text-center">
                                                 <span class="brand-font">{{ucwords($product->brand)}} </span>
@@ -94,13 +94,28 @@
                     </div>
                     @foreach ($brands as $brand) 
                         <li class="">
-                            <a class="refinementlink add brand-size" href="/products/{{ str_replace(" ", "-",$gfather) }}/{{str_replace(" ", "-",$father)}}/{{str_replace(" ", "-",$son)}}_{{$subcat_id}}/{{ mb_strtolower(str_replace(" ", "-", $brand->brand))}}" title="Futurebiotics">
-                                <span class="square-check"><i class="fa fa-square-o fa-lg"></i></span>
+                            @if ($brand->brand != $brandname)
+                                <a class="refinementlink add brand-size" href="/products/{{ str_replace(" ", "-",$gfather) }}/{{str_replace(" ", "-",$father)}}/{{str_replace(" ", "-",$son)}}_{{$subcat_id}}/{{ mb_strtolower(str_replace(" ", "-", $brand->brand))}}" title="Futurebiotics">
+                            @else
+                                <span class="brand-size"><b>         
+                            @endif
+                                <span class="square-check">
+                                    @if ($brand->brand == $brandname)
+                                        <i class="fa fa-check-square-o" aria-hidden="true"></i>
+
+                                    @else
+                                        <i class="fa fa-square-o fa-lg"></i>
+                                    @endif
+                                </span>
                                 <span class="text-ref ">
                                     {{ $brand->brand}}
                                     <span class="hits" style="color:#333333">({{$brand->total_brand}})</span>
                                 </span>
-                            </a>
+                            @if ($brand->brand != $brandname)
+                                </a>
+                            @else
+                            </b></span>
+                            @endif
                         </li>
                     @endforeach
                 </ul>   

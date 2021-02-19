@@ -10,9 +10,11 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
-
+                        <input type="hidden" name="recaptcha_token" id="recaptcha_token">
                         <div class="form-group row">
-                            
+                            @if($errors->has("recaptcha_token"))
+                                {{$errors->first("recaptcha_token")}}
+                            @endif
 
                             <div class="col-md-12">
                                 <label for="name" class="col-form-label text-md-right text-register">{{ __('Tu nombre') }}</label>
@@ -85,4 +87,13 @@
         </div>
     </div>
 </div>
+@endsection
+@section('custom-js')
+<script src="https://www.google.com/recaptcha/api.js?render={{ env('RE_KEY') }}"></script>
+<script>
+    grecaptcha.ready(function() {
+    grecaptcha.execute('{{ env('RE_KEY') }}')    .then(function(token) {
+    document.getElementById("recaptcha_token").value = token;
+    }); });
+</script>
 @endsection

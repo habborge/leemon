@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row">
             <div class="alert @if ($approval == 1) alert-success @else alert-danger @endif card-rounded" role="alert" style="width: 100%">
-                <h4 class="alert-heading">@if ($approval == 1) Transacción Approvada @else Atención @endif</h4>
+                <h4 class="alert-heading">@if ($approval == 1) Transacción Aprobada @else Atención @endif</h4>
                 <p>{{ $message }}</p>
                 <hr>
                 <p class="mb-0">
@@ -142,11 +142,11 @@
                         <tbody>
                             <tr>
                                 <td>Nombre</td>
-                                <td>Leemon</td>
+                                <td>Leemon Nutrición</td>
                             </tr>
                             <tr>
                                 <td>Identificación</td>
-                                <td></td>
+                                <td>NIT 901.416.234</td>
                             </tr>
                         </tbody>
                     </table>

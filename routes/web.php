@@ -30,6 +30,7 @@ Route::post('add-to-cart-quantity', 'ProductController@addToCartQuantity');
 Route::post('add-to-wishlist', 'ProductController@addToWishList');
 Route::delete('remove-from-cart', 'ProductController@remove');
 Route::get('/result', 'searchController@searchProducts');
+Route::get('/result/brand/{brand}/{searching}', 'searchController@searchProductsByBrand');
 Route::get('/products/{gfather}/{father}/{son}', 'ProductController@groupSon');
 Route::get('/products/{gfather}/{father}/{son}/{brand}', 'ProductController@groupByBand');
 Route::get('/products/{gfather}','ProductController@groupGfa');

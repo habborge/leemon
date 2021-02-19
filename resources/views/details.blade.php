@@ -30,14 +30,14 @@
                 <div class="row">
                     <div class="col-xl-1 xzoom-thumbs">
                         <ul class="nav nav-pills nav-stacked flex-column">
-                        <li class="active">
+                        <li class="active card-rounded">
                             <a href="#tab_a" data-toggle="pill">
                                 <img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}" class="img-tam xzoom-gallery_" alt="" xpreview="../{{ $prod_info->img1 }}">
                             </a>
                         </li>
                         @for ($i = 0; $i <= count($images); $i++)
                             @if (!empty($images[$i]))
-                                <li><a href="#tab_{{$i}}" data-toggle="pill"><img src="{{ env('AWS_URL') }}/{{ $images[$i] }}" class="img-tam xzoom-gallery_{{$i}}" alt="" xpreview="../{{ $images[$i] }}"></a></li>
+                                <li class="card-rounded"><a href="#tab_{{$i}}" data-toggle="pill"><img src="{{ env('AWS_URL') }}/{{ $images[$i] }}" class="img-tam xzoom-gallery_{{$i}}" alt="" xpreview="../{{ $images[$i] }}"></a></li>
                             @endif
                             
                         @endfor
@@ -47,13 +47,13 @@
                     </div>
                     <div class="col-xl-5">
                         <div class="tab-content" id="father">
-                            <div class="tab-pane active" id="tab_a">
-                                <img id="xzoom-default" src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}" class="img-tam2 xzoom" xoriginal="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}" alt="">
+                            <div class="tab-pane active bg-white" id="tab_a">
+                                <img id="xzoom-default" src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}" class="img-tam2 xzoom card-rounded" xoriginal="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}" alt="">
                             </div>
                             @for ($i = 0; $i <= count($images); $i++)
                                 @if (!empty($images[$i]))
                                     <div class="tab-pane" id="tab_{{$i}}">
-                                        <img id="thumb_{{$i}}" src="{{ env('AWS_URL') }}/{{ $images[$i] }}" class="img-tam2 xzoom" xoriginal="{{ env('AWS_URL') }}/{{ $images[$i] }}" alt="">
+                                        <img id="thumb_{{$i}}" src="{{ env('AWS_URL') }}/{{ $images[$i] }}" class="img-tam2 xzoom_{{$i}} detail-xzoom card-rounded" xoriginal="{{ env('AWS_URL') }}/{{ $images[$i] }}" alt="">
                                     </div>
                                 @endif
                             @endfor
@@ -139,7 +139,7 @@
                                                 @if (($prod_info->webquantity - session('cart')[$prod_info->id]["quantity"]) > 0)
                                                     <div id="nodis-button" class="col-xl-auto">
                                                         <div class="row">
-                                                            <button id="" class="btn btn-purchase update-cart"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity - session('cart')[$prod_info->id]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</button>
+                                                            <button id="" class="btn btn-leemon-green update-cart"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity - session('cart')[$prod_info->id]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</button>
                                                         </div>
                                                     </div>
                                                 @endif
@@ -147,7 +147,7 @@
                                             @else
                                                 <div id="nodis-button" class="col-xl-auto">
                                                     <div class="row">
-                                                        <button id="" class="btn btn-purchase update-cart" data-cart="1"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
+                                                        <button id="" class="btn btn-leemon-green update-cart" data-cart="1"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
                                                     </div>
                                                 </div>
                                             @endif  
@@ -272,7 +272,7 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="rom">
-                        <div class="card mb-4 shadow-sm">
+                        <div class="card mb-4 shadow-sm bg-leemon-pro card-rounded">
                             <a href="/product/{{$similar->proId}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $similar->reference }}/{{$similar->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
                             <div class="card-body text-center">
                                 <span class="brand-font">{{ucwords($similar->brand)}} </span>

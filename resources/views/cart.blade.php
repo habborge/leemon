@@ -338,7 +338,7 @@
                                                     @if ($answer == 0)
                                                         <a href="{{ url('purchase') }}" class="btn btn-leemon-info">Información de Usuario</a>
                                                     @elseif ($answer == 1)
-                                                        <a href="{{ url('methods') }}" class="btn btn-leemon-method">Methodo de Pago</a>
+                                                        <a href="{{ url('methods') }}" class="btn btn-leemon-method">Metodo de Pago</a>
                                                     @endif
                                                 @endguest
                                             </div>
@@ -449,7 +449,7 @@
                                                 @if ($answer == 0)
                                                     <a href="{{ url('purchase') }}" class="btn btn-leemon-info btn-block">Información de Facturación</a>
                                                 @elseif ($answer == 1)
-                                                    <a href="{{ url('methods') }}" class="btn btn-leemon-method btn-block">Methodo de Pago</a>
+                                                    <a href="{{ url('methods') }}" class="btn btn-leemon-method btn-block">Metodo de Pago</a>
                                                 @endif
                                             @endguest
                                         </div>

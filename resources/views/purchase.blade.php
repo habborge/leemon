@@ -363,14 +363,14 @@
         }); 
         
         $('#firstname').on('input', function () { 
-            this.value = this.value.replace(/[^ a-záéíóúüñ]/g,'');
+            this.value = this.value.replace(/[^ a-záéíóúüñA-Z]/g,'');
         });
         $('#lastname').on('input', function () { 
-            this.value = this.value.replace(/[^ a-záéíóúüñ]/g,'');
+            this.value = this.value.replace(/[^ a-záéíóúüñA-Z]/g,'');
         });
 
         $('#contact').on('input', function () { 
-            this.value = this.value.replace(/[^ a-záéíóúüñ]/g,'');
+            this.value = this.value.replace(/[^ a-záéíóúüñA-Z]/g,'');
         });
         $('#phone').on('input', function () { 
             this.value = this.value.replace(/[^0-9]/g,'');

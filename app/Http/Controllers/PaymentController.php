@@ -109,7 +109,7 @@ class PaymentController extends Controller
                     ->where('members.user_id', $user_id)
                     ->where('c.default', 1)->first();
 
-                    $methodCode = "0";
+                    $methodCode = env('METHOD_PSE');
 
                 }else if ($method == 2){
                     $member = Member::where('user_id', $user_id)->first();
