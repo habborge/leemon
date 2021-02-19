@@ -474,4 +474,28 @@ class ProductController extends Controller
             'brands' => [],
         ]);
     }
+
+    public function groupCategory(Request $request){
+        $id = $request->id;
+
+        $products = Product::select('products.id as proId', 'products.reference','products.name as proName','products.brand','products.description','products.price','products.img1','products.prom','products.quantity as webquantity','products.health_register','products.width','products.length','products.height','products.weight','products.fee')
+        ->join('categories as c', 'c.id', '=', 'products.subcategory_id')
+        ->join('categories as c2', 'c2.id', '=', 'c.father_id')
+        ->join('categories as c3', 'c3.id', '=', 'c2.father_id')
+        ->where('c3.id', $id)
+        ->where('price', '>', 0)->orderBy('products.name')->paginate(24);
+
+        //dd($products);
+        $subcategories = Category::where('father_id', $id)->get();
+
+        return view('products.categoryFather', [
+            'gfather_id' => $request->id,
+            'gfather' => str_replace("-", " ", $request->category),
+            'father' => '',
+            'son' => '',
+            'subcategories' => $subcategories,
+            'products' => $products,
+            'brands' => [],
+        ]);
+    }
 }

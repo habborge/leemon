@@ -49,13 +49,17 @@
                 
                   <div class="row">
                     @foreach ($cat_pri as $category)
+                    
                       <div class="col-md-4 category_style">
-                          
-                          <img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/categories/cat_{{ $category->id }}.jpg" class="card-img-top rounded mx-auto d-block" alt="">
-                          <div class = "carousel-caption" >
-                            <h5 style="text-shadow: 2px 2px #202020;"> {{$category->name}}</h5>
-                            </div>
-                      </div>
+                        <a href="/categories/{{ str_replace(" ", "-",$category->name) }}/{{ $category->id }}">
+                        <img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/categories/cat_{{ $category->id }}.jpg" class="card-img-top card-rounded mx-auto d-block" alt="">
+                        <div class = "carousel-caption" >
+                          <h5 style="text-shadow: 2px 2px #202020;"> {{$category->name}}</h5>
+                          </div>
+                        </a>
+                    </div>
+                    
+                      
                     @endforeach
                   </div>
                 
@@ -81,7 +85,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="rom">
-                      <div class="card mb-4 shadow-sm">
+                      <div class="card mb-4 shadow-sm bg-leemon-pro card-rounded">
                         <a href="/product/{{$product->id}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $product->reference }}/{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
                         <div class="card-body text-center">
                           <span class="brand-font">{{ucwords($product->brand)}} </span>
@@ -186,6 +190,17 @@
     </div> --}}
     <div class="album py-5 ">
       <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              
+                <img src="/img/BANNER-COMBO-MOD.jpg" width="100%" class="card-rounded" alt="">
+              
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="album py-5 ">
+      <div class="container">
         <div class="row">
           <div class="col-md-6">
                 <div class="row">
@@ -272,17 +287,7 @@
         </div>
       </div>
     </div>
-    <div class="album py-5 ">
-      <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-              
-                <img src="/img/50off.jpg" width="100%" class="rounded" alt="">
-              
-            </div>
-          </div>
-      </div>
-    </div>
+    
     {{-- <div class="album py-5 ">
       <div class="container">
         <div class="row">

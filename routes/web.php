@@ -13,13 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return redirect('/home');
-// });
-
 Route::get('/', function () {
-    return redirect('/giveaway/registry');
+    return redirect('/home');
 });
+
+// Route::get('/', function () {
+//     return redirect('/giveaway/registry');
+// });
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/product/{id}', 'ProductController@details')->name('productdetails');
@@ -33,6 +33,7 @@ Route::get('/result', 'searchController@searchProducts');
 Route::get('/products/{gfather}/{father}/{son}', 'ProductController@groupSon');
 Route::get('/products/{gfather}/{father}/{son}/{brand}', 'ProductController@groupByBand');
 Route::get('/products/{gfather}','ProductController@groupGfa');
+Route::get('/categories/{category}/{id}', 'ProductController@groupCategory');
 
 // Landing page
 Route::get('/giveaway/registry', 'GiveawayController@index');

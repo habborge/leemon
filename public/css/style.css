@@ -17,16 +17,16 @@
 }
 .navbar-mega {
     overflow: hidden;
-  }
+}
   
-  .navbar-mega a {
+.navbar-mega a {
     float: left;
     font-size: 12px;
     color: white;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-  }
+}
   .favorites{
       font-size: 12px;
       color: #fca38f;
@@ -105,7 +105,7 @@
 }
 .title-tam2{
     font-size: 12px !important;
-    color: #4a8b41;
+    color: #4a8b41 !important;
     text-decoration: none;
 }
 .title-tam3{
@@ -185,7 +185,6 @@
     clear: both;
 }
 .dropdown{
-    float:right;
     /*padding-right: 30px;*/
 }
 .btn{
@@ -205,15 +204,15 @@
     color: #fafafa !important;
 }
 .btn-leemon-back{
-    background-color: #403d38 !important;
-    border: 1px solid #403d38 !important;
+    background-color: #888887 !important;
+    border: 0px solid #403d38 !important;
     color: #ffffff !important;
-    border-radius: 0% !important;
+    border-radius: 10px !important;
 }
 .btn-leemon-back:hover{
-    background-color: transparent !important;
-    border: 1px solid #403d38 !important;
-    color: #403d38 !important;
+    background-color: #403d38 !important;
+    border: 0px solid #403d38 !important;
+    color: #ffffff !important;
 }
 .btn-leemon-warning{
     background-color: #ceb600 !important;
@@ -227,15 +226,26 @@
     color: #fff !important;
 }
 .btn-leemon-method{
-    background-color: #007bff !important;
-    border: 1px solid #0767ce !important;
+    background-color: #6CC4F6 !important;
+    border: 0px solid #6CC4F6 !important;
     color: #ffffff !important;
-    border-radius: 0% !important;
+    border-radius: 10px !important;
 }
 .btn-leemon-method:hover{
     background-color: #0767ce !important;
-    border: 1px solid #007bff !important;
-    color: #fff !important;
+    border: 0px solid #007bff !important;
+    color: #fff !important; 
+}
+.btn-leemon-info{
+    background-color: #F49BEF !important;
+    border: 0px solid #F49BEF !important;
+    color: #ffffff !important;
+    border-radius: 10px !important;
+}
+.btn-leemon-info:hover{
+    background-color: #b867b4 !important;
+    border: 0px solid #F49BEF !important;
+    color: #fff !important; 
 }
 .btn-register{
     background-color: #a1a1a1 !important;
@@ -249,32 +259,40 @@
     color: #ffffff !important;
     border-radius: .25rem !important;
 }
+
 .dropdown .dropdown-menu{
-    padding:20px;
+    padding: 0px 15px 0px 15px;
     top:56px !important;
-    /* width:350px !important; */
+     width:300px !important; 
     
-    box-shadow:0px 5px 30px black;
+    /*box-shadow:0px 5px 30px black;*/
 }
 
 .dropdown-menu-position{
-    left:-190px !important;
+    left:-214px !important;
 }
 .dropdown-menu-position-center{
-    left:-80px !important;
+    left:-95px !important;
 }
 .total-header-section{
     border-bottom:1px solid #d2d2d2;
+    padding-top: 15px;
 }
 .total-section p{
     margin-bottom:20px;
 }
 .cart-detail{
     padding:10px 0px;
+    background-color: #C6C6C6;
+}
+.cart-footer{
+    padding:10px 0px;
+    background-color: #C6C6C6;
+    border-radius: 0 0 1rem 1rem;
 }
 .cart-detail-img img{
-    width:100%;
-    height:100%;
+    width:70px;
+    height:70px;
     padding-left:10px;
 }
 .cart-detail-product p{
@@ -288,11 +306,19 @@
     font-weight:500;
 }
 .cart-detail .count{
-    color:#919291;
+    color:#41403E;
+}
+.cart-text-green{
+    color: #689463;
+}
+.cart-text-gray{
+    color: #689463;
 }
 .count{
     font-size: 12px;
 }
+
+
 .checkout{
     border-top:1px solid #d2d2d2;
     padding-top: 15px;
@@ -304,10 +330,10 @@
 .dropdown-menu:before{
     content: " ";
     position:absolute;
-    top:-20px;
+    top:-30px;
     right:50px;
-    border:10px solid transparent;
-    border-bottom-color:#fff;
+    border:15px solid transparent;
+    border-bottom-color:#DDDDDD;
 }
  
 .thumbnail {
@@ -498,17 +524,18 @@
         border-bottom-right-radius: 0px !important;
     }
   .btn-purchase{
-    background-color: #4a8b41 !important;
-    border: 1px solid #33642c !important;
+    background-color: #80DA76 !important; 
+    border: 0px solid #80DA76 !important;
     color: #fcfcfc !important;
-    border-radius: .25rem !important;
+    /*border-radius: .25rem !important;*/
     margin-right: 5px;
     font-family: "AcuminVariableConcept2";
-    font-size: 14px;
+    font-size: 12px;
+    border-radius: 10px !important;
 }
 .btn-purchase:hover{
-    background-color: #246e1b !important;
-    border: 1px solid #33642c !important;
+    background-color: #45883d !important;
+    border: 0px solid #80DA76 !important;
     color: #fff !important;
     
 }
@@ -530,7 +557,10 @@
   .bg-purchase{
       background-color: rgb(218, 218, 218);
   }
-
+.bg-title-cart{
+    background-color: #E3DFC4;
+    border-radius: 20px !important;
+}
   .img-product{
       width: 200px !important;
       height: 200px;
@@ -668,7 +698,7 @@ padding: 0 8px 0 7px;
 .a-divide {
 	border-bottom: 1px solid #ddd
 }
-#cc_cvv::placeholder, #cc_number::placeholder, #cc_name::placeholder, #address_d::placeholder, #firstname::placeholder, #lastname::placeholder, #n_doc::placeholder, #email::placeholder, #address_db::placeholder, #zipcode::placeholder, #zipcode_e::placeholder, #phone::placeholder, #contact::placeholder, #search::placeholder {
+#cc_cvv::placeholder, #cc_number::placeholder, #cc_name::placeholder, #address_d::placeholder, #firstname::placeholder, #lastname::placeholder, #n_doc::placeholder, #email::placeholder, #address_db::placeholder, #zipcode::placeholder, #zipcode_e::placeholder, #phone::placeholder, #contact::placeholder, #search::placeholder, #address_2::placeholder, #address_4::placeholder, #address_2b::placeholder, #address_4b::placeholder, #birthday::placeholder  {
     color:rgb(212, 212, 212);
 }
 
@@ -795,6 +825,14 @@ border-color: #646464 !important;
 }
 .category_style{
     padding-bottom: 30px;
+}
+
+.swal2-popup{
+    border-radius: 1rem !important;
+    background-color: #F4F4DC !important;
+}
+.swal2-styled.swal2-confirm, .swal2-styled.swal2-deny, .swal2-styled.swal2-cancel{
+    border-radius: 15px !important;
 }
 /* ---------------------------------------------------------------------------------
    -- resposive design

@@ -1,18 +1,20 @@
 @extends('layouts.app')
-
+@section('custom-css')
+    <link rel="stylesheet" href="/css/jquery-ui.min.css">
+@endsection
 @section('content')
 <div class="tabs">
     <div class="container">
         @if ($infosaved == 0)
             <form class="needs-validation" action="{{ route('saveinfo') }}" method="POST" name="formaut" id="formRegisterwithdrawal" novalidate>
                 @csrf
-                <div class="card">
-                    <div class="card-header col-md-12">
+                <div class="card card-rounded">
+                    <div class="card-header col-md-12  card-round-header">
                         <div class="">
                             Formulario de Pago
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body card-body-yellow card-round-footer">
                         <div class="row">
                             <div class="col-md-12">
                                 @if ($errors->any()) 
@@ -30,7 +32,7 @@
                                 <hr class="mb-4">
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label class="text-register" for="firstname">Nombre</label>
+                                        <label class="text-register" for="firstname">Nombres</label>
                                         <input type="text" class="form-control @if ($errors-> has('firstname'))  is-invalid @endif" name="firstname" id="firstname" placeholder="Ej: Nombres" value="@if(!empty($completeRequest->firstname)){{$completeRequest->firstname}}@endif" required>
                                         <div class="invalid-feedback">
                                             El campo Nombre es requerido. 
@@ -46,15 +48,26 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="text-register" for="n_doc">Número ID</label>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="text-register" for="birthday">Fecha de Nacimiento</label>
+                                        <input type="text" class="form-control bg-white @if ($errors-> has('birthday'))  is-invalid @endif" name="birthday" id="birthday" placeholder="Click para escojer fecha" value="@if(!empty($completeRequest->birthday)){{$completeRequest->birthday}}@endif" readonly>
+                                        <div class="invalid-feedback">
+                                            La fecha de nacimiento es requerida.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="text-register" for="n_doc">Número Cedula</label>
                                         <input type="text" class="form-control @if ($errors-> has('n_doc'))  is-invalid @endif" name="n_doc" id="n_doc" placeholder="Ej: 4893848349" value="@if(!empty($completeRequest->n_doc)){{$completeRequest->n_doc}}@endif" required>
                                         <div class="invalid-feedback">
                                             El número de Indentificación es requerido.
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-3">
-                                       
+                                    <div class="col-md-4 mb-3">
+                                        <label class="text-register" for="phone">Teléfono</label>
+                                        <input type="text" class="form-control @if ($errors-> has('phone'))  is-invalid @endif" name="phone" id="phone" placeholder="Ej: 4893848349" value="@if(!empty($completeRequest->phone)){{$completeRequest->phone}}@endif" required>
+                                        <div class="invalid-feedback">
+                                            El número de Teléfono es requerido.
+                                        </div>
                                     </div>
                                 </div>
                                 
@@ -89,7 +102,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             
-                                                <input type="text" class="form-control @if ($errors-> has('address_2'))  is-invalid @endif" name="address_2" id="address_2" value="@if(!empty($completeRequest->address_2)){{$completeRequest->address_2}}@endif" placeholder="" required>
+                                                <input type="text" class="form-control @if ($errors-> has('address_2'))  is-invalid @endif" name="address_2" id="address_2" value="@if(!empty($completeRequest->address_2)){{$completeRequest->address_2}}@endif" placeholder="ej: 12A sur" required>
                                                 <div class="invalid-feedback">
                                                     Ingrese su dirección de facturación.
                                                 </div>
@@ -116,7 +129,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         
-                                            <input type="text" class="form-control @if ($errors-> has('address_4'))  is-invalid @endif" name="address_4" id="address_4" value="@if(!empty($completeRequest->address_4)){{$completeRequest->address_4}}@endif" placeholder="" required>
+                                            <input type="text" class="form-control @if ($errors-> has('address_4'))  is-invalid @endif" name="address_4" id="address_4" value="@if(!empty($completeRequest->address_4)){{$completeRequest->address_4}}@endif" placeholder="ej: 12 - 34" required>
                                             <div class="invalid-feedback">
                                                 Ingrese su dirección de facturación.
                                             </div>
@@ -132,7 +145,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4 mb-3">
-                                        <label class="text-register" for="zipcode">Zipcode</label>
+                                        <label class="text-register" for="zipcode">Zipcode (Opcional)</label>
                                         <input type="text" class="form-control" name="zipcode" id="zipcode" value="@if(!empty($completeRequest->zipcode)){{$completeRequest->zipcode}}@endif" placeholder="Ej: 080001">
                                         <div class="invalid-feedback">
                                             Ingrese el Codigo Zip de su zona.
@@ -230,7 +243,8 @@
                                         </div>
                                         <div class="col-md-4">
                                         
-                                            <input type="text" class="form-control @if (!isset($checkbox)) @if ($errors-> has('address_2b'))  is-invalid @endif  @endif" name="address_2b" id="address_2b" value="@if (!isset($checkbox)) @if(!empty($completeRequest->address_2b)){{$completeRequest->address_2b}}@endif @endif" placeholder="" required>
+                                            <input type="text" class="form-control @if (!isset($checkbox)) @if ($errors-> has('address_2b'))  is-invalid @endif  @endif" name="address_2b" id="address_2b" placeholder="ej: 12A sur" value="@if(!empty($completeRequest->address_2b)){{$completeRequest->address_2b}}@endif" required>
+                                           
                                             <div class="invalid-feedback">
                                                 Ingrese su dirección de Envío.
                                             </div>
@@ -255,7 +269,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             
-                                                <input type="text" class="form-control @if ($errors-> has('address_4b'))  is-invalid @endif" name="address_4b" id="address_4b" value="@if(!empty($completeRequest->address_4b)){{$completeRequest->address_4b}}@endif" placeholder="" required>
+                                                <input type="text" class="form-control @if ($errors-> has('address_4b'))  is-invalid @endif" name="address_4b" id="address_4b" value="@if(!empty($completeRequest->address_4b)){{$completeRequest->address_4b}}@endif" placeholder="ej: 12 - 34" required>
                                                 <div class="invalid-feedback">
                                                     Ingrese su dirección de Envío.
                                                 </div>
@@ -268,7 +282,7 @@
                                             <input type="text" class="form-control" name="address_db" id="address_db" placeholder="Ej: casa, Apto, Edificio">
                                         </div>
                                         <div class="col-md-4">
-                                            <label class="text-register" for="zipcode_e">Zipcode</label>
+                                            <label class="text-register" for="zipcode_e">Zipcode (Opcional)</label>
                                             <input type="text" class="form-control" name="zipcode_e" id="zipcode_e" value="" placeholder="Ej: 080001" required>
                                             <div class="invalid-feedback">
                                                 Ingrese el Codigo postal de su zona de envío.
@@ -339,9 +353,40 @@
 </div>
 @endsection
 @section('custom-js')
+<script src="/js/jquery-ui.min.js" defer></script>
 <script type="text/javascript">
+    
     $(document).ready(function(){
+        $("#birthday").datepicker({
+            changeMonth: true,
+            changeYear: true
+        }); 
         
+        $('#firstname').on('input', function () { 
+            this.value = this.value.replace(/[^ a-záéíóúüñ]/g,'');
+        });
+        $('#lastname').on('input', function () { 
+            this.value = this.value.replace(/[^ a-záéíóúüñ]/g,'');
+        });
+
+        $('#contact').on('input', function () { 
+            this.value = this.value.replace(/[^ a-záéíóúüñ]/g,'');
+        });
+        $('#phone').on('input', function () { 
+            this.value = this.value.replace(/[^0-9]/g,'');
+        });
+
+        $('#zipcode').on('input', function () { 
+            this.value = this.value.replace(/[^0-9]/g,'');
+        });
+
+        $('#n_doc').on('input', function () { 
+            this.value = this.value.replace(/[^0-9]/g,'');
+        });
+
+        $('#zipcode_e').on('input', function () { 
+            this.value = this.value.replace(/[^0-9]/g,'');
+        });
         $('#sameaddress').change(function(){
             if($(this).prop('checked')){
                 $('#delivery_a').hide();

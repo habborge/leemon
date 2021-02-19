@@ -13,28 +13,31 @@
                                 <div class="row">
                                     <div class="accordion accord-width" id="accordionExample">
                                         
-                                            <div class="card col-md-12 bg-light mb-3">
-                                                <div class="card-header row" id="headingOne">
-                                                  
-                                                    <a class="text-left a-size-methods" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                          Dirección de Envio
+                                            <div class="card col-md-12 card-rounded mb-3">
+                                                
+                                                    <a class="text-left a-size-methods" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="width: 100%">
+                                                        <div class="card-header row" id="headingOne"> Dirección de Envio</div>
                                                     </a>
-                                                  
-                                                </div>
-                                            
-                                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                                    <div class="card-body">
-                                                        <h6>{{ ucwords($address->contact) }}</h6>
-                                                        <p class="info-small">
-                                                            @php
-                                                                $my_address = str_replace("~", " ", $address->address)
-                                                            @endphp
-                                                            {{ $my_address }}, {{ $address->zipcode }} Código Postal<br>
-                                                            {{ ucwords($address->details) }}<br>
-                                                            {{ ucwords($address->city_d_id) }} ({{ ucwords($address->department) }}), {{ ucwords($address->country_master_name) }}
-                                                        </p>
+                                                
+                                                <div class="row">
+                                                    <div id="collapseOne" class="col-md-12 collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                        <div class="row">
+                                                            <div class="card-body card-body-yellow card-round-footer">
+                                                                <h6>{{ ucwords($address->contact) }}</h6>
+                                                                <p class="info-small">
+                                                                    @php
+                                                                        $my_address = str_replace("~", " ", $address->address)
+                                                                    @endphp
+                                                                    {{ $my_address }}, {{ $address->zipcode }} Código Postal<br>
+                                                                    {{ ucwords($address->details) }}<br>
+                                                                    {{ ucwords($address->city_d_id) }} ({{ ucwords($address->department) }}), {{ ucwords($address->country_master_name) }}
+                                                                </p>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                    
+                                                
                                             </div>
                                         
                                     </div>
@@ -42,66 +45,71 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="card col-md-12 bg-light mb-3">
-                                        <div class="card-header row">Metodo de Pago</div>
-                                        <div class="card-body">
-                                            <div class="form-check">
-                                                <div class="col-md-12">
-                                                    <div class="row">
-                                                        <div class="col-md-8">
-                                                            <div class="row">
-                                                                <input class="form-check-input" type="radio" name="methodPay" id="TC" value="1" checked>
-                                                                <label class="form-check-label" for="TC">
-                                                                    Tarjeta de Credito
-                                                                    @if ($cardexist == 2)
-                                                                        terminada en ************{{ $card[0]->last4num }}
-                                                                    @else
-                                                                        <a href="/secure/methods/create" id="creditcard" class="btn btn-dark btn-sm" type='button'>Agregar una Tarjeta</a>
-                                                                    @endif
-                                                                </label>
+                                    <div class="card col-md-12 card-rounded mb-3">
+                                        <div class="row">
+                                            <div class="card-header col-md-12 card-round-header">Metodo de Pago</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="card-body card-body-yellow card-round-footer">
+                                                <div class="form-check">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-8">
+                                                                <div class="row">
+                                                                    <input class="form-check-input" type="radio" name="methodPay" id="TC" value="1">
+                                                                    <label class="form-check-label" for="TC">
+                                                                        Tarjeta de Credito
+                                                                        @if ($cardexist == 2)
+                                                                            terminada en ************{{ $card[0]->last4num }}
+                                                                        @else
+                                                                            <a href="/secure/methods/create" id="creditcard" class="btn btn-leemon-green btn-sm" type='button'>Agregar una Tarjeta</a>
+                                                                        @endif
+                                                                    </label>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="row float-right">
-                                                                @if ($cardexist == 2)
-                                                                    <button class="btn btn-dark btn-sm" data-toggle="modal" id="changeCard">Cambiar Tarjeta</button>
-                                                                @endif
+                                                            <div class="col-md-4">
+                                                                <div class="row float-right">
+                                                                    @if ($cardexist == 2)
+                                                                        <button class="btn btn-leemon-back btn-sm" data-toggle="modal" id="changeCard">Cambiar Tarjeta</button>
+                                                                    @endif
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    
+                                                    
                                                 </div>
-                                                
-                                                
+                                                <hr>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="methodPay" id="PSE" value="2">
+                                                    <label class="form-check-label" for="PSE">
+                                                    PSE
+                                                    </label>
+                                                </div>
+                                                {{--<hr>
+                                                 <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="methodPay" id="OTH" value="3">
+                                                    <label class="form-check-label" for="OTH">
+                                                    Otros metodos
+                                                    </label>
+                                                </div> --}}
+    
                                             </div>
-                                            <hr>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="methodPay" id="PSE" value="2">
-                                                <label class="form-check-label" for="PSE">
-                                                PSE
-                                                </label>
-                                            </div>
-                                            <hr>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="methodPay" id="OTH" value="3">
-                                                <label class="form-check-label" for="OTH">
-                                                Otros metodos
-                                                </label>
-                                            </div>
-
                                         </div>
+                                        
                                     </div>
                                 </div>
                              </div>
                         @endif
 
-                        <div class="card col-md-12 ">
+                        <div class="card col-md-12 card-rounded">
                             <div class="row">
-                                <div class="card-header col-md-12">
+                                <div class="card-header col-md-12 card-round-header">
                                     <div class="row">
                                         <div class="col-md-8">
                                             Articulos
                                         </div>
-                                        <div id="purchase-details" class="col-md-4">
+                                        <div id="purchase-details" class="col-md-4 text-center">
                                             Precio
                                         </div>
                                     </div>
@@ -109,7 +117,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="card-body">
+                                <div class="card-body card-body-yellow card-round-footer">
                                     <div class="row">
                                         <?php 
                                             $subTotal = 0;
@@ -166,11 +174,11 @@
                     
                                                 <div class="col-12 col-md-12">
                                                     <div class="row">
-                                                        <div class="col-md-9" data-th="Product">
+                                                        <div class="col-8 col-md-8 line-right-cart py-3" data-th="Product">
                                                             <div class="row">
                                                                 <div class="col-3 col-sm-4 hidden-xs">
                                                                     <div class="row text-center">
-                                                                        <img src="{{ $details['photo'] }}"  class="img-purchase img-responsive mx-auto d-block"/>
+                                                                        <img src="{{ $details['photo'] }}"  class="img-purchase2 img-responsive mx-auto d-block"/>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-9 col-sm-8">
@@ -178,14 +186,14 @@
                                                                         <div class="row">
                                                                             <div class="col-md-12">
                                                                                 <div class="row">
-                                                                                    <span class="nomargin">{{ $details['name'] }}</span>
+                                                                                    <small><span class="nomargin">{{ $details['name'] }}</span></small>
                                                                                     
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-md-12">
                                                                                 <div class="row">
                                                                                     <span data-th="Price">
-                                                                                        ${{ number_format($details['price'],0) }}
+                                                                                        <small>$ {{ number_format($details['price'],0) }} COP</small>
                                                                                     </span>
                                                                                 </div>
                                                                             </div>
@@ -200,7 +208,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <br>
+                                                                    {{--<br>
                                                                     <div id="cart_2" class="col-md-12">
                                                                         <div class="row">
                                                                             
@@ -221,11 +229,11 @@
                                                                                             @endif
                                                                                         </div>
                                                                                     </div>
-                                                                                    {{-- <div class="col-2 col-md-2" data-th="">
+                                                                                     <div class="col-2 col-md-2" data-th="">
                                                                                         <div class="row">
                                                                                             <button id="" class="btn btn-info btn-sm update-cart" data-id="{{ $id }}"><i class="fa fa-refresh"></i></button>
                                                                                         </div>
-                                                                                    </div> --}}
+                                                                                    </div> 
                                                                                     <div class="col-3 col-md-2">
                                                                                         <div class="row">
                                                                                             <button class="btn btn-danger btn-sm remove-from-cart" data-id="{{ $id }}"><i class="fa fa-trash-o"></i> Eliminar</button>
@@ -238,45 +246,42 @@
                                                                             
                                                                             
                                                                         </div>
-                                                                    </div>
+                                                                    </div>--}}
                                                                 </div>
                                                                 
                                                             </div>
                                                         </div>
                                                         
-                                                        <div id="subtotal" data-th="Subtotal" class="col-3 col-md-3 text-right">
+                                                        <div id="subtotal" data-th="Subtotal" class="col-4 col-md-4 text-right py-3">
                                                             <div class="col-md-12">
-                                                                <h4 class="nomargin">
-                                                                    $ {{ number_format($details['price'] * $nq,0)}}
-                                                                </h4> 
+                                                                {{-- <span class="nomargin">
+                                                                    <b>$ {{ number_format($details['price'] * $nq,0)}}</b><br>
+                                                                </span> 
                                                                 @if ($half > 0)
-                                                                    <br> <span class="text-danger">Descuento $ {{ number_format($half,0) }}</span>
+                                                                    <span class="text-danger">Descuento $ {{ number_format($half,0) }}</span><br> 
                                                                 @elseif ($discount > 0)
-                                                                    <br> <span class="text-danger">Descuento $ {{ number_format($discount,0) }}</span>
+                                                                     <span class="text-danger">Descuento $ {{ number_format($discount,0) }}</span><br>
                                                                 @else
-                                                                @endif
-                                                                    <br>A pagar $ {{ number_format(($details['price'] * $nq) - $half - $discount,0) }}
+                                                                @endif --}}
+                                                                <small><b>A pagar</b> $ {{ number_format(($details['price'] * $nq) - $half - $discount,0) }}</small>
                                                             </div>
                                                         </div>
                                                         
                                                     </div>
                                                 </div>
-                                                <div class="col-12 col-md-12">
-                                                    <div class="col-md-12">
-                                                        <hr>
-                                                    </div>
-                                                </div>
+                                                
                                             @endforeach
+                                        @else
+                                            <?php
+                                            header('Location: /home');
+                                            exit;
+                                            ?>
                                         @endif
                                     </div>
                                     <div class="row">
                                         <div class="col-12 col-md-12">
                                             <div class="visible-xs">
-                                                
-                                                
-                                                <div class="col-12 col-md-12">
-                                                    <hr>
-                                                </div>
+                                               
                                                 {{-- <div colspan="2" class="col-md-12 mb-3 hidden-xs">
                                                     @if ($answer == 1)
                                                         <div class="card bg-light mb-3 h-card">
@@ -291,11 +296,15 @@
                                                     @endif
                                                 </div> --}}
                                                 
-                                                <div class="col-md-12">
+                                                <div class="col-md-12 mt-4">
                                                     <div class="row">
-                                                        <div class="card-title col-md-12">
-                                                            Subtotal Compra
-                                                            <hr>
+                                                        <div class="card-title col-md-12 text-center">
+                                                            <div class="row justify-content-md-center">
+                                                                <div class="col-4 col-md-4 bg-title-cart">
+                                                                    <div class="mt-2 mb-2"><b>Subtotal Compra</b></div>
+                                                                </div>
+                                                                
+                                                            </div>
                                                         </div>
                                                         
                                                         <div class="card-body info-small">
@@ -322,7 +331,7 @@
                                                                     </div>
                                                                     <div class="col-md-4">
                                                                         <div class="row float-right">
-                                                                            COP$ {{ number_format($subTotal,0) }}
+                                                                            COP $ {{ number_format($subTotal,0) }}
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -396,7 +405,7 @@
                                                             @if ($answer == 0)
                                                                 <a href="{{ url('purchase') }}" class="btn btn-leemon-method">Información de Facturación</a>
                                                             @elseif ($answer == 1)
-                                                                <button id="proccess" class="btn btn-success btn-sm">Proceder con el Pago</button>
+                                                                <button id="proccess" class="btn btn-purchase btn-sm">Proceder con el Pago</button>
                                                             @endif
                                                         @endguest
                                                     </div>
@@ -414,14 +423,14 @@
             <div id="secondary2" class="refinements col-md-3 pull-right no-padding-md no-padding-lg hidden-xs hidden-sm">
                 <div class="primary-content2">
                     <div class="row">
-                        <div class="card col-md-12">
+                        <div class="card col-md-12 card-rounded">
                             <div class="row">
-                                <div class="card-header col-md-12">
+                                <div class="card-header col-md-12 card-round-header">
                                     Subtotal Compra
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="card-body info-small">
+                                <div class="card-body info-small card-body-yellow card-round-footer">
                                     <div class="col-md-12">
                                         <div class="row">
                                             <div class="col-md-9">
@@ -483,7 +492,7 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    <div class="col-md-12">
+                                    <div class="col-md-12 mb-4">
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <div class="row">
@@ -499,9 +508,26 @@
                                         </div>
                                     </div>
                                     {{-- {{ $total + $delivery }} --}}
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                    
+                                            <div class="text-center col-md-12">
+                                                @guest
+                                                    <a class="btn btn-leemon-green btn-block" href="{{ url('/login') }}">Iniciar Sesión</a>
+                                                    <span class="title-tam3">¿Eres nuevo en Leemon? </span><a class="title-tam2" href="{{ route('register') }}">{{ __('Unete aquí.') }}</a>
+                                                @else
+                                                    @if ($answer == 0)
+                                                        <a href="{{ url('purchase') }}" class="btn btn-leemon-info btn-block">Información de Usuario</a>
+                                                    @elseif ($answer == 1)
+                                                    <button id="proccess2" class="btn btn-purchase btn-sm btn-block">Proceder con el Pago</button>
+                                                    @endif
+                                                @endguest
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="card-footer col-md-12">
                                     @guest
                                         <a class="btn btn-leemon-warning btn-block" href="{{ url('/login') }}">Iniciar Sesión</a>
@@ -513,7 +539,7 @@
                                         @endif
                                     @endguest
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -669,7 +695,7 @@
     function connectZonPagos(){
         var methodPay = $('input:radio[name=methodPay]:checked').val()   
 
-            if (methodPay ==2){
+            if ((methodPay ==2) || (methodPay == 1)){
                 $.ajax({
                     type:'POST',
                     dataType:'json',
@@ -708,7 +734,11 @@
                     }
                 });
             }else{
-
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Debe escojer un Metodo de Pago Valido',
+                });
             }
             
     }

@@ -35,11 +35,14 @@ class Member extends Model
             $contact = $request->contact;
         }
 
-        try{
+        $newDate = date("Y-m-d", strtotime($request->birthday));
+        //try{
         
             $this->user_id = Auth::user()->id;
             $this->firstname = $request->firstname;
             $this->lastname = $request->lastname;
+            $this->birthday = $newDate;
+            $this->phone = $request->phone;
             $this->email = Auth::user()->email;
             $this->address = $request->address_1." ".$request->address_2." ".$request->address_3." ".$request->address_4;
             $this->delivery_address = $delivery_ad;
@@ -58,19 +61,19 @@ class Member extends Model
             $address_info->dpt = $dpt;
             $address_info->city = $city;
             $address_info->zipcode = $zipcode;
-            $address_info->phone = '';
+            $address_info->phone = $request->phone;
             $address_info->contact = $contact;
             $address_info->details = $details;
             $address_info->default = 1;
             $address_info->save();
 
-        }catch (\Exception $e) {
-            //return $e->getMessage();
-            if ($e->getCode() == 23000) { // numero del error para Duplicate entry '%s' for key %d
-                $message = "La Ultima comision de Venta Indirecta ya ha sido calculada.";
-                $t_message = 2;
-            }
-        }
+        // }catch (\Exception $e) {
+        //     //return $e->getMessage();
+        //     if ($e->getCode() == 23000) { // numero del error para Duplicate entry '%s' for key %d
+        //         $message = "La Información ya ah sido almacenada.";
+        //         $t_message = 2;
+        //     }
+        // }
         return $rs;
     }
 

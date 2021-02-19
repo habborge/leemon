@@ -111,9 +111,11 @@ class PaymentController extends Controller
 
                     $methodCode = "0";
 
-                }else{
+                }else if ($method == 2){
                     $member = Member::where('user_id', $user_id)->first();
                     $methodCode = env('METHOD_PSE');
+                }else{
+                    
                 }
                 
                 $address = Address::select('addresses.id as addressId', 'addresses.address', 'addresses.zipcode', 'addresses.contact', 'addresses.details', 'c.country_master_name', 'd.department', 'ct.city_d_id')->where('user_id', $user_id)
@@ -161,7 +163,7 @@ class PaymentController extends Controller
                     "InformacionPago" => [
                         "flt_total_con_iva" => $totalFinal,
                         "flt_valor_iva" => 0,
-                        "str_id_pago" => "ORD-10".$orderId,
+                        "str_id_pago" => "100498-".$orderId,
                         "str_descripcion_pago" => "Compra de Productos Naturales",
                         "str_email" => $member->email,
                         "str_id_cliente" => $member->n_doc,
