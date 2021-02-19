@@ -21,7 +21,7 @@
                             @foreach ($products as $product)
                                 <div class="col-md-3">
                                     <div class="row">
-                                        <div class="card mb-4 shadow-sm shadow-global">
+                                        <div class="card mb-4 shadow-sm shadow-global bg-leemon-pro">
                                             <a href="/product/{{$product->proId}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $product->reference }}/{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product2" alt=""></a>
                                             <div class="card-body text-center">
                                                 <span class="brand-font">{{ucwords($product->brand)}} </span>

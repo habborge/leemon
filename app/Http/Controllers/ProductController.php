@@ -376,6 +376,7 @@ class ProductController extends Controller
             'subcat_id' => $subCategory_id,
             'products' => $products,
             'brands' => $brand,
+            'brandname' => ''
         ]);
     }
 
@@ -445,6 +446,7 @@ class ProductController extends Controller
             'subcat_id' => $subCategory_id,
             'products' => $products,
             'brands' => $brand,
+            'brandname' => $brandName,
         ]);
     }
 
@@ -472,6 +474,7 @@ class ProductController extends Controller
             'subcat_id' => 0,
             'products' => $products,
             'brands' => [],
+            'brandname' => ''
         ]);
     }
 

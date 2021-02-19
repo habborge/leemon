@@ -43,63 +43,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="card col-md-12 card-rounded mb-3">
-                                        <div class="row">
-                                            <div class="card-header col-md-12 card-round-header">Metodo de Pago</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="card-body card-body-yellow card-round-footer">
-                                                <div class="form-check">
-                                                    <div class="col-md-12">
-                                                        <div class="row">
-                                                            <div class="col-md-8">
-                                                                <div class="row">
-                                                                    <input class="form-check-input" type="radio" name="methodPay" id="TC" value="1">
-                                                                    <label class="form-check-label" for="TC">
-                                                                        Tarjeta de Credito
-                                                                        @if ($cardexist == 2)
-                                                                            terminada en ************{{ $card[0]->last4num }}
-                                                                        @else
-                                                                            <a href="/secure/methods/create" id="creditcard" class="btn btn-leemon-green btn-sm" type='button'>Agregar una Tarjeta</a>
-                                                                        @endif
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <div class="row float-right">
-                                                                    @if ($cardexist == 2)
-                                                                        <button class="btn btn-leemon-back btn-sm" data-toggle="modal" id="changeCard">Cambiar Tarjeta</button>
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    
-                                                </div>
-                                                <hr>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="methodPay" id="PSE" value="2">
-                                                    <label class="form-check-label" for="PSE">
-                                                    PSE
-                                                    </label>
-                                                </div>
-                                                {{--<hr>
-                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="methodPay" id="OTH" value="3">
-                                                    <label class="form-check-label" for="OTH">
-                                                    Otros metodos
-                                                    </label>
-                                                </div> --}}
-    
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                             </div>
+                            
                         @endif
 
                         <div class="card col-md-12 card-rounded">
@@ -693,9 +637,19 @@
     });
 
     function connectZonPagos(){
-        var methodPay = $('input:radio[name=methodPay]:checked').val()   
+        var methodPay = 1 
 
-            if ((methodPay ==2) || (methodPay == 1)){
+        Swal.fire({
+            title: 'Seguro Desea proceder con el Pago?',
+            text: "Será enviado a Leemon ZonaPagos!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#6CC4F6',
+            cancelButtonColor: '#403d38',
+            confirmButtonText: 'Sí, Ir a Pagar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
                 $.ajax({
                     type:'POST',
                     dataType:'json',
@@ -733,13 +687,8 @@
                     }  
                     }
                 });
-            }else{
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Debe escojer un Metodo de Pago Valido',
-                });
             }
+        });
             
     }
 </script>
