@@ -639,17 +639,7 @@
     function connectZonPagos(){
         var methodPay = 1 
 
-        Swal.fire({
-            title: 'Seguro Desea proceder con el Pago?',
-            text: "Será enviado a Leemon ZonaPagos!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#6CC4F6',
-            cancelButtonColor: '#403d38',
-            confirmButtonText: 'Sí, Ir a Pagar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
+            if ((methodPay ==2) || (methodPay == 1)){
                 $.ajax({
                     type:'POST',
                     dataType:'json',
@@ -687,8 +677,13 @@
                     }  
                     }
                 });
+            }else{
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Debe escojer un Metodo de Pago Valido',
+                });
             }
-        });
             
     }
 </script>
