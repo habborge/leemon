@@ -74,7 +74,8 @@ Route::group([
     Route::post('secure/methods/listchange', 'CreditCardController@creditCardChange');
 
     //------- Payment process ----------------------------------------
-    Route::post('secure/methods/paynow', 'PaymentController@paymentProcess');
+    //Route::post('secure/methods/paynow', 'PaymentController@paymentProcess');
+    Route::get('secure/method/payment/now', 'PaymentController@paymentProcess')->name('paymentnow');;
 
     //------- Send Email to friend -----------------------------------
     Route::post('send-email-friend', 'SendingEmailController@sendToFriend');
