@@ -701,7 +701,7 @@
                     dataType:'json',
                     data: {_token: '{{ csrf_token() }}', methodPay: methodPay},
                     url:'secure/methods/paynow',
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    // headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     beforeSend: function(x){
                         $('#loading_web').show();
                     },

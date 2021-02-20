@@ -293,7 +293,7 @@
                         <ul class="sub-menu-responsive">
                             @foreach ($menus as $key => $item)
                                 @if ($item['father_id'] == 0)
-                                    <li class="sidepanel-li"><a href="/products/{{ str_replace(" ", "-",$item['name']) }}_{{$item['id']}}">{{ $item['name'] }} </a></li>
+                                    <li class="sidepanel-li"><a href="/categories/{{ str_replace(" ", "-",$item['name']) }}/{{$item['id']}}">{{ $item['name'] }} </a></li>
                                 @endif
                             @endforeach
                         </ul>
