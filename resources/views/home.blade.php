@@ -17,13 +17,13 @@
         </ol>
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="img/promo.jpg" height="500px" class="d-block w-100" alt="...">
+            <img src="img/promo.jpg" class="img-fluid d-block w-100" alt="...">
           </div>
           <div class="carousel-item">
-            <img src="img/promo_1B.jpg" height="500px" class="d-block w-100" alt="...">
+            <img src="img/promo_1B.jpg" class="img-fluid d-block w-100" alt="...">
           </div>
           <div class="carousel-item">
-            <img src="img/promo2.jpg" height="500px" class="d-block w-100" alt="...">
+            <img src="img/promo2.jpg" class="img-fluid d-block w-100" alt="...">
           </div>
         </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -52,7 +52,11 @@
                     
                       <div class="col-md-4 category_style">
                         <a href="/categories/{{ str_replace(" ", "-",$category->name) }}/{{ $category->id }}">
-                        <img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/categories/cat_{{ $category->id }}.jpg" class="card-img-top card-rounded mx-auto d-block" alt="">
+                          <picture>
+                            <source type="image/webp"  srcset="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/categories/cat_{{ $category->id }}.webp">
+                            <img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/categories/cat_{{ $category->id }}.jpg" class="card-img-top card-rounded mx-auto d-block" alt="">
+                          </picture>
+                       
                         <div class = "carousel-caption" >
                           <h5 style="text-shadow: 2px 2px #202020;"> {{$category->name}}</h5>
                           </div>
