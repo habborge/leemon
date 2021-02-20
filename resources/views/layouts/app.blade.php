@@ -130,18 +130,25 @@
                                         <!-- Authentication Links -->
                                         @guest
                                             <li class="nav-item dropdown li-width">
-                                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" v-pre>
-                                                Identificarse<span class="caret"></span>
+                                                {{-- <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" v-pre>
+                                                Registrate<span class="caret"></span>
                                                 </a>
-                                                <div class="dropdown-menu dropdown-menu-position-center dropdown-menu-center text-center" aria-labelledby="navbarDropdown">
+                                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" v-pre>
+                                                    Inicia Sesión<span class="caret"></span>
+                                                    </a> --}}
+                                                    <a class="nav-link brand-font" href="{{ route('login') }}">{{ __('Iniciar Sesión') }}</a>
+                                                    
+                                                {{-- <div class="dropdown-menu dropdown-menu-position-center dropdown-menu-center text-center" aria-labelledby="navbarDropdown">
                                                     <a class="btn btn-leemon-green btn-block mt-2" href="{{ route('login') }}">{{ __('Iniciar Sesión') }}</a>
                                                     @if (Route::has('register'))
                                                         <div class="mb-2"><span class="title-tam3">¿Eres nuevo en Leemon? </span><a class="title-tam2" href="{{ route('register') }}">{{ __('Unete aquí.') }}</a></div>
                                                     @endif
-                                                </div>
+                                                </div> --}}
                                                 {{--  --}}
                                             </li>
-                                            
+                                            <li class="nav-item dropdown li-width">
+                                            <a class="nav-link brand-font" href="{{ route('register')  }}">{{ __('Registrate') }}</a>
+                                            </li>
                                         @else
                                             <li class="nav-item dropdown li-width">
                                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre><img src="/img/PERFIL.png" width="30px" alt="">
@@ -271,6 +278,14 @@
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
             <div class="">
                 <ul id="menu-responsive" class="menu-responsive">
+                    @guest
+                    <li class="sidepanel-li">
+                        <a href="{{ route('login') }}">{{ __('Iniciar Sesión') }}</a>
+                    </li>
+                    <li class="sidepanel-li">
+                        <a href="{{ route('register')  }}">{{ __('Registrate') }}</a>
+                    </li>
+                    @endguest
                     <li class="sidepanel-li">
                         <a href="#"><i class="fa fa-id-card" aria-hidden="true"></i> Nosotros</a>
                     </li>
@@ -284,18 +299,22 @@
                             @endforeach
                         </ul>
                     </li>
-                    <li id="profile" class="sidepanel-li">
-                        <a href="#profile"><i class="fa fa-user-circle" aria-hidden="true"></i> Perfil</a>
-                        <ul class="sub-menu-responsive">
-                            <li class="sidepanel-li"><a href="">Ordenes</a></li>
-                            <li class="sidepanel-li"><a href="">Lista de Deseos</a></li>
-                            <li class="sidepanel-li"><a href="/addresses">Direcciones</a></li>
-                            <li class="sidepanel-li"><a href="/secure/methods">Metodos de Pago</a></li>
-                        </ul>
-                    </li>
-                    <li class="sidepanel-li">
-                        <a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar Sesión</a>
-                    </li>
+                    @guest
+
+                    @else
+                        <li id="profile" class="sidepanel-li">
+                            <a href="#profile"><i class="fa fa-user-circle" aria-hidden="true"></i> Perfil</a>
+                            <ul class="sub-menu-responsive">
+                                <li class="sidepanel-li"><a href="">Ordenes</a></li>
+                                <li class="sidepanel-li"><a href="">Lista de Deseos</a></li>
+                                <li class="sidepanel-li"><a href="/addresses">Direcciones</a></li>
+                                <li class="sidepanel-li"><a href="/secure/methods">Metodos de Pago</a></li>
+                            </ul>
+                        </li>
+                        <li class="sidepanel-li">
+                            <a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar Sesión</a>
+                        </li>
+                    @endguest
                 </ul>
             </div>
         </div>
@@ -314,7 +333,7 @@
      
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    
+
     <script src="{{ asset('js/jquery.validate.min.js') }}" defer></script>
     @include('layouts.footer')
 

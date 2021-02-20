@@ -32,7 +32,7 @@
                             
 
                             <div class="col-md-12">
-                                <label for="email" class="col-form-label text-md-right text-register">{{ __('E-Mail') }}</label>
+                                <label for="email" class="col-form-label text-md-right text-register">{{ __('Correo Electronico') }}</label>
                                 <input id="email" type="email" class="form-control form-control-sm @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
                                 @error('email')

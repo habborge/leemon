@@ -82,3 +82,5 @@ Route::group([
 });
 
 Auth::routes();
+
+Route::get('resize','ProductController@resize');

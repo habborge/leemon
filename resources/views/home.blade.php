@@ -12,19 +12,19 @@
       <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
           <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+          {{-- <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li> --}}
         </ol>
         <div class="carousel-inner">
           <div class="carousel-item active">
             <img src="img/promo.jpg" class="img-fluid d-block w-100" alt="...">
           </div>
-          <div class="carousel-item">
+          {{-- <div class="carousel-item">
             <img src="img/promo_1B.jpg" class="img-fluid d-block w-100" alt="...">
           </div>
           <div class="carousel-item">
             <img src="img/promo2.jpg" class="img-fluid d-block w-100" alt="...">
-          </div>
+          </div> --}}
         </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -89,11 +89,11 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="rom">
-                      <div class="card mb-4 shadow-sm bg-leemon-pro card-rounded">
+                      <div class="card mb-4 bg-leemon-pro card-rounded">
                         <a href="/product/{{$product->id}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $product->reference }}/{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
                         <div class="card-body text-center">
                           <span class="brand-font">{{ucwords($product->brand)}} </span>
-                          <h6>{{ucwords($product->name)}} </h6>
+                          <div style="height: 60px"><h6>{{ucwords($product->name)}} </h6></div>
                           <h6>
                             @if ($product->prom == 1) 
                               <span class="badge badge-warning">Paga 2 Lleva 3</span>

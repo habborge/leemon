@@ -272,7 +272,7 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="rom">
-                        <div class="card mb-4 shadow-sm bg-leemon-pro card-rounded">
+                        <div class="card mb-4  bg-leemon-pro card-rounded">
                             <a href="/product/{{$similar->proId}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $similar->reference }}/{{$similar->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
                             <div class="card-body text-center">
                                 <span class="brand-font">{{ucwords($similar->brand)}} </span>
