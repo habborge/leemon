@@ -10,30 +10,16 @@
     <title>{{ config('app.name', 'Leemon') }}</title>
 
     <!-- Scripts -->
-    @if (env('APP_ENV') == "production")
-        <script src="{{ secure_asset('js/app.js') }}" defer></script>
-        <script src="{{ secure_asset('js/scripts.js') }}" defer></script>
-        <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
-        <link href="{{ secure_asset('css/style.css') }}" rel="stylesheet">
-        <link href="{{ secure_asset('js/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
-        <link href="{{ secure_asset('js/toastr/toastr.min.css') }}" rel="stylesheet">
-        <script src="{{ secure_asset('js/toastr/toastr.min.js') }}" defer></script>
-    @else
+    
         <script src="{{ asset('js/app.js') }}" defer></script>
-        <script src="{{ asset('js/scripts.js') }}" defer></script>
+        
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-        <link href="{{ asset('js/toastr/toastr.min.css') }}" rel="stylesheet">
-        <script src="{{ asset('js/toastr/toastr.min.js') }}" defer></script>
-               
-    @endif
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        
     
 
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+   
 
     <!-- Styles -->
     
@@ -322,6 +308,13 @@
             @yield('content')
         
     </div>
+    <link href="{{ asset('js/toastr/toastr.min.css') }}" rel="stylesheet">
+        <script src="{{ asset('js/toastr/toastr.min.js') }}" defer></script>
+        <link href="{{ asset('js/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
+     
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
     <script src="{{ asset('js/jquery.validate.min.js') }}" defer></script>
     @include('layouts.footer')
 
