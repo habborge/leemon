@@ -49,9 +49,10 @@
                                         <div class="row">
                                             <div class="card-header col-md-12 card-round-header">Metodo de Pago</div>
                                         </div>
+                                         {{--
                                         <div class="row">
                                             <div class="card-body card-body-yellow card-round-footer">
-                                                {{-- <div class="form-check">
+                                                 <div class="form-check">
                                                     <div class="col-md-12">
                                                         <div class="row">
                                                             <div class="col-md-8">
@@ -78,7 +79,7 @@
                                                     </div>
                                                     
                                                     
-                                                </div> --}}
+                                                </div> 
                                                 <hr>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="methodPay" id="PSE" value="2">
@@ -86,16 +87,16 @@
                                                     PSE y tarjeta de Credito
                                                     </label>
                                                 </div>
-                                                {{--<hr>
+                                                <hr>
                                                  <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="methodPay" id="OTH" value="3">
                                                     <label class="form-check-label" for="OTH">
                                                     Otros metodos
                                                     </label>
-                                                </div> --}}
+                                                </div> 
     
                                             </div>
-                                        </div>
+                                        </div>--}}
                                         
                                     </div>
                                 </div>
@@ -392,7 +393,7 @@
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <div class="col-6 col-md-6">
-                                                        <a href="{{ url('/') }}" class="btn btn-leemon-back">
+                                                        <a href="{{ url('/') }}" class="btn btn-leemon-back btn-sm">
                                                             Seguir Comprando
                                                         </a>
                                                     </div>
@@ -405,7 +406,8 @@
                                                             @if ($answer == 0)
                                                                 <a href="{{ url('purchase') }}" class="btn btn-leemon-method">Información de Facturación</a>
                                                             @elseif ($answer == 1)
-                                                                <button id="proccess" class="btn btn-purchase btn-sm">Proceder con el Pago</button>
+                                                                {{-- <button id="proccess" class="btn btn-purchase btn-sm">Proceder con el Pago</button> --}}
+                                                                <a href="{{ route('paymentnow') }}" class="btn btn-purchase btn-sm">Proceder con el Pago</a>
                                                             @endif
                                                         @endguest
                                                     </div>
@@ -519,7 +521,9 @@
                                                     @if ($answer == 0)
                                                         <a href="{{ url('purchase') }}" class="btn btn-leemon-info btn-block">Información de Usuario</a>
                                                     @elseif ($answer == 1)
-                                                    <button id="proccess2" class="btn btn-purchase btn-sm btn-block">Proceder con el Pago</button>
+                                                    {{-- <button id="proccess2" class="btn btn-purchase btn-sm btn-block">Proceder con el Pago</button> --}}
+                                                    <a href="{{ route('paymentnow') }}" class="btn btn-purchase btn-sm btn-block">Proceder con el Pago</a>
+                                                    
                                                     @endif
                                                 @endguest
                                             </div>
@@ -692,55 +696,55 @@
         });
     });
 
-    function connectZonPagos(){
-        var methodPay = $('input:radio[name=methodPay]:checked').val()   
+    // function connectZonPagos(){
+    //     var methodPay = $('input:radio[name=methodPay]:checked').val()   
 
-            if ((methodPay ==2) || (methodPay == 1)){
-                $.ajax({
-                    type:'POST',
-                    dataType:'json',
-                    data: {_token: '{{ csrf_token() }}', methodPay: methodPay},
-                    url:'secure/methods/paynow',
-                    // headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    beforeSend: function(x){
-                        $('#loading_web').show();
-                    },
-                    success:function(data){
-                    if(data.status==200){
-                        //alert(data.url);
-                        //$('#loading_web').hide(); 
-                        //$('#selectioncard').modal('show');
-                        //window.open(data.url, '_blank');
-                        $(location).attr('href',data.url);
-                    }else if(data.status==403){
-                        $('#loading_web').hide(); 
-                        $.each(data.errors, function( index, value ){
-                        toastr.error(value, 'Error!', {  timeOut: 5e3});
-                        });  
-                    }else if(data.status==506){
-                        $('#loading_web').hide(); 
-                        // $.each(data.errors, function( index, value ){
-                        // toastr.error(value, 'Error!', {  timeOut: 5e3});
-                        // });  
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: data.message + data.order_exists,
-                        });
-                    }else{ 
-                        $('#loading_web').hide(); 
-                        toastr.error(data.message, "Error!");
-                    }  
-                    }
-                });
-            }else{
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Debe escojer un Metodo de Pago Valido',
-                });
-            }
+    //         if ((methodPay ==2) || (methodPay == 1)){
+    //             $.ajax({
+    //                 type:'POST',
+    //                 dataType:'json',
+    //                 data: {_token: '{{ csrf_token() }}', methodPay: methodPay},
+    //                 url:'secure/methods/paynow',
+    //                 // headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+    //                 beforeSend: function(x){
+    //                     $('#loading_web').show();
+    //                 },
+    //                 success:function(data){
+    //                 if(data.status==200){
+    //                     //alert(data.url);
+    //                     //$('#loading_web').hide(); 
+    //                     //$('#selectioncard').modal('show');
+    //                     //window.open(data.url, '_blank');
+    //                     $(location).attr('href',data.url);
+    //                 }else if(data.status==403){
+    //                     $('#loading_web').hide(); 
+    //                     $.each(data.errors, function( index, value ){
+    //                     toastr.error(value, 'Error!', {  timeOut: 5e3});
+    //                     });  
+    //                 }else if(data.status==506){
+    //                     $('#loading_web').hide(); 
+    //                     // $.each(data.errors, function( index, value ){
+    //                     // toastr.error(value, 'Error!', {  timeOut: 5e3});
+    //                     // });  
+    //                     Swal.fire({
+    //                         icon: 'error',
+    //                         title: 'Oops...',
+    //                         text: data.message + data.order_exists,
+    //                     });
+    //                 }else{ 
+    //                     $('#loading_web').hide(); 
+    //                     toastr.error(data.message, "Error!");
+    //                 }  
+    //                 }
+    //             });
+    //         }else{
+    //             Swal.fire({
+    //                 icon: 'error',
+    //                 title: 'Oops...',
+    //                 text: 'Debe escojer un Metodo de Pago Valido',
+    //             });
+    //         }
             
-    }
+    // }
 </script>
 @endsection

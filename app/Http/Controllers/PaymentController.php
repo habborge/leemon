@@ -22,8 +22,9 @@ class PaymentController extends Controller
 
     public function paymentProcess(Request $request){
 
-        $method = $request->methodPay;
-        
+        //$method = $request->methodPay;
+        //dd("aqui");
+        $method = 2;
 
         $subTotal = 0;
         $total = 0;
@@ -248,7 +249,8 @@ class PaymentController extends Controller
                 
                
                 $response = Http::post('https://www.zonapagos.com/Apis_CicloPago/api/InicioPago', $data);
-                
+
+                return redirect()->away($response->json()['str_url']);
                // return redirect()->to($response->json()['str_url']);
                 
                 //dd($response->json(),json_encode($data),$response->json()['str_url']);
@@ -267,7 +269,7 @@ class PaymentController extends Controller
         
                // dd($response, json_encode($data));
 
-                return response()->json(['status'=>200, 'url' => $response->json()['str_url']]);
+                //return response()->json(['status'=>200, 'url' => $response->json()['str_url']]);
             }else{
 
             }
