@@ -332,7 +332,8 @@
                                             <!--<div class="hidden-xs text-right"><strong>Total $ {{ $total }}</strong></div>-->
                                             <div class="col-6 col-md-6 text-right">
                                                 @guest
-                                                    <a class="btn btn-leemon-green" href="{{ route('login') }}">Iniciar Sesión</a><br>
+                                                    {{-- <a class="btn btn-leemon-green" href="{{ route('login') }}">Ir a Pagar</a><br> --}}
+                                                    <a id="pagar" class="btn btn-leemon-green">Ir a Pagar</a>
                                                     <span class="title-tam3">¿Eres nuevo en Leemon? </span><a class="title-tam2" href="{{ route('register') }}">{{ __('Unete aquí.') }}</a>
                                                 @else
                                                     @if ($answer == 0)
@@ -443,7 +444,7 @@
                                 
                                         <div class="text-center col-md-12">
                                             @guest
-                                                <a class="btn btn-leemon-green btn-block" href="{{ url('/login') }}">Iniciar Sesión</a>
+                                                <a class="btn btn-leemon-green btn-block" href="{{ url('/login') }}">Ir a Pagar</a>
                                                 <span class="title-tam3">¿Eres nuevo en Leemon? </span><a class="title-tam2" href="{{ route('register') }}">{{ __('Unete aquí.') }}</a>
                                             @else
                                                 @if ($answer == 0)
@@ -549,6 +550,23 @@
                 }  
                 }
             });
+        });
+
+        $('#pagar').click(function () {
+                        Swal.fire({
+            title: 'Do you want to save the changes?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: `Save`,
+            denyButtonText: `Don't save`,
+            }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                Swal.fire('Saved!', '', 'success')
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
+            })
         });
         
     });

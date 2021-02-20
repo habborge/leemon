@@ -21,11 +21,11 @@
                             @foreach ($products as $product)
                                 <div class="col-md-3">
                                     <div class="row">
-                                        <div class="card mb-4 shadow-sm shadow-global bg-leemon-pro card-rounded">
+                                        <div class="card mb-4 shadow-global bg-leemon-pro card-rounded">
                                             <a href="/product/{{$product->proId}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $product->reference }}/{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product2" alt=""></a>
                                             <div class="card-body text-center">
                                                 <span class="brand-font">{{ucwords($product->brand)}} </span>
-                                                <h6>{{ucwords($product->proName)}} </h6>
+                                                <div style="height: 80px"><h6>{{ucwords($product->proName)}} </h6></div>
                                                 <h6>
                                                     @if ($product->prom == 1) 
                                                         <span class="badge badge-warning">Paga 2 Lleva 3</span>
@@ -33,7 +33,9 @@
                                                         <span class="badge badge-success">2nd 50% off</span>
                                                     @endif
                                                 </h6> 
+                                                <div class="mb-4">
                                                 <h6>$ {{number_format($product->price, 0)}} COP </h6>
+                                                </div>
                                                 <!-- <a href="/product/{{$product->proId}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
                                                 {{-- <a href="{{ url('add-to-cart/'.$product->proId) }}"> <button type="button" class="btn btn-sm btn-leemon-green"><i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito</button></a> --}}
                                                 

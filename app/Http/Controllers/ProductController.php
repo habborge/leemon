@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Storage;
 use Aws\S3\S3MultiRegionClient;
 use Illuminate\Support\Facades\Http;
 
+use Image;
+
 class ProductController extends Controller
 {
     //--------------------------------------------------------------------------------------------------------------
@@ -500,5 +502,34 @@ class ProductController extends Controller
             'products' => $products,
             'brands' => [],
         ]);
+    }
+
+    public function resize(){
+        $brand = "MOD";
+        $products = Product::where('brand', $brand)->get();
+
+        $disk = Storage::disk('s3');
+        foreach ($products as $product) {
+
+            $imgname = $product->img1;
+            $path = "/".env('BUCKET_SUBFOLDER')."/products/".$product->reference."/";
+            //dd(env('AWS_URL').$path.$img);
+            
+               
+            //Ruta donde queremos guardar las imagenes
+            $path3 = $path.'/thumbnails/';
+
+            //Creamos una instancia de la libreria instalada  
+            $img = Image::make(env('AWS_URL').$path.$imgname);
+            
+            $img->resize(200, 200);
+            $img->save( $disk->put($path3.$imgname, 'public'));
+
+           
+
+             
+   
+
+        }
     }
 }
