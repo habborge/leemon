@@ -250,6 +250,8 @@ class PaymentController extends Controller
                
                 $response = Http::post('https://www.zonapagos.com/Apis_CicloPago/api/InicioPago', $data);
 
+                //dd($response->json());
+
                 return redirect()->away($response->json()['str_url']);
                // return redirect()->to($response->json()['str_url']);
                 

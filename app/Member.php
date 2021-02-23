@@ -12,7 +12,7 @@ use App\Address;
 class Member extends Model
 {
     protected $fillable = [
-        'user_id', 'email', 'firstname','lastname','address', 'delivery_address', 'city', 'dpt', 'country', 'n_doc'
+        'user_id', 'email', 'firstname','lastname','address', 'delivery_address', 'city', 'dpt', 'country', 'n_doc', 'birthday', 'status', 'phone'
     ];
 
     public function set($request){

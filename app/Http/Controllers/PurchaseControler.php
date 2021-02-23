@@ -19,6 +19,7 @@ use File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use SoapClient;
+use App\Department;
 
 class PurchaseControler extends Controller
 {
@@ -30,31 +31,27 @@ class PurchaseControler extends Controller
     private function verifyInsert($request){
         
         $rules = [
-            'firstname' => 'required|string',
-            'lastname' => 'required|string',
-            
             'address_1' => 'required',
             'address_2' => 'required',
             'address_3' => 'required',
             'address_4' => 'required',
-            'birthday' => 'required',
+            
             'city'  => 'required', 
             'dpt' => 'required',  
             'country' => 'required',  
-            'n_doc' => 'required',
         ];
 
-        if (!isset($request->sameaddress)){
+        // if (!isset($request->sameaddress)){
             
-            $rules['contact'] = 'required';
-            $rules['address_1b'] = 'required';
-            $rules['address_2b'] = 'required';
-            $rules['address_3b'] = 'required';
-            $rules['address_4b'] = 'required';
-            $rules['city_e'] = 'required';
-            $rules['dpt_e'] = 'required'; 
-            $rules['country_e'] = 'required'; 
-        }
+        //     $rules['contact'] = 'required';
+        //     $rules['address_1b'] = 'required';
+        //     $rules['address_2b'] = 'required';
+        //     $rules['address_3b'] = 'required';
+        //     $rules['address_4b'] = 'required';
+        //     $rules['city_e'] = 'required';
+        //     $rules['dpt_e'] = 'required'; 
+        //     $rules['country_e'] = 'required'; 
+        // }
         
         return $p = Validator::make($request->all(), $rules);
     }
@@ -62,19 +59,23 @@ class PurchaseControler extends Controller
     //--------------------------------------------------------------------------------------------------------------    
     // Verify auth , then allow to register billing information
     //--------------------------------------------------------------------------------------------------------------
-    public function purchase(){
+    public function verifyAddress(){
         $infosaved = 0;
         $id = Auth::user()->id;
        
-        $info = Member::where('user_id', $id)->first();
+        $info = Address::where('user_id', $id);
 
-        if ($info){
+        if ($info->exists()){
             $infosaved = 1;
         }
-        
+
+        $country_id = 47;
+        $dpts = Department::where('country_id', $country_id)->orderBy('department', 'ASC')->get();
+
         return view('purchase', [
             'infosaved' => $infosaved,
-            'info' => $info
+            //'info' => $info->get(),
+            'dpts' => $dpts
         ]);
     }
 
@@ -101,16 +102,39 @@ class PurchaseControler extends Controller
                     'completeRequest' => $request,
                     'infosaved' => $infosaved,
                     'info' => $info,
-                    'checkbox' => $request->sameaddress
+                    // 'checkbox' => $request->sameaddress
                 ])->withErrors($p);
             }else{
                 //$res = $this->luhnCheck($request->cc_number);
                 
-                $user_info = New Member();
-                $rs = $user_info->set($request);
+                // $user_info = New Member();
+                // $rs = $user_info->set($request);
+                
+                if($info){
+                    
+                    $delivery_ad = $request->address_1."~".$request->address_2."~".$request->address_3."~".$request->address_4;
+                    $details = $request->address_d;
+                    $coutry = $request->country;
+                    $dpt = $request->dpt;
+                    $city = $request->city;
+                    $obs= $request->obs;
 
-                if($rs){
-                    return redirect('cart')->with('success', 'Usuario creado de manera Exitosa!!');
+                    $address_info = New Address();
+                    $address_info->user_id = Auth::user()->id;
+                    $address_info->address = $delivery_ad;
+                    $address_info->country = $coutry;
+                    $address_info->dpt = $dpt;
+                    $address_info->phone = $info->phone;
+                    $address_info->contact = $info->firstname." ".$info->lastname;
+                    $address_info->city = $city;
+                    $address_info->zipcode = $obs;
+                    $address_info->details = $details;
+                    $address_info->default = 1;
+                    $address_info->save();
+
+                    
+                    return redirect('methods')->with('success', 'Dirección Agregada de amnera exitosa!!');
+
                 }else{
                     //return back()->with('notice', 'Un error ha ocurrido!!');
 
@@ -119,7 +143,7 @@ class PurchaseControler extends Controller
                         'completeRequest' => $request,
                         'infosaved' => $infosaved,
                         'info' => $info,
-                        'checkbox' => $request->sameaddress,
+                        //'checkbox' => $request->sameaddress,
                         
                     ])->withErrors($error);    
                 }
@@ -143,122 +167,133 @@ class PurchaseControler extends Controller
     //--------------------------------------------------------------------------------------------------------------
     public function methods()
     {
-        $answer = 1;
-        $cardExist = 0;
-        $member_info = null;
-        $card = null;
-        $address = null;
-        $weight = 0;
-        $volweight = 0;
-        $sw = 0;
-        $totalprice = 0;
+        if ((Auth::user()) and (session('cart'))){
+            $answer = 1;
+            $cardExist = 0;
+            $member_info = null;
+            $card = null;
+            $address = null;
+            $weight = 0;
+            $volweight = 0;
+            $sw = 0;
+            $totalprice = 0;
 
-        foreach (session('cart') as $id => $details){
-            $whole = 0;
-            $half = 0;
-            $nq = 0;
-            $h = 0;
-            $discount = 0;
+            foreach (session('cart') as $id => $details){
+                $whole = 0;
+                $half = 0;
+                $nq = 0;
+                $h = 0;
+                $discount = 0;
 
-            $hash = md5(env('SECRETPASS')."~".$details['name']."~".$details['price']."~".$details['prom']."~".$details['fee']."~".$details['width']."~".$details['height']."~".$details['length']."~".$details['weight']);
+                $hash = md5(env('SECRETPASS')."~".$details['name']."~".$details['price']."~".$details['prom']."~".$details['fee']."~".$details['width']."~".$details['height']."~".$details['length']."~".$details['weight']);
 
-            if ($hash == $details['hash']){
+                if ($hash == $details['hash']){
 
-                $weight = $weight + ($details['weight'] * $details['quantity']);
-                $volweight = $volweight + ((($details['width']/100)*($details['length']/100)*($details['height']/100)*400) * $details['quantity']);
-                $totalprice = $totalprice + ($details['price'] * $details['quantity']);
-            }else{
-                $sw = 1;
-                break;
-            }
-            
-        }
-
-        if ($sw == 0){
-            //$apiauth =array('UserName'=>'username','Password'=>'password');
-            
-
-            if (Auth::user()){
-                $id = Auth::user()->id;
-                $address = Address::where('user_id', $id)->where('default', 1)
-                ->join('countries as c', 'c.country_master_id', 'addresses.country')
-                ->join('departments as d', 'd.code', 'addresses.dpt')
-                ->join('cost_tcc as ct', 'ct.id', 'addresses.city')
-                ->first();
-                //dd($address);
-                $card = Creditcard::where('user_id', $id)->where('default', 1)->get();
-
-                if ($card->count() >0){
-                    $cardExist = 2;
+                    $weight = $weight + ($details['weight'] * $details['quantity']);
+                    $volweight = $volweight + ((($details['width']/100)*($details['length']/100)*($details['height']/100)*400) * $details['quantity']);
+                    $totalprice = $totalprice + ($details['price'] * $details['quantity']);
+                }else{
+                    $sw = 1;
+                    break;
                 }
+                
+            }
 
-                $wsdl = "http://clientes.tcc.com.co/preservicios/liquidacionacuerdos.asmx?wsdl";
-                $parameters = [
-                    'Clave' => 'CLIENTETCC608W3A61CJ',
-                    'Liquidacion' => [
-                        'tipoenvio' => 2,
-                        'idciudadorigen' => '08001000',
-                        'idciudaddestino' => $address->dane_d,
-                        'valormercancia' => $totalprice,
-                        'boomerang' => 0,
-                        'cuenta' => 0,
-                        'fecharemesa' => '05/02-2021',
-                        'idunidadestrategicanegocio' => 2,
-                        'unidades' => [
-                            'unidad' => [
-                                'numerounidades' => 1,
-                                'pesoreal' => $weight,
-                                'pesovolumen' => $volweight,
-                                
-                                'tipoempaque' => '1'
+            if ($sw == 0){
+                //$apiauth =array('UserName'=>'username','Password'=>'password');
+                
+
+                if (Auth::user()){
+                    $id = Auth::user()->id;
+                    $address = Address::where('user_id', $id)->where('default', 1)
+                    ->join('countries as c', 'c.country_master_id', 'addresses.country')
+                    ->join('departments as d', 'd.code', 'addresses.dpt')
+                    ->join('cost_tcc as ct', 'ct.id', 'addresses.city')
+                    ->first();
+                    //dd($address);
+                    $card = Creditcard::where('user_id', $id)->where('default', 1)->get();
+
+                    if ($card->count() >0){
+                        $cardExist = 2;
+                    }
+
+                    $wsdl = "http://clientes.tcc.com.co/preservicios/liquidacionacuerdos.asmx?wsdl";
+                    $parameters = [
+                        'Clave' => 'CLIENTETCC608W3A61CJ',
+                        'Liquidacion' => [
+                            'tipoenvio' => 2,
+                            'idciudadorigen' => '08001000',
+                            'idciudaddestino' => $address->dane_d,
+                            'valormercancia' => $totalprice,
+                            'boomerang' => 0,
+                            'cuenta' => 0,
+                            'fecharemesa' => '05/02-2021',
+                            'idunidadestrategicanegocio' => 2,
+                            'unidades' => [
+                                'unidad' => [
+                                    'numerounidades' => 1,
+                                    'pesoreal' => $weight,
+                                    'pesovolumen' => $volweight,
+                                    
+                                    'tipoempaque' => '1'
+                                ]
                             ]
                         ]
-                    ]
 
-                ];
+                    ];
 
-                $soap = new SoapClient($wsdl);
-                $re = $soap->__soapCall("ConsultarLiquidacion", array($parameters));
+                    $soap = new SoapClient($wsdl);
+                    $re = $soap->__soapCall("ConsultarLiquidacion", array($parameters));
+                    //dd($re->consultarliquidacionResult);
 
-                if ($re->consultarliquidacionResult){
-                    if ($re->consultarliquidacionResult->idliquidacion){
-                        session()->put('tcc', $re);  
-                    }else{
-                        $re->consultarliquidacionResult->respuesta;
+                    if ($re->consultarliquidacionResult){
+                        if (!empty($re->consultarliquidacionResult->idliquidacion)){
+                            session()->put('tcc', $re); 
+                            $message = "";
+                            return view('method', [
+                                'answer' => $answer,
+                                'cardexist' => $cardExist,
+                                'member_info' => $member_info,
+                                'address' => $address,
+                                'card' => $card,
+                                'message' => $message
+                            ]);
+                        }else{
+                            $message = $re->consultarliquidacionResult->respuesta->mensaje;
+
+                            return redirect()->back()->withErrors([$message]);
+                        }
                     }
-                }
-                
-                // if ($re->consultarliquidacionResult->respuesta){
-                    // {#1290 ▼
-                    //     +"consultarliquidacionResult": {#1302 ▼
-                    //         +"respuesta": {#1317 ▼
-                    //           +"codigo": "-1"
-                    //           +"mensaje": "Actualmente NO se tiene habilitado el servicio para la ruta y tipo de transporte seleccionados."
-                    //           +"codigointerno": "-1"
-                    //           +"mensajeinterno": "No se envio un origen valido"
-                    //         }
-                    //       }
-                    //     }
-                // }
-            
-                
+                    
+                    // if ($re->consultarliquidacionResult->respuesta){
+                        // {#1290 ▼
+                        //     +"consultarliquidacionResult": {#1302 ▼
+                        //         +"respuesta": {#1317 ▼
+                        //           +"codigo": "-1"
+                        //           +"mensaje": "Actualmente NO se tiene habilitado el servicio para la ruta y tipo de transporte seleccionados."
+                        //           +"codigointerno": "-1"
+                        //           +"mensajeinterno": "No se envio un origen valido"
+                        //         }
+                        //       }
+                        //     }
+                    // }
                 
                     
-                //dd($re, $weight, $volweight, $re->consultarliquidacionResult->total->totaldespacho);
+                    
+                        
+                    //dd($re, $weight, $volweight, $re->consultarliquidacionResult->total->totaldespacho);
 
-                return view('method', [
-                    'answer' => $answer,
-                    'cardexist' => $cardExist,
-                    'member_info' => $member_info,
-                    'address' => $address,
-                    'card' => $card
-                ]);
-            }else{
-               
+                    
+                }else{
+                
+                }
+
+                
             }
-
-            
+        }else{
+            return redirect('/home');
         }
+        
         
     }
 

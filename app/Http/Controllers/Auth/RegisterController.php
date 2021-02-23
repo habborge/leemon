@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use App\Member;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -30,7 +31,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = RouteServiceProvider::CART;
 
     /**
      * Create a new controller instance.
@@ -53,8 +54,11 @@ class RegisterController extends Controller
         //dd($data);
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
+            'lastname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'birthday' => ['required'],
+            'phone' => ['required', 'numeric'],
             'recaptcha_token' => ['required', new   ReCaptchaRule($data['recaptcha_token'])]
         ]);
     }
@@ -67,10 +71,32 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+        $user = User::create([
+            'name' => $data['name']." ".$data['lastname'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'code_verify' => null,
+            'email_verified' => 0
         ]);
+
+        $newDate = date("Y-m-d", strtotime($data['birthday']));
+
+        $member = Member::create([
+            'user_id' => $user->id, 
+            'email' => $data['email'], 
+            'firstname' => $data['name'],
+            'lastname' => $data['lastname'],
+            'birthday' => $newDate,
+            'phone' => $data['phone'],
+            'address' => '', 
+            'delivery_address' => '', 
+            'city' => '', 
+            'dpt' => '', 
+            'country' => '', 
+            'n_doc' => '1234567890',
+            'status' => 1
+        ]);
+
+        return $user;
     }
 }

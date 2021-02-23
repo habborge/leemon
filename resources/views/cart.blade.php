@@ -15,6 +15,19 @@
                                         <div class="card-header row card-round-header"><b>Dirección de Envio</b></div>
                                         <div class="card-body card-body-yellow row card-round-footer">
                                             <div class="col-md-12">
+                                                @if($errors->any())
+                                                    <div class="row">   
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <div class="alert alert-danger col-12" role="alert">
+                                                                    {{$errors->first()}}<br>
+                                                                    Por favor verifique o cambie el municipio de destino<br>
+                                                                    O intente mas tarde la disponibilidad del destino. 
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endif
                                                 <div class="row">
                                                             <div class="col-md-8">
                                                                 <div class="row">
@@ -212,12 +225,6 @@
                                                     </div>
                                                 </div>
                                             @endforeach
-
-                                        @else
-                                        <?php
-                                        header('Location: /home');
-                                        exit;
-                                        ?>
                                         @endif
                                     </div>
                                     <div class="row">
@@ -328,13 +335,15 @@
                                                     Seguir Comprando
                                                 </a>
                                             </div>
-                                            
+                                            <div class="col-3 col-md-3">
+
+                                            </div>
                                             <!--<div class="hidden-xs text-right"><strong>Total $ {{ $total }}</strong></div>-->
-                                            <div class="col-6 col-md-6 text-right">
+                                            <div class="col-3 col-md-3 text-right">
                                                 @guest
                                                     {{-- <a class="btn btn-leemon-green" href="{{ route('login') }}">Ir a Pagar</a><br> --}}
-                                                    <a id="pagar" class="btn btn-leemon-green">Ir a Pagar</a>
-                                                    <span class="title-tam3">¿Eres nuevo en Leemon? </span><a class="title-tam2" href="{{ route('register') }}">{{ __('Unete aquí.') }}</a>
+                                                    <a id="pagar" class="btn btn-leemon-green btn-block">Ir a Pagar</a>
+                                                    {{-- <span class="title-tam3">¿Eres nuevo en Leemon? </span><a class="title-tam2" href="{{ route('register') }}">{{ __('Unete aquí.') }}</a> --}}
                                                 @else
                                                     @if ($answer == 0)
                                                         <a href="{{ url('purchase') }}" class="btn btn-leemon-info">Información de Usuario</a>
@@ -444,8 +453,9 @@
                                 
                                         <div class="text-center col-md-12">
                                             @guest
-                                                <a class="btn btn-leemon-green btn-block" href="{{ url('/login') }}">Ir a Pagar</a>
-                                                <span class="title-tam3">¿Eres nuevo en Leemon? </span><a class="title-tam2" href="{{ route('register') }}">{{ __('Unete aquí.') }}</a>
+                                                {{-- <a class="btn btn-leemon-green btn-block" href="{{ url('/login') }}">Ir a Pagar</a> --}}
+                                                <a id="pagar2" class="btn btn-leemon-green btn-block">Ir a Pagar</a>
+                                                {{-- <span class="title-tam3">¿Eres nuevo en Leemon? </span><a class="title-tam2" href="{{ route('register') }}">{{ __('Unete aquí.') }}</a> --}}
                                             @else
                                                 @if ($answer == 0)
                                                     <a href="{{ url('purchase') }}" class="btn btn-leemon-info btn-block">Información de Facturación</a>
@@ -553,22 +563,28 @@
         });
 
         $('#pagar').click(function () {
-                        Swal.fire({
-            title: 'Do you want to save the changes?',
-            showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonText: `Save`,
-            denyButtonText: `Don't save`,
-            }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {
-                Swal.fire('Saved!', '', 'success')
-            } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
-            }
-            })
+            confirmation();
+        });
+        $('#pagar2').click(function () {
+            confirmation();
         });
         
     });
+    function confirmation(){
+        Swal.fire({
+            title: 'Eres Usuario Registrado?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: `Sí, Inicia Sesión`,
+            denyButtonText: `No, Registrate`,
+            }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                $(location).attr('href', "{{ url('/login') }}")
+            } else if (result.isDenied) {
+                $(location).attr('href', "{{ url('/register') }}")
+            }
+            })
+    }
 </script>
 @endsection

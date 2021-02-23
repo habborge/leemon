@@ -698,7 +698,7 @@ padding: 0 8px 0 7px;
 .a-divide {
 	border-bottom: 1px solid #ddd
 }
-#cc_cvv::placeholder, #cc_number::placeholder, #cc_name::placeholder, #address_d::placeholder, #firstname::placeholder, #lastname::placeholder, #n_doc::placeholder, #email::placeholder, #address_db::placeholder, #zipcode::placeholder, #zipcode_e::placeholder, #phone::placeholder, #contact::placeholder, #search::placeholder, #address_2::placeholder, #address_4::placeholder, #address_2b::placeholder, #address_4b::placeholder, #birthday::placeholder  {
+#cc_cvv::placeholder, #cc_number::placeholder, #cc_name::placeholder, #address_d::placeholder, #firstname::placeholder, #lastname::placeholder, #n_doc::placeholder, #email::placeholder, #address_db::placeholder, #zipcode::placeholder, #zipcode_e::placeholder, #phone::placeholder, #contact::placeholder, #search::placeholder, #address_2::placeholder, #address_4::placeholder, #address_2b::placeholder, #address_4b::placeholder, #birthday::placeholder, #obs::placeholder  {
     color:rgb(212, 212, 212);
 }
 
@@ -845,6 +845,14 @@ border-color: #646464 !important;
     border-color: #149b2f !important;
     color: white !important;
 }
+.color{
+    color:rgb(214, 214, 214) !important;
+}
+option {
+    font-family: "AcuminVariableConcept2";
+    font-size: 12px;
+}
+    option.one {color: #c7c7c7;}
 /* ---------------------------------------------------------------------------------
    -- resposive design
 ---------------------------------------------------------------------------------- */

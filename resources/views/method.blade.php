@@ -378,7 +378,9 @@
                                                                     </div>
                                                                     <div class="col-md-4">
                                                                         <div class="row float-right">
-                                                                            COP$ {{ number_format($total + session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
+                                                                            @if (session('tcc'))
+                                                                                COP$ {{ number_format($total + session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
+                                                                            @endif
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -504,7 +506,9 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="row float-right">
+                                                    @if (session('tcc'))
                                                     COP$ {{ number_format($total + session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>

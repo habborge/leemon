@@ -36,6 +36,10 @@ Route::get('/products/{gfather}/{father}/{son}/{brand}', 'ProductController@grou
 Route::get('/products/{gfather}','ProductController@groupGfa');
 Route::get('/categories/{category}/{id}', 'ProductController@groupCategory');
 
+// E-mail verification after registration.
+Route::post('/secure/verify/email', 'MemberController@verifyEmail');
+Route::get('/register/auth/email/verify', 'MemberController@sendEmailVerication');
+
 // Landing page
 Route::get('/giveaway/registry', 'GiveawayController@index');
 Route::post('/giveaway/registry', 'GiveawayController@savingData');
@@ -50,7 +54,7 @@ Route::group([
     'middleware' => ['auth']
 ], function() {
 
-    Route::get('purchase', 'PurchaseControler@purchase');
+    // Route::get('purchase', 'PurchaseControler@purchase');
     Route::post('add-info-user', 'PurchaseControler@addInfoUser')->name('saveinfo');
     Route::get('confirm', 'PurchaseControler@confirm');
     Route::get('methods', 'PurchaseControler@methods');
@@ -62,6 +66,8 @@ Route::group([
     Route::get('addresses/default/{id}', 'AddressController@default');
     Route::post('addresses/list', 'AddressController@addressList');
     Route::post('addresses/listchange', 'AddressController@addressChange');
+    Route::get('/secure/delivery/address/verify', 'PurchaseControler@verifyAddress');
+    
 
     //------- Regions ------------------------------------------------
     Route::post('/region/dpt', 'regionController@dpt');
