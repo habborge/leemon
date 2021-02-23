@@ -21,10 +21,20 @@
                              @endif
 
                             <div class="col-md-12">
-                                <label for="name" class="col-form-label text-md-right text-register">{{ __('Nombres y Apellidos') }}</label>
+                                <label for="name" class="col-form-label text-md-right text-register">{{ __('Nombres') }}</label>
                                 <input id="name" type="text" class="form-control form-control-sm @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                 @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="col-md-12">
+                                <label for="lastname" class="col-form-label text-md-right text-register">{{ __('Apellidos') }}</label>
+                                <input id="lastname" type="text" class="form-control form-control-sm @error('lastname') is-invalid @enderror" name="lastname" value="{{ old('lastname') }}" required autocomplete="lastname" autofocus>
+
+                                @error('lastname')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -85,6 +95,7 @@
                                 @enderror
                             </div>
                         </div>
+                        
 
                         <div class="form-group row">
                             <div class="col-md-12">
@@ -134,6 +145,10 @@
         }); 
 
         $('#name').on('input', function () { 
+            this.value = this.value.replace(/[^ a-záéíóúüñA-Z]/g,'');
+        });
+
+        $('#lastname').on('input', function () { 
             this.value = this.value.replace(/[^ a-záéíóúüñA-Z]/g,'');
         });
 

@@ -15,6 +15,19 @@
                                         <div class="card-header row card-round-header"><b>Dirección de Envio</b></div>
                                         <div class="card-body card-body-yellow row card-round-footer">
                                             <div class="col-md-12">
+                                                @if($errors->any())
+                                                    <div class="row">   
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <div class="alert alert-danger col-12" role="alert">
+                                                                    {{$errors->first()}}<br>
+                                                                    Por favor verifique o cambie el municipio de destino<br>
+                                                                    O intente mas tarde la disponibilidad del destino. 
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endif
                                                 <div class="row">
                                                             <div class="col-md-8">
                                                                 <div class="row">

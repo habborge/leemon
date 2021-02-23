@@ -54,8 +54,11 @@ class RegisterController extends Controller
         //dd($data);
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
+            'lastname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'birthday' => ['required'],
+            'phone' => ['required', 'numeric'],
             'recaptcha_token' => ['required', new   ReCaptchaRule($data['recaptcha_token'])]
         ]);
     }
@@ -69,7 +72,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $user = User::create([
-            'name' => $data['name'],
+            'name' => $data['name']." ".$data['lastname'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'code_verify' => null,
@@ -81,7 +84,8 @@ class RegisterController extends Controller
         $member = Member::create([
             'user_id' => $user->id, 
             'email' => $data['email'], 
-            'fullname' => $data['name'],
+            'firstname' => $data['name'],
+            'lastname' => $data['lastname'],
             'birthday' => $newDate,
             'phone' => $data['phone'],
             'address' => '', 
@@ -89,7 +93,7 @@ class RegisterController extends Controller
             'city' => '', 
             'dpt' => '', 
             'country' => '', 
-            'n_doc' => '',
+            'n_doc' => '1234567890',
             'status' => 1
         ]);
 

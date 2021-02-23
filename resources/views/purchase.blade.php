@@ -1,7 +1,8 @@
 @extends('layouts.app')
 @section('custom-css')
     <link rel="stylesheet" href="/css/jquery-ui.min.css">
-    <link rel="stylesheet" href="/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="/css/select2.min.css">
+    
 @endsection
 @section('content')
 <div class="tabs">
@@ -9,12 +10,14 @@
         @if ($infosaved == 0)
             <form class="needs-validation" action="{{ route('saveinfo') }}" method="POST" name="formaut" id="formRegisterwithdrawal" novalidate>
                 @csrf
+                <input type="hidden" name="recaptcha_token" id="recaptcha_token">
                 <div class="card card-rounded">
                     <div class="card-header col-md-12  card-round-header">
                         <div class="">
                             Dirección de Envío
                         </div>
                     </div>
+                    
                     <div class="card-body card-body-yellow card-round-footer">
                         <div class="row">
                             <div class="col-md-12">
@@ -37,10 +40,9 @@
                                     
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-5 mb-3">
-                                        <label class="text-register" for="country">País</label>
-                                        <select class="custom-select d-block w-100 @if ($errors-> has('country'))  is-invalid @endif" name="country" id="country" required>
-                                            <option value="">Escojer...</option>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="text-register " for="country">País</label>
+                                        <select class="custom-select d-block w-100 @if ($errors-> has('country'))  is-invalid @endif js-example-basic-single" name="country" id="country" required>
                                             <option value="47" @if (!empty($completeRequest->country)) @if (($completeRequest->country) == '57') selected @endif @endif>Colombia</option>
                                         </select>
                                         <div class="invalid-feedback">
@@ -52,19 +54,22 @@
                                             <img src="/img/preloader.gif" id="img_loading" alt="">
                                         </div>
                                         <label class="text-register" for="dpt">Departamento</label>
-                                        <select class="custom-select d-block w-100 @if ($errors-> has('dpt'))  is-invalid @endif" name="dpt" id="dpt" disabled required>
-                                            <option value="">Escojer...</option>
+                                        <select class="custom-select d-block w-100 @if ($errors-> has('dpt'))  is-invalid @endif js-example-basic-single" name="dpt" id="dpt" required>
+                                            <option class="color" value=""><span class="">Seleccione el Departamento</span></option>
+                                                @foreach ($dpts as $dpto)
+                                                    <option value="{{ $dpto->code }}">{{ $dpto->department }}</option>
+                                                @endforeach
                                             {{-- <option value="atlantico"  @if (!empty($completeRequest->dpt)) @if (($completeRequest->dpt) == 'atlantico') selected @endif @endif>Atlántico</option> --}}
                                         </select>
                                         <div class="invalid-feedback">
                                             Seleccione un valido departamento.
                                         </div>
                                     </div>
-                                    <div class="col-md-3 mb-3">
+                                    <div class="col-md-4 mb-3">
                                         <label class="text-register" for="city">Ciudad</label>
                                         {{-- <input type="text" class="form-control @if ($errors-> has('city'))  is-invalid @endif" name="city" id="city" value="@if(!empty($completeRequest->city)){{$completeRequest->city}}@endif" placeholder="" required> --}}
-                                        <select class="custom-select d-block w-100 @if ($errors-> has('city'))  is-invalid @endif" name="city" id="city" disabled required>
-                                            <option value="">Escojer...</option>
+                                        <select class="custom-select d-block w-100 @if ($errors-> has('city'))  is-invalid @endif js-example-basic-single" name="city" id="city" disabled required>
+                                            
                                             {{-- <option value="atlantico"  @if (!empty($completeRequest->dpt)) @if (($completeRequest->dpt) == 'atlantico') selected @endif @endif>Atlántico</option> --}}
                                         </select>
                                         <div class="invalid-feedback">
@@ -103,11 +108,11 @@
                                 <div class="row mb-3">
                                     
                                         <div class="col-md-3">
-                                            <select name="address_1" id="address_1" class="selectpicker form-control @if ($errors->has('address_1'))  is-invalid @endif" data-live-search="true">
+                                            <select name="address_1" id="address_1" class="form-control @if ($errors->has('address_1'))  is-invalid @endif">
                                                 @if(!empty($completeRequest->address_1))
                                             <option value="{{ $completeRequest->address_1 }}">{{$completeRequest->address_1}}</option>
                                                 @endif
-                                                <option value="">Ej: Calle</option>
+                                                <option class="one" value="">Ej: Calle</option>
                                                 <option value="Clle">Calle</option>
                                                 <option value="Kr">Carrera</option>
                                                 <option value="Dg">Diagonal</option>
@@ -165,7 +170,7 @@
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div class="row">
-                                                    <input type="text" class="form-control @if ($errors-> has('address_4'))  is-invalid @endif" name="address_4" id="address_4" value="@if(!empty($completeRequest->address_4)){{$completeRequest->address_4}}@endif" placeholder="ej: 34" required>
+                                                    <input type="text" class="form-control @if ($errors-> has('address_5'))  is-invalid @endif" name="address_5" id="address_5" value="@if(!empty($completeRequest->address_5)){{$completeRequest->address_5}}@endif" placeholder="ej: 34" required>
                                                     <div class="invalid-feedback">
                                                         Ingrese su dirección de Envío.
                                                     </div>
@@ -184,8 +189,8 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3">
-                                        <label class="text-register" for="address_d">Observaciónes</label>
-                                        <input type="text" class="form-control" name="address_d" id="address_d" value="@if(!empty($completeRequest->address_d)){{$completeRequest->address_d}}@endif" placeholder="Ej: No hay porteria, por favor llamar a celular" required>
+                                        <label class="text-register" for="obs">Observaciónes</label>
+                                        <input type="text" class="form-control" name="obs" id="obs" value="@if(!empty($completeRequest->obs)){{$completeRequest->obs}}@endif" placeholder="Ej: No hay porteria, por favor llamar a celular" required>
                                         <div class="invalid-feedback">
                                             Ingrese información adicional de la dirección.
                                         </div>
@@ -379,16 +384,19 @@
 </div>
 @endsection
 @section('custom-js')
-
+<script src="https://www.google.com/recaptcha/api.js?render={{ env('RE_KEY') }}"></script>
+<script>
+    grecaptcha.ready(function() {
+    grecaptcha.execute('{{ env('RE_KEY') }}')    .then(function(token) {
+    document.getElementById("recaptcha_token").value = token;
+    }); });
+</script>
 <script src="/js/jquery-ui.min.js" defer></script>
-<script src="/js/bootstrap-select.min.js"></script>
+<script src="/js/select2.min.js" defer></script>
 <script type="text/javascript">
     
     $(document).ready(function(){
-        $("#birthday").datepicker({
-            changeMonth: true,
-            changeYear: true
-        }); 
+        
         
         $('#firstname').on('input', function () { 
             this.value = this.value.replace(/[^ a-záéíóúüñA-Z]/g,'');
@@ -429,10 +437,10 @@
             
         });
 
-        $('#country_e').change(function(){
-            var countryId = $(this).val();
-            bringDpts(countryId, "#dpt_e", 3);
-        });
+        // $('#country_e').change(function(){
+        //     var countryId = $(this).val();
+        //     bringDpts(countryId, "#dpt_e", 3);
+        // });
 
         $('#dpt').change(function(){
             var dptId = $(this).val();
@@ -444,44 +452,49 @@
             bringCities(dptId, "#city_e", 3);
         });
 
+        $('.js-example-basic-single').select2({
+            theme: "classic",
+            placeholder: "Selecciona una opción",
+        });
+        
     });
 
-    function bringDpts(id, se, loading){
+    // function bringDpts(id, se, loading){
         
-        var countryId = id;
+    //     var countryId = id;
             
-            $.ajax({
-                type:'POST',   
-                dataType:'json',      
-                url:'/region/dpt',
-                data: {'id':countryId},
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                beforeSend: function(x){
-                    $('#loading_web'+loading).show();
-                },
-                success:function(data){
-                    if(data.status==200){
-                        $('#loading_web'+loading).hide(); 
+    //         $.ajax({
+    //             type:'POST',   
+    //             dataType:'json',      
+    //             url:'/region/dpt',
+    //             data: {'id':countryId},
+    //             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+    //             beforeSend: function(x){
+    //                 $('#loading_web'+loading).show();
+    //             },
+    //             success:function(data){
+    //                 if(data.status==200){
+    //                     $('#loading_web'+loading).hide(); 
 
-                        var dptsList = '<option value="">Seleccione el Departamento</option>'
-                        for (var i=0; i<data.dpts.length;i++){
-                            dptsList +='<option value="'+data.dpts[i].code+'">'+data.dpts[i].department+'</option>';
-                        }
-                        $(se).removeAttr('disabled');    
-                        $(se).html(dptsList);
+    //                     var dptsList = '<option value="">Seleccione el Departamento</option>'
+    //                     for (var i=0; i<data.dpts.length;i++){
+    //                         dptsList +='<option value="'+data.dpts[i].code+'">'+data.dpts[i].department+'</option>';
+    //                     }
+    //                     $(se).removeAttr('disabled');    
+    //                     $(se).html(dptsList);
                         
-                    }else if(data.status==403){
-                        $('#loading_web' + loading).hide(); 
-                        $.each(data.errors, function( index, value ) {         
-                            toastr.error(value, 'Error!', {  timeOut: 5e3});
-                        });  
-                    }else{ 
-                        $('#loading_web' + loading).hide(); 
-                        toastr.error(data.message, "Error!");      
-                    }  
-                }
-            });
-    }
+    //                 }else if(data.status==403){
+    //                     $('#loading_web' + loading).hide(); 
+    //                     $.each(data.errors, function( index, value ) {         
+    //                         toastr.error(value, 'Error!', {  timeOut: 5e3});
+    //                     });  
+    //                 }else{ 
+    //                     $('#loading_web' + loading).hide(); 
+    //                     toastr.error(data.message, "Error!");      
+    //                 }  
+    //             }
+    //         });
+    // }
 
     function bringCities(id, se, loading){
         
@@ -520,5 +533,6 @@
                 }
             });
     }
+    
 </script>
 @endsection

@@ -19,6 +19,7 @@ use File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use SoapClient;
+use App\Department;
 
 class PurchaseControler extends Controller
 {
@@ -30,31 +31,27 @@ class PurchaseControler extends Controller
     private function verifyInsert($request){
         
         $rules = [
-            'firstname' => 'required|string',
-            'lastname' => 'required|string',
-            
             'address_1' => 'required',
             'address_2' => 'required',
             'address_3' => 'required',
             'address_4' => 'required',
-            'birthday' => 'required',
+            
             'city'  => 'required', 
             'dpt' => 'required',  
             'country' => 'required',  
-            'n_doc' => 'required',
         ];
 
-        if (!isset($request->sameaddress)){
+        // if (!isset($request->sameaddress)){
             
-            $rules['contact'] = 'required';
-            $rules['address_1b'] = 'required';
-            $rules['address_2b'] = 'required';
-            $rules['address_3b'] = 'required';
-            $rules['address_4b'] = 'required';
-            $rules['city_e'] = 'required';
-            $rules['dpt_e'] = 'required'; 
-            $rules['country_e'] = 'required'; 
-        }
+        //     $rules['contact'] = 'required';
+        //     $rules['address_1b'] = 'required';
+        //     $rules['address_2b'] = 'required';
+        //     $rules['address_3b'] = 'required';
+        //     $rules['address_4b'] = 'required';
+        //     $rules['city_e'] = 'required';
+        //     $rules['dpt_e'] = 'required'; 
+        //     $rules['country_e'] = 'required'; 
+        // }
         
         return $p = Validator::make($request->all(), $rules);
     }
@@ -62,19 +59,23 @@ class PurchaseControler extends Controller
     //--------------------------------------------------------------------------------------------------------------    
     // Verify auth , then allow to register billing information
     //--------------------------------------------------------------------------------------------------------------
-    public function purchase(){
+    public function verifyAddress(){
         $infosaved = 0;
         $id = Auth::user()->id;
        
-        $info = Member::where('user_id', $id)->first();
+        $info = Address::where('user_id', $id);
 
-        if ($info){
+        if ($info->exists()){
             $infosaved = 1;
         }
-        
+
+        $country_id = 47;
+        $dpts = Department::where('country_id', $country_id)->orderBy('department', 'ASC')->get();
+
         return view('purchase', [
             'infosaved' => $infosaved,
-            'info' => $info
+            //'info' => $info->get(),
+            'dpts' => $dpts
         ]);
     }
 
@@ -101,16 +102,39 @@ class PurchaseControler extends Controller
                     'completeRequest' => $request,
                     'infosaved' => $infosaved,
                     'info' => $info,
-                    'checkbox' => $request->sameaddress
+                    // 'checkbox' => $request->sameaddress
                 ])->withErrors($p);
             }else{
                 //$res = $this->luhnCheck($request->cc_number);
                 
-                $user_info = New Member();
-                $rs = $user_info->set($request);
+                // $user_info = New Member();
+                // $rs = $user_info->set($request);
+                
+                if($info){
+                    
+                    $delivery_ad = $request->address_1."~".$request->address_2."~".$request->address_3."~".$request->address_4;
+                    $details = $request->address_d;
+                    $coutry = $request->country;
+                    $dpt = $request->dpt;
+                    $city = $request->city;
+                    $obs= $request->obs;
 
-                if($rs){
-                    return redirect('cart')->with('success', 'Usuario creado de manera Exitosa!!');
+                    $address_info = New Address();
+                    $address_info->user_id = Auth::user()->id;
+                    $address_info->address = $delivery_ad;
+                    $address_info->country = $coutry;
+                    $address_info->dpt = $dpt;
+                    $address_info->phone = $info->phone;
+                    $address_info->contact = $info->firstname." ".$info->lastname;
+                    $address_info->city = $city;
+                    $address_info->zipcode = $obs;
+                    $address_info->details = $details;
+                    $address_info->default = 1;
+                    $address_info->save();
+
+                    
+                    return redirect('methods')->with('success', 'Dirección Agregada de amnera exitosa!!');
+
                 }else{
                     //return back()->with('notice', 'Un error ha ocurrido!!');
 
@@ -119,7 +143,7 @@ class PurchaseControler extends Controller
                         'completeRequest' => $request,
                         'infosaved' => $infosaved,
                         'info' => $info,
-                        'checkbox' => $request->sameaddress,
+                        //'checkbox' => $request->sameaddress,
                         
                     ])->withErrors($error);    
                 }
@@ -220,12 +244,24 @@ class PurchaseControler extends Controller
 
                     $soap = new SoapClient($wsdl);
                     $re = $soap->__soapCall("ConsultarLiquidacion", array($parameters));
+                    //dd($re->consultarliquidacionResult);
 
                     if ($re->consultarliquidacionResult){
-                        if ($re->consultarliquidacionResult->idliquidacion){
-                            session()->put('tcc', $re);  
+                        if (!empty($re->consultarliquidacionResult->idliquidacion)){
+                            session()->put('tcc', $re); 
+                            $message = "";
+                            return view('method', [
+                                'answer' => $answer,
+                                'cardexist' => $cardExist,
+                                'member_info' => $member_info,
+                                'address' => $address,
+                                'card' => $card,
+                                'message' => $message
+                            ]);
                         }else{
-                            $re->consultarliquidacionResult->respuesta;
+                            $message = $re->consultarliquidacionResult->respuesta->mensaje;
+
+                            return redirect()->back()->withErrors([$message]);
                         }
                     }
                     
@@ -247,13 +283,7 @@ class PurchaseControler extends Controller
                         
                     //dd($re, $weight, $volweight, $re->consultarliquidacionResult->total->totaldespacho);
 
-                    return view('method', [
-                        'answer' => $answer,
-                        'cardexist' => $cardExist,
-                        'member_info' => $member_info,
-                        'address' => $address,
-                        'card' => $card
-                    ]);
+                    
                 }else{
                 
                 }

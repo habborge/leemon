@@ -51,6 +51,8 @@ class ProductController extends Controller
             $address = Address::where('user_id', Auth::user()->id);
             if($address->doesntExist()){
                 return redirect('/secure/delivery/address/verify');
+            }else{
+                
             }
         }
         

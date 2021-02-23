@@ -15,7 +15,7 @@
                                     <div class="row">
                                                 <div class="col-md-12 text-center">
                                                     <div class="">
-                                                        <p><h5>Please enter the 5-digit verification code we sent via SMS:</h5><h6> (we want to make sure it's you before we contact our movers)</h6></p>
+                                                        <p><h5>Por favor escriba los 7-digitos del código verificación enviados al email registrado en leemon:</h5><h6> (Queremos asegurarnos de que eres tu antes de seguir navegando en Leemon)</h6></p>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
