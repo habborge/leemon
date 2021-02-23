@@ -40,39 +40,58 @@ class ProductController extends Controller
     
     public function cart()
     {
-        $answer = 0;
-        $member_info = null;
-        $card = null;
-        $address = null;
 
-        if (Auth::user()){
-            $id = Auth::user()->id;
-            // $query = Member::select('members.email as email', 'members.firstname','members.lastname','members.address', 'members.delivery_address', 'members.city', 'members.dpt', 'members.country', 'members.n_doc', 'c.fullname','c.cardnumber', 'c.last4num', 'c.expiration', 'c.cvv')
-            // ->join('creditcards as c', 'members.user_id', '=', 'c.user_id' )
-            // ->where('members.user_id', $id)->get();
+        if(Auth::user()){
+            $emailVerified = Auth::user()->email_verified;
 
-            //$card = Creditcard::where('user_id', $id)->where('default', 1)->get();
-            $address = Address::where('user_id', $id)->where('default', 1)
-            ->join('countries as c', 'c.country_master_id', 'addresses.country')
-            ->join('departments as d', 'd.code', 'addresses.dpt')
-            ->join('cost_tcc as ct', 'ct.id', 'addresses.city')
-            ->get();
-            //dd($address);
-            // (($card->count() >0) and ($address->count() >0))
-            if ($address->count() >0){
-                $answer = 1;
-                //$member_info = $query;
+            if($emailVerified == 0){
+                return redirect('/register/auth/email/verify');
             }
 
+            $address = Address::where('user_id', Auth::user()->id);
+            if($address->doesntExist()){
+                return redirect('/secure/delivery/address/verify');
+            }
         }
         
+
+        if (session('cart')){
+            $answer = 0;
+            $member_info = null;
+            $card = null;
+            $address = null;
+
+            if (Auth::user()){
+                $id = Auth::user()->id;
+                // $query = Member::select('members.email as email', 'members.firstname','members.lastname','members.address', 'members.delivery_address', 'members.city', 'members.dpt', 'members.country', 'members.n_doc', 'c.fullname','c.cardnumber', 'c.last4num', 'c.expiration', 'c.cvv')
+                // ->join('creditcards as c', 'members.user_id', '=', 'c.user_id' )
+                // ->where('members.user_id', $id)->get();
+
+                //$card = Creditcard::where('user_id', $id)->where('default', 1)->get();
+                $address = Address::where('user_id', $id)->where('default', 1)
+                ->join('countries as c', 'c.country_master_id', 'addresses.country')
+                ->join('departments as d', 'd.code', 'addresses.dpt')
+                ->join('cost_tcc as ct', 'ct.id', 'addresses.city')
+                ->get();
+                //dd($address);
+                // (($card->count() >0) and ($address->count() >0))
+                if ($address->count() >0){
+                    $answer = 1;
+                    //$member_info = $query;
+                }
+
+            }
         
-        return view('cart', [
-            'answer' => $answer,
-            'member_info' => $member_info,
-            // 'card' => $card,
-            'address' => $address
-        ]);
+        
+            return view('cart', [
+                'answer' => $answer,
+                'member_info' => $member_info,
+                // 'card' => $card,
+                'address' => $address
+            ]);
+        }else{
+            return redirect('/home');
+        }
     }
 
     //--------------------------------------------------------------------------------------------------------------

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('custom-css')
     <link rel="stylesheet" href="/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-select.min.css">
 @endsection
 @section('content')
 <div class="tabs">
@@ -11,146 +12,29 @@
                 <div class="card card-rounded">
                     <div class="card-header col-md-12  card-round-header">
                         <div class="">
-                            Formulario de Pago
+                            Dirección de Envío
                         </div>
                     </div>
                     <div class="card-body card-body-yellow card-round-footer">
                         <div class="row">
                             <div class="col-md-12">
                                 @if ($errors->any()) 
-                                <div class="alert alert-danger" role="alert">
-                                    Revise el formulario que contine errores!! <br> 
-                                    @if ($errors->has('notice'))
-                                        {{ $errors->first('notice') }}
-                                    @endif
-                                </div>
-                            @endif
+                                    <div class="alert alert-warnig" role="alert">
+                                        Revise el formulario que contine errores!! <br> 
+                                        @if ($errors->has('notice'))
+                                            {{ $errors->first('notice') }}
+                                        @endif
+                                    </div>
+                                @endif
                             </div>
                             <div class="col-md-2"></div>
                             <div class="col-md-8 order-md-1">
-                                <h4 class="mb-3">Información de Personal</h4>
-                                <hr class="mb-4">
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="text-register" for="firstname">Nombres</label>
-                                        <input type="text" class="form-control @if ($errors-> has('firstname'))  is-invalid @endif" name="firstname" id="firstname" placeholder="Ej: Nombres" value="@if(!empty($completeRequest->firstname)){{$completeRequest->firstname}}@endif" required>
-                                        <div class="invalid-feedback">
-                                            El campo Nombre es requerido. 
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="text-register" for="lastname">Apellidos</label>
-                                        <input type="text" class="form-control @if ($errors-> has('lastname'))  is-invalid @endif" name="lastname" id="lastname" placeholder="Ej: Apellidos" value="@if(!empty($completeRequest->lastname)){{$completeRequest->lastname}}@endif" required>
-                                        <div class="invalid-feedback">
-                                            El campo Apellidos es requerido.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4 mb-3">
-                                        <label class="text-register" for="birthday">Fecha de Nacimiento</label>
-                                        <input type="text" class="form-control bg-white @if ($errors-> has('birthday'))  is-invalid @endif" name="birthday" id="birthday" placeholder="Click para escojer fecha" value="@if(!empty($completeRequest->birthday)){{$completeRequest->birthday}}@endif" readonly>
-                                        <div class="invalid-feedback">
-                                            La fecha de nacimiento es requerida.
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 mb-3">
-                                        <label class="text-register" for="n_doc">Número Cedula</label>
-                                        <input type="text" class="form-control @if ($errors-> has('n_doc'))  is-invalid @endif" name="n_doc" id="n_doc" placeholder="Ej: 4893848349" value="@if(!empty($completeRequest->n_doc)){{$completeRequest->n_doc}}@endif" required>
-                                        <div class="invalid-feedback">
-                                            El número de Indentificación es requerido.
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 mb-3">
-                                        <label class="text-register" for="phone">Teléfono</label>
-                                        <input type="text" class="form-control @if ($errors-> has('phone'))  is-invalid @endif" name="phone" id="phone" placeholder="Ej: 4893848349" value="@if(!empty($completeRequest->phone)){{$completeRequest->phone}}@endif" required>
-                                        <div class="invalid-feedback">
-                                            El número de Teléfono es requerido.
-                                        </div>
-                                    </div>
-                                </div>
                                 
-                                <hr>
-                                <h4 class="mb-3">Información de Facturación</h4>
-                                <hr class="mb-4">
-                                <div class="row mb-3">
-                                        <div class="col-md-12">
-                                            <div class="alert alert-danger" role="alert">
-                                                <p class="mb-0">
-                                                    <b>Verifica que la dirección suministrada sea la correcta</b><br>
-                                                    Si has suministrado mal la información de tu dirección, posiblemente tu articulo no podra ser entregado.
-                                                </p> 
-                                            </div>
-                                            <label class="text-register" for="address">Dirección de Facturación</label>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <select name="address_1" id="address_1" class="form-control @if ($errors->has('address_1'))  is-invalid @endif">
-                                                @if(!empty($completeRequest->address_1))
-                                            <option value="{{ $completeRequest->address_1 }}">{{$completeRequest->address_1}}</option>
-                                                @endif
-                                                <option value="">Escoja...</option>
-                                                <option value="Clle">Calle</option>
-                                                <option value="Kr">Carrera</option>
-                                                <option value="Dg">Diagonal</option>
-                                                <option value="Tr">Transversal</option>
-                                                <option value="Av">Avenida</option>
-                                                <option value="Mz">Manzana</option>
-                                                <option value="Lt">Lote</option>
-                                                <option value="Cs">Casa</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-4">
-                                            
-                                                <input type="text" class="form-control @if ($errors-> has('address_2'))  is-invalid @endif" name="address_2" id="address_2" value="@if(!empty($completeRequest->address_2)){{$completeRequest->address_2}}@endif" placeholder="ej: 12A sur" required>
-                                                <div class="invalid-feedback">
-                                                    Ingrese su dirección de facturación.
-                                                </div>
-                                            
-                                        </div>
-                                        <div class="col-md-2">
-                                            
-                                            <select name="address_3" id="address_3" class="form-control @if ($errors->has('address_3'))  is-invalid @endif">
-                                                @if(!empty($completeRequest->address_3))
-                                                    <option value="{{ $completeRequest->address_3 }}">{{$completeRequest->address_3}}</option>
-                                                @endif
-                                                    <option value="">Escoja...</option>
-                                                <option value="no">No</option>
-                                                <option value="Clle">Calle</option>
-                                                <option value="Kr">Carrera</option>
-                                                <option value="Dg">Diagonal</option>
-                                                <option value="Tr">Transversal</option>
-                                                <option value="Av">Avenida</option>
-                                                <option value="Mz">Manzana</option>
-                                                <option value="Lt">Lote</option>
-                                                <option value="Cs">Casa</option>
-                                            </select>
-                                        
+                                <div class="col-md-12">
+                                    <div class="row mb-5">
+                                        <h2>Dirección de Envío</h2>
                                     </div>
-                                    <div class="col-md-4">
-                                        
-                                            <input type="text" class="form-control @if ($errors-> has('address_4'))  is-invalid @endif" name="address_4" id="address_4" value="@if(!empty($completeRequest->address_4)){{$completeRequest->address_4}}@endif" placeholder="ej: 12 - 34" required>
-                                            <div class="invalid-feedback">
-                                                Ingrese su dirección de facturación.
-                                            </div>
-                                        
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-8 mb-3">
-                                        <label class="text-register" for="address_d">Información adicional de la dirección</label>
-                                        <input type="text" class="form-control" name="address_d" id="address_d" value="@if(!empty($completeRequest->address_d)){{$completeRequest->address_d}}@endif" placeholder="Ej: casa, Apto, Edificio" required>
-                                        <div class="invalid-feedback">
-                                            Ingrese información adicional de la dirección.
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 mb-3">
-                                        <label class="text-register" for="zipcode">Zipcode (Opcional)</label>
-                                        <input type="text" class="form-control" name="zipcode" id="zipcode" value="@if(!empty($completeRequest->zipcode)){{$completeRequest->zipcode}}@endif" placeholder="Ej: 080001">
-                                        <div class="invalid-feedback">
-                                            Ingrese el Codigo Zip de su zona.
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5 mb-3">
@@ -189,28 +73,161 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    {{-- <div class="col-md-4 mb-3">
+                                        <label class="text-register" for="birthday">Fecha de Nacimiento</label>
+                                        <input type="text" class="form-control bg-white @if ($errors-> has('birthday'))  is-invalid @endif" name="birthday" id="birthday" placeholder="Click para escojer fecha" value="@if(!empty($completeRequest->birthday)){{$completeRequest->birthday}}@endif" readonly>
+                                        <div class="invalid-feedback">
+                                            La fecha de nacimiento es requerida.
+                                        </div>
+                                    </div> --}}
+                                    {{-- <div class="col-md-4 mb-3">
+                                        <label class="text-register" for="n_doc">Número Cedula</label>
+                                        <input type="text" class="form-control @if ($errors-> has('n_doc'))  is-invalid @endif" name="n_doc" id="n_doc" placeholder="Ej: 4893848349" value="@if(!empty($completeRequest->n_doc)){{$completeRequest->n_doc}}@endif" required>
+                                        <div class="invalid-feedback">
+                                            El número de Indentificación es requerido.
+                                        </div>
+                                    </div> --}}
+                                    {{-- <div class="col-md-4 mb-3">
+                                        <label class="text-register" for="phone">Teléfono</label>
+                                        <input type="text" class="form-control @if ($errors-> has('phone'))  is-invalid @endif" name="phone" id="phone" placeholder="Ej: 4893848349" value="@if(!empty($completeRequest->phone)){{$completeRequest->phone}}@endif" required>
+                                        <div class="invalid-feedback">
+                                            El número de Teléfono es requerido.
+                                        </div>
+                                    </div> --}}
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <label for="">Ej: Calle 12A sur # 12 -34</label>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    
+                                        <div class="col-md-3">
+                                            <select name="address_1" id="address_1" class="selectpicker form-control @if ($errors->has('address_1'))  is-invalid @endif" data-live-search="true">
+                                                @if(!empty($completeRequest->address_1))
+                                            <option value="{{ $completeRequest->address_1 }}">{{$completeRequest->address_1}}</option>
+                                                @endif
+                                                <option value="">Ej: Calle</option>
+                                                <option value="Clle">Calle</option>
+                                                <option value="Kr">Carrera</option>
+                                                <option value="Dg">Diagonal</option>
+                                                <option value="Tr">Transversal</option>
+                                                <option value="Av">Avenida</option>
+                                                <option value="Mz">Manzana</option>
+                                                <option value="Lt">Lote</option>
+                                                <option value="Cs">Casa</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            
+                                                <input type="text" class="form-control @if ($errors-> has('address_2'))  is-invalid @endif" name="address_2" id="address_2" value="@if(!empty($completeRequest->address_2)){{$completeRequest->address_2}}@endif" placeholder="ej: 12A sur" required>
+                                                <div class="invalid-feedback">
+                                                    Ingrese su dirección de Envío.
+                                                </div>
+                                            
+                                        </div>
+                                        
+                                        <div class="col-md-3">
+                                            
+                                            <select name="address_3" id="address_3" class="form-control @if ($errors->has('address_3'))  is-invalid @endif">
+                                                @if(!empty($completeRequest->address_3))
+                                                    <option value="{{ $completeRequest->address_3 }}">{{$completeRequest->address_3}}</option>
+                                                @endif
+                                                    <option value="">Ej: #</option>
+                                                <option value="no">#</option>
+                                                <option value="Clle">Calle</option>
+                                                <option value="Kr">Carrera</option>
+                                                <option value="Dg">Diagonal</option>
+                                                <option value="Tr">Transversal</option>
+                                                <option value="Av">Avenida</option>
+                                                <option value="Mz">Manzana</option>
+                                                <option value="Lt">Lote</option>
+                                                <option value="Cs">Casa</option>
+                                            </select>
+                                        
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                        
+                                                        <div class="row">
+                                                            <input type="text" class="form-control @if ($errors-> has('address_4'))  is-invalid @endif" name="address_4" id="address_4" value="@if(!empty($completeRequest->address_4)){{$completeRequest->address_4}}@endif" placeholder="ej: 12" required>
+                                                        <div class="invalid-feedback">
+                                                            Ingrese su dirección de Envío.
+                                                        </div>
+                                                        </div>
+                                                    
+                                                </div >
+                                                <div class="col-md-1">
+                                                    -
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="row">
+                                                    <input type="text" class="form-control @if ($errors-> has('address_4'))  is-invalid @endif" name="address_4" id="address_4" value="@if(!empty($completeRequest->address_4)){{$completeRequest->address_4}}@endif" placeholder="ej: 34" required>
+                                                    <div class="invalid-feedback">
+                                                        Ingrese su dirección de Envío.
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                    <div class="col-md-12 mb-3 mt-2">
+                                        
+                                        <input type="text" class="form-control" name="address_d" id="address_d" value="@if(!empty($completeRequest->address_d)){{$completeRequest->address_d}}@endif" placeholder="Ej: casa 1, Apto 101, Edificio ..." required>
+                                        <div class="invalid-feedback">
+                                            Ingrese información de dirección.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <label class="text-register" for="address_d">Observaciónes</label>
+                                        <input type="text" class="form-control" name="address_d" id="address_d" value="@if(!empty($completeRequest->address_d)){{$completeRequest->address_d}}@endif" placeholder="Ej: No hay porteria, por favor llamar a celular" required>
+                                        <div class="invalid-feedback">
+                                            Ingrese información adicional de la dirección.
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                {{-- <div class="row">
+                                    
+                                    <div class="col-md-4 mb-3">
+                                        <label class="text-register" for="zipcode">Zipcode (Opcional)</label>
+                                        <input type="text" class="form-control" name="zipcode" id="zipcode" value="@if(!empty($completeRequest->zipcode)){{$completeRequest->zipcode}}@endif" placeholder="Ej: 080001">
+                                        <div class="invalid-feedback">
+                                            Ingrese el Codigo Zip de su zona.
+                                        </div>
+                                    </div>
+                                </div> --}}
+                                
+                                {{-- <div class="row">
                                     <div class="col-md-12">
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" name="sameaddress" id="sameaddress" @if (isset($checkbox)) checked @endif>
-                                            <label class="custom-control-label distancia text-register" for="sameaddress">Dirección de Facturación es la misma de la de Envío</label>
+                                            <label class="custom-control-label distancia text-register" for="sameaddress">Dirección de Envío es la misma de la de Envío</label>
                                         </div>
                                     </div>
+                               </div> --}}
+                               <div class="row">
+                                <div class="col-md-12 mt-3">
+                                    <div class="alert alert-warning" role="alert">
+                                        <p class="mb-0">
+                                            <b>* No olvides siempre verificar que la dirección suministrada sea la correcta.</b><br>
+                                            {{-- Si has suministrado mal la información de tu dirección, posiblemente tu articulo no podra ser entregado. --}}
+                                        </p> 
+                                    </div>
                                </div>
+                                
+                            </div>
                                
-                               <div id="delivery_a" @if (isset($checkbox)) style="display: none" @endif>
-                                    <hr>
-                                    <h4 class="mb-3">Información de Envío</h4>
+                                {{-- <div id="delivery_a" @if (isset($checkbox)) style="display: none" @endif>
+                                    
                                     <hr class="mb-4">
                                     <div class="row mb-3">
-                                        <div class="col-md-12">
-                                            <div class="alert alert-danger" role="alert">
-                                                <p class="mb-0">
-                                                    <b>Verifica que la dirección suministrada sea la correcta</b><br>
-                                                    Si has suministrado mal la información de tu dirección, posiblemente tu articulo no podra ser entregado.
-                                                </p> 
-                                            </div>
-                                            
-                                        </div>
+                                        
                                         <div class="col-md-12">
                                             <label class="text-register" for="contact">Nombre completo</label>
                                             <input type="text" class="form-control @if ($errors-> has('contact'))  is-invalid @endif" name="contact" id="contact" placeholder="Ej: Nombre del destinatario" value="@if(!empty($completeRequest->contact)){{$completeRequest->contact}}@endif" required>
@@ -275,6 +292,15 @@
                                                 </div>
                                             
                                         </div>
+                                        <div class="col-md-12 mt-3">
+                                            <div class="alert alert-warning" role="alert">
+                                                <p class="mb-0">
+                                                    <b>* No olvides siempre verificar que la dirección suministrada sea la correcta.</b><br>
+                                                     Si has suministrado mal la información de tu dirección, posiblemente tu articulo no podra ser entregado. 
+                                                </p> 
+                                            </div>
+                                            
+                                        </div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-8" >
@@ -308,7 +334,7 @@
                                                     <label class="text-register" for="dpt_e">Departamento</label>
                                                     <select class="custom-select d-block w-100 @if ($errors-> has('dpt_e'))  is-invalid @endif" name="dpt_e" id="dpt_e" disabled required>
                                                         <option value="">Escojer...</option>
-                                                        {{-- <option value="atlantico"  @if (!empty($completeRequest->dpt_e)) @if (($completeRequest->dpt_e) == 'atlantico') selected @endif @endif>Atlántico</option> --}}
+                                                        <option value="atlantico"  @if (!empty($completeRequest->dpt_e)) @if (($completeRequest->dpt_e) == 'atlantico') selected @endif @endif>Atlántico</option> 
                                                     </select>
                                                     <div class="invalid-feedback">
                                                         Seleccione un valido departamento.
@@ -316,7 +342,7 @@
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label class="text-register" for="city_e">Ciudad</label>
-                                                    {{-- <input type="text" class="form-control @if ($errors-> has('city_e'))  is-invalid @endif" name="city_e" id="city_e" value="@if(!empty($completeRequest->city_e)){{$completeRequest->city_e}}@endif" placeholder="" required> --}}
+                                                    <input type="text" class="form-control @if ($errors-> has('city_e'))  is-invalid @endif" name="city_e" id="city_e" value="@if(!empty($completeRequest->city_e)){{$completeRequest->city_e}}@endif" placeholder="" required> 
                                                     <select class="custom-select d-block w-100 @if ($errors-> has('city_e'))  is-invalid @endif" name="city_e" id="city_e" disabled required>
                                                         <option value="">Escojer...</option>
                                                     </select>
@@ -329,7 +355,7 @@
                                         
                                     </div>
                                     
-                                </div>
+                                </div> --}}
                                 <hr class="mb-4">
                                 <div class="conatiner">
                                     <div class="row">
@@ -353,7 +379,9 @@
 </div>
 @endsection
 @section('custom-js')
+
 <script src="/js/jquery-ui.min.js" defer></script>
+<script src="/js/bootstrap-select.min.js"></script>
 <script type="text/javascript">
     
     $(document).ready(function(){

@@ -1,11 +1,13 @@
 @extends('layouts.app')
-
+@section('custom-css')
+    <link rel="stylesheet" href="/css/jquery-ui.min.css">
+@endsection
 @section('content')
 <div class="container litlemargin">
     <div class="row justify-content-center">
         <div class="col-md-4">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header">{{ __('Registro') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
@@ -13,11 +15,13 @@
                         <input type="hidden" name="recaptcha_token" id="recaptcha_token">
                         <div class="form-group row">
                             @if($errors->has("recaptcha_token"))
-                                {{$errors->first("recaptcha_token")}}
-                            @endif
+                                <div class="col-12 alert alert-danger text-center" role="alert">
+                                    Ha intentado enviar información despues de un tiempo de inactividad. Vuelva a intentar enviar la información.
+                                </div>
+                             @endif
 
                             <div class="col-md-12">
-                                <label for="name" class="col-form-label text-md-right text-register">{{ __('Tu nombre') }}</label>
+                                <label for="name" class="col-form-label text-md-right text-register">{{ __('Nombres y Apellidos') }}</label>
                                 <input id="name" type="text" class="form-control form-control-sm @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                 @error('name')
@@ -27,7 +31,31 @@
                                 @enderror
                             </div>
                         </div>
-
+                        <div class="form-group row">
+                             <div class="col-md-12">
+                                <label class="text-register" for="birthday">Fecha de Nacimiento</label>
+                                <input type="text" class="form-control form-control-sm bg-white @error('birthday')  is-invalid @enderror" name="birthday" id="birthday" placeholder="Click para escojer fecha" value="{{ old('birthday') }}" readonly>
+                                <div class="invalid-feedback" role="alert">
+                                    La fecha de nacimiento es requerida.
+                                </div>
+                            </div> 
+                            {{-- <div class="col-md-4 mb-3">
+                                <label class="text-register" for="n_doc">Número Cedula</label>
+                                <input type="text" class="form-control @if ($errors-> has('n_doc'))  is-invalid @endif" name="n_doc" id="n_doc" placeholder="Ej: 4893848349" value="@if(!empty($completeRequest->n_doc)){{$completeRequest->n_doc}}@endif" required>
+                                <div class="invalid-feedback">
+                                    El número de Indentificación es requerido.
+                                </div>
+                            </div> --}}
+                        </div>
+                        <div class="form-group row">
+                             <div class="col-md-12">
+                                <label class="text-register" for="phone">Teléfono</label>
+                                <input type="text" class="form-control form-control-sm @error('phone')  is-invalid @enderror" name="phone" id="phone" placeholder="Ej: 4893848349" value="{{ old('phone') }}" required>
+                                <div class="invalid-feedback" role="alert">
+                                    El número de Teléfono es requerido.
+                                </div>
+                            </div> 
+                        </div>
                         <div class="form-group row">
                             
 
@@ -90,10 +118,28 @@
 @endsection
 @section('custom-js')
 <script src="https://www.google.com/recaptcha/api.js?render={{ env('RE_KEY') }}"></script>
+<script src="/js/jquery-ui.min.js" defer></script>
 <script>
     grecaptcha.ready(function() {
     grecaptcha.execute('{{ env('RE_KEY') }}')    .then(function(token) {
     document.getElementById("recaptcha_token").value = token;
     }); });
 </script>
+<script type="text/javascript">
+    
+    $(document).ready(function(){
+        $("#birthday").datepicker({
+            changeMonth: true,
+            changeYear: true
+        }); 
+
+        $('#name').on('input', function () { 
+            this.value = this.value.replace(/[^ a-záéíóúüñA-Z]/g,'');
+        });
+
+        $('#phone').on('input', function () { 
+            this.value = this.value.replace(/[^0-9]/g,'');
+        });
+    });
+</script>        
 @endsection

@@ -143,122 +143,127 @@ class PurchaseControler extends Controller
     //--------------------------------------------------------------------------------------------------------------
     public function methods()
     {
-        $answer = 1;
-        $cardExist = 0;
-        $member_info = null;
-        $card = null;
-        $address = null;
-        $weight = 0;
-        $volweight = 0;
-        $sw = 0;
-        $totalprice = 0;
+        if ((Auth::user()) and (session('cart'))){
+            $answer = 1;
+            $cardExist = 0;
+            $member_info = null;
+            $card = null;
+            $address = null;
+            $weight = 0;
+            $volweight = 0;
+            $sw = 0;
+            $totalprice = 0;
 
-        foreach (session('cart') as $id => $details){
-            $whole = 0;
-            $half = 0;
-            $nq = 0;
-            $h = 0;
-            $discount = 0;
+            foreach (session('cart') as $id => $details){
+                $whole = 0;
+                $half = 0;
+                $nq = 0;
+                $h = 0;
+                $discount = 0;
 
-            $hash = md5(env('SECRETPASS')."~".$details['name']."~".$details['price']."~".$details['prom']."~".$details['fee']."~".$details['width']."~".$details['height']."~".$details['length']."~".$details['weight']);
+                $hash = md5(env('SECRETPASS')."~".$details['name']."~".$details['price']."~".$details['prom']."~".$details['fee']."~".$details['width']."~".$details['height']."~".$details['length']."~".$details['weight']);
 
-            if ($hash == $details['hash']){
+                if ($hash == $details['hash']){
 
-                $weight = $weight + ($details['weight'] * $details['quantity']);
-                $volweight = $volweight + ((($details['width']/100)*($details['length']/100)*($details['height']/100)*400) * $details['quantity']);
-                $totalprice = $totalprice + ($details['price'] * $details['quantity']);
-            }else{
-                $sw = 1;
-                break;
-            }
-            
-        }
-
-        if ($sw == 0){
-            //$apiauth =array('UserName'=>'username','Password'=>'password');
-            
-
-            if (Auth::user()){
-                $id = Auth::user()->id;
-                $address = Address::where('user_id', $id)->where('default', 1)
-                ->join('countries as c', 'c.country_master_id', 'addresses.country')
-                ->join('departments as d', 'd.code', 'addresses.dpt')
-                ->join('cost_tcc as ct', 'ct.id', 'addresses.city')
-                ->first();
-                //dd($address);
-                $card = Creditcard::where('user_id', $id)->where('default', 1)->get();
-
-                if ($card->count() >0){
-                    $cardExist = 2;
+                    $weight = $weight + ($details['weight'] * $details['quantity']);
+                    $volweight = $volweight + ((($details['width']/100)*($details['length']/100)*($details['height']/100)*400) * $details['quantity']);
+                    $totalprice = $totalprice + ($details['price'] * $details['quantity']);
+                }else{
+                    $sw = 1;
+                    break;
                 }
+                
+            }
 
-                $wsdl = "http://clientes.tcc.com.co/preservicios/liquidacionacuerdos.asmx?wsdl";
-                $parameters = [
-                    'Clave' => 'CLIENTETCC608W3A61CJ',
-                    'Liquidacion' => [
-                        'tipoenvio' => 2,
-                        'idciudadorigen' => '08001000',
-                        'idciudaddestino' => $address->dane_d,
-                        'valormercancia' => $totalprice,
-                        'boomerang' => 0,
-                        'cuenta' => 0,
-                        'fecharemesa' => '05/02-2021',
-                        'idunidadestrategicanegocio' => 2,
-                        'unidades' => [
-                            'unidad' => [
-                                'numerounidades' => 1,
-                                'pesoreal' => $weight,
-                                'pesovolumen' => $volweight,
-                                
-                                'tipoempaque' => '1'
+            if ($sw == 0){
+                //$apiauth =array('UserName'=>'username','Password'=>'password');
+                
+
+                if (Auth::user()){
+                    $id = Auth::user()->id;
+                    $address = Address::where('user_id', $id)->where('default', 1)
+                    ->join('countries as c', 'c.country_master_id', 'addresses.country')
+                    ->join('departments as d', 'd.code', 'addresses.dpt')
+                    ->join('cost_tcc as ct', 'ct.id', 'addresses.city')
+                    ->first();
+                    //dd($address);
+                    $card = Creditcard::where('user_id', $id)->where('default', 1)->get();
+
+                    if ($card->count() >0){
+                        $cardExist = 2;
+                    }
+
+                    $wsdl = "http://clientes.tcc.com.co/preservicios/liquidacionacuerdos.asmx?wsdl";
+                    $parameters = [
+                        'Clave' => 'CLIENTETCC608W3A61CJ',
+                        'Liquidacion' => [
+                            'tipoenvio' => 2,
+                            'idciudadorigen' => '08001000',
+                            'idciudaddestino' => $address->dane_d,
+                            'valormercancia' => $totalprice,
+                            'boomerang' => 0,
+                            'cuenta' => 0,
+                            'fecharemesa' => '05/02-2021',
+                            'idunidadestrategicanegocio' => 2,
+                            'unidades' => [
+                                'unidad' => [
+                                    'numerounidades' => 1,
+                                    'pesoreal' => $weight,
+                                    'pesovolumen' => $volweight,
+                                    
+                                    'tipoempaque' => '1'
+                                ]
                             ]
                         ]
-                    ]
 
-                ];
+                    ];
 
-                $soap = new SoapClient($wsdl);
-                $re = $soap->__soapCall("ConsultarLiquidacion", array($parameters));
+                    $soap = new SoapClient($wsdl);
+                    $re = $soap->__soapCall("ConsultarLiquidacion", array($parameters));
 
-                if ($re->consultarliquidacionResult){
-                    if ($re->consultarliquidacionResult->idliquidacion){
-                        session()->put('tcc', $re);  
-                    }else{
-                        $re->consultarliquidacionResult->respuesta;
+                    if ($re->consultarliquidacionResult){
+                        if ($re->consultarliquidacionResult->idliquidacion){
+                            session()->put('tcc', $re);  
+                        }else{
+                            $re->consultarliquidacionResult->respuesta;
+                        }
                     }
-                }
-                
-                // if ($re->consultarliquidacionResult->respuesta){
-                    // {#1290 ▼
-                    //     +"consultarliquidacionResult": {#1302 ▼
-                    //         +"respuesta": {#1317 ▼
-                    //           +"codigo": "-1"
-                    //           +"mensaje": "Actualmente NO se tiene habilitado el servicio para la ruta y tipo de transporte seleccionados."
-                    //           +"codigointerno": "-1"
-                    //           +"mensajeinterno": "No se envio un origen valido"
-                    //         }
-                    //       }
-                    //     }
-                // }
-            
-                
+                    
+                    // if ($re->consultarliquidacionResult->respuesta){
+                        // {#1290 ▼
+                        //     +"consultarliquidacionResult": {#1302 ▼
+                        //         +"respuesta": {#1317 ▼
+                        //           +"codigo": "-1"
+                        //           +"mensaje": "Actualmente NO se tiene habilitado el servicio para la ruta y tipo de transporte seleccionados."
+                        //           +"codigointerno": "-1"
+                        //           +"mensajeinterno": "No se envio un origen valido"
+                        //         }
+                        //       }
+                        //     }
+                    // }
                 
                     
-                //dd($re, $weight, $volweight, $re->consultarliquidacionResult->total->totaldespacho);
+                    
+                        
+                    //dd($re, $weight, $volweight, $re->consultarliquidacionResult->total->totaldespacho);
 
-                return view('method', [
-                    'answer' => $answer,
-                    'cardexist' => $cardExist,
-                    'member_info' => $member_info,
-                    'address' => $address,
-                    'card' => $card
-                ]);
-            }else{
-               
+                    return view('method', [
+                        'answer' => $answer,
+                        'cardexist' => $cardExist,
+                        'member_info' => $member_info,
+                        'address' => $address,
+                        'card' => $card
+                    ]);
+                }else{
+                
+                }
+
+                
             }
-
-            
+        }else{
+            return redirect('/home');
         }
+        
         
     }
 
