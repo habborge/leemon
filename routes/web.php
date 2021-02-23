@@ -54,7 +54,7 @@ Route::group([
     'middleware' => ['auth']
 ], function() {
 
-    // Route::get('purchase', 'PurchaseControler@purchase');
+    Route::get('purchase', 'PurchaseControler@verifyAddress');
     Route::post('add-info-user', 'PurchaseControler@addInfoUser')->name('saveinfo');
     Route::get('confirm', 'PurchaseControler@confirm');
     Route::get('methods', 'PurchaseControler@methods');
