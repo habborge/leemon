@@ -352,7 +352,7 @@ class ProductController extends Controller
         $url = env('BUCKET_SUBFOLDER')."/products/".$product->reference."/";
         //dd($url);
         $disk = Storage::disk('s3');
-        $images = $disk->allFiles($url);
+        $images = $disk->files($url);
         
         $key_a = array_search($url.$product->img1, $images);
         unset($images[$key_a]);

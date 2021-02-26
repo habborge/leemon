@@ -27,7 +27,7 @@ Route::get('cart', 'ProductController@cart')->name('cart');
 Route::get('add-to-cart/{id}', 'ProductController@addToCart');
 Route::patch('update-cart', 'ProductController@update');
 Route::post('add-to-cart-quantity', 'ProductController@addToCartQuantity');
-Route::post('add-to-wishlist', 'ProductController@addToWishList');
+
 Route::delete('remove-from-cart', 'ProductController@remove');
 Route::get('/result', 'searchController@searchProducts');
 Route::get('/result/brand/{brand}/{searching}', 'searchController@searchProductsByBrand');
@@ -94,6 +94,9 @@ Route::group([
 
     //------- Send Email to friend -----------------------------------
     Route::post('send-email-friend', 'SendingEmailController@sendToFriend'); 
+
+    //------- Wish list ----------------------------------------------
+    Route::post('add-to-wishlist', 'ProductController@addToWishList');
 });
 
 Auth::routes();

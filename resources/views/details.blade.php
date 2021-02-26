@@ -143,11 +143,10 @@
                                                         </div>
                                                     </div>
                                                 @endif
-
                                             @else
                                                 <div id="nodis-button" class="col-xl-auto">
                                                     <div class="row">
-                                                        <button id="" class="btn btn-leemon-green update-cart" data-cart="1"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
+                                                        <button id="" class="btn btn-leemon-green update-cart mr-1" data-cart="1"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
                                                     </div>
                                                 </div>
                                             @endif  
@@ -155,29 +154,31 @@
                                             @guest
                                                     
                                             @else
-                                            <div class="col-xl-auto">
-                                                <div class="row">
-                                                    
-                                                    <button id="" class="btn btn-wishlist update-wishlist"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity }}"><i class="fa fa-heart" aria-hidden="true"></i></button>
-                                                    
-                                                    
+                                                <div class="col-xl-auto">
+                                                    <div class="row">
+                                                        <button id="" class="btn btn-wishlist update-wishlist btn-leemon-radius mr-1"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity }}"><i class="fa fa-heart" aria-hidden="true"></i></button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xl-auto">
-                                                <div class="row">
-                                                    <a id="linkWeb" data-id="{{ $prod_id }}" href="https://web.whatsapp.com/send?text=Visita%20el%20blog%20de%20Parzibyte%20en%20https://develop.leemon.com.co" target="_blank">
-                                                        <img src="/img/whatsappIcon.png" width="35px" alt="">
-                                                    </a>
-                                                    <a id="linkApp" data-id="{{ $prod_id }}" href="https://api.whatsapp.com/send?text=Visita%20el%20blog%20de%20Parzibyte%20en%20https://develop.leemon.com.co" target="_blank">
-                                                        <img src="/img/whatsappIcon.png" width="35px" alt="">
-                                                    </a>
+                                                <div class="col-xl-auto">
+                                                    <div class="row">
+                                                        <button id="" class="btn btn-wishlist update-wishlist btn-leemon-radius mr-1"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity }}"><i class="fa fa-heart" aria-hidden="true"></i></button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xl-auto">
-                                                <div class="row">
-                                                    <button id="" class="btn btn-dark"  data-id="{{ $prod_id }}"><i class="fa fa-envelope" aria-hidden="true"></i></button>
+                                                <div class="col-xl-auto">
+                                                    <div class="row">
+                                                        <a id="linkWeb" data-id="{{ $prod_id }}" href="https://web.whatsapp.com/send?text=Visita%20el%20blog%20de%20Parzibyte%20en%20https://develop.leemon.com.co" target="_blank">
+                                                            <img src="/img/whatsappIcon.png" width="35px" alt="">
+                                                        </a>
+                                                        <a id="linkApp" data-id="{{ $prod_id }}" href="https://api.whatsapp.com/send?text=Visita%20el%20blog%20de%20Parzibyte%20en%20https://develop.leemon.com.co" target="_blank">
+                                                            <img src="/img/whatsappIcon.png" width="35px" alt="">
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                                <div class="col-xl-auto">
+                                                    <div class="row">
+                                                        <button id="" class="btn btn-dark"  data-id="{{ $prod_id }}"><i class="fa fa-envelope" aria-hidden="true"></i></button>
+                                                    </div>
+                                                </div>
                                             @endguest
                                         </div>
                                     </div>
