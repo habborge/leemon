@@ -17,7 +17,7 @@
                 <div class="row">
                     <div class="breadcrumbs-block" itemtype="" itemscope="">
                         <div id="routeCat"class="breadcrumb hidden-xs" itemprop="breadcrumb">
-                            <span>Categorias: </span>  
+                            <span class="px-1">Categorias:  </span>  
                             @foreach ($categories as $category)
                                 <a class="" href="/products/{{ str_replace(" ", "-",$category->gfName) }}/{{str_replace(" ", "-",$category->fName)}}/{{str_replace(" ", "-",$category->catName)}}_{{$category->catId}}"> {{ $category->catName }} |
                             @endforeach
@@ -222,7 +222,7 @@
                       <a class="nav-link active" id="desc-tab" data-toggle="tab" href="#desc" role="tab" aria-controls="desc" aria-selected="true">Descripción</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                      <a class="nav-link" id="cara-tab" data-toggle="tab" href="#cara" role="tab" aria-controls="cara" aria-selected="false">Caracteristicas</a>
+                      <a class="nav-link" id="cara-tab" data-toggle="tab" href="#cara" role="tab" aria-controls="cara" aria-selected="false">Características</a>
                     </li>
                     <li class="nav-item" role="presentation">
                       <a class="nav-link" id="ingr-tab" data-toggle="tab" href="#ingr" role="tab" aria-controls="ingr" aria-selected="false">Ingredientes</a>
@@ -276,7 +276,7 @@
                             <a href="/product/{{$similar->proId}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $similar->reference }}/{{$similar->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
                             <div class="card-body text-center">
                                 <span class="brand-font">{{ucwords($similar->brand)}} </span>
-                                <h6>{{ucwords($similar->proName)}} </h6>
+                                <div style="height: 60px"><h6>{{ucwords($similar->proName)}} </h6></div>
                                 <h6>
                                     @if ($similar->prom == 1) 
                                         <span class="badge badge-warning">Paga 2 Lleva 3</span>

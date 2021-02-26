@@ -29,28 +29,28 @@
                                                     </div>
                                                 @endif
                                                 <div class="row">
-                                                            <div class="col-md-8">
-                                                                <div class="row">
-                                                                    
-                                                                    <p>
-                                                                        <b>{{ ucwords($address[0]->contact) }}</b><br>
-                                                                        @php
-                                                                            $my_address = str_replace("~", " ", $address[0]->address)
-                                                                        @endphp
-                                                                        <span class="info-small">
-                                                                            {{ $my_address }}, {{ $address[0]->zipcode }} Código Postal<br>
-                                                                            @if ($address[0]->details) {{ ucwords($address[0]->details) }}<br> @endif
-                                                                            {{ ucwords($address[0]->city_d_id) }} ({{ ucwords($address[0]->department) }}), {{ ucwords($address[0]->country_master_name) }}
-                                                                        </span>
-                                                                        
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <div class="row float-right">
-                                                                    <a class="btn btn-leemon-back" data-toggle="modal" id="changeAddress">Cambiar Dirección</a>
-                                                                </div>
-                                                            </div>
+                                                    <div class="col-md-8">
+                                                        <div class="row">
+                                                            
+                                                            <p>
+                                                                <b>{{ ucwords($address[0]->contact) }}</b><br>
+                                                                @php
+                                                                    $my_address = str_replace("~", " ", $address[0]->address)
+                                                                @endphp
+                                                                <span class="info-small">
+                                                                    {{ $my_address }}, {{ $address[0]->zipcode }} Código Postal<br>
+                                                                    @if ($address[0]->details) {{ ucwords($address[0]->details) }}<br> @endif
+                                                                    {{ ucwords($address[0]->city_d_id) }} ({{ ucwords($address[0]->department) }}), {{ ucwords($address[0]->country_master_name) }}
+                                                                </span>
+                                                                
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="row float-right">
+                                                            <a class="btn btn-leemon-back" data-toggle="modal" id="changeAddress">Cambiar Dirección</a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

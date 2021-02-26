@@ -95,7 +95,7 @@
                             </div>
                         </div>
                         {{-- 2 --}}
-                        <div id="two" class="col-12 col-md-7 mr-auto">
+                        <div id="two" class="col-12 col-md-6 mr-auto">
                             <div class="row">
                                 <form  name="form" id="form" action="/result" class="search-form" method="GET">
                                     @csrf
@@ -118,7 +118,7 @@
                             </div>
                         </div>
                         {{-- 3 --}}
-                        <div id="three" class="col-2 col-md-2">
+                        <div id="three" class="col-2 col-md-3">
                             <div class="row text-center">
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                     <!-- Left Side Of Navbar -->

@@ -51,7 +51,6 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        //dd($data);
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'lastname' => ['required', 'string', 'max:255'],
@@ -87,7 +86,7 @@ class RegisterController extends Controller
             'firstname' => $data['name'],
             'lastname' => $data['lastname'],
             'birthday' => $newDate,
-            'phone' => $data['phone'],
+            'phone' => "+".$data['callingcode']."-".$data['phone'],
             'address' => '', 
             'delivery_address' => '', 
             'city' => '', 

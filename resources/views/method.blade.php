@@ -2,8 +2,39 @@
 
 @section('content')
 
-<div id="main" class="tabs clearfix">
-    <div class="container no-padding-sm-xs dataPosition2">
+<div id="main" class=" clearfix">
+    <div class="container litlemargin">
+        <div class="row justify-content-center">
+            <div class="md-stepper-horizontal orange">
+                {{-- <div class="md-step active done"> --}}
+                {{-- <div class="md-step active editable"> --}}
+                <div class="md-step active done">
+                  <div class="md-step-circle"><span>1</span></div>
+                  <div class="md-step-title">Registro</div>
+                  <div class="md-step-bar-left"></div>
+                  <div class="md-step-bar-right"></div>
+                </div>
+                <div class="md-step active done">
+                  <div class="md-step-circle"><span>2</span></div>
+                  <div class="md-step-title">Verificación</div>
+                  {{-- <div class="md-step-optional">Optional</div> --}}
+                  <div class="md-step-bar-left"></div>
+                  <div class="md-step-bar-right"></div>
+                </div>
+                <div class="md-step active done">
+                  <div class="md-step-circle"><span>3</span></div>
+                  <div class="md-step-title">Envío</div>
+                  <div class="md-step-bar-left"></div>
+                  <div class="md-step-bar-right"></div>
+                </div>
+                <div class="md-step active">
+                  <div class="md-step-circle"><span>4</span></div>
+                  <div class="md-step-title">Pago</div>
+                  <div class="md-step-bar-left"></div>
+                  <div class="md-step-bar-right"></div>
+                </div>
+              </div>
+        </div>
         <div class="row ">
             <div id="primary2" class=" col-md-9 col-sm-12 col-xs-12 pull-left no-padding-md no-padding-lg no-padding-sm-xs">
                 <div class="primary-content2">
@@ -11,17 +42,13 @@
                         @if ($answer == 1)
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="accordion accord-width" id="accordionExample">
+                                    
                                         
                                             <div class="card col-md-12 card-rounded mb-3">
-                                                
-                                                    <a class="text-left a-size-methods" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="width: 100%">
-                                                        <div class="card-header row" id="headingOne"> Dirección de Envio</div>
-                                                    </a>
-                                                
+                                                <div class="card-header row card-round-header" id="headingOne"> Dirección de Envio</div>
                                                 <div class="row">
-                                                    <div id="collapseOne" class="col-md-12 collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                                        <div class="row">
+                                                    
+                                                        
                                                             <div class="card-body card-body-yellow card-round-footer">
                                                                 <h6>{{ ucwords($address->contact) }}</h6>
                                                                 <p class="info-small">
@@ -33,23 +60,23 @@
                                                                     {{ ucwords($address->city_d_id) }} ({{ ucwords($address->department) }}), {{ ucwords($address->country_master_name) }}
                                                                 </p>
                                                             </div>
-                                                        </div>
-                                                    </div>
+                                                        
+                                                    
                                                 </div>
                                                     
                                                 
                                             </div>
                                         
-                                    </div>
+                                    
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            {{--<div class="col-md-12">
                                 <div class="row">
                                     <div class="card col-md-12 card-rounded mb-3">
                                         <div class="row">
                                             <div class="card-header col-md-12 card-round-header">Metodo de Pago</div>
                                         </div>
-                                         {{--
+                                         
                                         <div class="row">
                                             <div class="card-body card-body-yellow card-round-footer">
                                                  <div class="form-check">
@@ -96,11 +123,11 @@
                                                 </div> 
     
                                             </div>
-                                        </div>--}}
+                                        </div>
                                         
                                     </div>
                                 </div>
-                             </div>
+                             </div>--}}
                         @endif
 
                         <div class="card col-md-12 card-rounded">
@@ -395,7 +422,7 @@
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <div class="col-6 col-md-6">
-                                                        <a href="{{ url('/') }}" class="btn btn-leemon-back btn-sm">
+                                                        <a href="{{ url('/') }}" class="btn btn-leemon-back">
                                                             Seguir Comprando
                                                         </a>
                                                     </div>
@@ -409,7 +436,7 @@
                                                                 <a href="{{ url('purchase') }}" class="btn btn-leemon-method">Información de Facturación</a>
                                                             @elseif ($answer == 1)
                                                                 {{-- <button id="proccess" class="btn btn-purchase btn-sm">Proceder con el Pago</button> --}}
-                                                                <a href="{{ route('paymentnow') }}" class="btn btn-purchase btn-sm">Proceder con el Pago</a>
+                                                                <a href="{{ route('paymentnow') }}" class="btn btn-purchase">Proceder con el Pago</a>
                                                             @endif
                                                         @endguest
                                                     </div>
@@ -526,7 +553,7 @@
                                                         <a href="{{ url('purchase') }}" class="btn btn-leemon-info btn-block">Información de Usuario</a>
                                                     @elseif ($answer == 1)
                                                     {{-- <button id="proccess2" class="btn btn-purchase btn-sm btn-block">Proceder con el Pago</button> --}}
-                                                    <a href="{{ route('paymentnow') }}" class="btn btn-purchase btn-sm btn-block">Proceder con el Pago</a>
+                                                    <a href="{{ route('paymentnow') }}" class="btn btn-purchase btn-block">Proceder con el Pago</a>
                                                     
                                                     @endif
                                                 @endguest

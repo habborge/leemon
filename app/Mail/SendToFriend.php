@@ -38,6 +38,7 @@ class SendToFriend extends Mailable
         $pro_url = env('APP_URL')."/product/".$this->product_id;
         
         return $this->markdown('emails.invitation')
+        ->subject($this->member_name.' le recomienda este producto')
         ->with(['product_url' => $pro_url, 'product_name' => $this->proname, 'product_img' => $this->img ,'member_name' => $this->member_name]);
     }
 }

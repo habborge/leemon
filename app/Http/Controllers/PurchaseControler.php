@@ -60,23 +60,33 @@ class PurchaseControler extends Controller
     // Verify auth , then allow to register billing information
     //--------------------------------------------------------------------------------------------------------------
     public function verifyAddress(){
-        $infosaved = 0;
-        $id = Auth::user()->id;
+
+        $userEmail = Auth::user()->email;
+        $emailVerified = Auth::user()->email_verified;
+        $emailSendAt = Auth::user()->email_send_at;
+            
+            
+        if($emailVerified == 0){
+            return redirect('/register/auth/email/verify');
+        }else{
+            $infosaved = 0;
+            $id = Auth::user()->id;
        
-        $info = Address::where('user_id', $id);
+            $info = Address::where('user_id', $id);
 
-        if ($info->exists()){
-            $infosaved = 1;
+            if ($info->exists()){
+                $infosaved = 1;
+            }
+
+            $country_id = 47;
+            $dpts = Department::where('country_id', $country_id)->orderBy('department', 'ASC')->get();
+
+            return view('purchase', [
+                'infosaved' => $infosaved,
+                //'info' => $info->get(),
+                'dpts' => $dpts
+            ]);
         }
-
-        $country_id = 47;
-        $dpts = Department::where('country_id', $country_id)->orderBy('department', 'ASC')->get();
-
-        return view('purchase', [
-            'infosaved' => $infosaved,
-            //'info' => $info->get(),
-            'dpts' => $dpts
-        ]);
     }
 
     //--------------------------------------------------------------------------------------------------------------
@@ -167,7 +177,9 @@ class PurchaseControler extends Controller
     //--------------------------------------------------------------------------------------------------------------
     public function methods()
     {
+        
         if ((Auth::user()) and (session('cart'))){
+            
             $answer = 1;
             $cardExist = 0;
             $member_info = null;
@@ -202,7 +214,7 @@ class PurchaseControler extends Controller
             if ($sw == 0){
                 //$apiauth =array('UserName'=>'username','Password'=>'password');
                 
-
+                
                 if (Auth::user()){
                     $id = Auth::user()->id;
                     $address = Address::where('user_id', $id)->where('default', 1)
@@ -211,11 +223,12 @@ class PurchaseControler extends Controller
                     ->join('cost_tcc as ct', 'ct.id', 'addresses.city')
                     ->first();
                     //dd($address);
-                    $card = Creditcard::where('user_id', $id)->where('default', 1)->get();
 
-                    if ($card->count() >0){
-                        $cardExist = 2;
-                    }
+                    // $card = Creditcard::where('user_id', $id)->where('default', 1)->get();
+
+                    // if ($card->count() >0){
+                    //     $cardExist = 2;
+                    // }
 
                     $wsdl = "http://clientes.tcc.com.co/preservicios/liquidacionacuerdos.asmx?wsdl";
                     $parameters = [
@@ -260,7 +273,6 @@ class PurchaseControler extends Controller
                             ]);
                         }else{
                             $message = $re->consultarliquidacionResult->respuesta->mensaje;
-
                             return redirect()->back()->withErrors([$message]);
                         }
                     }

@@ -59,19 +59,10 @@
       <!-- Grid row -->
       <div class="row mt-3">
   
-        <!-- Grid column -->
-        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-  
-          <!-- Content -->
-        <img src="{{ env('APP_URL') }}/img/logo_leemon_small_white.png" alt="" class="leemonlogo">
-          {{-- <hr class="hr-color accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;"> --}}
-          <p class="line-footer"></p>
-  
-        </div>
-        <!-- Grid column -->
+        
   
         <!-- Grid column -->
-        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4 brand-font">
+        <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mb-4 brand-font">
   
           <!-- Links -->
           <h6 class="text-uppercase font-weight-bold">Productos</h6>
@@ -97,33 +88,30 @@
         <!-- Grid column -->
   
         <!-- Grid column -->
-        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4 brand-font">
+        <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mb-4 brand-font">
   
           <!-- Links -->
           <h6 class="text-uppercase font-weight-bold">Links de Interes</h6>
           <hr class="hr-color accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
           <p>
-            <a class="link-a" href="#!">Terminos & Condiciones</a>
-         <br>
-            <a class="link-a" href="#!">Privacidad de Datos</a>
-         <br>
-            <a class="link-a" href="#!">Politicas de Reembolso</a>
-         <br>
+            <a class="link-a" target="_blank" href="/terms/privacy-policy-and-data-processing">Política de privacidad y Tratamiento de Datos</a>
+            <br>
+            <a class="link-a" href="#!">Política de Términos de Servicio, Política de Reembolsos y Devoluciones</a>
+          <br>
             <a class="link-a" href="#!">FAQ</a>
           </p>
   
         </div>
-        <!-- Grid column -->
-  
-        <!-- Grid column -->
-        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4 brand-font">
+        
+        
+        <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mb-md-0 mb-4 brand-font">
   
           <!-- Links -->
           <h6 class="text-uppercase font-weight-bold">Contacto</h6>
           <hr class="hr-color accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
           <p>
             <i class="fas fa-home mr-3"></i> Barranquilla, 080002, Colombia<br>
-            <i class="fas fa-envelope mr-3"></i> info@leemon.com.co<br>
+            <i class="fas fa-envelope mr-3"></i> servicioalcliente@leemon.com.co<br>
             {{-- <i class="fas fa-phone mr-3"></i> + 57 234 567 88<br>
             <i class="fas fa-print mr-3"></i> + 57 234 567 89 --}}
           </p>
@@ -135,13 +123,20 @@
       <!-- Grid row -->
   
     </div>
-    <!-- Footer Links -->
-  
-    <!-- Copyright -->
-    <div class="footer-copyright text-center py-3">© 2020 Copyright:
-      leemon.com.co
+    <!-- Grid column -->
+    <div class="col-12-col-md-12">
+      <div class="row justify-content-center">
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4 text-center">
+
+          <!-- Content -->
+          <img src="{{ env('APP_URL') }}/img/logo_leemon_small_white.png" alt="" class="leemonlogo">
+          <div class="footer-copyright text-center py-3">© 2020 Copyright:
+            leemon.com.co
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- Copyright -->
+    
   
   </footer>
   <!-- Footer -->
