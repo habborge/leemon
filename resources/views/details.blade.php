@@ -161,22 +161,58 @@
                                                 </div>
                                                 <div class="col-xl-auto">
                                                     <div class="row">
-                                                        <button id="" class="btn btn-wishlist update-wishlist btn-leemon-radius mr-1"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity }}"><i class="fa fa-heart" aria-hidden="true"></i></button>
+                                                        
+                                                        <div class="btn-group dropdown">
+                                                            <button id="" class="btn btn-upload share-with btn-leemon-radius mr-1"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/img/upload_1.png" alt="" style="width: 14px"></button>
+                                                            <div class="dropdown-menu dropdown-menu-position-upload dropdown-upload">
+                                                                <div class="">
+                                                                    <div class="input-group mt-2 mb-1">
+                                                                        <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-link" aria-hidden="true"></i></span>
+                                                                        </div>
+                                                                        <input type="text" class="form-control form-control-sm mr-1" value="{{Request::url()}}" aria-label="Username" aria-describedby="basic-addon1" readonly>
+                                                                        <button id="copylink" class="btn btn-dark btn-sm"><i class="fa fa-files-o" aria-hidden="true"></i> Copiar </button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="dropdown-divider"></div>
+                                                                <div class="">
+                                                                    <div class="input-group mb-2">
+                                                                        <a id="linkWeb" data-id="{{ $prod_id }}" href="https://web.whatsapp.com/send?text=Visita%20el%20blog%20de%20Parzibyte%20en%20{{Request::url()}}" target="_blank" class="mr-1">
+                                                                            <img src="/img/whatsappIcon.png" width="35px" alt="">
+                                                                        </a>
+                                                                        <a id="linkApp" data-id="{{ $prod_id }}" href="https://api.whatsapp.com/send?text=Visita%20el%20blog%20de%20Parzibyte%20en%20{{Request::url()}}" target="_blank"  class="mr-1">
+                                                                            <img src="/img/whatsappIcon.png" width="35px" alt="">
+                                                                        </a>
+                                                                        <button id="openbox" class="btn btn-dark"  data-id="{{ $prod_id }}"><i class="fa fa-envelope" aria-hidden="true"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                <div id="sendemailbox" style="display: none">
+                                                                    <div class="input-group mb-2">
+                                                                        {{-- <div id="loading_sendtofriend">
+                                                                            <img src="/img/preloader.gif" id="img_loading" alt="">
+                                                                        </div> --}}
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-at" aria-hidden="true"></i></span>
+                                                                        </div>
+                                                                        
+                                                                        <input id="email" name="email" type="email" class="form-control form-control-sm" placeholder="email de tu amigo" aria-label="email" aria-describedby="basic-addon1" required>
+                                                                        <div class="input-group-append">
+                                                                            <button id="sendEmail" class="btn btn-dark btn-sm" type="button">Enviar</button>
+                                                                        </div>
+                                                                    </div>
+                                                                
+                                                        
+                                                                </div>
+                                                                
+                                                            </div>
+                                                          </div>
                                                     </div>
                                                 </div>
+                                                
                                                 <div class="col-xl-auto">
                                                     <div class="row">
-                                                        <a id="linkWeb" data-id="{{ $prod_id }}" href="https://web.whatsapp.com/send?text=Visita%20el%20blog%20de%20Parzibyte%20en%20https://develop.leemon.com.co" target="_blank">
-                                                            <img src="/img/whatsappIcon.png" width="35px" alt="">
-                                                        </a>
-                                                        <a id="linkApp" data-id="{{ $prod_id }}" href="https://api.whatsapp.com/send?text=Visita%20el%20blog%20de%20Parzibyte%20en%20https://develop.leemon.com.co" target="_blank">
-                                                            <img src="/img/whatsappIcon.png" width="35px" alt="">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-auto">
-                                                    <div class="row">
-                                                        <button id="" class="btn btn-dark"  data-id="{{ $prod_id }}"><i class="fa fa-envelope" aria-hidden="true"></i></button>
+                                                        
                                                     </div>
                                                 </div>
                                             @endguest
@@ -185,30 +221,7 @@
                                     
                                 </div>
                                 <div class="form-group">
-                                    @guest
-                                    @else
-                                        <div class="col-xl-12">
-                                            <div class="row">
-                                                <div class="alert alert-email" role="alert" style="width: 100%">
-                                                    <h6 class="alert-heading">Enviaselo a un Amigo!</h6>
-                                                    <div class="input-group mb-3">
-                                                        <div id="loading_sendtofriend">
-                                                            <img src="/img/preloader.gif" id="img_loading" alt="">
-                                                        </div>
-                                                        <div class="input-group-prepend">
-                                                        <span class="input-group-text" id="basic-addon1">@</span>
-                                                        </div>
-                                                        <input id="email" name="email" type="email" class="form-control" placeholder="email de tu amigo" aria-label="email" aria-describedby="basic-addon1" value="" required>
-                                                        <div class="input-group-append">
-                                                            <button id="sendEmail" class="btn btn-dark" type="button">Enviar articulo</button>
-                                                        </div>
-                                                    </div>
-                                                    <div id="mm"></div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endguest
+                                    
                                 </div>
                             </form>
                         </div>
@@ -515,6 +528,16 @@
                 spinner.find("input").trigger("change");
             });
         });
+
+        $("#openbox").click(function(){
+            $("#sendemailbox").toggle();
+        });
+
+        $('.dropdown-menu').on('click', function (e) {
+            e.stopPropagation();
+        });
+
+
     });
     
 </script>
