@@ -73,7 +73,41 @@
     #nodis{
         display: none;
     }
-     
+    #cajacookies {
+            box-shadow: 0px 0px 5px 5px #c1c1c185;
+            background-color: #000000c7;
+            color: #fff;
+            padding: 15px 30px;
+            margin-bottom: 0px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 999;
+            text-align: center !important;
+        }
+    
+        #cajacookies button {
+            color: #fff;
+        }
+        #cajacookies button:hover {
+            color: #fff;
+            border-color: #c49703;
+            background: #c49703;
+        }
+        .btn-success {
+            color: #fff;
+            background-color: #c49703;
+            border-color: #c49703;
+        }
+        #cajacookies a:hover {
+            color: #fff !important;
+            text-decoration: underline !important;
+        }
+        #cajacookies a {
+            font-weight: bold;
+            text-decoration: underline !important;
+            color: #a56b03;
+        }
 </style>
 <body>
     <div id="app">
