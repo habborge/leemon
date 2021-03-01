@@ -196,13 +196,24 @@
     box-shadow:none !important;
 }
 .btn-leemon-green{
-    background-color: #E39281 !important;
+    background-color: #daffd4 !important;
     border: 0px solid #403d38 !important;
-    color: #fafafa !important;
+    color: #5c5a59 !important;
     border-radius: 10px !important;
 }
 .btn-leemon-green:hover{
     background-color: #403d38 !important;
+    border: 0px solid #403d38 !important;
+    color: #fafafa !important;
+}
+.btn-leemon-pink{
+    background-color: #E39281 !important;
+    border: 0px solid #403d38 !important;
+    color: #ffffff !important;
+    border-radius: 10px !important;
+}
+.btn-leemon-pink:hover{
+    background-color: #E39281 !important;
     border: 0px solid #403d38 !important;
     color: #fafafa !important;
 }
@@ -428,7 +439,7 @@
 
     
 .tabs2{
-    background-color:#FFFFF5;
+    background-color:#ffffff;
     padding-top:30px;
     padding-bottom:30px;
 }
@@ -454,7 +465,7 @@
     border-color: #dee2e6 #dee2e6 #FFFFF5 !important;
 }
   .tabs{
-    background-color: #FFFFF5;
+    background-color: #ffffff;
     padding-top:30px;
     padding-bottom:30px;
   }

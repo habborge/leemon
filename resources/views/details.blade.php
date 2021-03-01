@@ -139,14 +139,14 @@
                                                 @if (($prod_info->webquantity - session('cart')[$prod_info->id]["quantity"]) > 0)
                                                     <div id="nodis-button" class="col-xl-auto">
                                                         <div class="row">
-                                                            <button id="" class="btn btn-leemon-green update-cart"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity - session('cart')[$prod_info->id]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</button>
+                                                            <button id="" class="btn btn-leemon-pink update-cart"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity - session('cart')[$prod_info->id]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</button>
                                                         </div>
                                                     </div>
                                                 @endif
                                             @else
                                                 <div id="nodis-button" class="col-xl-auto">
                                                     <div class="row">
-                                                        <button id="" class="btn btn-leemon-green update-cart mr-1" data-cart="1"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
+                                                        <button id="" class="btn btn-leemon-pink update-cart mr-1" data-cart="1"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
                                                     </div>
                                                 </div>
                                             @endif  
@@ -300,13 +300,13 @@
                                 </h6> 
                                 <span class="brand-font2"><b>$ {{number_format($similar->price, 0)}} COP </b></span><br><br>
                                                  
-                                    {{-- <button id="" class="btn btn-sm btn-leemon-green update-cart" data-cart="2"  data-id="{{ $similar->proId }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button> --}}
+                                    {{-- <button id="" class="btn btn-sm btn-leemon-pink update-cart" data-cart="2"  data-id="{{ $similar->proId }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button> --}}
 
                                 @if (isset(session('cart')[$similar->proId])) 
                                     @if (($similar->webquantity - session('cart')[$similar->proId]["quantity"]) > 0)
                                         <div id="nodis-button" class="col-xl-auto">
                                         <div class="row">
-                                            <button id="" class="btn btn-sm btn-leemon-green update-cart btn-block" data-cart="2" data-id="{{ $similar->proId }}" data-dif="{{ $similar->webquantity - session('cart')[$similar->proId]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
+                                            <button id="" class="btn btn-sm btn-leemon-pink update-cart btn-block" data-cart="2" data-id="{{ $similar->proId }}" data-dif="{{ $similar->webquantity - session('cart')[$similar->proId]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
                                         </div>
                                         </div>
                                     @else
@@ -317,7 +317,7 @@
                                 @else
                                     <div id="nodis-button" class="col-xl-auto">
                                         <div class="row">
-                                        <button id="" class="btn btn-sm btn-leemon-green update-cart btn-block"  data-id="{{ $similar->proId }}" data-dif="{{ $similar->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
+                                        <button id="" class="btn btn-sm btn-leemon-pink update-cart btn-block"  data-id="{{ $similar->proId }}" data-dif="{{ $similar->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
                                         </div>
                                     </div>
                                 @endif
