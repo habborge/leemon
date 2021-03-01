@@ -45,12 +45,11 @@
               <div class="aline-title col-md-12">
                 <h3 class="aline-span">{{ $catTitle }}</h3>
               </div>
-              <div class=" col-md-12">
-                
-                  <div class="row">
+              <div class="col-md-12">
+                <div class="row">
                     @foreach ($cat_pri as $category)
                     
-                      <div class="col-md-4 category_style">
+                      <div class="col-6 col-md-4 category_style">
                         <a href="/categories/{{ str_replace(" ", "-",$category->name) }}/{{ $category->id }}">
                           <picture>
                             <source type="image/webp"  srcset="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/categories/cat_{{ $category->id }}.webp">
@@ -104,7 +103,7 @@
                           <span class="brand-font2"><b>$ {{number_format($product->price, 0)}} COP</b></span><br><br>
                           <!-- <a href="/product/{{$product->id}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
                           {{-- <a href="{{ url('add-to-cart/'.$product->id) }}">
-                            <button type="button" class="btn btn-sm btn-leemon-green">
+                            <button type="button" class="btn btn-sm btn-leemon-pink">
                               <i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito
                             </button>
                           </a> --}}
@@ -112,7 +111,7 @@
                             @if (($product->webquantity - session('cart')[$product->id]["quantity"]) > 0)
                               <div id="nodis-button" class="col-xl-auto">
                                 <div class="row">
-                                  <button id="" class="btn btn-sm btn-leemon-green update-cart btn-block"  data-id="{{ $product->id }}" data-dif="{{ $product->webquantity - session('cart')[$product->id]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
+                                  <button id="" class="btn btn-sm btn-leemon-pink update-cart btn-block"  data-id="{{ $product->id }}" data-dif="{{ $product->webquantity - session('cart')[$product->id]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
                                 </div>
                               </div>
                             @else
@@ -123,7 +122,7 @@
                           @else
                             <div id="nodis-button" class="col-xl-auto">
                               <div class="row">
-                                <button id="" class="btn btn-sm btn-leemon-green update-cart btn-block"  data-id="{{ $product->id }}" data-dif="{{ $product->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
+                                <button id="" class="btn btn-sm btn-leemon-pink update-cart btn-block"  data-id="{{ $product->id }}" data-dif="{{ $product->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
                               </div>
                             </div>
                           @endif 
@@ -178,7 +177,7 @@
                               </h6> 
                               <span class="brand-font2"><b>$ {{number_format($product2->price, 0)}} COP</b></span><br><br>
                               <!-- <a href="/product/{{$product2->id}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
-                              <a href="{{ url('add-to-cart/'.$product2->id) }}"> <button type="button" class="btn btn-sm btn-leemon-green"><i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito</button></a>
+                              <a href="{{ url('add-to-cart/'.$product2->id) }}"> <button type="button" class="btn btn-sm btn-leemon-pink"><i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito</button></a>
                             </div>
                           </div>
                         </div>
@@ -230,7 +229,7 @@
                               <div class="col-md-12 button-topline">
                                 <div class="row">
                                   <a href="{{ url('add-to-cart/') }}">
-                                    <button type="button" class="btn btn-leemon-green">
+                                    <button type="button" class="btn btn-leemon-pink">
                                       <i class="czi-cart font-size-sm mr-1"></i>Comprar Ahora
                                     </button>
                                   </a>
@@ -270,7 +269,7 @@
                               <div class="col-md-12 button-topline">
                                 <div class="row">
                                   <a href="{{ url('add-to-cart/') }}">
-                                    <button type="button" class="btn btn-leemon-green">
+                                    <button type="button" class="btn btn-leemon-pink">
                                       <i class="czi-cart font-size-sm mr-1"></i>Comprar Ahora
                                     </button>
                                   </a>
