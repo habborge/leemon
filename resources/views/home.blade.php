@@ -49,7 +49,7 @@
                 <div class="row">
                     @foreach ($cat_pri as $category)
                     
-                      <div class="col-6 col-md-12 category_style">
+                      <div class="col-6 col-md-4 category_style">
                         <a href="/categories/{{ str_replace(" ", "-",$category->name) }}/{{ $category->id }}">
                           <picture>
                             <source type="image/webp"  srcset="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/categories/cat_{{ $category->id }}.webp">
