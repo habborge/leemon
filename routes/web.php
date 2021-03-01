@@ -35,7 +35,7 @@ Route::get('/products/{gfather}/{father}/{son}', 'ProductController@groupSon');
 Route::get('/products/{gfather}/{father}/{son}/{brand}', 'ProductController@groupByBand');
 Route::get('/products/{gfather}','ProductController@groupGfa');
 Route::get('/categories/{category}/{id}', 'ProductController@groupCategory');
-
+Route::get('/category/{category}/{id}/{subcategory}/{subid}', 'ProductController@groupSubCategory');
 
 // Landing page
 Route::get('/giveaway/registry', 'GiveawayController@index');

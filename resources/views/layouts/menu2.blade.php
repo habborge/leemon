@@ -26,8 +26,9 @@
                                                 </div>   
                                                 <div class="row-mega">
                                                     @foreach ($item['submenu'] as $submenu)
+                                                    
                                                         @if ($submenu['submenu'] == [])
-            
+                                                        <div class="columna columna-{{ $item['code'] }}"><h3 class="title-tam2">{{ $submenu['name'] }}</h3></div>
                                                         @else
                                                        
                                                             <div class="columna columna-{{ $item['code'] }}">
