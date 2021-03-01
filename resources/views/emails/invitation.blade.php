@@ -1,5 +1,5 @@
 @component('mail::message')
-# Tu amigo <span style="color: rgb(45, 77, 146)">{{ucwords($member_name)}}</span> Te ha enviado un producto que te interesa.
+# Tu amigo <span style="color: rgb(45, 77, 146)">{{ucwords($member_name)}}</span> Te ha enviado un producto que te puede interesar.
 <hr class="">
 <div class="col-12">
     <a href="{{ $product_url }}">

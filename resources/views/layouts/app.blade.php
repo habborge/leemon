@@ -73,7 +73,41 @@
     #nodis{
         display: none;
     }
-     
+    #cajacookies {
+            box-shadow: 0px 0px 5px 5px #c1c1c185;
+            background-color: #000000c7;
+            color: #fff;
+            padding: 15px 30px;
+            margin-bottom: 0px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 999;
+            text-align: center !important;
+        }
+    
+        #cajacookies button {
+            color: #fff;
+        }
+        #cajacookies button:hover {
+            color: #fff;
+            border-color: #c49703;
+            background: #c49703;
+        }
+        .btn-success {
+            color: #fff;
+            background-color: #c49703;
+            border-color: #c49703;
+        }
+        #cajacookies a:hover {
+            color: #fff !important;
+            text-decoration: underline !important;
+        }
+        #cajacookies a {
+            font-weight: bold;
+            text-decoration: underline !important;
+            color: #a56b03;
+        }
 </style>
 <body>
     <div id="app">
@@ -95,7 +129,7 @@
                             </div>
                         </div>
                         {{-- 2 --}}
-                        <div id="two" class="col-12 col-md-7 mr-auto">
+                        <div id="two" class="col-12 col-md-6 mr-auto">
                             <div class="row">
                                 <form  name="form" id="form" action="/result" class="search-form" method="GET">
                                     @csrf
@@ -118,7 +152,7 @@
                             </div>
                         </div>
                         {{-- 3 --}}
-                        <div id="three" class="col-2 col-md-2">
+                        <div id="three" class="col-2 col-md-3">
                             <div class="row text-center">
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                     <!-- Left Side Of Navbar -->
@@ -397,7 +431,18 @@
     <noscript>
         <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1886361894716538&ev=PageView&noscript=1" />
     </noscript>
-    <!-- End Facebook Pixel Code -->
-    
+  <!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/603920d2385de407571a73b1/1evfigdno';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Tawk.to Script-->
 </body>
 </html>

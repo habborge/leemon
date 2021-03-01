@@ -18,16 +18,45 @@ class MemberController extends Controller
         if (Auth::user()){
             $userEmail = Auth::user()->email;
             $emailVerified = Auth::user()->email_verified;
-        
+            $emailSendAt = Auth::user()->email_send_at;
+            
+            
             if($emailVerified == 0){
-                $random = rand(100000, 9999999);
-                $user = User::where('email', $userEmail)->first();
-                $user->code_verify = $random;
-                $user->save();
-                $sending = Mail::to($userEmail)->send(new VerifyEmail($random));
+                $sw = 0;
+                $now = new \DateTime();
+                $today = $now->format('Y-m-d H:i:s');
 
-                return view('emailVerify', [
+                if (!empty($emailSendAt)){
+                    $minutes = (strtotime($emailSendAt)-strtotime($today))/60;
+                    $minutes = abs($minutes); 
+                    //$minutes = floor($minutes);
+                    $seconds = ($minutes * 60);
                     
+                    if ($seconds > 60){
+                        $seconds = 60;
+                        $sw = 1;
+                    }else{
+                        $seconds = 60 - $seconds;
+                    }
+                }else{
+                    $seconds = 1 * 60;
+                    $sw = 1;
+                }
+                
+                if ($sw == 1){
+                    
+                    $random = rand(100000, 9999999);
+                    $user = User::where('email', $userEmail)->first();
+                    $user->code_verify = $random;
+                    $user->email_send_at = $today;
+                    $user->save();
+                    $sending = Mail::to($userEmail)->send(new VerifyEmail($random));
+
+                }
+                
+                return view('emailVerify', [
+                      'sw'  => $sw,
+                      'seconds' => $seconds
                 ]);
 
             }else{

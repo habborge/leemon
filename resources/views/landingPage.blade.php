@@ -107,8 +107,8 @@
 						@csrf
 						<div class="features-header text-center">
 							<div class="container-sm">
-								<h2 class="section-title mt-0">¡Giveaway Terminado!</h2>
-								<p class="section-paragraph">¡Te deseamos suerte!<br><small>Fecha de Inicio: 24 de enero 2021<br>Fecha Final: 3 de febrero 2021</small></p>
+								<h2 class="section-title mt-0">¡Muy Pronto!</h2>
+								<p class="section-paragraph">¡Leemon Nutrición!</p>
 							</div>
 						</div>
 						
@@ -149,8 +149,8 @@
 						</div>--}}
 					</form> 
 					<div class="alert alert-success" role="alert">
-						<h4 class="alert-heading">¡Gracias por Participar!</h4>
-						<p>El Giveaway ha cerrado inscripciones. </p>
+						<h4 class="alert-heading">¡A la Espectativa!</h4>
+						
 						<hr>
 						<p class="mb-0">Muy pronto Leemon.com.co estará disponible online.</p>
 					</div>

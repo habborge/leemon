@@ -4,8 +4,8 @@
 <div class="container litlemargin">
     <div class="row justify-content-center">
         <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">{{ __('Iniciar Sesión') }}</div>
+            <div class="card card-rounded">
+                <div class="card-header card-round-header body-cart"><h4>{{ __('Iniciar Sesión') }}</h4></div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -58,7 +58,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-12 ">
-                                <button type="submit" class="btn btn-success btn-block">
+                                <button type="submit" class="btn btn-success btn-leemon-radius btn-sm btn-block">
                                     {{ __('Acceder') }}
                                 </button>
 

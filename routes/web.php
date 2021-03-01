@@ -27,7 +27,7 @@ Route::get('cart', 'ProductController@cart')->name('cart');
 Route::get('add-to-cart/{id}', 'ProductController@addToCart');
 Route::patch('update-cart', 'ProductController@update');
 Route::post('add-to-cart-quantity', 'ProductController@addToCartQuantity');
-Route::post('add-to-wishlist', 'ProductController@addToWishList');
+
 Route::delete('remove-from-cart', 'ProductController@remove');
 Route::get('/result', 'searchController@searchProducts');
 Route::get('/result/brand/{brand}/{searching}', 'searchController@searchProductsByBrand');
@@ -35,10 +35,7 @@ Route::get('/products/{gfather}/{father}/{son}', 'ProductController@groupSon');
 Route::get('/products/{gfather}/{father}/{son}/{brand}', 'ProductController@groupByBand');
 Route::get('/products/{gfather}','ProductController@groupGfa');
 Route::get('/categories/{category}/{id}', 'ProductController@groupCategory');
-
-// E-mail verification after registration.
-Route::post('/secure/verify/email', 'MemberController@verifyEmail');
-Route::get('/register/auth/email/verify', 'MemberController@sendEmailVerication');
+Route::get('/category/{category}/{id}/{subcategory}/{subid}', 'ProductController@groupSubCategory');
 
 // Landing page
 Route::get('/giveaway/registry', 'GiveawayController@index');
@@ -49,6 +46,15 @@ Route::get('/secure/methods/zp/response', 'ConfirmController@ConfirmTrans');
 
 // back to commerce from zonaPagos
 Route::get('/secure/methods/zp/back', 'ConfirmController@BackToCommerce');
+
+//politica de privacidad y tratamiento de datos
+Route::get('/terms/privacy-policy-and-data-processing', function () {
+    return view('terms.privacy');
+});
+
+
+// Política de Términos de Servicio, Política de Reembolsos y Devoluciones
+Route::get('/terms/service-policy-refound-and-return-policy', 'ConfirmController@BackToCommerce');
 
 Route::group([
     'middleware' => ['auth']
@@ -68,7 +74,10 @@ Route::group([
     Route::post('addresses/listchange', 'AddressController@addressChange');
     Route::get('/secure/delivery/address/verify', 'PurchaseControler@verifyAddress');
     
-
+    // E-mail verification after registration.
+    Route::post('/secure/verify/email', 'MemberController@verifyEmail');
+    Route::get('/register/auth/email/verify', 'MemberController@sendEmailVerication');
+    
     //------- Regions ------------------------------------------------
     Route::post('/region/dpt', 'regionController@dpt');
     Route::post('/region/city', 'regionController@city');
@@ -84,7 +93,10 @@ Route::group([
     Route::get('secure/method/payment/now', 'PaymentController@paymentProcess')->name('paymentnow');;
 
     //------- Send Email to friend -----------------------------------
-    Route::post('send-email-friend', 'SendingEmailController@sendToFriend');
+    Route::post('send-email-friend', 'SendingEmailController@sendToFriend'); 
+
+    //------- Wish list ----------------------------------------------
+    Route::post('add-to-wishlist', 'ProductController@addToWishList');
 });
 
 Auth::routes();

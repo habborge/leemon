@@ -1,13 +1,45 @@
 @extends('layouts.app')
 @section('custom-css')
     <link rel="stylesheet" href="/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="/css/intlTelInput.min.css">
 @endsection
 @section('content')
 <div class="container litlemargin">
     <div class="row justify-content-center">
+        <div class="md-stepper-horizontal orange">
+            {{-- <div class="md-step active done"> --}}
+            {{-- <div class="md-step active editable"> --}}
+            <div class="md-step active">
+              <div class="md-step-circle"><span>1</span></div>
+              <div class="md-step-title">Registro</div>
+              <div class="md-step-bar-left"></div>
+              <div class="md-step-bar-right"></div>
+            </div>
+            <div class="md-step">
+              <div class="md-step-circle"><span>2</span></div>
+              <div class="md-step-title">Verificación</div>
+              {{-- <div class="md-step-optional">Optional</div> --}}
+              <div class="md-step-bar-left"></div>
+              <div class="md-step-bar-right"></div>
+            </div>
+            <div class="md-step">
+              <div class="md-step-circle"><span>3</span></div>
+              <div class="md-step-title">Envío</div>
+              <div class="md-step-bar-left"></div>
+              <div class="md-step-bar-right"></div>
+            </div>
+            <div class="md-step">
+              <div class="md-step-circle"><span>4</span></div>
+              <div class="md-step-title">Pago</div>
+              <div class="md-step-bar-left"></div>
+              <div class="md-step-bar-right"></div>
+            </div>
+          </div>
+    </div>
+    <div class="row justify-content-center">
         <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">{{ __('Registro') }}</div>
+            <div class="card card-rounded">
+                <div class="card-header card-round-header body-cart"><h4>{{ __('Registro') }}</h4></div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
@@ -57,10 +89,11 @@
                                 </div>
                             </div> --}}
                         </div>
+                        <input id="callingcode" type="hidden" name="callingcode">
                         <div class="form-group row">
                              <div class="col-md-12">
-                                <label class="text-register" for="phone">Teléfono</label>
-                                <input type="text" class="form-control form-control-sm @error('phone')  is-invalid @enderror" name="phone" id="phone" placeholder="Ej: 4893848349" value="{{ old('phone') }}" required>
+                                <label class="text-register" for="phone">Teléfono</label><br>
+                                <input type="tel" class="form-control form-control-sm @error('phone')  is-invalid @enderror" name="phone" id="phone" placeholder="Ej: 4893848349" value="{{ old('phone') }}" required>
                                 <div class="invalid-feedback" role="alert">
                                     El número de Teléfono es requerido.
                                 </div>
@@ -110,7 +143,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-success btn-block">
+                                <button type="submit" class="btn btn-success btn-leemon-radius btn-sm btn-block">
                                     {{ __('Registra tu cuenta en Leemon') }}
                                 </button>
                             </div>
@@ -130,6 +163,7 @@
 @section('custom-js')
 <script src="https://www.google.com/recaptcha/api.js?render={{ env('RE_KEY') }}"></script>
 <script src="/js/jquery-ui.min.js" defer></script>
+<script src="/js/intlTelInput-jquery.min.js" defer></script>
 <script>
     grecaptcha.ready(function() {
     grecaptcha.execute('{{ env('RE_KEY') }}')    .then(function(token) {
@@ -155,6 +189,14 @@
         $('#phone').on('input', function () { 
             this.value = this.value.replace(/[^0-9]/g,'');
         });
+        $("#phone").intlTelInput({
+            initialCountry: "co",
+            preferredCountries: ["co", "us"],
+            // separateDialCode: true,
+        }).on('keyup', function () { 
+            $('#callingcode').val(($("#phone").intlTelInput("getSelectedCountryData").dialCode)); 
+        });;
+        
     });
 </script>        
 @endsection

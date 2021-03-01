@@ -33,7 +33,7 @@ class VerifyEmail extends Mailable
         $member = Auth::user()->name;
         
         return $this->markdown('emails.verification')
-        ->subject('Leemon Codigo de Verificación')
+        ->subject('Leemon Código de Verificación')
         ->with(['member_name' => $member
         ,'radomNum' => $this->random]);
     }

@@ -2,19 +2,60 @@
 @section('custom-css')
     <link rel="stylesheet" href="/css/jquery-ui.min.css">
     <link rel="stylesheet" href="/css/select2.min.css">
-    
+    <style>
+        select:required:invalid {
+            color: rgb(199, 199, 199);
+        }
+        option[value=""][disabled] {
+            display: none;
+        }
+        option {
+            color: black;
+        }
+    </style>
 @endsection
 @section('content')
 <div class="tabs">
     <div class="container">
         @if ($infosaved == 0)
+        <div class="row justify-content-center">
+            <div class="md-stepper-horizontal orange">
+                {{-- <div class="md-step active done"> --}}
+                {{-- <div class="md-step active editable"> --}}
+                <div class="md-step active done">
+                  <div class="md-step-circle"><span>1</span></div>
+                  <div class="md-step-title">Registro</div>
+                  <div class="md-step-bar-left"></div>
+                  <div class="md-step-bar-right"></div>
+                </div>
+                <div class="md-step active done">
+                  <div class="md-step-circle"><span>2</span></div>
+                  <div class="md-step-title">Verificación</div>
+                  {{-- <div class="md-step-optional">Optional</div> --}}
+                  <div class="md-step-bar-left"></div>
+                  <div class="md-step-bar-right"></div>
+                </div>
+                <div class="md-step active">
+                  <div class="md-step-circle"><span>3</span></div>
+                  <div class="md-step-title">Envío</div>
+                  <div class="md-step-bar-left"></div>
+                  <div class="md-step-bar-right"></div>
+                </div>
+                <div class="md-step">
+                  <div class="md-step-circle"><span>4</span></div>
+                  <div class="md-step-title">Pago</div>
+                  <div class="md-step-bar-left"></div>
+                  <div class="md-step-bar-right"></div>
+                </div>
+              </div>
+        </div>
             <form class="needs-validation" action="{{ route('saveinfo') }}" method="POST" name="formaut" id="formRegisterwithdrawal" novalidate>
                 @csrf
                 <input type="hidden" name="recaptcha_token" id="recaptcha_token">
                 <div class="card card-rounded">
-                    <div class="card-header col-md-12  card-round-header">
+                    <div class="card-header col-md-12 body-cart card-round-header">
                         <div class="">
-                            Dirección de Envío
+                            <h4>Dirección de Envío</h4>
                         </div>
                     </div>
                     
@@ -33,12 +74,6 @@
                             <div class="col-md-2"></div>
                             <div class="col-md-8 order-md-1">
                                 
-                                <div class="col-md-12">
-                                    <div class="row mb-5">
-                                        <h2>Dirección de Envío</h2>
-                                    </div>
-                                    
-                                </div>
                                 <div class="row">
                                     <div class="col-md-4 mb-3">
                                         <label class="text-register " for="country">País</label>
@@ -108,7 +143,7 @@
                                 <div class="row mb-3">
                                     
                                         <div class="col-md-3">
-                                            <select name="address_1" id="address_1" class="form-control @if ($errors->has('address_1'))  is-invalid @endif">
+                                            <select name="address_1" id="address_1" class="form-control @if ($errors->has('address_1'))  is-invalid @endif" required>
                                                 @if(!empty($completeRequest->address_1))
                                             <option value="{{ $completeRequest->address_1 }}">{{$completeRequest->address_1}}</option>
                                                 @endif
@@ -134,7 +169,7 @@
                                         
                                         <div class="col-md-3">
                                             
-                                            <select name="address_3" id="address_3" class="form-control @if ($errors->has('address_3'))  is-invalid @endif">
+                                            <select name="address_3" id="address_3" class="form-control @if ($errors->has('address_3'))  is-invalid @endif" required>
                                                 @if(!empty($completeRequest->address_3))
                                                     <option value="{{ $completeRequest->address_3 }}">{{$completeRequest->address_3}}</option>
                                                 @endif
@@ -183,14 +218,14 @@
                                 </div>
                                     <div class="col-md-12 mb-3 mt-2">
                                         
-                                        <input type="text" class="form-control" name="address_d" id="address_d" value="@if(!empty($completeRequest->address_d)){{$completeRequest->address_d}}@endif" placeholder="Ej: casa 1, Apto 101, Edificio ..." required>
+                                        <input type="text" class="form-control" name="address_d" id="address_d" value="@if(!empty($completeRequest->address_d)){{$completeRequest->address_d}}@endif" placeholder="Ej: casa 1, Apto 101, Edificio ...">
                                         <div class="invalid-feedback">
                                             Ingrese información de dirección.
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <label class="text-register" for="obs">Observaciónes</label>
-                                        <input type="text" class="form-control" name="obs" id="obs" value="@if(!empty($completeRequest->obs)){{$completeRequest->obs}}@endif" placeholder="Ej: No hay porteria, por favor llamar a celular" required>
+                                        <input type="text" class="form-control" name="obs" id="obs" value="@if(!empty($completeRequest->obs)){{$completeRequest->obs}}@endif" placeholder="Ej: No hay porteria, por favor llamar a celular" >
                                         <div class="invalid-feedback">
                                             Ingrese información adicional de la dirección.
                                         </div>
@@ -366,7 +401,7 @@
                                     <div class="row">
                                         <div class="col-md-2"></div>
                                         <div class="col-md-8">
-                                            <button class="btn btn-purchase btn-block" type="submit">Guardar Información y Continuar con el pago</button>
+                                            <button class="btn btn-purchase btn-block" type="submit">Guardar Información y Continuar con el Pago</button>
                                         </div>
                                         <div class="col-md-2"></div>
                                     </div>
@@ -437,6 +472,12 @@
             
         });
 
+        $("#address_1").change(function(){
+            $("#address_2").focus();
+        });
+        $("#address_3").change(function(){
+            $("#address_4").focus();
+        });
         // $('#country_e').change(function(){
         //     var countryId = $(this).val();
         //     bringDpts(countryId, "#dpt_e", 3);
@@ -445,6 +486,7 @@
         $('#dpt').change(function(){
             var dptId = $(this).val();
             bringCities(dptId, "#city", 2);
+            
         });
 
         $('#dpt_e').change(function(){
