@@ -1090,9 +1090,7 @@ option.one {color: #c7c7c7;}
         font-size: 18px;
         letter-spacing: .1em;
     }
-    #tabs3{
-        display: none;
-    }
+    
     #mobilinfo{
         display:inherit;
     }
