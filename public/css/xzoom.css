@@ -1,3 +1,5 @@
+
+@media (min-width: 1200px), (min-width: 992px), (min-width: 768px) {
 /* Compatibility styles for frameworks like bootstrap, foundation e.t.c */
 .xzoom-source img, .xzoom-preview img, .xzoom-lens img {
   display: block;
@@ -100,4 +102,5 @@
   font-size: 0.75em;
   font-weight: bold;
   padding: 10px;
+}
 }

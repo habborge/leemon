@@ -37,15 +37,15 @@
                                                 <h6>$ {{number_format($product->price, 0)}} COP </h6>
                                                 </div>
                                                 <!-- <a href="/product/{{$product->proId}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
-                                                {{-- <a href="{{ url('add-to-cart/'.$product->proId) }}"> <button type="button" class="btn btn-sm btn-leemon-green"><i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito</button></a> --}}
+                                                {{-- <a href="{{ url('add-to-cart/'.$product->proId) }}"> <button type="button" class="btn btn-sm btn-leemon-pink"><i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito</button></a> --}}
                                                 
-                                                {{-- <button id="" class="btn btn-sm btn-leemon-green update-cart"  data-id="{{ $product->proId }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button> --}}
+                                                {{-- <button id="" class="btn btn-sm btn-leemon-pink update-cart"  data-id="{{ $product->proId }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button> --}}
 
                                                 @if (isset(session('cart')[$product->proId])) 
                                                     @if (($product->webquantity - session('cart')[$product->proId]["quantity"]) > 0)
                                                         <div id="nodis-button" class="col-xl-auto">
                                                             <div class="row">
-                                                            <button id="" class="btn btn-sm btn-leemon-green update-cart btn-block"  data-id="{{ $product->proId }}" data-dif="{{ $product->webquantity - session('cart')[$product->proId]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
+                                                            <button id="" class="btn btn-sm btn-leemon-pink update-cart btn-block"  data-id="{{ $product->proId }}" data-dif="{{ $product->webquantity - session('cart')[$product->proId]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
                                                             </div>
                                                         </div>
                                                     @else
@@ -56,7 +56,7 @@
                                                 @else
                                                     <div id="nodis-button" class="col-xl-auto">
                                                     <div class="row">
-                                                        <button id="" class="btn btn-sm btn-leemon-green update-cart btn-block"  data-id="{{ $product->proId }}" data-dif="{{ $product->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
+                                                        <button id="" class="btn btn-sm btn-leemon-pink update-cart btn-block"  data-id="{{ $product->proId }}" data-dif="{{ $product->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
                                                     </div>
                                                     </div>
                                                 @endif 

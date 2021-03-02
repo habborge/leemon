@@ -53,7 +53,7 @@
     margin: 0;
 }
 .category{
-    font-size: 15px;
+    font-size: 13px;
 }
 .class-100001{
     /* display: inline !important; */
@@ -211,11 +211,13 @@
     border: 0px solid #403d38 !important;
     color: #ffffff !important;
     border-radius: 10px !important;
+    font-weight: bold !important;
 }
 .btn-leemon-pink:hover{
-    background-color: #E39281 !important;
+    background-color: #ca7362 !important;
     border: 0px solid #403d38 !important;
     color: #fafafa !important;
+    font-weight: bold !important;
 }
 .btn-leemon-back{
     background-color: #888887 !important;
@@ -486,14 +488,14 @@
   
   .tabs a{
     font-size:12px;
-    font-family: "AcuminVariableConcept";
+    font-family: "GothamBook";
     /* font-weight:700; */
     color:#fff;
     /* padding:5px; */
   }
 
   .tabs button{
-    font-family: "AcuminVariableConcept2";
+    font-family: "GothamBook";
     font-size: 14px;
   }
   
@@ -558,7 +560,7 @@
     color: #fcfcfc !important;
     /*border-radius: .25rem !important;*/
     margin-right: 5px;
-    font-family: "AcuminVariableConcept2";
+    font-family: "GothamBook";
     font-size: 12px;
     border-radius: 10px !important;
 }
@@ -711,7 +713,7 @@
     color: #333;
 }
 .brand-size{
-    font-family: "AcuminVariableConcept2";
+    font-family: "GothamBook";
     font-size: 12px;
 }
 .refinement li{
@@ -855,8 +857,8 @@ border-color: #646464 !important;
     margin-right: auto;
 }
 .aline-span{
-    color: #333;
-    background: #f8f9fa;
+    color: #606060;;
+    background: #ffffff;
     font-weight: 400;
     display: inline-block;
     position: relative;
@@ -867,6 +869,9 @@ border-color: #646464 !important;
 }
 .category_style{
     padding-bottom: 30px;
+}
+.text-leemon-color{
+    color: #606060;
 }
 
 .swal2-popup{
@@ -891,7 +896,7 @@ border-color: #646464 !important;
     color:rgb(214, 214, 214) !important;
 }
 option {
-    font-family: "AcuminVariableConcept2";
+    font-family: "GothamBook";
     font-size: 12px;
 }
 option.one {color: #c7c7c7;}
@@ -956,7 +961,7 @@ option.one {color: #c7c7c7;}
     background-color: rgb(33,150,243);
 }
 .md-stepper-horizontal .md-step.done .md-step-circle:before {
-    font-family:'FontAwesome';
+    font-family:'GothamBook';
     font-weight:100;
     content: "\f00c";
 }
@@ -971,7 +976,7 @@ option.one {color: #c7c7c7;}
     transform: scaleX(-1);
 }
 .md-stepper-horizontal .md-step.editable .md-step-circle:before {
-    font-family:'FontAwesome';
+    font-family:'GothamBook';
     font-weight:100;
     content: "\f040";
 }
@@ -1016,6 +1021,12 @@ option.one {color: #c7c7c7;}
     right:50%;
     margin-right:20px;
 }
+.column-flex{
+    flex-direction: column !important;
+}
+#mobilinfo{
+    display: none;
+}
 /* ---------------------------------------------------------------------------------
    -- resposive design
 ---------------------------------------------------------------------------------- */
@@ -1053,4 +1064,46 @@ option.one {color: #c7c7c7;}
         border-bottom-color: transparent;
         border-bottom-color: #DDDDDD;
     }
+
+    .column-flex{
+        flex-direction: row !important;
+    }
+
+    .tabs li{
+        
+        margin: 0 auto;
+    }
+    .tabs .tab-pane {
+        margin: 0 auto;
+    }
+    .img-tam2 {
+        max-width: 300px;
+    }
+    .aline-span {
+        color: #606060;
+        background: #ffffff;
+        font-weight: 400;
+        display: inline-block;
+        position: relative;
+        top: 4px;
+        padding: 0 10px;
+        font-size: 18px;
+        letter-spacing: .1em;
+    }
+    #tabs3{
+        display: none;
+    }
+    #mobilinfo{
+        display:inherit;
+    }
+    .h3color {
+        color: #4a8b41;
+        text-align: center;
+    }
+
+    .btn-width{
+        width: 100%;
+        height: 40px;
+    }
+
 }

@@ -28,8 +28,9 @@
             </div> 
             <div class="tabs col-md-12">
                 <div class="row">
-                    <div class="col-xl-1 xzoom-thumbs">
-                        <ul class="nav nav-pills nav-stacked flex-column">
+                    {{-- small images --}}
+                    <div id="one_details" class="col-12 col-xl-1 xzoom-thumbs">
+                        <ul class="nav nav-pills nav-stacked column-flex">
                         <li class="active card-rounded">
                             <a href="#tab_a" data-toggle="pill">
                                 <img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}" class="img-tam xzoom-gallery_" alt="" xpreview="../{{ $prod_info->img1 }}">
@@ -45,8 +46,10 @@
                             {{-- <li><a href="#tab_b"  data-toggle="pill"><img src="../{{ $prod_info->img2 }}" class="img-tam" alt=""></a></li> --}}
                         </ul>
                     </div>
-                    <div class="col-xl-5">
-                        <div class="tab-content" id="father">
+
+                    {{-- big images --}}
+                    <div id="two_details" class="col-12 col-xl-5 text-center">
+                        <div class="row tab-content" id="father">
                             <div class="tab-pane active bg-white" id="tab_a">
                                 <img id="xzoom-default" src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}" class="img-tam2 xzoom card-rounded" xoriginal="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}" alt="">
                             </div>
@@ -62,12 +65,12 @@
                         </div>
                     </div>
                     
-                    <div class="col-xl-6">
+                    <div id="three_details" class="col-12 col-xl-6">
                         <div>
                             <form action="{{ route('generateimg') }}" method="POST" name="formaut" id="formRegisterwithdrawal">
                                 @csrf
                                 <div class="form-group">
-                                   <h2><small class="info-small">{{ $prod_info->brand }}</small><br>{{ $prod_info->name }}</h2>
+                                   <h2><small class="info-small font-black">{{ $prod_info->brand }}</small><br>{{ $prod_info->name }}</h2>
                                   <hr class="mb-4">
                                 </div>
                                 <div class="form-group">
@@ -139,14 +142,14 @@
                                                 @if (($prod_info->webquantity - session('cart')[$prod_info->id]["quantity"]) > 0)
                                                     <div id="nodis-button" class="col-xl-auto">
                                                         <div class="row">
-                                                            <button id="" class="btn btn-leemon-pink update-cart"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity - session('cart')[$prod_info->id]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</button>
+                                                            <button id="" class="btn btn-leemon-pink update-cart btn-width"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity - session('cart')[$prod_info->id]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</button>
                                                         </div>
                                                     </div>
                                                 @endif
                                             @else
                                                 <div id="nodis-button" class="col-xl-auto">
                                                     <div class="row">
-                                                        <button id="" class="btn btn-leemon-pink update-cart mr-1" data-cart="1"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
+                                                        <button id="" class="btn btn-leemon-pink update-cart mr-1 btn-width" data-cart="1"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
                                                     </div>
                                                 </div>
                                             @endif  
@@ -228,9 +231,13 @@
                     </div>
                 </div>
             </div>
-            <div class="tabs3 col-md-12">
+            <div class="col-md-12 col-12">
                 <hr class="mb-4">
-                <h3 class="h3color">Sobre este Articulo <small>(Información suministrada por el Proveedor)</small></h3> <br>
+                <h3 class="h3color">Sobre este Articulo<br> <small>(Información suministrada por el Proveedor)</small></h3> <br>
+            </div>
+            {{-- pc resolution --}}
+            <div id="tabs3" class="tabs3 col-md-12">
+                
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
                       <a class="nav-link active" id="desc-tab" data-toggle="tab" href="#desc" role="tab" aria-controls="desc" aria-selected="true">Descripción</a>
@@ -268,6 +275,84 @@
                     </div>
                 </div>
             </div>
+            {{-- mobil resolution --}}
+            
+            <div id="mobilinfo" class="col-md-12">
+                
+                <div class="" style="width: 100%">
+                    <div class="accordion accord-width" id="accordionExample">
+                        <div class="card col-md-12 col-12">
+                            <a class="text-left a-size-methods" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="width: 100%">
+                                <div class="card-header row" id="headingOne"><div class="col-6 col-md-6 font-black text-leemon-color"><div class="row">Descripción</div></div><div class="col-6 col-md-6"><div class="row float-right">Ver Más</div></div></div>
+                            </a>
+                            <div class="row">
+                                <div id="collapseOne" class="col-md-12 collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                    <div class="row">
+                                        <div class="card-body card-body-yellow card-round-footer">
+                                            
+                                            <p class="info-small">
+                                                {{ $prod_info->description }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card col-md-12">
+                            <a class="text-left a-size-methods" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" style="width: 100%">
+                                <div class="card-header row" id="headingTwo"> <div class="col-6 col-md-6 font-black text-leemon-color"><div class="row">Características</div></div><div class="col-6 col-md-6"><div class="row float-right">Ver Más</div></div> </div>
+                            </a>
+                            <div class="row">
+                                <div id="collapseTwo" class="col-md-12 collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                    <div class="row">
+                                        <div class="card-body card-body-yellow card-round-footer">
+                                            
+                                            <p class="info-small">
+                                                {{ $prod_info->characteristics }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card col-md-12">
+                            <a class="text-left a-size-methods" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree" style="width: 100%">
+                                <div class="card-header row" id="headingThree"><div class="col-6 col-md-6 font-black text-leemon-color"><div class="row">Ingredientes</div></div><div class="col-6 col-md-6"><div class="row float-right">Ver Más</div></div></div>
+                            </a>
+                            <div class="row">
+                                <div id="collapseThree" class="col-md-12 collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                    <div class="row">
+                                        <div class="card-body card-body-yellow card-round-footer">
+                                            
+                                            <p class="info-small">
+                                                {{ $prod_info->ingredients }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card col-md-12">
+                            <a class="text-left a-size-methods" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour" style="width: 100%">
+                                <div class="card-header row" id="headingFour"><div class="col-6 col-md-6 font-black text-leemon-color"><div class="row">Indicaciones de uso</div></div><div class="col-6 col-md-6"><div class="row float-right">Ver Más</div></div></div>
+                            </a>
+                            <div class="row">
+                                <div id="collapseFour" class="col-md-12 collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                                    <div class="row">
+                                        <div class="card-body card-body-yellow card-round-footer">
+                                            <p class="info-small">
+                                                {{ $prod_info->use }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            {{--  --}}
         </div>
     </div><br>
     <div class="container">
@@ -353,11 +438,17 @@
 
     $(document).ready(function(){
         var max = 0;
-        $(".xzoom, #xzoom-default").xzoom({tint: '#333', Xoffset: 15, position: 'right' });
-        $(".xzoom_0, #xzoom-default_0").xzoom({tint: '#333', Xoffset: 15, position: 'right' });
-        $(".xzoom_1, #xzoom-default_1").xzoom({tint: '#333', Xoffset: 15, position: 'right' });
-        $(".xzoom_2, #xzoom-default_2").xzoom({tint: '#333', Xoffset: 15, position: 'right' });
-        $(".xzoom_3, #xzoom-default_3").xzoom({tint: '#333', Xoffset: 15, position: 'right' });
+
+        if ($(window).width() > 600){
+            $(".xzoom, #xzoom-default").xzoom({tint: '#333', Xoffset: 15, position: 'right' });
+            $(".xzoom_0, #xzoom-default_0").xzoom({tint: '#333', Xoffset: 15, position: 'right' });
+            $(".xzoom_1, #xzoom-default_1").xzoom({tint: '#333', Xoffset: 15, position: 'right' });
+            $(".xzoom_2, #xzoom-default_2").xzoom({tint: '#333', Xoffset: 15, position: 'right' });
+            $(".xzoom_3, #xzoom-default_3").xzoom({tint: '#333', Xoffset: 15, position: 'right' });
+        }
+
+        
+        
         
          $(function() {
             var $a = $(".tabs li");

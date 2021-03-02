@@ -30,13 +30,15 @@
 </head>
 <style>
     @font-face {
-        font-family: "AcuminVariableConcept2";
-        src: url("{{ env('APP_URL')}}/css/AcuminVariableConceptCondens.otf") format('opentype');
+        font-family: "GothamBook";
+        src: url("{{ env('APP_URL')}}/css/GothamBook.ttf") format('truetype');
     }
+
     @font-face {
-        font-family: "AcuminVariableConcept";
-        src: url("{{ env('APP_URL') }}/css/AcuminVariableConcept.otf") format('opentype');
+        font-family: "Gotham-Black";
+        src: url("{{ env('APP_URL')}}/css/Gotham-Black.otf") format('opentype');
     }
+
     #loading_web{
         position: absolute;
         top: 0;
