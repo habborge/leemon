@@ -232,12 +232,12 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <hr class="mb-4">
-                <h3 class="h3color">Sobre este Articulo<br> <small>(Información suministrada por el Proveedor)</small></h3> <br>
+                
             </div>
             {{-- pc resolution --}}
             <div id="tabs3" class="tabs3 col-md-12">
-                
+                <hr class="mb-4">
+                <h3 class="h3color">Sobre este Articulo<br> <small>(Información suministrada por el Proveedor)</small></h3> <br>
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
                       <a class="nav-link active" id="desc-tab" data-toggle="tab" href="#desc" role="tab" aria-controls="desc" aria-selected="true">Descripción</a>
