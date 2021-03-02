@@ -118,7 +118,7 @@
                 <div class="col-12 col xl-12">
                     <div class="row ancho">
                         {{-- 1 --}}
-                        <div id="one" class="col-6 col-md-2">
+                        <div id="one" class="col-7 col-md-2">
                             <div class="row">
                                 <button  onclick="openNav()" class="navbar-toggler" type="button" data-toggle="" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="{{ __('Toggle navigation') }}">
                                     <span class="navbar-toggler-icon"></span>
@@ -243,7 +243,7 @@
                             </div>
                         </div>
                         {{-- 4 --}}
-                        <div id="four" class="col-6 col-md-1">
+                        <div id="four" class="col-5 col-md-1">
                             <div class="row float-right">
                                 <div id="litlecart" class="main-section">
                                     <div class="dropdown justify-content-end d-flex">

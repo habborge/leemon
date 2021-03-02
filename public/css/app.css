@@ -11276,4 +11276,7 @@ a.text-dark:focus {
     order: 1;
     width: 100% !important;
   }
+  .line-right-cart{
+    border-right: 0px solid #dddddd !important;
+  }
 }
