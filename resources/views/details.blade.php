@@ -70,7 +70,7 @@
                             <form action="{{ route('generateimg') }}" method="POST" name="formaut" id="formRegisterwithdrawal">
                                 @csrf
                                 <div class="form-group">
-                                   <h2><small class="info-small font-black">{{ $prod_info->brand }}</small><br>{{ $prod_info->name }}</h2>
+                                   <h2 class="text-leemon-color"><small class="info-small font-black">{{ $prod_info->brand }}</small><br>{{ $prod_info->name }}</h2>
                                   <hr class="mb-4">
                                 </div>
                                 <div class="form-group">
