@@ -444,7 +444,6 @@
     background-color:#ffffff;
     padding-top:30px;
     padding-bottom:30px;
-    font-family: "GothamBook";
 }
 .tabs3 .tab-content{
     background-color: #ffffff;
@@ -490,8 +489,8 @@
   .tabs a{
     font-size:12px;
     font-family: "GothamBook";
-    /* font-weight:700; */
-    color:#fff;
+    /* font-weight:700; 
+    color:#fff;*/
     /* padding:5px; */
   }
 
