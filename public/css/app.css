@@ -11282,9 +11282,5 @@ a.text-dark:focus {
   .line-right-cart{
     border-right: 0px solid #dddddd !important;
   }
-  small,
-  .small {
-    font-size: 40% !important;
-    font-weight: 400 !important;
-  }
+  
 }
