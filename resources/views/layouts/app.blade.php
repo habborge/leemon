@@ -282,9 +282,9 @@
                                                                 <img src="{{ $details['photo'] }}" />
                                                             </div>
                                                             <div class="col-lg-8 col-sm-8 col-8 cart-detail-product ">
-                                                                <div class="mt-3 mb-3">
+                                                                <div class="mt-2 mb-2">
                                                                     <p class="brand-font">{{ $details['name'] }}<br>
-                                                                        <span class="price cart-text-green"> $ {{ number_format($details['price'],0) }}</span> <span class="count"> Cantidad:{{ $details['quantity'] }}</span></p>
+                                                                        <span class="count"> Cantidad: {{ $details['quantity'] }}</span><span class="price cart-text-green font-black"> $ {{ number_format($details['price'],0) }}</span> </p>
                                                                 </div>
                                                                 
                                                             </div>

@@ -73,6 +73,9 @@ Route::group([
     Route::post('addresses/list', 'AddressController@addressList');
     Route::post('addresses/listchange', 'AddressController@addressChange');
     Route::get('/secure/delivery/address/verify', 'PurchaseControler@verifyAddress');
+
+    //------- new address from cart -------------------------------------------
+    Route::get('addresses/new/{value}', 'AddressController@create');
     
     // E-mail verification after registration.
     Route::post('/secure/verify/email', 'MemberController@verifyEmail');

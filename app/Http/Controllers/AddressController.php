@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Department;
 use App\Address;
+use App\Member;
 use Auth;
 
 class AddressController extends Controller
@@ -73,10 +75,19 @@ class AddressController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('profile.newaddress',[
+        if($request->value){
+            $value = $request->value;
+        }else{
+            $value = "nothing";
+        }
+        $country_id = 47;
+        $dpts = Department::where('country_id', $country_id)->orderBy('department', 'ASC')->get();
 
+        return view('profile.newaddress',[
+            'valueFrom' => $value,
+            'dpts' => $dpts
         ]);
     }
 
@@ -88,17 +99,16 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
+        $valueFrom = 0;
         $rules = [
             'address_1' => 'required',
             'address_2' => 'required',
             'address_3' => 'required',
             'address_4' => 'required',
+            
             'city'  => 'required', 
             'dpt' => 'required',  
             'country' => 'required',  
-            'zipcode' => 'required',
-            'contact' => 'required',
-            'phone' => 'required|numeric|digits_between:7,12',
         ];
 
         $p = Validator::make($request->all(), $rules);
@@ -108,11 +118,22 @@ class AddressController extends Controller
                 'completeRequest' => $request,
             ])->withErrors($p);
         }else{
+            $user_id = Auth::user()->id;
+            $info = Member::where('user_id', $user_id)->first();
+            
+            if ($request->valuefrom){
+                $valueFrom = 1; 
+            }
+
             $address = New Address();
-            $rs = $address->set($request);
+            $rs = $address->set($request, $info, $valueFrom);
 
             if($rs){
-                return redirect('addresses')->with('success', 'Usuario creado de manera Exitosa!!');
+                if ($request->valuefrom){
+                    return redirect('methods')->with('success', 'Dirección Agregada de amnera exitosa!!');
+                }else{
+                    return redirect('addresses')->with('success', 'Usuario creado de manera Exitosa!!');
+                }
             }else{
                 return view('profile.newaddress', [
                     'completeRequest' => $request,

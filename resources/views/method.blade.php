@@ -23,7 +23,7 @@
                 </div>
                 <div class="md-step active done">
                   <div class="md-step-circle"><span>3</span></div>
-                  <div class="md-step-title">Envío</div>
+                  <div class="md-step-title">Datos de Envío</div>
                   <div class="md-step-bar-left"></div>
                   <div class="md-step-bar-right"></div>
                 </div>
@@ -388,9 +388,13 @@
                                                                     </div>
                                                                     <div class="col-md-4">
                                                                         <div class="row float-right">
-                                                                            @if (session('tcc'))
-                                                                                {{ number_format(session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
-                                                                            @endif
+                                                                            @if ($delivery_cost == "free")
+                                                                                COP$ (Envío Gratis)
+                                                                            @else 
+                                                                                @if (session('tcc'))
+                                                                                    {{ number_format(session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
+                                                                                @endif
+                                                                            @endif       
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -405,8 +409,12 @@
                                                                     </div>
                                                                     <div class="col-md-4">
                                                                         <div class="row float-right">
-                                                                            @if (session('tcc'))
-                                                                                COP$ {{ number_format($total + session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
+                                                                            @if ($delivery_cost == "free")
+                                                                                COP$ {{ number_format($total,0) }}
+                                                                            @else    
+                                                                                @if (session('tcc'))
+                                                                                    COP$ {{ number_format($total + session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
+                                                                                @endif
                                                                             @endif
                                                                         </div>
                                                                     </div>
@@ -515,9 +523,13 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="row float-right">
-                                                    @if (session('tcc'))
-                                                        {{ number_format(session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
-                                                    @endif
+                                                    @if ($delivery_cost == "free")
+                                                        COP$ (Envío Gratis)
+                                                    @else 
+                                                        @if (session('tcc'))
+                                                            {{ number_format(session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
+                                                        @endif
+                                                    @endif  
                                                 </div>
                                             </div>
                                         </div>
@@ -533,8 +545,12 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="row float-right">
-                                                    @if (session('tcc'))
-                                                    COP$ {{ number_format($total + session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
+                                                    @if ($delivery_cost == "free")
+                                                        COP$ {{ number_format($total,0) }}
+                                                    @else    
+                                                        @if (session('tcc'))
+                                                            COP$ {{ number_format($total + session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
+                                                        @endif
                                                     @endif
                                                 </div>
                                             </div>

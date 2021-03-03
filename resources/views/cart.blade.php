@@ -42,13 +42,14 @@
                                                                     @if ($address[0]->details) {{ ucwords($address[0]->details) }}<br> @endif
                                                                     {{ ucwords($address[0]->city_d_id) }} ({{ ucwords($address[0]->department) }}), {{ ucwords($address[0]->country_master_name) }}
                                                                 </span>
-                                                                
+                                                                <br><a class="btn btn-leemon-back mt-2" data-toggle="modal" id="changeAddress">Cambiar Dirección</a>
                                                             </p>
+                                                            
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="row float-right">
-                                                            <a class="btn btn-leemon-back" data-toggle="modal" id="changeAddress">Cambiar Dirección</a>
+                                                            <a href="addresses/new/cart" class="btn btn-leemon-pink">Agregar Nueva Dirección</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -342,9 +343,9 @@
                                                     {{-- <span class="title-tam3">¿Eres nuevo en Leemon? </span><a class="title-tam2" href="{{ route('register') }}">{{ __('Unete aquí.') }}</a> --}}
                                                 @else
                                                     @if ($answer == 0)
-                                                        <a href="{{ url('purchase') }}" class="btn btn-leemon-info">Información de Usuario</a>
+                                                        <a href="{{ url('purchase') }}" class="btn btn-leemon-info">Datos de Envío</a>
                                                     @elseif ($answer == 1)
-                                                        <a href="{{ url('methods') }}" class="btn btn-leemon-method">Metodo de Pago</a>
+                                                        <a href="{{ url('methods') }}" class="btn btn-leemon-method">Resumen de Compra</a>
                                                     @endif
                                                 @endguest
                                             </div>
@@ -454,9 +455,9 @@
                                                 {{-- <span class="title-tam3">¿Eres nuevo en Leemon? </span><a class="title-tam2" href="{{ route('register') }}">{{ __('Unete aquí.') }}</a> --}}
                                             @else
                                                 @if ($answer == 0)
-                                                    <a href="{{ url('purchase') }}" class="btn btn-leemon-info btn-block">Información de Facturación</a>
+                                                    <a href="{{ url('purchase') }}" class="btn btn-leemon-info btn-block">Datos de Envío</a>
                                                 @elseif ($answer == 1)
-                                                    <a href="{{ url('methods') }}" class="btn btn-leemon-method btn-block">Metodo de Pago</a>
+                                                    <a href="{{ url('methods') }}" class="btn btn-leemon-method btn-block">Resumen de Compra</a>
                                                 @endif
                                             @endguest
                                         </div>
