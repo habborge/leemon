@@ -9,24 +9,22 @@
 <footer class="page-footer font-small unique-color-dark"  style="background-color: #403d38;">
     <div class="container">
         <div class="row py-3 align-items-center">
-            <div class="col-md-6">
+            <div class="col-6 col-md-6">
                 Leemon Team
             </div>
-            <div class="col-md-6 text-right">
+            <div class="col-6 col-md-6 text-right">
                 <a class="link-a" href="#">Regresar Arriba</a>
             </div>
         </div>
-        
     </div>
     <div style="background-color: #fba38f;">
       <div class="container">
-  
         <!-- Grid row-->
         <div class="row py-4 d-flex align-items-center">
   
           <!-- Grid column -->
           <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
-            <h6 class="mb-0">Get connected with us on social networks!</h6>
+            <h6 class="mb-0">Mantente Conectado con Leemon en las Redes Sociales!</h6>
           </div>
           <!-- Grid column -->
   
@@ -37,37 +35,32 @@
             <a id="facebook-f" class="fb-ic facebook-f">
               <i class="white-text mr-4"></i>
             </a>
+
             <!-- Twitter -->
             <a id="twitter" class="tw-ic">
               <i class="white-text mr-4"> </i>
             </a>
             
-            
             <!--Instagram-->
             <a id="instagram" class="ins-ic">
               <i class="white-text mr-4"> </i>
             </a>
-  <!-- Google +-->
-  <a id="google-plus" class="gplus-ic">
-    <i class="white-text mr-4"> </i>
-  </a>
+
+            <!-- Google +-->
+            <a id="google-plus" class="gplus-ic">
+              <i class="white-text mr-4"> </i>
+            </a>
           </div>
           <!-- Grid column -->
-  
         </div>
         <!-- Grid row-->
-  
       </div>
     </div>
   
     <!-- Footer Links -->
     <div class="container text-center text-md-left mt-5">
-  
       <!-- Grid row -->
       <div class="row mt-3">
-  
-        
-  
         <!-- Grid column -->
         <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mb-4 brand-font">
   
@@ -131,14 +124,16 @@
   
     </div>
     <!-- Grid column -->
-    <div class="col-12-col-md-12">
-      <div class="row justify-content-center">
-        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4 text-center">
-
-          <!-- Content -->
-          <img src="{{ env('APP_URL') }}/img/logo_leemon_small_white.png" alt="" class="leemonlogo">
-          <div class="footer-copyright text-center py-3">© 2020 Copyright:
-            leemon.com.co
+    <div class="container">
+      <div class="col-12-col-md-12">
+        <div class="row justify-content-center">
+          <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4 text-center">
+  
+            <!-- Content -->
+            <img src="{{ env('APP_URL') }}/img/logo_leemon_small_white.png" alt="" class="leemonlogo">
+            <div class="footer-copyright text-center py-3">© 2020 Copyright:
+              leemon.com.co
+            </div>
           </div>
         </div>
       </div>

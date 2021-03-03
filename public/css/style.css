@@ -1092,7 +1092,7 @@ option.one {color: #c7c7c7;}
     }
     
     #mobilinfo{
-        display:inherit;
+        display:block;
     }
     .h3color {
         color: #4a8b41;
@@ -1102,6 +1102,9 @@ option.one {color: #c7c7c7;}
     .btn-width{
         width: 100%;
         height: 40px;
+    }
+    #tabs3{
+        display: none;
     }
 
 }
