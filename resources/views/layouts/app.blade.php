@@ -31,7 +31,7 @@
 <style>
     @font-face {
         font-family: "GothamBook";
-        src: url("{{ env('APP_URL')}}/css/GothamBook.ttf") format('truetype');
+        src: url("{{ env('APP_URL')}}/css/GothamBook.otf") format('opentype');
     }
 
     @font-face {

@@ -479,7 +479,7 @@
   .tabs h3{
     font-size:20px;
     margin-top:10px;
-    margin-bottom:60px;
+    /* margin-bottom:60px; */
   }
   
   .tabs p{

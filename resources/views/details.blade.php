@@ -67,28 +67,55 @@
                     
                     <div id="three_details" class="col-12 col-xl-6">
                         <div>
-                            <form action="{{ route('generateimg') }}" method="POST" name="formaut" id="formRegisterwithdrawal">
-                                @csrf
-                                <div class="form-group">
-                                   <h2 class="text-leemon-color"><small class="info-small font-black">{{ $prod_info->brand }}</small><br>{{ $prod_info->name }}</h2>
-                                  <hr class="mb-4">
+                            {{-- <form action="{{ route('generateimg') }}" method="POST" name="formaut" id="formRegisterwithdrawal">
+                                @csrf --}}
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12">
+                                            <div class="">
+                                                <div class="info-small font-black">{{ $prod_info->brand }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-12">
+                                            <div class="">
+                                                <h3 class="text-leemon-color">{{ $prod_info->name }}</h3>
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                    <hr class="mb-4">
                                 </div>
-                                <div class="form-group">
-                                    <p>
+                                <div class="col-md-12">
+                                    {{-- <p>
                                         @if ($prod_info->prom == 1) 
                                         <h2><span class="badge badge-warning">Paga 2 Lleva 3</span></h2><br>
                                         @elseif ($prod_info->prom == 2)
                                         <h2> <span class="badge badge-success">2nd 50% off</span></h2><br>
                                         @endif
-                                    </p>
-                                    <p>
-                                        <span class="price-color">Referencia:</span> <br>{{ $prod_info->reference }}
-                                    </p>
-                                    <p>
-                                        <span class="price-color">Precio: </span><br>
-                                        <span class="price">Ahora $ {{ number_format($prod_info->price, 0) }} COP</span><br>
-                                        {{-- <span><del>Antes $ {{ number_format(($prod_info->price * 0.15) + $prod_info->price, 0) }} COP</del></span>  --}}
-                                    </p>
+                                    </p> --}}
+                                    <div class="row">
+                                        <div class="col-12 col-md-12">
+                                            <div>
+                                                <div class="price-color">Referencia:</div> 
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-12 mb-4">
+                                            <div>
+                                                {{ $prod_info->reference }}
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-12">
+                                            <div>
+                                                <div class="price-color">Precio:</div> 
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-12">
+                                            <div>
+                                                Ahora $ {{ number_format($prod_info->price, 0) }} COP
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
                                     <hr class="mb-4">
                                     {{-- <span class="price-color">Costo de Envio:</span><br> $ {{ number_format($prod_info->delivery_cost, 0) }} COP<br>
                                     <hr class="mb-4"> --}}
@@ -100,7 +127,7 @@
                                             
                                             @if (isset(session('cart')[$prod_info->id])) 
                                                 @if (($prod_info->webquantity - session('cart')[$prod_info->id]["quantity"]) > 0)
-                                                    <div class="qua col-xl-2">
+                                                    <div class="qua col-xl-3">
                                                         <span id="cant">
                                                             <input class="quantity" type="number" min="1" max="{{$prod_info->webquantity - session('cart')[$prod_info->id]["quantity"] }}" step="1" value="1">
                                                         </span>
@@ -112,7 +139,7 @@
                                                 @endif
 
                                             @else
-                                                <div class="qua col-xl-2">
+                                                <div class="qua col-xl-3">
                                                     <span id="cant">
                                                         <input class="quantity" type="number" min="1" max="{{ $prod_info->webquantity }}" step="1" value="1">
                                                     </span>
@@ -456,8 +483,6 @@
                 $a.removeClass("active");
                 $(this).addClass("active");
                 //alert($(this).attr('id'));
-               
-
             });
             
         });
