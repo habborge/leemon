@@ -344,7 +344,7 @@
           },
           600:{
               items:3,
-              nav:false,
+              nav:true,
               navText : ['<div class="carousel-control-prev-icon"></div>','<div class="carousel-control-next-icon"></div>']
           },
           1000:{

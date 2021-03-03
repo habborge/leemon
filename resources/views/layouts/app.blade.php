@@ -249,7 +249,7 @@
                             <div class="row float-right">
                                 <div id="litlecart" class="main-section">
                                     <div class="dropdown justify-content-end d-flex">
-                                        <a type="button" class="btn btn-info cart " data-toggle="dropdown">
+                                        <a type="" class="btn btn-info cart " data-toggle="dropdown">
                                             <span class="cart-size"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span><span id="cart_menu_num" class="">{{ count((array) session('cart')) }}</span>
                                         </a>
                                         @if(session('cart'))
