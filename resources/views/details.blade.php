@@ -565,7 +565,7 @@
             responsiveClass:true,
             responsive:{
                 0:{
-                    items:1,
+                    items:2,
                     nav:true,
                     navText : ['<div class="carousel-control-prev-icon"></div>','<div class="carousel-control-next-icon"></div>']
                 },
