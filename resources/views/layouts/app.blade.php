@@ -172,7 +172,7 @@
                                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" v-pre>
                                                     Inicia Sesión<span class="caret"></span>
                                                     </a> --}}
-                                                    <a class="nav-link brand-font" href="{{ route('login') }}">{{ __('Iniciar Sesión') }}</a>
+                                                    <a class="nav-link brand-font-login" href="{{ route('login') }}">{{ __('Iniciar Sesión') }}</a>
                                                     
                                                 {{-- <div class="dropdown-menu dropdown-menu-position-center dropdown-menu-center text-center" aria-labelledby="navbarDropdown">
                                                     <a class="btn btn-leemon-green btn-block mt-2" href="{{ route('login') }}">{{ __('Iniciar Sesión') }}</a>
@@ -183,7 +183,7 @@
                                                 {{--  --}}
                                             </li>
                                             <li class="nav-item dropdown li-width">
-                                            <a class="nav-link brand-font" href="{{ route('register')  }}">{{ __('Registrate') }}</a>
+                                            <a class="nav-link brand-font-login " href="{{ route('register')  }}">{{ __('Registrate') }}</a>
                                             </li>
                                         @else
                                             <li class="nav-item dropdown li-width">

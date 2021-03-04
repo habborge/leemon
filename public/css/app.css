@@ -534,6 +534,9 @@ h6,
 .brand-font{
   font-size: 0.7rem !important;
 }
+.brand-font-login{
+  font-size: 0.8rem !important;
+}
 .hr-color{
   border-color: #d1d1d1;
 }
