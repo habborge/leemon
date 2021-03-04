@@ -39,7 +39,7 @@
     
 
       {{-- MAIN CATEGORIES --}}
-      <div class="album py-5 ">
+      <div class="album pt-5 ">
         <div class="container">
             <div class="row">
               <div class="col-12 aline-title col-md-12">
@@ -72,7 +72,7 @@
       </div>
       {{-- end product of the month --}}
       {{-- product list --}}
-<div class="album py-5 ">
+<div class="album pt-4 ">
   <div class="container">
     <div class="row">
       <div class="col-12 aline-title col-md-12">
@@ -191,7 +191,7 @@
         </div>
       </div>
     </div> --}}
-    <div class="album py-5 ">
+    <div class="album pt-5 ">
       <div class="container">
           <div class="row">
             <div class="col-md-12">
@@ -205,8 +205,8 @@
     <div class="album py-5 ">
       <div class="container">
         <div class="row">
-          <div class="col-md-6">
-                <div class="row">
+          <div class="col-12 col-md-6">
+                <div class="row justify-content-center">
                   
                   <div class="card no-line-left line-right">
                     <div class="card-body">
@@ -218,10 +218,10 @@
                       </div>
                       <div class="col-md-12">
                           <div class="row">
-                            <div class="col-md-7">
+                            <div class="col-7 col-md-7">
                               <div class="col-md-12">
                                 <div class="row">
-                                  <p class="card-text">
+                                  <p class="card-text text-justify">
                                     Some quick example text to build on the card title and make up the bulk of the card's content.
                                   </p>
                                 </div>
@@ -236,7 +236,7 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="col-md-5 text-right">
+                            <div class="col-5 col-md-5 text-right">
                               <img src="/img/Garlic(1).png" class="img-responsive" width="120">
                             </div>
                           </div>
@@ -245,9 +245,9 @@
                   </div>
                 
                 </div>
-          </div>
-          <div class="col-md-6">
-                <div class="row">
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="row justify-content-center">
                   <div class="card no-line-right line-left">
                     <div class="card-body">
                       <div class="col-md-12">
@@ -258,10 +258,10 @@
                       </div>
                       <div class="col-md-12">
                           <div class="row">
-                            <div class="col-md-7">
+                            <div class="col-7 col-md-7">
                               <div class="col-md-12">
                                 <div class="row">
-                                  <p class="card-text">
+                                  <p class="card-text text-justify">
                                     Some quick example text to build on the card title and make up the bulk of the card's content.
                                   </p>
                                 </div>
@@ -278,7 +278,7 @@
                               
                               
                             </div>
-                            <div class="col-md-5 text-right">
+                            <div class="col-5 col-md-5 text-right">
                               <img src="/img/Garlic(1).png" class="img-responsive" width="120">
                             </div>
                           </div>

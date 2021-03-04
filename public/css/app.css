@@ -11285,5 +11285,10 @@ a.text-dark:focus {
   .line-right-cart{
     border-right: 0px solid #dddddd !important;
   }
-  
+
+  /* border pass fron right to bottom */
+  .line-right{
+    border-bottom: 1px solid #adb5bd !important;
+    width: 90%;
+  }
 }
