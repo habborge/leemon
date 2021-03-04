@@ -4,10 +4,9 @@
 @endsection
 @section('content')
 <div id="main" role="main" class="clearfix">
-    <div class="row" itemtype="" itemscope="">
-            
-        <img src="/img/ca_{{$gfather_id}}.jpg" alt="" width="100%" height="300px">
-</div>
+    <div itemtype="" itemscope="">
+        <img id="slideSection" src="/img/ca_{{$gfather_id}}.jpg" alt="" class="img-fluid d-block w-100" style="max-height: 300px">
+    </div>
     <div class="container no-padding-sm-xs">
         
         <div id="primary" class="primary-content col-md-9 col-sm-12 col-xs-12 pull-right no-padding-md no-padding-lg no-padding-sm-xs">
@@ -26,17 +25,19 @@
                                             <div class="card-body col-12 col-md-12">
                                                 <div class="row justify-content-center text-center">
                                                     <span class="brand-font font-black text-leemon-color">{{ucwords($product->brand)}} </span>
-                                                <div class="height-p"><h6>{{ucwords($product->proName)}} </h6></div>
+                                                    <div class="height-p">
+                                                        <h6>{{ucwords($product->proName)}} </h6>
+                                                    </div>
                                                 
-                                                    @if ($product->prom == 1) 
-                                                        <h6><span class="badge badge-warning">Paga 2 Lleva 3</span></h6> 
-                                                    @elseif ($product->prom == 2)
-                                                    <h6><span class="badge badge-success">2nd 50% off</span></h6> 
-                                                    @endif
+                                                        @if ($product->prom == 1) 
+                                                            <h6><span class="badge badge-warning">Paga 2 Lleva 3</span></h6> 
+                                                        @elseif ($product->prom == 2)
+                                                        <h6><span class="badge badge-success">2nd 50% off</span></h6> 
+                                                        @endif
                                                 
-                                               <div class="mt-2 mb-1">
-                                                <h6>$ {{number_format($product->price, 0)}} COP </h6>
-                                               </div>
+                                                    <div class="mt-2 mb-1">
+                                                        <h6>$ {{number_format($product->price, 0)}} COP </h6>
+                                                    </div>
                                                 <!-- <a href="/product/{{$product->proId}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
                                                 {{-- <a href="{{ url('add-to-cart/'.$product->proId) }}"> <button type="button" class="btn btn-sm btn-leemon-pink"><i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito</button></a> --}}
                                                 
@@ -55,10 +56,10 @@
                                                         </div>
                                                     @endif
                                                 @else
-                                                    <div id="nodis-button" class="col-xl-auto">
-                                                    <div class="row">
-                                                        <button id="" class="btn btn-sm btn-leemon-pink update-cart btn-block"  data-id="{{ $product->proId }}" data-dif="{{ $product->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
-                                                    </div>
+                                                    <div id="nodis-button" class="col-xl-auto" style="width: 95%;">
+                                                        <div class="row">
+                                                            <button id="" class="btn btn-sm btn-leemon-pink update-cart btn-block"  data-id="{{ $product->proId }}" data-dif="{{ $product->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
+                                                        </div>
                                                     </div>
                                                 @endif 
                                                 @guest

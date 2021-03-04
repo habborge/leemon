@@ -1113,6 +1113,9 @@ option.one {color: #c7c7c7;}
     #slide2{
         height: 200px;
     }
+    #slideSection{
+        height: 200px;
+    }
     .height-p{
         height: 80px;
     }
