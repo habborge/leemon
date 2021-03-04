@@ -529,7 +529,7 @@ h5,
 
 h6,
 .h6 {
-  font-size: 0.9rem;
+  font-size: 0.9rem !important;
 }
 .brand-font{
   font-size: 0.7rem !important;
@@ -11290,5 +11290,14 @@ a.text-dark:focus {
   .line-right{
     border-bottom: 1px solid #adb5bd !important;
     width: 90%;
+  }
+  .shadow-global {
+    width: 100%;
+    margin-right: 0px;
+  }
+
+  h6,
+  .h6 {
+    font-size: 1rem !important;
   }
 }

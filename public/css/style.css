@@ -1027,6 +1027,9 @@ option.one {color: #c7c7c7;}
 #mobilinfo{
     display: none;
 }
+.height-p{
+    height: 60px;
+}
 /* ---------------------------------------------------------------------------------
    -- resposive design
 ---------------------------------------------------------------------------------- */
@@ -1109,6 +1112,9 @@ option.one {color: #c7c7c7;}
 
     #slide2{
         height: 200px;
+    }
+    .height-p{
+        height: 80px;
     }
 
 }

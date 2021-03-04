@@ -19,10 +19,10 @@
                     <div class="col-md-12">
                         <div class="row">
                             @foreach ($products as $product)
-                                <div class="col-md-3">
+                                <div class="col-6 col-md-3">
                                     <div class="row">
                                         <div class="card mb-4 shadow-global bg-leemon-pro card-rounded">
-                                            <a href="/product/{{$product->proId}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $product->reference }}/{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product2" alt=""></a>
+                                            <a href="/product/{{$product->proId}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $product->reference }}/{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product2 img-fluid" alt=""></a>
                                             <div class="card-body text-center">
                                                 <span class="brand-font">{{ucwords($product->brand)}} </span>
                                                 <div style="height: 80px"><h6>{{ucwords($product->proName)}} </h6></div>
