@@ -1107,4 +1107,8 @@ option.one {color: #c7c7c7;}
         display: none;
     }
 
+    #slide2{
+        height: 200px;
+    }
+
 }

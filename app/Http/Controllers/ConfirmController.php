@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Mail\SendPurchase;
 use App\payment_error;
+use App\Order_detail;
+use App\Product;
 use App\Member;
 use App\Order;
 use DateTime;
@@ -188,6 +190,7 @@ class ConfirmController extends Controller
                                     // array($approval, $sw, $message);
                                     if ($result[0] == 1){
                                         $order_change = Order::approval_order($order->id);
+                                        $products_discount = $this->updateQuantity($order->id);
                                         $member = Member::select('user_id','firstname','lastname','email')->where('user_id', $order->user_id)->first();
                                         $sending = Mail::to($member->email)->send(new SendPurchase($order, $member, $rs));
                                     }else{
@@ -237,6 +240,7 @@ class ConfirmController extends Controller
                                         // array($approval, $sw, $message); var approval is 1 transaction was approved, if var approval is 0 was rejected
                                         if ($result[0] == 1){
                                             $order_change = Order::approval_order($order->id);
+                                            $products_discount = $this->updateQuantity($order->id);
                                             $order_status = 1;
                                             break;
                                         }else{
@@ -418,6 +422,18 @@ class ConfirmController extends Controller
             'response' => $dataTransaction
         ]);
 
+    }
+
+    private function updateQuantity($order_id){
+        $products = Order_detail::where('order_id', $order_id)->get();
+
+        foreach ($products as $product) {
+            $pro = Product::where('id', $product->id);
+            $value = $pro->quantity - $product->quantity;
+            
+            $pro->quantity = $value;
+            $pro->save();
+        }
     }
 
     

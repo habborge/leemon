@@ -17,7 +17,7 @@
         </ol>
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="img/promo.jpg" class="img-fluid d-block w-100" alt="...">
+            <img id="slide2" src="img/promo.jpg" class="img-fluid d-block w-100" alt="...">
           </div>
           {{-- <div class="carousel-item">
             <img src="img/promo_1B.jpg" class="img-fluid d-block w-100" alt="...">
