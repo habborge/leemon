@@ -11300,4 +11300,8 @@ a.text-dark:focus {
   .h6 {
     font-size: 1rem !important;
   }
+  .primary-content {
+    width: 100%;
+    border-left: 0px solid #cbcbcb;
+}
 }
