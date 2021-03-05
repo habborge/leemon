@@ -294,7 +294,7 @@ class ConfirmController extends Controller
 
     public function BackToCommerce(){
 
-        return redirect()->away("https://leemon.com.co/secure/methods/zp/back");
+        
         
         $message = "";
         $sw = 0;
