@@ -41,7 +41,7 @@
                             </tr>
                             <tr>
                             <td>Total Pagado</td>
-                            <td>$ {{ number_format($response[6], 2)}}</td>
+                            <td>$ {{ $response[6] }}</td>
                             </tr>
                         </tbody>
                     </table>
