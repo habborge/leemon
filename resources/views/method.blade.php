@@ -83,7 +83,7 @@
                                         <div class="row">
                                             <div class="col-12 col-md-12">
                                                 <div class="row">
-                                                    <div class="col-12 alert alert-danger" role="alert">
+                                                    <div class="col-12 alert alert-success" role="alert">
                                                         Ya has Utilizado un Voucher de Descuento!!
                                                     </div>
                                                 </div>
@@ -744,7 +744,7 @@
                 },
                 success:function(data){
                     if(data.status==200){
-                        window.reload();
+                        window.location.reload();
                     }else{ 
                         $('#loading_web2').hide(); 
                         $('#vouchermessage').text(data.message);

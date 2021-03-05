@@ -19,7 +19,7 @@ class VoucherController extends Controller
         ]);
         
         if ($p->fails()){
-            return response()->json(['status'=>505, 'message' => 'recapthca']);
+            return response()->json(['status'=>505, 'message' => 'El Voucher debe contener caracteres validos!!']);
         }else{
 
             $voucher = $request->voucher;
