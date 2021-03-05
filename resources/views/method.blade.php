@@ -57,7 +57,7 @@
                                                                     @endphp
                                                                     {{ $my_address }}, {{ $address->zipcode }} Código Postal<br>
                                                                     {{ ucwords($address->details) }}<br>
-                                                                    {{ ucwords($address->city_d_id) }} ({{ ucwords($address->department) }}), {{ ucwords($address->country_master_name) }}
+                                                                    {{ ucwords($address->dane_d) }} - {{ ucwords($address->city_d_id) }} ({{ ucwords($address->department) }}), {{ ucwords($address->country_master_name) }}
                                                                 </p>
                                                             </div>
                                                         
@@ -70,66 +70,55 @@
                                     
                                 </div>
                             </div>
-                            {{--<div class="col-md-12">
-                                <div class="row">
-                                    <div class="card col-md-12 card-rounded mb-3">
+                            
+                        @endif
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="card col-md-12 card-rounded mb-3">
+                                    <div class="card-header row card-round-header" id="headingOne"> 
+                                        Voucher de Descuento
+                                    </div>
+                                    <div class="card-body card-body-yellow card-round-footer">
+                                        @if (session('voucher'))
                                         <div class="row">
-                                            <div class="card-header col-md-12 card-round-header">Metodo de Pago</div>
-                                        </div>
-                                         
-                                        <div class="row">
-                                            <div class="card-body card-body-yellow card-round-footer">
-                                                 <div class="form-check">
-                                                    <div class="col-md-12">
-                                                        <div class="row">
-                                                            <div class="col-md-8">
-                                                                <div class="row">
-                                                                    <input class="form-check-input" type="radio" name="methodPay" id="TC" value="1">
-                                                                    <label class="form-check-label" for="TC">
-                                                                        Tarjeta de Credito
-                                                                        @if ($cardexist == 2)
-                                                                            terminada en ************{{ $card[0]->last4num }}
-                                                                        @else
-                                                                            <a href="/secure/methods/create" id="creditcard" class="btn btn-leemon-green btn-sm" type='button'>Agregar una Tarjeta</a>
-                                                                        @endif
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <div class="row float-right">
-                                                                    @if ($cardexist == 2)
-                                                                        <button class="btn btn-leemon-back btn-sm" data-toggle="modal" id="changeCard">Cambiar Tarjeta</button>
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                            <div class="col-12 col-md-12">
+                                                <div class="row">
+                                                    <div class="col-12 alert alert-danger" role="alert">
+                                                        Ya has Utilizado un Voucher de Descuento!!
                                                     </div>
-                                                    
-                                                    
-                                                </div> 
-                                                <hr>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="methodPay" id="PSE" value="2">
-                                                    <label class="form-check-label" for="PSE">
-                                                    PSE y tarjeta de Credito
-                                                    </label>
                                                 </div>
-                                                <hr>
-                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="methodPay" id="OTH" value="3">
-                                                    <label class="form-check-label" for="OTH">
-                                                    Otros metodos
-                                                    </label>
-                                                </div> 
-    
                                             </div>
                                         </div>
+                                        @else
+                                            <div class="row">
+                                                <div class="col-12 col-md-12">
+                                                    <div class="row">
+                                                        <div id="vouchermessage" class="col-12 alert alert-danger" role="alert">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="loading_web2">
+                                                    <img src="/img/preloader.gif" id="img_loading" alt="">
+                                                </div>
+                                                <div class="col-12 col-md-8">
+                                                    <div class="row">
+                                                        <label for="voucher" class="sr-only">Código de Descuento</label>
+                                                        <input type="text" class="form-control form-control-sm mr-1" id="voucher" name="voucher" placeholder="Código de Descuento" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4">
+                                                    <div class="row">
+                                                        <input type="hidden" name="recaptcha_token" id="recaptcha_token">
+                                                        <button id="sendcode" type="button" class="btn btn-primary mb-2 btn-sm">Confirmar Código</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
                                         
                                     </div>
                                 </div>
-                             </div>--}}
-                        @endif
-
+                            </div>
+                        </div>
                         <div class="card col-md-12 card-rounded">
                             <div class="row">
                                 <div class="card-header col-md-12 card-round-header">
@@ -282,15 +271,6 @@
                                                         
                                                         <div id="subtotal" data-th="Subtotal" class="col-4 col-md-4 text-right py-3">
                                                             <div class="col-md-12">
-                                                                {{-- <span class="nomargin">
-                                                                    <b>$ {{ number_format($details['price'] * $nq,0)}}</b><br>
-                                                                </span> 
-                                                                @if ($half > 0)
-                                                                    <span class="text-danger">Descuento $ {{ number_format($half,0) }}</span><br> 
-                                                                @elseif ($discount > 0)
-                                                                     <span class="text-danger">Descuento $ {{ number_format($discount,0) }}</span><br>
-                                                                @else
-                                                                @endif --}}
                                                                 <small><b>A pagar</b> $ {{ number_format(($details['price'] * $nq) - $half - $discount,0) }}</small>
                                                             </div>
                                                         </div>
@@ -309,21 +289,6 @@
                                     <div class="row">
                                         <div class="col-12 col-md-12">
                                             <div class="visible-xs">
-                                               
-                                                {{-- <div colspan="2" class="col-md-12 mb-3 hidden-xs">
-                                                    @if ($answer == 1)
-                                                        <div class="card bg-light mb-3 h-card">
-                                                            <div class="card-header">Información de Pago</div>
-                                                            <div class="card-body">
-                                                                <span class="info-small"><b>Cliente:</b>  {{ $card[0]->fullname }}<br>
-                                                                <b>Metodo de Pago:</b> Credit Card<br>
-                                                                <b>No de Tarjeta:</b> **********{{$card[0]->last4num}}<br>
-                                                                <b>vence:</b> {{ $card[0]->expiration }}<br></span>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div> --}}
-                                                
                                                 <div class="col-md-12 mt-4">
                                                     <div class="row">
                                                         <div class="card-title col-md-12 text-center">
@@ -390,6 +355,11 @@
                                                                         <div class="row float-right">
                                                                             @if ($delivery_cost == "free")
                                                                                 COP$ (Envío Gratis)
+
+                                                                            @elseif ($delivery_cost == "freeVoucher")
+                                                                                @if (session('voucher'))
+                                                                                    COP$ (Envío Gratis por Uso de Voucher No {{session('voucher')['voucher_id']}})
+                                                                                @endif
                                                                             @else 
                                                                                 @if (session('tcc'))
                                                                                     {{ number_format(session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
@@ -410,6 +380,8 @@
                                                                     <div class="col-md-4">
                                                                         <div class="row float-right">
                                                                             @if ($delivery_cost == "free")
+                                                                                COP$ {{ number_format($total,0) }}
+                                                                            @elseif ($delivery_cost == "freeVoucher")
                                                                                 COP$ {{ number_format($total,0) }}
                                                                             @else    
                                                                                 @if (session('tcc'))
@@ -516,15 +488,19 @@
                                     
                                     <div class="col-md-12">
                                         <div class="row">
-                                            <div class="col-md-8">
+                                            <div class="col-md-4">
                                                 <div class="row">
                                                     Envío:
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-8 text-right">
                                                 <div class="row float-right">
                                                     @if ($delivery_cost == "free")
                                                         COP$ (Envío Gratis)
+                                                    @elseif ($delivery_cost == "freeVoucher")
+                                                        @if (session('voucher'))
+                                                            (Envío Gratis por Uso de Voucher No {{session('voucher')['voucher_id']}})
+                                                        @endif
                                                     @else 
                                                         @if (session('tcc'))
                                                             {{ number_format(session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
@@ -546,6 +522,8 @@
                                             <div class="col-md-4">
                                                 <div class="row float-right">
                                                     @if ($delivery_cost == "free")
+                                                        COP$ {{ number_format($total,0) }}
+                                                    @elseif ($delivery_cost == "freeVoucher")
                                                         COP$ {{ number_format($total,0) }}
                                                     @else    
                                                         @if (session('tcc'))
@@ -601,6 +579,14 @@
 @include('modal.my_methods')
 @endsection
 @section('custom-js')
+<script src="https://www.google.com/recaptcha/api.js?render={{ env('RE_KEY') }}"></script>
+<script>
+    grecaptcha.ready(function() {
+    grecaptcha.execute('{{ env('RE_KEY') }}')    .then(function(token) {
+    document.getElementById("recaptcha_token").value = token;
+    }); 
+    });
+</script>
 <script type="text/javascript">
     // function submitForm(){
     //     var fullname = $("#cc_name").val();
@@ -740,6 +726,32 @@
         });
         $("#proccess2").click(function () {
             connectZonPagos();
+        });
+
+        $("#sendcode").click(function () {
+
+            var token = '{{ csrf_token() }}';
+            var voucherF = $("#voucher").val();
+            
+            $.ajax({
+                type:'POST',
+                dataType:'json',
+                data: { voucher: voucherF, recaptcha_token: $("#recaptcha_token").val()},
+                url:'secure/methods/verify/voucher',
+                headers: {'X-CSRF-TOKEN': token},
+                beforeSend: function(x){
+                    $('#loading_web2').show();
+                },
+                success:function(data){
+                    if(data.status==200){
+                        window.reload();
+                    }else{ 
+                        $('#loading_web2').hide(); 
+                        $('#vouchermessage').text(data.message);
+                        $('#vouchermessage').show();
+                    }  
+                }
+            });
         });
     });
 

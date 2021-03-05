@@ -100,6 +100,9 @@ Route::group([
 
     //------- Wish list ----------------------------------------------
     Route::post('add-to-wishlist', 'ProductController@addToWishList');
+
+    //------- Voucher verification -----------------------------------
+    Route::post('secure/methods/verify/voucher', 'VoucherController@voucherVerify');
 });
 
 Auth::routes();

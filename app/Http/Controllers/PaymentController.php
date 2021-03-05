@@ -105,10 +105,9 @@ class PaymentController extends Controller
                // if request->methodPay = 1 is credit card, 2 is PSE, 3 others 
                 if ($method == 1){
                     
-                    $member = Member::select('members.email', 'members.firstname','members.lastname','members.address', 'members.delivery_address', 'members.phone', 'members.city', 'members.dpt', 'members.country', 'members.n_doc', 'c.fullname','c.cardnumber','c.last4num', 'c.expiration', 'c.cvv', 'c.brand')
-                    ->join('creditcards as c', 'members.user_id', '=', 'c.user_id' )
+                    $member = Member::select('members.email', 'members.firstname','members.lastname','members.address', 'members.delivery_address', 'members.phone', 'members.city', 'members.dpt', 'members.country', 'members.n_doc')
                     ->where('members.user_id', $user_id)
-                    ->where('c.default', 1)->first();
+                    ->first();
 
                     $methodCode = env('METHOD_PSE');
 
@@ -156,8 +155,26 @@ class PaymentController extends Controller
 
                 session()->put('myorder', $orderId);
                 //new class to insert new order
-                $re = session()->get('tcc'); 
-                $totalFinal =  $total + $re->consultarliquidacionResult->total->totaldespacho;
+
+                if (session()->get('deliveryCost')){
+                    if (session('deliveryCost') == "freeVoucher"){
+                        if (session()->get('voucher')){
+                            
+                            $delivery_cost = session('voucher')['voucher_cost'];
+                            
+                        }
+                    }else if (session('deliveryCost') == "free"){
+                        $delivery_cost = 0;
+                    }else{
+                        if (session()->get('tcc')){
+                            $delivery_cost = session('tcc')->consultarliquidacionResult->total->totaldespacho;
+                        }
+                    }
+                }
+                
+                // $re = session()->get('tcc'); 
+                // $totalFinal =  $total + $re->consultarliquidacionResult->total->totaldespacho;
+                $totalFinal =  $total + $delivery_cost;
                 $reference = $user_id."~";
 
                 $data = [

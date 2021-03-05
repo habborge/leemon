@@ -224,9 +224,26 @@ class PurchaseControler extends Controller
                     ->join('cost_tcc as ct', 'ct.id', 'addresses.city')
                     ->first();
 
-                    if ($totalprice > 120000){
+                    if ($totalprice > 150000){
                         $message = "";
                         $deliveryCost = "free";
+
+                        session()->put('deliveryCost', $deliveryCost);
+
+                        return view('method', [
+                            'answer' => $answer,
+                            'cardexist' => $cardExist,
+                            'member_info' => $member_info,
+                            'address' => $address,
+                            'card' => $card,
+                            'message' => $message,
+                            'delivery_cost' => $deliveryCost,
+                        ]);
+                    }else if (session()->get('voucher')){
+                        $message = "";
+                        $deliveryCost = "freeVoucher";
+
+                        session()->put('deliveryCost', $deliveryCost);
 
                         return view('method', [
                             'answer' => $answer,
@@ -238,7 +255,7 @@ class PurchaseControler extends Controller
                             'delivery_cost' => $deliveryCost,
                         ]);
                     }else{
-                        
+                        $deliveryCost = "TCC";
                         //dd($address);
 
                         // $card = Creditcard::where('user_id', $id)->where('default', 1)->get();
@@ -281,6 +298,8 @@ class PurchaseControler extends Controller
                                 session()->put('tcc', $re); 
                                 $message = "";
                                 $deliveryCost = "payment";
+
+                                session()->put('deliveryCost', $deliveryCost);
 
                                 return view('method', [
                                     'answer' => $answer,
