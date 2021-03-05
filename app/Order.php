@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Voucher;
 use Auth;
 
 class Order extends Model
@@ -41,6 +42,8 @@ class Order extends Model
 
         }
         
+        $rv = app('App\Voucher')->updateVoucher($voucher_id);
+
         $this->user_id = Auth::user()->id;
         $this->code_hash = session('codehash');
         $this->customer = $request->firstname." ".$request->lastname;
