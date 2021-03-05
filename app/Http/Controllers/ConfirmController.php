@@ -294,7 +294,7 @@ class ConfirmController extends Controller
 
     public function BackToCommerce(){
 
-        
+        //return redirect()->away("https://leemon.com.co/secure/methods/zp/back");
         
         $message = "";
         $sw = 0;
@@ -430,7 +430,7 @@ class ConfirmController extends Controller
         $products = Order_detail::where('order_id', $order_id)->get();
 
         foreach ($products as $product) {
-            $pro = Product::where('id', $product->id);
+            $pro = Product::where('id', $product->product_id);
             $value = $pro->quantity - $product->quantity;
             
             $pro->quantity = $value;
