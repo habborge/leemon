@@ -29,6 +29,8 @@ class Order extends Model
                     $voucher_id = session('voucher')['voucher_id'];
                     $delivery_cost = session('voucher')['voucher_cost'];
                     $voucher_type = session('voucher')['voucher_type'];
+
+                    $rv = app('App\Voucher')->updateVoucher($voucher_id);
                 }
             }else if (session('deliveryCost') == "free"){
                 $delivery_cost = 0;
@@ -42,7 +44,8 @@ class Order extends Model
 
         }
         
-        $rv = app('App\Voucher')->updateVoucher($voucher_id);
+
+        
 
         $this->user_id = Auth::user()->id;
         $this->code_hash = session('codehash');
