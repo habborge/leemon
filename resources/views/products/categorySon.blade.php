@@ -25,8 +25,8 @@
                                             <a href="/product/{{$product->proId}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $product->reference }}/{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product2 img-fluid" alt=""></a>
                                             <div class="card-body col-12 col-md-12">
                                                 <div class="row justify-content-center text-center">
-                                                    <span class="brand-font">{{ucwords($product->brand)}} </span>
-                                                    <div style="height: 60px">
+                                                    <span class="brand-font font-black text-leemon-color">{{ucwords($product->brand)}} </span>
+                                                    <div class="height-p">
                                                         <h6>{{ucwords($product->proName)}} </h6>
                                                     </div>
                                                     
