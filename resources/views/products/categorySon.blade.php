@@ -100,7 +100,8 @@
                     </div>
                     @foreach ($subcategories as $subcategory) 
                         <li class="">
-                            <a class="refinementlink add brand-size" href="/category/{{ str_replace(" ", "-",$gfather) }}/{{ $gfather_id }}/{{ str_replace(" ", "-",$subcategory->name) }}/{{ $subcategory->id }}" title="Futurebiotics">
+                            {{-- /products/{{ str_replace(" ", "-",$item['name']) }}/{{str_replace(" ", "-",$submenu['name'])}}/{{str_replace(" ", "-",$submenu2['name'])}}_{{$submenu2['id']}} --}}
+                            <a class="refinementlink add brand-size" href="/products/{{ str_replace(" ", "-",$gfather) }}/{{ str_replace(" ", "-",$father) }}/{{str_replace(" ", "-",$subcategory->name)}}_{{ $subcategory->id }}" title="Futurebiotics">
                                 <span class="square-check"><i class="fa fa-square-o fa-lg"></i></span>
                                 <span class="text-ref ">
                                     {{ $subcategory->name}}
