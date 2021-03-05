@@ -213,18 +213,23 @@
         </div>
       </div>
     </div> --}}
-    <div class="album pt-5 ">
+    <div class="album pt-5 mb-5">
       <div class="container">
           <div class="row">
             <div class="col-md-12">
+              <picture>
               
-                <img src="/img/BANNER-COMBO-MOD.jpg" width="100%" class="card-rounded" alt="">
+                
+                <source type="image/webp"  srcset="img/Banner.webp">
+                <img id="slide1" src="img/Banner.jpg" class="img-fluid d-block w-100 card-rounded" alt="...">
+              </picture>
+                
               
             </div>
           </div>
       </div>
     </div>
-    <div class="album py-5 ">
+    {{-- <div class="album py-5 ">
       <div class="container">
         <div class="row">
           <div class="col-12 col-md-6">
@@ -311,7 +316,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> --}}
     
     {{-- <div class="album py-5 ">
       <div class="container">
