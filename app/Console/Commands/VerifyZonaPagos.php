@@ -5,7 +5,9 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use App\Order;
+use App\Order_detail;
 use App\payment_error;
+use App\Product;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
 class VerifyZonaPagos extends Command
@@ -155,6 +157,7 @@ class VerifyZonaPagos extends Command
                                     // array($approval, $sw, $message);
                                     if ($result[0] == 1){
                                         $order_change = Order::approval_order($order->id);
+                                        $products_discount = $this->updateQuantity($order->id);
                                     }else{
                                         // int_pago_terminado => 1: Terminado => 2: Pendiente: En caso de que el pago sea mixto. El pago no ha sido terminado en su totalidad. => 200 Pago iniciado
                                         if ($data_info[3] == 1){
@@ -197,6 +200,7 @@ class VerifyZonaPagos extends Command
                                         // array($approval, $sw, $message); var approval is 1 transaction was approved, if var approval is 0 was rejected
                                         if ($result[0] == 1){
                                             $order_change = Order::approval_order($order->id);
+                                            $products_discount = $this->updateQuantity($order->id);
                                             $order_status = 1;
                                             break;
                                         }else{
@@ -356,4 +360,17 @@ class VerifyZonaPagos extends Command
         $rs->save(); 
         return array(1, $rs);
     }
+
+    private function updateQuantity($order_id){
+        $products = Order_detail::where('order_id', $order_id)->get();
+
+        foreach ($products as $product) {
+            $pro = Product::where('id', $product->id);
+            $value = $pro->quantity - $product->quantity;
+            
+            $pro->quantity = $value;
+            $pro->save();
+        }
+    }
+    
 }

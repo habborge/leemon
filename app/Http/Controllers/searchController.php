@@ -9,7 +9,7 @@ class searchController extends Controller
 {
     public function searchProducts(Request $request){
        
-        $products = Product::where('name', 'LIKE', "%$request->search%")->orWhere('brand', 'LIKE', "%$request->search%")->where('quantity', '>', 0)->orderBy('id', 'desc')->paginate(24);
+        $products = Product::where('quantity', '>', 0)->where('name', 'LIKE', "%$request->search%")->orWhere('brand', 'LIKE', "%$request->search%")->orderBy('id', 'desc')->paginate(24);
 
         //$brand = Product::select('brand', 'brand_id')->groupBy('brand', 'brand_id')->get();
 

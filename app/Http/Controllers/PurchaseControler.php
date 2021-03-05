@@ -122,7 +122,7 @@ class PurchaseControler extends Controller
                 
                 if($info){
                     
-                    $delivery_ad = $request->address_1."~".$request->address_2."~".$request->address_3."~".$request->address_4;
+                    $delivery_ad = $request->address_1."~".$request->address_2."~".$request->address_3."~".$request->address_4."-".$request->address_5;
                     $details = $request->address_d;
                     $coutry = $request->country;
                     $dpt = $request->dpt;
@@ -216,66 +216,107 @@ class PurchaseControler extends Controller
                 
                 
                 if (Auth::user()){
+
                     $id = Auth::user()->id;
                     $address = Address::where('user_id', $id)->where('default', 1)
                     ->join('countries as c', 'c.country_master_id', 'addresses.country')
                     ->join('departments as d', 'd.code', 'addresses.dpt')
                     ->join('cost_tcc as ct', 'ct.id', 'addresses.city')
                     ->first();
-                    //dd($address);
 
-                    // $card = Creditcard::where('user_id', $id)->where('default', 1)->get();
+                    if ($totalprice > 150000){
+                        $message = "";
+                        $deliveryCost = "free";
 
-                    // if ($card->count() >0){
-                    //     $cardExist = 2;
-                    // }
+                        session()->put('deliveryCost', $deliveryCost);
 
-                    $wsdl = "http://clientes.tcc.com.co/preservicios/liquidacionacuerdos.asmx?wsdl";
-                    $parameters = [
-                        'Clave' => 'CLIENTETCC608W3A61CJ',
-                        'Liquidacion' => [
-                            'tipoenvio' => 2,
-                            'idciudadorigen' => '08001000',
-                            'idciudaddestino' => $address->dane_d,
-                            'valormercancia' => $totalprice,
-                            'boomerang' => 0,
-                            'cuenta' => 0,
-                            'fecharemesa' => '05/02-2021',
-                            'idunidadestrategicanegocio' => 2,
-                            'unidades' => [
-                                'unidad' => [
-                                    'numerounidades' => 1,
-                                    'pesoreal' => $weight,
-                                    'pesovolumen' => $volweight,
-                                    
-                                    'tipoempaque' => '1'
+                        return view('method', [
+                            'answer' => $answer,
+                            'cardexist' => $cardExist,
+                            'member_info' => $member_info,
+                            'address' => $address,
+                            'card' => $card,
+                            'message' => $message,
+                            'delivery_cost' => $deliveryCost,
+                        ]);
+                    }else if (session()->get('voucher')){
+                        $message = "";
+                        $deliveryCost = "freeVoucher";
+
+                        session()->put('deliveryCost', $deliveryCost);
+
+                        return view('method', [
+                            'answer' => $answer,
+                            'cardexist' => $cardExist,
+                            'member_info' => $member_info,
+                            'address' => $address,
+                            'card' => $card,
+                            'message' => $message,
+                            'delivery_cost' => $deliveryCost,
+                        ]);
+                    }else{
+                        $deliveryCost = "TCC";
+                        //dd($address);
+
+                        // $card = Creditcard::where('user_id', $id)->where('default', 1)->get();
+
+                        // if ($card->count() >0){
+                        //     $cardExist = 2;
+                        // }
+
+                        $wsdl = "http://clientes.tcc.com.co/preservicios/liquidacionacuerdos.asmx?wsdl";
+                        $parameters = [
+                            'Clave' => 'CLIENTETCC608W3A61CJ',
+                            'Liquidacion' => [
+                                'tipoenvio' => 2,
+                                'idciudadorigen' => '08001000',
+                                'idciudaddestino' => $address->dane_d,
+                                'valormercancia' => $totalprice,
+                                'boomerang' => 0,
+                                'cuenta' => 0,
+                                'fecharemesa' => '05/02-2021',
+                                'idunidadestrategicanegocio' => 2,
+                                'unidades' => [
+                                    'unidad' => [
+                                        'numerounidades' => 1,
+                                        'pesoreal' => $weight,
+                                        'pesovolumen' => $volweight,
+                                        
+                                        'tipoempaque' => '1'
+                                    ]
                                 ]
                             ]
-                        ]
 
-                    ];
+                        ];
 
-                    $soap = new SoapClient($wsdl);
-                    $re = $soap->__soapCall("ConsultarLiquidacion", array($parameters));
-                    //dd($re->consultarliquidacionResult);
+                        $soap = new SoapClient($wsdl);
+                        $re = $soap->__soapCall("ConsultarLiquidacion", array($parameters));
+                        //dd($re->consultarliquidacionResult);
 
-                    if ($re->consultarliquidacionResult){
-                        if (!empty($re->consultarliquidacionResult->idliquidacion)){
-                            session()->put('tcc', $re); 
-                            $message = "";
-                            return view('method', [
-                                'answer' => $answer,
-                                'cardexist' => $cardExist,
-                                'member_info' => $member_info,
-                                'address' => $address,
-                                'card' => $card,
-                                'message' => $message
-                            ]);
-                        }else{
-                            $message = $re->consultarliquidacionResult->respuesta->mensaje;
-                            return redirect()->back()->withErrors([$message]);
+                        if ($re->consultarliquidacionResult){
+                            if (!empty($re->consultarliquidacionResult->idliquidacion)){
+                                session()->put('tcc', $re); 
+                                $message = "";
+                                $deliveryCost = "payment";
+
+                                session()->put('deliveryCost', $deliveryCost);
+
+                                return view('method', [
+                                    'answer' => $answer,
+                                    'cardexist' => $cardExist,
+                                    'member_info' => $member_info,
+                                    'address' => $address,
+                                    'card' => $card,
+                                    'message' => $message,
+                                    'delivery_cost' => $deliveryCost,
+                                ]);
+                            }else{
+                                $message = $re->consultarliquidacionResult->respuesta->mensaje;
+                                return redirect()->back()->withErrors([$message]);
+                            }
                         }
                     }
+                    
                     
                     // if ($re->consultarliquidacionResult->respuesta){
                         // {#1290 ▼

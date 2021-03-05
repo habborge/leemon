@@ -37,7 +37,7 @@
                 </div>
                 <div class="md-step active">
                   <div class="md-step-circle"><span>3</span></div>
-                  <div class="md-step-title">Envío</div>
+                  <div class="md-step-title">Datos de Envío</div>
                   <div class="md-step-bar-left"></div>
                   <div class="md-step-bar-right"></div>
                 </div>

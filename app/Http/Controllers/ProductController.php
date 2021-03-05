@@ -509,12 +509,17 @@ class ProductController extends Controller
     public function groupCategory(Request $request){
         $id = $request->id;
 
-        $products = Product::select('products.id as proId', 'products.reference','products.name as proName','products.brand','products.description','products.price','products.img1','products.prom','products.quantity as webquantity','products.health_register','products.width','products.length','products.height','products.weight','products.fee')
-        ->join('categories as c', 'c.id', '=', 'products.subcategory_id')
+        $products = Product::select('products.id as proId', 'products.reference','products.name as proName','products.brand','products.description','products.price','products.img1','products.img2','products.prom','products.quantity as webquantity','products.health_register','products.width','products.length','products.height','products.weight','products.fee')
+        ->join('product_categories as pc', 'products.id', '=', 'pc.product_id')
+        ->join('categories as c', 'c.id', '=', 'pc.category_id')
         ->join('categories as c2', 'c2.id', '=', 'c.father_id')
         ->join('categories as c3', 'c3.id', '=', 'c2.father_id')
         ->where('c3.id', $id)
-        ->where('price', '>', 0)->orderBy('products.name')->paginate(24);
+        ->where('price', '>', 0)
+        ->groupBy('products.id')
+        ->orderBy('products.img2', 'desc')
+        ->orderBy('products.name')
+        ->paginate(24);
 
         //dd($products);
         $subcategories = Category::where('father_id', $id)->get();
@@ -536,10 +541,14 @@ class ProductController extends Controller
         $sub_id = $request->subid;
 
         $products = Product::select('products.id as proId', 'products.reference','products.name as proName','products.brand','products.description','products.price','products.img1','products.prom','products.quantity as webquantity','products.health_register','products.width','products.length','products.height','products.weight','products.fee')
-        ->join('categories as c', 'c.id', '=', 'products.subcategory_id')
+        ->join('product_categories as pc', 'products.id', '=', 'pc.product_id')
+        ->join('categories as c', 'c.id', '=', 'pc.category_id')
         ->join('categories as c2', 'c2.id', '=', 'c.father_id')
+        ->groupBy('products.id')
         ->where('c2.id', $sub_id)
-        ->where('price', '>', 0)->orderBy('products.name')->paginate(24);
+        ->where('price', '>', 0)
+        ->orderBy('products.name')
+        ->paginate(24);
 
         //dd($products);
         $subcategories = Category::where('father_id', $sub_id)->get();

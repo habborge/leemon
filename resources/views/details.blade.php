@@ -28,8 +28,9 @@
             </div> 
             <div class="tabs col-md-12">
                 <div class="row">
-                    <div class="col-xl-1 xzoom-thumbs">
-                        <ul class="nav nav-pills nav-stacked flex-column">
+                    {{-- small images --}}
+                    <div id="one_details" class="col-12 col-xl-1 xzoom-thumbs">
+                        <ul class="nav nav-pills nav-stacked column-flex">
                         <li class="active card-rounded">
                             <a href="#tab_a" data-toggle="pill">
                                 <img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}" class="img-tam xzoom-gallery_" alt="" xpreview="../{{ $prod_info->img1 }}">
@@ -45,8 +46,10 @@
                             {{-- <li><a href="#tab_b"  data-toggle="pill"><img src="../{{ $prod_info->img2 }}" class="img-tam" alt=""></a></li> --}}
                         </ul>
                     </div>
-                    <div class="col-xl-5">
-                        <div class="tab-content" id="father">
+
+                    {{-- big images --}}
+                    <div id="two_details" class="col-12 col-xl-5 text-center">
+                        <div class="row tab-content" id="father">
                             <div class="tab-pane active bg-white" id="tab_a">
                                 <img id="xzoom-default" src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}" class="img-tam2 xzoom card-rounded" xoriginal="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}" alt="">
                             </div>
@@ -62,175 +65,210 @@
                         </div>
                     </div>
                     
-                    <div class="col-xl-6">
+                    <div id="three_details" class="col-12 col-xl-6">
                         <div>
-                            <form action="{{ route('generateimg') }}" method="POST" name="formaut" id="formRegisterwithdrawal">
-                                @csrf
-                                <div class="form-group">
-                                   <h2><small class="info-small">{{ $prod_info->brand }}</small><br>{{ $prod_info->name }}</h2>
-                                  <hr class="mb-4">
+                            {{-- <form action="{{ route('generateimg') }}" method="POST" name="formaut" id="formRegisterwithdrawal">
+                                @csrf --}}
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12">
+                                            <div class="">
+                                                <div class="info-small font-black">{{ $prod_info->brand }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-12">
+                                            <div class="">
+                                                <h2 class="text-leemon-color">{{ $prod_info->name }}</h2>
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                    <hr class="mb-4">
                                 </div>
-                                <div class="form-group">
-                                    <p>
+                                <div class="col-md-12">
+                                    {{-- <p>
                                         @if ($prod_info->prom == 1) 
                                         <h2><span class="badge badge-warning">Paga 2 Lleva 3</span></h2><br>
                                         @elseif ($prod_info->prom == 2)
                                         <h2> <span class="badge badge-success">2nd 50% off</span></h2><br>
                                         @endif
-                                    </p>
-                                    <p>
-                                        <span class="price-color">Referencia:</span> <br>{{ $prod_info->reference }}
-                                    </p>
-                                    <p>
-                                        <span class="price-color">Precio: </span><br>
-                                        <span class="price">Ahora $ {{ number_format($prod_info->price, 0) }} COP</span><br>
-                                        {{-- <span><del>Antes $ {{ number_format(($prod_info->price * 0.15) + $prod_info->price, 0) }} COP</del></span>  --}}
-                                    </p>
+                                    </p> --}}
+                                    <div class="row">
+                                        <div class="col-12 col-md-12">
+                                            <div>
+                                                <div class="price-color">Referencia:</div> 
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-12 mb-4">
+                                            <div>
+                                                {{ $prod_info->reference }}
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-12">
+                                            <div>
+                                                <div class="price-color">Precio:</div> 
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-12">
+                                            <div>
+                                                Ahora $ {{ number_format($prod_info->price, 0) }} COP
+                                            </div>
+                                        </div>
+                                    </div>
                                     <hr class="mb-4">
                                     {{-- <span class="price-color">Costo de Envio:</span><br> $ {{ number_format($prod_info->delivery_cost, 0) }} COP<br>
                                     <hr class="mb-4"> --}}
                                 </div>
-                                <div class="form-group">
-                                    <div class="col-xl-12" data-th="Quantity">
-                                        <div class="row">
-                                            Cantidad:  
-                                            
-                                            @if (isset(session('cart')[$prod_info->id])) 
-                                                @if (($prod_info->webquantity - session('cart')[$prod_info->id]["quantity"]) > 0)
-                                                    <div class="qua col-xl-2">
-                                                        <span id="cant">
-                                                            <input class="quantity" type="number" min="1" max="{{$prod_info->webquantity - session('cart')[$prod_info->id]["quantity"] }}" step="1" value="1">
-                                                        </span>
-                                                    </div>
-                                                @else
-                                                    <div class="col-md-12">
-                                                       No Disponible, pero no te preocupes LEEMON te notificará cuando el producto se encuentre disponible.
-                                                    </div> 
-                                                @endif
-
-                                            @else
-                                                <div class="qua col-xl-2">
-                                                    <span id="cant">
-                                                        <input class="quantity" type="number" min="1" max="{{ $prod_info->webquantity }}" step="1" value="1">
-                                                    </span>
-                                                </div>
-                                            @endif
-                                                
-                                            <div id="nodis"  class="col-md-12">
-                                                No Disponible, pero no te preocupes LEEMON te notificará cuando el producto se encuentre disponible
+                                
+                                <div class="col-md-12" data-th="Quantity">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 mb-1">
+                                            <div>
+                                                <div class="price-color">Cantidad: </div>
                                             </div>
-                                               
-                                                
-                                            
-                                                {{-- <select class="form-control quantity" name="" id="">
-                                                    @for ($i = 1; $i <= $prod_info->webquantity; $i++)
-                                                        <option value="{{ $i }}">{{ $i }}</option>
-                                                    @endfor
-                                                </select> --}}
-                                                {{-- <input type="number" value="" class="form-control quantity" /> --}}
                                         </div>
                                         
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-xl-12">
-                                        <div class="row">
-                                            @if (isset(session('cart')[$prod_info->id])) 
-                                                @if (($prod_info->webquantity - session('cart')[$prod_info->id]["quantity"]) > 0)
-                                                    <div id="nodis-button" class="col-xl-auto">
-                                                        <div class="row">
-                                                            <button id="" class="btn btn-leemon-pink update-cart"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity - session('cart')[$prod_info->id]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</button>
-                                                        </div>
-                                                    </div>
-                                                @endif
+                                        @if (isset(session('cart')[$prod_info->id])) 
+                                            @if (($prod_info->webquantity - session('cart')[$prod_info->id]["quantity"]) > 0)
+                                                <div class="qua col-md-3 mb-3">
+                                                    <span id="cant">
+                                                        <input class="quantity" type="number" min="1" max="{{$prod_info->webquantity - session('cart')[$prod_info->id]["quantity"] }}" step="1" value="1">
+                                                    </span>
+                                                </div>
                                             @else
+                                                <div class="col-md-12 mb-3">
+                                                    No Disponible, pero no te preocupes LEEMON te notificará cuando el producto se encuentre disponible.
+                                                </div> 
+                                            @endif
+
+                                        @else
+                                            <div class="qua col-xl-3 mb-3">
+                                                <span id="cant">
+                                                    <input class="quantity" type="number" min="1" max="{{ $prod_info->webquantity }}" step="1" value="1">
+                                                </span>
+                                            </div>
+                                        @endif
+                                            
+                                        <div id="nodis"  class="col-md-12">
+                                            No Disponible, pero no te preocupes LEEMON te notificará cuando el producto se encuentre disponible
+                                        </div>
+                                            
+                                            
+                                        
+                                            {{-- <select class="form-control quantity" name="" id="">
+                                                @for ($i = 1; $i <= $prod_info->webquantity; $i++)
+                                                    <option value="{{ $i }}">{{ $i }}</option>
+                                                @endfor
+                                            </select> --}}
+                                            {{-- <input type="number" value="" class="form-control quantity" /> --}}
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="col-12 col-md-12">
+                                    <div class="row">
+                                        @if (isset(session('cart')[$prod_info->id])) 
+                                            @if (($prod_info->webquantity - session('cart')[$prod_info->id]["quantity"]) > 0)
+                                            
                                                 <div id="nodis-button" class="col-xl-auto">
                                                     <div class="row">
-                                                        <button id="" class="btn btn-leemon-pink update-cart mr-1" data-cart="1"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
+                                                        <div class="col-md-12">
+                                                            <button id="" class="btn btn-leemon-pink update-cart btn-width"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity - session('cart')[$prod_info->id]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            @endif  
-
-                                            @guest
                                                     
-                                            @else
-                                                <div class="col-xl-auto">
-                                                    <div class="row">
-                                                        <button id="" class="btn btn-wishlist update-wishlist btn-leemon-radius mr-1"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity }}"><i class="fa fa-heart" aria-hidden="true"></i></button>
-                                                    </div>
                                                 </div>
-                                                <div class="col-xl-auto">
-                                                    <div class="row">
-                                                        
-                                                        <div class="btn-group dropdown">
-                                                            <button id="" class="btn btn-upload share-with btn-leemon-radius mr-1"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/img/upload_1.png" alt="" style="width: 14px"></button>
-                                                            <div class="dropdown-menu dropdown-menu-position-upload dropdown-upload">
-                                                                <div class="">
-                                                                    <div class="input-group mt-2 mb-1">
-                                                                        <div class="input-group-prepend">
-                                                                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-link" aria-hidden="true"></i></span>
-                                                                        </div>
-                                                                        <input type="text" class="form-control form-control-sm mr-1" value="{{Request::url()}}" aria-label="Username" aria-describedby="basic-addon1" readonly>
-                                                                        <button id="copylink" class="btn btn-dark btn-sm"><i class="fa fa-files-o" aria-hidden="true"></i> Copiar </button>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="dropdown-divider"></div>
-                                                                <div class="">
-                                                                    <div class="input-group mb-2">
-                                                                        <a id="linkWeb" data-id="{{ $prod_id }}" href="https://web.whatsapp.com/send?text=Visita%20el%20blog%20de%20Parzibyte%20en%20{{Request::url()}}" target="_blank" class="mr-1">
-                                                                            <img src="/img/whatsappIcon.png" width="35px" alt="">
-                                                                        </a>
-                                                                        <a id="linkApp" data-id="{{ $prod_id }}" href="https://api.whatsapp.com/send?text=Visita%20el%20blog%20de%20Parzibyte%20en%20{{Request::url()}}" target="_blank"  class="mr-1">
-                                                                            <img src="/img/whatsappIcon.png" width="35px" alt="">
-                                                                        </a>
-                                                                        <button id="openbox" class="btn btn-dark"  data-id="{{ $prod_id }}"><i class="fa fa-envelope" aria-hidden="true"></i></button>
-                                                                    </div>
-                                                                </div>
-                                                                
-                                                                <div id="sendemailbox" style="display: none">
-                                                                    <div class="input-group mb-2">
-                                                                        {{-- <div id="loading_sendtofriend">
-                                                                            <img src="/img/preloader.gif" id="img_loading" alt="">
-                                                                        </div> --}}
-                                                                        <div class="input-group-prepend">
-                                                                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-at" aria-hidden="true"></i></span>
-                                                                        </div>
-                                                                        
-                                                                        <input id="email" name="email" type="email" class="form-control form-control-sm" placeholder="email de tu amigo" aria-label="email" aria-describedby="basic-addon1" required>
-                                                                        <div class="input-group-append">
-                                                                            <button id="sendEmail" class="btn btn-dark btn-sm" type="button">Enviar</button>
-                                                                        </div>
-                                                                    </div>
-                                                                
-                                                        
-                                                                </div>
-                                                                
-                                                            </div>
-                                                          </div>
-                                                    </div>
+                                            @endif
+                                        @else
+                                            <div id="nodis-button" class="col-xl-auto">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <button id="" class="btn btn-leemon-pink update-cart mr-1 btn-width" data-cart="1"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
+                                                    </div>  
                                                 </div>
+                                               
+                                            </div>
+                                        @endif  
+
+                                        @guest
                                                 
-                                                <div class="col-xl-auto">
-                                                    <div class="row">
-                                                        
-                                                    </div>
+                                        @else
+                                            <div class="col-xl-auto">
+                                                <div class="row">
+                                                    <button id="" class="btn btn-wishlist update-wishlist btn-leemon-radius mr-1"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity }}"><i class="fa fa-heart" aria-hidden="true"></i></button>
                                                 </div>
-                                            @endguest
-                                        </div>
+                                            </div>
+                                            <div class="col-xl-auto">
+                                                <div class="row">
+                                                    
+                                                    <div class="btn-group dropdown">
+                                                        <button id="" class="btn btn-upload share-with btn-leemon-radius mr-1"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/img/upload_1.png" alt="" style="width: 14px"></button>
+                                                        <div class="dropdown-menu dropdown-menu-position-upload dropdown-upload">
+                                                            <div class="">
+                                                                <div class="input-group mt-2 mb-1">
+                                                                    <div class="input-group-prepend">
+                                                                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-link" aria-hidden="true"></i></span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control form-control-sm mr-1" value="{{Request::url()}}" aria-label="Username" aria-describedby="basic-addon1" readonly>
+                                                                    <button id="copylink" class="btn btn-dark btn-sm"><i class="fa fa-files-o" aria-hidden="true"></i> Copiar </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="dropdown-divider"></div>
+                                                            <div class="">
+                                                                <div class="input-group mb-2">
+                                                                    <a id="linkWeb" data-id="{{ $prod_id }}" href="https://web.whatsapp.com/send?text=Visita%20el%20blog%20de%20Parzibyte%20en%20{{Request::url()}}" target="_blank" class="mr-1">
+                                                                        <img src="/img/whatsappIcon.png" width="35px" alt="">
+                                                                    </a>
+                                                                    <a id="linkApp" data-id="{{ $prod_id }}" href="https://api.whatsapp.com/send?text=Visita%20el%20blog%20de%20Parzibyte%20en%20{{Request::url()}}" target="_blank"  class="mr-1">
+                                                                        <img src="/img/whatsappIcon.png" width="35px" alt="">
+                                                                    </a>
+                                                                    <button id="openbox" class="btn btn-dark"  data-id="{{ $prod_id }}"><i class="fa fa-envelope" aria-hidden="true"></i></button>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div id="sendemailbox" style="display: none">
+                                                                <div class="input-group mb-2">
+                                                                    {{-- <div id="loading_sendtofriend">
+                                                                        <img src="/img/preloader.gif" id="img_loading" alt="">
+                                                                    </div> --}}
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-at" aria-hidden="true"></i></span>
+                                                                    </div>
+                                                                    
+                                                                    <input id="email" name="email" type="email" class="form-control form-control-sm" placeholder="email de tu amigo" aria-label="email" aria-describedby="basic-addon1" required>
+                                                                    <div class="input-group-append">
+                                                                        <button id="sendEmail" class="btn btn-dark btn-sm" type="button">Enviar</button>
+                                                                    </div>
+                                                                </div>
+                                                            
+                                                    
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-xl-auto">
+                                                <div class="row">
+                                                    
+                                                </div>
+                                            </div>
+                                        @endguest
                                     </div>
-                                    
                                 </div>
-                                <div class="form-group">
-                                    
-                                </div>
-                            </form>
+                                
+                            {{-- </form> --}}
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="tabs3 col-md-12">
+            <div class="col-md-12">
+                
+            </div>
+            {{-- pc resolution --}}
+            <div id="tabs3" class="tabs3 col-md-12">
                 <hr class="mb-4">
-                <h3 class="h3color">Sobre este Articulo <small>(Información suministrada por el Proveedor)</small></h3> <br>
+                <h3 class="h3color">Sobre este Articulo<br> <small>(Información suministrada por el Proveedor)</small></h3> <br>
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
                       <a class="nav-link active" id="desc-tab" data-toggle="tab" href="#desc" role="tab" aria-controls="desc" aria-selected="true">Descripción</a>
@@ -268,6 +306,90 @@
                     </div>
                 </div>
             </div>
+            {{-- mobil resolution --}}
+            
+            <div id="mobilinfo" class="col-md-12">
+                <div class="col-12 col-md-12">
+                    <div class="row">
+                        <hr class="mb-4">
+                        <h3 class="h3color">Sobre este Articulo<br> <small>(Información suministrada por el Proveedor)</small></h3>
+                    </div>
+                </div>
+                <div class="col-12 col-md-12">
+                    <div class="" style="width: 100%">
+                        <div class="accordion accord-width" id="accordionExample">
+                            <div class="card col-md-12 col-12">
+                                <a class="text-left a-size-methods" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="width: 100%">
+                                    <div class="card-header row" id="headingOne"><div class="col-6 col-md-6 font-black text-leemon-color"><div class="row">Descripción</div></div><div class="col-6 col-md-6"><div class="row float-right">Ver Más</div></div></div>
+                                </a>
+                                <div class="row">
+                                    <div id="collapseOne" class="col-md-12 collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                        <div class="row">
+                                            <div class="card-body card-body-yellow card-round-footer">
+                                                
+                                                <p class="info-small">
+                                                    {{ $prod_info->description }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card col-md-12">
+                                <a class="text-left a-size-methods" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" style="width: 100%">
+                                    <div class="card-header row" id="headingTwo"> <div class="col-6 col-md-6 font-black text-leemon-color"><div class="row">Características</div></div><div class="col-6 col-md-6"><div class="row float-right">Ver Más</div></div> </div>
+                                </a>
+                                <div class="row">
+                                    <div id="collapseTwo" class="col-md-12 collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                        <div class="row">
+                                            <div class="card-body card-body-yellow card-round-footer">
+                                                
+                                                <p class="info-small">
+                                                    {{ $prod_info->characteristics }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card col-md-12">
+                                <a class="text-left a-size-methods" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree" style="width: 100%">
+                                    <div class="card-header row" id="headingThree"><div class="col-6 col-md-6 font-black text-leemon-color"><div class="row">Ingredientes</div></div><div class="col-6 col-md-6"><div class="row float-right">Ver Más</div></div></div>
+                                </a>
+                                <div class="row">
+                                    <div id="collapseThree" class="col-md-12 collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                        <div class="row">
+                                            <div class="card-body card-body-yellow card-round-footer">
+                                                
+                                                <p class="info-small">
+                                                    {{ $prod_info->ingredients }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card col-md-12">
+                                <a class="text-left a-size-methods" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour" style="width: 100%">
+                                    <div class="card-header row" id="headingFour"><div class="col-6 col-md-6 font-black text-leemon-color"><div class="row">Indicaciones de uso</div></div><div class="col-6 col-md-6"><div class="row float-right">Ver Más</div></div></div>
+                                </a>
+                                <div class="row">
+                                    <div id="collapseFour" class="col-md-12 collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                                        <div class="row">
+                                            <div class="card-body card-body-yellow card-round-footer">
+                                                <p class="info-small">
+                                                    {{ $prod_info->use }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{--  --}}
         </div>
     </div><br>
     <div class="container">
@@ -353,11 +475,17 @@
 
     $(document).ready(function(){
         var max = 0;
-        $(".xzoom, #xzoom-default").xzoom({tint: '#333', Xoffset: 15, position: 'right' });
-        $(".xzoom_0, #xzoom-default_0").xzoom({tint: '#333', Xoffset: 15, position: 'right' });
-        $(".xzoom_1, #xzoom-default_1").xzoom({tint: '#333', Xoffset: 15, position: 'right' });
-        $(".xzoom_2, #xzoom-default_2").xzoom({tint: '#333', Xoffset: 15, position: 'right' });
-        $(".xzoom_3, #xzoom-default_3").xzoom({tint: '#333', Xoffset: 15, position: 'right' });
+
+        if ($(window).width() > 600){
+            $(".xzoom, #xzoom-default").xzoom({tint: '#333', Xoffset: 15, position: 'right' });
+            $(".xzoom_0, #xzoom-default_0").xzoom({tint: '#333', Xoffset: 15, position: 'right' });
+            $(".xzoom_1, #xzoom-default_1").xzoom({tint: '#333', Xoffset: 15, position: 'right' });
+            $(".xzoom_2, #xzoom-default_2").xzoom({tint: '#333', Xoffset: 15, position: 'right' });
+            $(".xzoom_3, #xzoom-default_3").xzoom({tint: '#333', Xoffset: 15, position: 'right' });
+        }
+
+        
+        
         
          $(function() {
             var $a = $(".tabs li");
@@ -365,8 +493,6 @@
                 $a.removeClass("active");
                 $(this).addClass("active");
                 //alert($(this).attr('id'));
-               
-
             });
             
         });
@@ -444,18 +570,18 @@
 
         $('.owl-carousel').owlCarousel({
       
-            loop:true,
+            loop:false,
             margin:10,
             responsiveClass:true,
             responsive:{
                 0:{
-                    items:1,
+                    items:2,
                     nav:true,
                     navText : ['<div class="carousel-control-prev-icon"></div>','<div class="carousel-control-next-icon"></div>']
                 },
                 600:{
                     items:3,
-                    nav:false,
+                    nav:true,
                     navText : ['<div class="carousel-control-prev-icon"></div>','<div class="carousel-control-next-icon"></div>']
                 },
                 1000:{

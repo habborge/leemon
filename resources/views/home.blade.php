@@ -12,12 +12,34 @@
       <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
           <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-          {{-- <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li> --}}
+          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="img/promo.jpg" class="img-fluid d-block w-100" alt="...">
+            <picture>
+              
+              <source media="(max-width: 576px)" srcset="img/SLIDER_mobil_1.webp">
+              <source type="image/webp"  srcset="img/SLIDER.webp">
+              <img id="slide1" src="img/SLIDER.jpg" class="img-fluid d-block w-100" alt="...">
+            </picture>
+            
+          </div>
+          <div class="carousel-item">
+            <picture>
+                <source media="(max-width: 576px)" srcset="img/SLIDER_mobil_2.webp">
+                <source type="image/webp"  srcset="img/SLIDER-2.webp">
+                <img id="slide2" src="img/SLIDER-2.jpg" class="img-fluid d-block w-100" alt="...">
+            </picture>
+            
+          </div>
+          <div class="carousel-item">
+            <picture>
+                <source media="(max-width: 576px)" srcset="img/SLIDER_mobil_3.webp">
+                <source type="image/webp"  srcset="img/SLIDER-3.webp">
+                <img id="slide3" src="img/SLIDER-3.jpg" class="img-fluid d-block w-100" alt="...">
+            </picture>
+            
           </div>
           {{-- <div class="carousel-item">
             <img src="img/promo_1B.jpg" class="img-fluid d-block w-100" alt="...">
@@ -39,11 +61,11 @@
     
 
       {{-- MAIN CATEGORIES --}}
-      <div class="album py-5 ">
+      <div class="album pt-5 ">
         <div class="container">
             <div class="row">
-              <div class="aline-title col-md-12">
-                <h3 class="aline-span">{{ $catTitle }}</h3>
+              <div class="col-12 aline-title col-md-12">
+                <h3 class="aline-span font-black">{{ $catTitle }}</h3>
               </div>
               <div class="col-md-12">
                 <div class="row">
@@ -56,7 +78,7 @@
                             <img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/categories/cat_{{ $category->id }}.jpg" class="card-img-top card-rounded mx-auto d-block" alt="">
                           </picture>
                        
-                        <div class = "carousel-caption" >
+                        <div class = "carousel-caption font-black" >
                           <h5 style="text-shadow: 2px 2px #202020;"> {{$category->name}}</h5>
                           </div>
                         </a>
@@ -72,11 +94,11 @@
       </div>
       {{-- end product of the month --}}
       {{-- product list --}}
-<div class="album py-5 ">
+<div class="album pt-4 ">
   <div class="container">
     <div class="row">
-      <div class="aline-title col-md-12">
-        <h3 class="aline-span">{{ $prom_1 }}</h3>
+      <div class="col-12 aline-title col-md-12">
+        <h3 class="aline-span font-black">{{ $prom_1 }}</h3>
       </div>
     </div>
     <div class="owl-carousel owl-theme owl-loaded owl-drag">
@@ -91,8 +113,8 @@
                       <div class="card mb-4 bg-leemon-pro card-rounded">
                         <a href="/product/{{$product->id}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $product->reference }}/{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product" alt=""></a>
                         <div class="card-body text-center">
-                          <span class="brand-font">{{ucwords($product->brand)}} </span>
-                          <div style="height: 60px"><h6>{{ucwords($product->name)}} </h6></div>
+                          <span class="brand-font font-black text-leemon-color">{{ucwords($product->brand)}} </span>
+                          <div class="text-leemon-color" style="height: 60px"><h6>{{ucwords($product->name)}} </h6></div>
                           <h6>
                             @if ($product->prom == 1) 
                               <span class="badge badge-warning">Paga 2 Lleva 3</span>
@@ -100,7 +122,7 @@
                               <span class="badge badge-success">2nd 50% off</span>
                             @endif
                           </h6> 
-                          <span class="brand-font2"><b>$ {{number_format($product->price, 0)}} COP</b></span><br><br>
+                          <span class="brand-font2 font-black text-leemon-color"><b>$ {{number_format($product->price, 0)}} COP</b></span><br><br>
                           <!-- <a href="/product/{{$product->id}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
                           {{-- <a href="{{ url('add-to-cart/'.$product->id) }}">
                             <button type="button" class="btn btn-sm btn-leemon-pink">
@@ -191,22 +213,27 @@
         </div>
       </div>
     </div> --}}
-    <div class="album py-5 ">
+    <div class="album pt-5 mb-5">
       <div class="container">
           <div class="row">
             <div class="col-md-12">
+              <picture>
               
-                <img src="/img/BANNER-COMBO-MOD.jpg" width="100%" class="card-rounded" alt="">
+                
+                <source type="image/webp"  srcset="img/Banner.webp">
+                <img id="slide1" src="img/Banner.jpg" class="img-fluid d-block w-100 card-rounded" alt="...">
+              </picture>
+                
               
             </div>
           </div>
       </div>
     </div>
-    <div class="album py-5 ">
+    {{-- <div class="album py-5 ">
       <div class="container">
         <div class="row">
-          <div class="col-md-6">
-                <div class="row">
+          <div class="col-12 col-md-6">
+                <div class="row justify-content-center">
                   
                   <div class="card no-line-left line-right">
                     <div class="card-body">
@@ -218,10 +245,10 @@
                       </div>
                       <div class="col-md-12">
                           <div class="row">
-                            <div class="col-md-7">
+                            <div class="col-7 col-md-7">
                               <div class="col-md-12">
                                 <div class="row">
-                                  <p class="card-text">
+                                  <p class="card-text text-justify">
                                     Some quick example text to build on the card title and make up the bulk of the card's content.
                                   </p>
                                 </div>
@@ -236,7 +263,7 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="col-md-5 text-right">
+                            <div class="col-5 col-md-5 text-right">
                               <img src="/img/Garlic(1).png" class="img-responsive" width="120">
                             </div>
                           </div>
@@ -245,9 +272,9 @@
                   </div>
                 
                 </div>
-          </div>
-          <div class="col-md-6">
-                <div class="row">
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="row justify-content-center">
                   <div class="card no-line-right line-left">
                     <div class="card-body">
                       <div class="col-md-12">
@@ -258,10 +285,10 @@
                       </div>
                       <div class="col-md-12">
                           <div class="row">
-                            <div class="col-md-7">
+                            <div class="col-7 col-md-7">
                               <div class="col-md-12">
                                 <div class="row">
-                                  <p class="card-text">
+                                  <p class="card-text text-justify">
                                     Some quick example text to build on the card title and make up the bulk of the card's content.
                                   </p>
                                 </div>
@@ -278,7 +305,7 @@
                               
                               
                             </div>
-                            <div class="col-md-5 text-right">
+                            <div class="col-5 col-md-5 text-right">
                               <img src="/img/Garlic(1).png" class="img-responsive" width="120">
                             </div>
                           </div>
@@ -289,7 +316,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> --}}
     
     {{-- <div class="album py-5 ">
       <div class="container">
@@ -344,7 +371,7 @@
           },
           600:{
               items:3,
-              nav:false,
+              nav:true,
               navText : ['<div class="carousel-control-prev-icon"></div>','<div class="carousel-control-next-icon"></div>']
           },
           1000:{

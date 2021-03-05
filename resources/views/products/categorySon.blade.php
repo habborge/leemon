@@ -19,52 +19,56 @@
                     <div class="col-md-12">
                         <div class="row">
                             @foreach ($products as $product)
-                                <div class="col-md-3">
+                                <div class="col-6 col-md-3">
                                     <div class="row">
                                         <div class="card mb-4 shadow-global bg-leemon-pro">
-                                            <a href="/product/{{$product->proId}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $product->reference }}/{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product2" alt=""></a>
-                                            <div class="card-body text-center">
-                                                <span class="brand-font">{{ucwords($product->brand)}} </span>
-                                                <div style="height: 60px"><h6>{{ucwords($product->proName)}} </h6></div>
-                                                <h6>
-                                                    @if ($product->prom == 1) 
-                                                        <span class="badge badge-warning">Paga 2 Lleva 3</span>
-                                                    @elseif ($product->prom == 2)
-                                                        <span class="badge badge-success">2nd 50% off</span>
-                                                    @endif
-                                                </h6> 
-                                               <div class="mb-4">
-                                                <h6>$ {{number_format($product->price, 0)}} COP </h6>
-                                               </div>
-                                                <!-- <a href="/product/{{$product->proId}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
-                                                {{-- <a href="{{ url('add-to-cart/'.$product->proId) }}"> <button type="button" class="btn btn-sm btn-leemon-green"><i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito</button></a> --}}
-                                                
-                                                {{-- <button id="" class="btn btn-sm btn-leemon-green update-cart"  data-id="{{ $product->proId }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button> --}}
+                                            <a href="/product/{{$product->proId}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $product->reference }}/{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product2 img-fluid" alt=""></a>
+                                            <div class="card-body col-12 col-md-12">
+                                                <div class="row justify-content-center text-center">
+                                                    <span class="brand-font font-black text-leemon-color">{{ucwords($product->brand)}} </span>
+                                                    <div class="height-p">
+                                                        <h6>{{ucwords($product->proName)}} </h6>
+                                                    </div>
+                                                    
+                                                        @if ($product->prom == 1) 
+                                                            <h6><span class="badge badge-warning">Paga 2 Lleva 3</span></h6>
+                                                        @elseif ($product->prom == 2)
+                                                            <h6><span class="badge badge-success">2nd 50% off</span></h6>
+                                                        @endif
+                                                     
+                                                    <div class="mt-2 mb-1">
+                                                        <h6>$ {{number_format($product->price, 0)}} COP </h6>
+                                                    </div>
+                                                    <!-- <a href="/product/{{$product->proId}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
+                                                    {{-- <a href="{{ url('add-to-cart/'.$product->proId) }}"> <button type="button" class="btn btn-sm btn-leemon-pink"><i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito</button></a> --}}
+                                                    
+                                                    {{-- <button id="" class="btn btn-sm btn-leemon-pink update-cart"  data-id="{{ $product->proId }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button> --}}
 
-                                                @if (isset(session('cart')[$product->proId])) 
-                                                    @if (($product->webquantity - session('cart')[$product->proId]["quantity"]) > 0)
-                                                        <div id="nodis-button" class="col-xl-auto">
+                                                    @if (isset(session('cart')[$product->proId])) 
+                                                        @if (($product->webquantity - session('cart')[$product->proId]["quantity"]) > 0)
+                                                            <div id="nodis-button" class="col-xl-auto">
+                                                                <div class="row">
+                                                                <button id="" class="btn btn-sm btn-leemon-pink update-cart btn-block"  data-id="{{ $product->proId }}" data-dif="{{ $product->webquantity - session('cart')[$product->proId]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
+                                                                </div>
+                                                            </div>
+                                                        @else
+                                                            <div class="col-md-12">
+                                                                No Disponible
+                                                            </div>
+                                                        @endif
+                                                    @else
+                                                        <div id="nodis-button" class="col-xl-auto" style="width: 95%;">
                                                             <div class="row">
-                                                            <button id="" class="btn btn-sm btn-leemon-green update-cart btn-block"  data-id="{{ $product->proId }}" data-dif="{{ $product->webquantity - session('cart')[$product->proId]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
+                                                                <button id="" class="btn btn-sm btn-leemon-pink update-cart btn-block"  data-id="{{ $product->proId }}" data-dif="{{ $product->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
                                                             </div>
                                                         </div>
+                                                    @endif 
+                                                    @guest
+                    
                                                     @else
-                                                        <div class="col-md-12">
-                                                            No Disponible
-                                                        </div>
-                                                    @endif
-                                                @else
-                                                    <div id="nodis-button" class="col-xl-auto">
-                                                    <div class="row">
-                                                        <button id="" class="btn btn-sm btn-leemon-green update-cart btn-block"  data-id="{{ $product->proId }}" data-dif="{{ $product->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
-                                                    </div>
-                                                    </div>
-                                                @endif 
-                                                @guest
-                
-                                                @else
-                                                    <br><a class="favorites update-wishlist" href="#"  data-id="{{ $product->proId }}">Enviar a Favoritos</a>
-                                                @endguest
+                                                        <br><a class="favorites update-wishlist" href="#"  data-id="{{ $product->proId }}">Enviar a Favoritos</a>
+                                                    @endguest
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -96,7 +100,8 @@
                     </div>
                     @foreach ($subcategories as $subcategory) 
                         <li class="">
-                            <a class="refinementlink add brand-size" href="/category/{{ str_replace(" ", "-",$gfather) }}/{{ $gfather_id }}/{{ str_replace(" ", "-",$subcategory->name) }}/{{ $subcategory->id }}" title="Futurebiotics">
+                            {{-- /products/{{ str_replace(" ", "-",$item['name']) }}/{{str_replace(" ", "-",$submenu['name'])}}/{{str_replace(" ", "-",$submenu2['name'])}}_{{$submenu2['id']}} --}}
+                            <a class="refinementlink add brand-size" href="/products/{{ str_replace(" ", "-",$gfather) }}/{{ str_replace(" ", "-",$father) }}/{{str_replace(" ", "-",$subcategory->name)}}_{{ $subcategory->id }}" title="Futurebiotics">
                                 <span class="square-check"><i class="fa fa-square-o fa-lg"></i></span>
                                 <span class="text-ref ">
                                     {{ $subcategory->name}}

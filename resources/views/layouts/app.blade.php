@@ -30,13 +30,15 @@
 </head>
 <style>
     @font-face {
-        font-family: "AcuminVariableConcept2";
-        src: url("{{ env('APP_URL')}}/css/AcuminVariableConceptCondens.otf") format('opentype');
+        font-family: "GothamBook";
+        src: url("{{ env('APP_URL')}}/css/GothamBook.otf") format('opentype');
     }
+
     @font-face {
-        font-family: "AcuminVariableConcept";
-        src: url("{{ env('APP_URL') }}/css/AcuminVariableConcept.otf") format('opentype');
+        font-family: "Gotham-Black";
+        src: url("{{ env('APP_URL')}}/css/Gotham-Black.otf") format('opentype');
     }
+
     #loading_web{
         position: absolute;
         top: 0;
@@ -118,7 +120,7 @@
                 <div class="col-12 col xl-12">
                     <div class="row ancho">
                         {{-- 1 --}}
-                        <div id="one" class="col-6 col-md-2">
+                        <div id="one" class="col-7 col-md-2">
                             <div class="row">
                                 <button  onclick="openNav()" class="navbar-toggler" type="button" data-toggle="" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="{{ __('Toggle navigation') }}">
                                     <span class="navbar-toggler-icon"></span>
@@ -170,7 +172,7 @@
                                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" v-pre>
                                                     Inicia Sesión<span class="caret"></span>
                                                     </a> --}}
-                                                    <a class="nav-link brand-font" href="{{ route('login') }}">{{ __('Iniciar Sesión') }}</a>
+                                                    <a class="nav-link brand-font-login" href="{{ route('login') }}">{{ __('Iniciar Sesión') }}</a>
                                                     
                                                 {{-- <div class="dropdown-menu dropdown-menu-position-center dropdown-menu-center text-center" aria-labelledby="navbarDropdown">
                                                     <a class="btn btn-leemon-green btn-block mt-2" href="{{ route('login') }}">{{ __('Iniciar Sesión') }}</a>
@@ -181,7 +183,7 @@
                                                 {{--  --}}
                                             </li>
                                             <li class="nav-item dropdown li-width">
-                                            <a class="nav-link brand-font" href="{{ route('register')  }}">{{ __('Registrate') }}</a>
+                                            <a class="nav-link brand-font-login " href="{{ route('register')  }}">{{ __('Registrate') }}</a>
                                             </li>
                                         @else
                                             <li class="nav-item dropdown li-width">
@@ -243,11 +245,11 @@
                             </div>
                         </div>
                         {{-- 4 --}}
-                        <div id="four" class="col-6 col-md-1">
+                        <div id="four" class="col-5 col-md-1">
                             <div class="row float-right">
                                 <div id="litlecart" class="main-section">
                                     <div class="dropdown justify-content-end d-flex">
-                                        <a type="button" class="btn btn-info cart " data-toggle="dropdown">
+                                        <a type="" class="btn btn-info cart " data-toggle="dropdown">
                                             <span class="cart-size"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span><span id="cart_menu_num" class="">{{ count((array) session('cart')) }}</span>
                                         </a>
                                         @if(session('cart'))
@@ -280,9 +282,9 @@
                                                                 <img src="{{ $details['photo'] }}" />
                                                             </div>
                                                             <div class="col-lg-8 col-sm-8 col-8 cart-detail-product ">
-                                                                <div class="mt-3 mb-3">
+                                                                <div class="mt-2 mb-2">
                                                                     <p class="brand-font">{{ $details['name'] }}<br>
-                                                                        <span class="price cart-text-green"> $ {{ number_format($details['price'],0) }}</span> <span class="count"> Cantidad:{{ $details['quantity'] }}</span></p>
+                                                                        <span class="count"> Cantidad: {{ $details['quantity'] }}</span><span class="price cart-text-green font-black"> $ {{ number_format($details['price'],0) }}</span> </p>
                                                                 </div>
                                                                 
                                                             </div>

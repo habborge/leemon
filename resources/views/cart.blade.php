@@ -29,7 +29,7 @@
                                                     </div>
                                                 @endif
                                                 <div class="row">
-                                                    <div class="col-md-8">
+                                                    <div class="col-md-12">
                                                         <div class="row">
                                                             
                                                             <p>
@@ -42,15 +42,12 @@
                                                                     @if ($address[0]->details) {{ ucwords($address[0]->details) }}<br> @endif
                                                                     {{ ucwords($address[0]->city_d_id) }} ({{ ucwords($address[0]->department) }}), {{ ucwords($address[0]->country_master_name) }}
                                                                 </span>
-                                                                
+                                                                <br><a class="btn btn-leemon-back mt-2" data-toggle="modal" id="changeAddress">Cambiar Dirección</a>
                                                             </p>
+                                                            
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4">
-                                                        <div class="row float-right">
-                                                            <a class="btn btn-leemon-back" data-toggle="modal" id="changeAddress">Cambiar Dirección</a>
-                                                        </div>
-                                                    </div>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -123,20 +120,19 @@
                     
                                                 <div class="col-12 col-md-12">
                                                     <div class="row">
-                                                        <div class="col-8 col-md-8 line-right-cart py-3" data-th="Product">
+                                                        <div class="col-12 col-md-8 line-right-cart py-3" data-th="Product">
                                                             <div class="row">
-                                                                <div class="col-3 col-sm-4 hidden-xs">
+                                                                <div class="col-4 col-sm-4 hidden-xs">
                                                                     <div class="row text-center">
                                                                         <img src="{{ $details['photo'] }}"  class="img-purchase img-responsive mx-auto d-block"/>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-9 col-sm-8 mt-3">
+                                                                <div class="col-8 col-sm-8 mt-3">
                                                                     <div id="cart_1" class="col-md-12">
                                                                         <div class="row">
                                                                             <div class="col-md-12">
                                                                                 <div class="row">
                                                                                     <small><span class="nomargin">{{ $details['name'] }}</span></small>
-                                                                                    
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-md-12">
@@ -160,7 +156,6 @@
                                                                     <br>
                                                                     <div id="cart_2" class="col-md-12">
                                                                         <div class="row">
-                                                                            
                                                                             <div class="col-8 col-md-12">
                                                                                 <div class="row">
                                                                                     <div class="col-9 col-md-4 input-group" data-pr="Quantity">
@@ -185,7 +180,7 @@
                                                                                     </div> --}}
                                                                                     <div class="col-3 col-md-2">
                                                                                         <div class="row">
-                                                                                            <button class="btn btn-danger btn-sm remove-from-cart" data-id="{{ $id }}"><i class="fa fa-trash-o"></i> Eliminar</button>
+                                                                                            <button class="btn btn-leemon-delete btn-sm remove-from-cart" data-id="{{ $id }}"><img src="/img/x.png" alt="" width="25px"></button>
                                                                                         </div>
                                                                                         
                                                                                     </div>
@@ -231,11 +226,11 @@
                                         <div class="col-12 col-md-12">
                                             <div class="visible-xs">
                                                 
-                                                <div class="col-md-12 mt-4">
+                                                <div class="col-12 col-md-12 mt-4">
                                                     <div class="row">
                                                         <div class="card-title col-md-12 text-center">
                                                             <div class="row justify-content-md-center">
-                                                                <div class="col-4 col-md-4 bg-title-cart">
+                                                                <div class="col-12 col-md-4 bg-title-cart">
                                                                     <div class="mt-2 mb-2"><b>Subtotal Compra</b></div>
                                                                 </div>
                                                                 
@@ -245,14 +240,14 @@
                                                         </div>
                                                         
                                                         <div class="card-body info-small card-body-yellow">
-                                                            <div class="col-md-12">
+                                                            <div class="col-12 col-md-12">
                                                                 <div class="row">
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-9 col-md-9">
                                                                         <div class="row">
                                                                             Cantidad de articulos:
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-3">
+                                                                    <div class="col-3 col-md-3">
                                                                         <div class="row float-right">
                                                                             {{ $q_prod }}
                                                                         </div>
@@ -261,12 +256,12 @@
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <div class="row">
-                                                                    <div class="col-md-8">
+                                                                    <div class="col-8 col-md-8">
                                                                         <div class="row">
                                                                             Subtotal:
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-4 col-md-4">
                                                                         <div class="row float-right">
                                                                             COP$ {{ number_format($subTotal,0) }}
                                                                         </div>
@@ -275,12 +270,12 @@
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <div class="row">
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-9 col-md-9">
                                                                         <div class="row">
                                                                             Descuento:
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-3">
+                                                                    <div class="col-3 col-md-3">
                                                                         <div class="row float-right">
                                                                             <span class="text-danger">-{{ number_format($total_d, 0) }}</span>
                                                                         </div>
@@ -289,14 +284,14 @@
                                                             </div>
                                                             
                                                             
-                                                            <div class="col-md-12">
+                                                            <div class="col-12 col-md-12">
                                                                 <div class="row">
-                                                                    <div class="col-md-8">
+                                                                    <div class="col-8 col-md-8">
                                                                         <div class="row">
                                                                             Envío:
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-4 col-md-4">
                                                                         <div class="row float-right">
                                                                             --
                                                                         </div>
@@ -304,14 +299,14 @@
                                                                 </div>
                                                             </div>
                                                             <hr>
-                                                            <div class="col-md-12">
+                                                            <div class="col-12 col-md-12">
                                                                 <div class="row">
-                                                                    <div class="col-md-8">
+                                                                    <div class="col-8 col-md-8">
                                                                         <div class="row">
                                                                             <b>Total:</b>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-4 col-md-4">
                                                                         <div class="row float-right">
                                                                            <b>COP$ --</b>
                                                                         </div>
@@ -328,27 +323,25 @@
                                             
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mt-4">
+                                    <div class="col-12 col-md-12 mt-4">
                                         <div class="row">
                                             <div class="col-6 col-md-6">
                                                 <a href="{{ url('/') }}" class="btn btn-leemon-back">
                                                     Seguir Comprando
                                                 </a>
                                             </div>
-                                            <div class="col-3 col-md-3">
-
-                                            </div>
+                                            
                                             <!--<div class="hidden-xs text-right"><strong>Total $ {{ $total }}</strong></div>-->
-                                            <div class="col-3 col-md-3 text-right">
+                                            <div class="col-6 col-md-6 text-right">
                                                 @guest
                                                     {{-- <a class="btn btn-leemon-green" href="{{ route('login') }}">Ir a Pagar</a><br> --}}
                                                     <a id="pagar" class="btn btn-leemon-green btn-block">Ir a Pagar</a>
                                                     {{-- <span class="title-tam3">¿Eres nuevo en Leemon? </span><a class="title-tam2" href="{{ route('register') }}">{{ __('Unete aquí.') }}</a> --}}
                                                 @else
                                                     @if ($answer == 0)
-                                                        <a href="{{ url('purchase') }}" class="btn btn-leemon-info">Información de Usuario</a>
+                                                        <a href="{{ url('purchase') }}" class="btn btn-leemon-info">Datos de Envío</a>
                                                     @elseif ($answer == 1)
-                                                        <a href="{{ url('methods') }}" class="btn btn-leemon-method">Metodo de Pago</a>
+                                                        <a href="{{ url('methods') }}" class="btn btn-leemon-method">Resumen de Compra</a>
                                                     @endif
                                                 @endguest
                                             </div>
@@ -373,42 +366,42 @@
                             </div>
                             <div class="row">
                                 <div class="card-body info-small card-body-yellow card-round-footer">
-                                    <div class="col-md-12">
+                                    <div class="col-12 col-md-12">
                                         <div class="row">
-                                            <div class="col-md-9">
+                                            <div class="col-9 col-md-9">
                                                 <div class="row">
                                                     Cantidad de articulos:
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-3 col-md-3">
                                                 <div class="row float-right">
                                                     {{ $q_prod }}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-12 col-md-12">
                                         <div class="row">
-                                            <div class="col-md-8">
+                                            <div class="col-8 col-md-8">
                                                 <div class="row">
                                                     Subtotal:
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-4 col-md-4">
                                                 <div class="row float-right">
                                                     COP$ {{ number_format($subTotal, 0) }}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-12 col-md-12">
                                         <div class="row">
-                                            <div class="col-md-9">
+                                            <div class="col-9 col-md-9">
                                                 <div class="row">
                                                     Descuento:
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-3 col-md-3">
                                                 <div class="row float-right">
                                                     <span class="text-danger">-{{ number_format($total_d, 0) }}</span>
                                                 </div>
@@ -419,12 +412,12 @@
                                     
                                     <div class="col-md-12">
                                         <div class="row">
-                                            <div class="col-md-8">
+                                            <div class="col-8 col-md-8">
                                                 <div class="row">
                                                     Envío:
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-4 col-md-4">
                                                 <div class="row float-right">
                                                     --
                                                 </div>
@@ -434,13 +427,13 @@
                                     <hr>
                                     <div class="col-md-12 mb-4">
                                         <div class="row">
-                                            <div class="col-md-8">
+                                            <div class="col-8 col-md-8">
                                                 <div class="row">
                                                     
                                                     Total:
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-4 col-md-4">
                                                 <div class="row float-right">
                                                     COP$ --
                                                 </div>
@@ -458,9 +451,9 @@
                                                 {{-- <span class="title-tam3">¿Eres nuevo en Leemon? </span><a class="title-tam2" href="{{ route('register') }}">{{ __('Unete aquí.') }}</a> --}}
                                             @else
                                                 @if ($answer == 0)
-                                                    <a href="{{ url('purchase') }}" class="btn btn-leemon-info btn-block">Información de Facturación</a>
+                                                    <a href="{{ url('purchase') }}" class="btn btn-leemon-info btn-block">Datos de Envío</a>
                                                 @elseif ($answer == 1)
-                                                    <a href="{{ url('methods') }}" class="btn btn-leemon-method btn-block">Metodo de Pago</a>
+                                                    <a href="{{ url('methods') }}" class="btn btn-leemon-method btn-block">Resumen de Compra</a>
                                                 @endif
                                             @endguest
                                         </div>
@@ -575,8 +568,11 @@
             title: 'Eres Usuario Registrado?',
             showDenyButton: true,
             showCancelButton: true,
+            cancelButtonText: `Cancelar`,
             confirmButtonText: `Sí, Inicia Sesión`,
+            confirmButtonColor: '#4da042',
             denyButtonText: `No, Registrate`,
+            denyButtonColor: '#E39281',
             }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {

@@ -17,9 +17,9 @@ Route::get('/', function () {
     return redirect('/home');
 });
 
-Route::get('/', function () {
-    return redirect('/giveaway/registry');
-});
+// Route::get('/', function () {
+//     return redirect('/giveaway/registry');
+// });
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/product/{id}', 'ProductController@details')->name('productdetails');
@@ -73,6 +73,9 @@ Route::group([
     Route::post('addresses/list', 'AddressController@addressList');
     Route::post('addresses/listchange', 'AddressController@addressChange');
     Route::get('/secure/delivery/address/verify', 'PurchaseControler@verifyAddress');
+
+    //------- new address from cart -------------------------------------------
+    Route::get('addresses/new/{value}', 'AddressController@create');
     
     // E-mail verification after registration.
     Route::post('/secure/verify/email', 'MemberController@verifyEmail');
@@ -97,6 +100,9 @@ Route::group([
 
     //------- Wish list ----------------------------------------------
     Route::post('add-to-wishlist', 'ProductController@addToWishList');
+
+    //------- Voucher verification -----------------------------------
+    Route::post('secure/methods/verify/voucher', 'VoucherController@voucherVerify');
 });
 
 Auth::routes();
