@@ -29,7 +29,7 @@
                                                     </div>
                                                 @endif
                                                 <div class="row">
-                                                    <div class="col-md-8">
+                                                    <div class="col-md-12">
                                                         <div class="row">
                                                             
                                                             <p>
@@ -47,11 +47,7 @@
                                                             
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4">
-                                                        <div class="row float-right">
-                                                            <a href="addresses/new/cart" class="btn btn-leemon-pink">Agregar Nueva Dirección</a>
-                                                        </div>
-                                                    </div>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -572,8 +568,11 @@
             title: 'Eres Usuario Registrado?',
             showDenyButton: true,
             showCancelButton: true,
+            cancelButtonText: `Cancelar`,
             confirmButtonText: `Sí, Inicia Sesión`,
+            confirmButtonColor: '#4da042',
             denyButtonText: `No, Registrate`,
+            denyButtonColor: '#E39281',
             }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {

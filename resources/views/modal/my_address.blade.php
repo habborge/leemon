@@ -12,6 +12,11 @@
                     </div>
                     <div class="col-md-12 modal-body" style="">
                         <div class="row">
+                            <div class="col-md-12">
+                                <div class="float-right mb-3">
+                                    <a href="addresses/new/cart" class="btn btn-leemon-pink">Agregar Nueva Dirección</a>
+                                </div>
+                            </div>
                             <div id="content_info" class="col-md-12 order-md-1">
 
                             </div>

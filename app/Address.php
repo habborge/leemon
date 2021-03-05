@@ -17,7 +17,7 @@ class Address extends Model
 
         $default = 0;
 
-        if ((isset($request->sameaddress)) or ($valueFrom == "cart")){
+        if ((isset($request->sameaddress)) or ($valueFrom == 1)){
             $default = 1;
             $preview = Address::where('user_id', Auth::user()->id)->where('default', 1)->first();
             $preview->default = 0;
