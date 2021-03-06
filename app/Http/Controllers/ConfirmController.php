@@ -140,8 +140,8 @@ class ConfirmController extends Controller
         
         $commerce_id = $request->id_comercio;
         $payment_id = $request->id_pago;
-        $commerce_id = 30364;
-        $payment_id = "100498-1";
+        // $commerce_id = 30364;
+        // $payment_id = "100498-1";
         $message = "";
         $sw = 0;
         $approval = 0;
