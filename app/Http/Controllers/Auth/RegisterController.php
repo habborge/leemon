@@ -56,6 +56,7 @@ class RegisterController extends Controller
             'lastname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'ndoc' => ['required', 'unique:members,n_doc'],
             'birthday' => ['required'],
             'phone' => ['required', 'numeric'],
             'recaptcha_token' => ['required', new   ReCaptchaRule($data['recaptcha_token'])]
@@ -85,6 +86,7 @@ class RegisterController extends Controller
             'email' => $data['email'], 
             'firstname' => $data['name'],
             'lastname' => $data['lastname'],
+            'n_doc' => $data['ndoc'],
             'birthday' => $newDate,
             'phone' => "+".$data['callingcode']."-".$data['phone'],
             'address' => '', 
@@ -92,7 +94,6 @@ class RegisterController extends Controller
             'city' => '', 
             'dpt' => '', 
             'country' => '', 
-            'n_doc' => '1234567890',
             'status' => 1
         ]);
 
