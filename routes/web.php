@@ -93,7 +93,7 @@ Route::group([
 
     //------- Payment process ----------------------------------------
     //Route::post('secure/methods/paynow', 'PaymentController@paymentProcess');
-    Route::get('secure/method/payment/now', 'PaymentController@paymentProcess')->name('paymentnow');;
+    Route::get('secure/method/payment/now', 'PaymentController@paymentProcess')->name('paymentnow');
 
     //------- Send Email to friend -----------------------------------
     Route::post('send-email-friend', 'SendingEmailController@sendToFriend'); 
@@ -103,6 +103,10 @@ Route::group([
 
     //------- Voucher verification -----------------------------------
     Route::post('secure/methods/verify/voucher', 'VoucherController@voucherVerify');
+
+    //------- My orders ----------------------------------------------
+    Route::get('/secure/orders/info', 'ProfileController@myOrders');
+
 });
 
 Auth::routes();

@@ -140,8 +140,8 @@ class ConfirmController extends Controller
         
         $commerce_id = $request->id_comercio;
         $payment_id = $request->id_pago;
-        // $commerce_id = 30364;
-        // $payment_id = "100498-34";
+        $commerce_id = 30364;
+        $payment_id = "100498-1";
         $message = "";
         $sw = 0;
         $approval = 0;
@@ -191,8 +191,10 @@ class ConfirmController extends Controller
                                     if ($result[0] == 1){
                                         $order_change = Order::approval_order($order->id);
                                         $products_discount = $this->updateQuantity($order->id);
+
+                                        $info_trans = $insertData[1];
                                         $member = Member::select('user_id','firstname','lastname','email')->where('user_id', $order->user_id)->first();
-                                        $sending = Mail::to($member->email)->send(new SendPurchase($order, $member, $rs));
+                                        $sending = Mail::to($member->email)->send(new SendPurchase($order, $member, $info_trans));
                                     }else{
                                         // int_pago_terminado => 1: Terminado => 2: Pendiente: En caso de que el pago sea mixto. El pago no ha sido terminado en su totalidad. => 200 Pago iniciado
                                         if ($data_info[3] == 1){
@@ -294,7 +296,7 @@ class ConfirmController extends Controller
 
     public function BackToCommerce(){
 
-        return redirect()->away("https://leemon.com.co/secure/methods/zp/back");
+        
         
         $message = "";
         $sw = 0;
@@ -430,7 +432,7 @@ class ConfirmController extends Controller
         $products = Order_detail::where('order_id', $order_id)->get();
 
         foreach ($products as $product) {
-            $pro = Product::where('id', $product->product_id);
+            $pro = Product::where('id', $product->product_id)->first();
             $value = $pro->quantity - $product->quantity;
             
             $pro->quantity = $value;

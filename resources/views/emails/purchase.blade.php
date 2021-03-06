@@ -1,24 +1,27 @@
 @component('mail::message')
-Hola <span style="color: rgb(45, 77, 146)">{{ $member->firstname }} {{ $member->firstname }}</span>,
+Hola <span style="color: rgb(45, 77, 146)">{{ $member->firstname }} {{ $member->lastname }}</span>,
 
 Gracias por Comprar en Leemon.
 <hr class="">
-Tu Orden de compra es {{ $order->id}}
+Tu Orden de compra es No {{ $order->id}}
 <hr class="">
+<span id="parrafo">
+  Hemos recibido tu orden y empezaremos a procesarla. Pronto recibirás un correo con la confirmación de envío. Recuerda que el tiempo de entrega comienza a partir de la confirmación del pago.
+</span>
+<br><br><br>
 <table>
     <tr>
         <td>
             <h3>Información de Compra</h3>
             <p>
-                Via Pago: {{ $order->payment }}
+                Cliente: {{ $member->firstname }} {{ $member->lastname }}<br>
+                Via Pago: {{ $order->payment }}<br>
+                Valor: {{ $order->amount }}<br>
             </p>
         </td>
     </tr>
 </table>
-<span>
-Estamos a la espera de recibir la confirmación del pago por parte de tu entidad bancaria en un plazo no mayor a 24 horas.
-Una vez confirmado, tu pedido será enviado a nuestro Centro de Distribución para ser preparado. Te enviaremos por correo la notificación cuando vaya en camino a tu domicilio.
-</span>
+
 
 <div class="col-12">
     <table class="table" style="width: 100%" >
@@ -34,7 +37,7 @@ Una vez confirmado, tu pedido será enviado a nuestro Centro de Distribución pa
         <tbody>
             @foreach ($order_details as $detail)
                 <tr>
-                    <td><img src="{{ $detail->picture }}" alt="" style="width: 100px"></td>
+                    <td><img src="{{ $detail->picture }}" alt="" style="width: 50px"></td>
                     <td><p>{{  $detail->proName }}</p></td>
                     <td><p>{{  $detail->proPrice }}</p></td>
                     <td><p>{{  $detail->cantidad }}</p></td>
@@ -58,8 +61,8 @@ Una vez confirmado, tu pedido será enviado a nuestro Centro de Distribución pa
 </div>
 
 
-@component('mail::button', ['url' => $order->id])
-    Ver el Producto
+@component('mail::button', ['url' =>  config('app.url')  ])
+    Estado de tu Orden
 @endcomponent
 
 Gracias,<br>

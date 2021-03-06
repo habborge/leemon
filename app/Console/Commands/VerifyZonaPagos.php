@@ -365,7 +365,7 @@ class VerifyZonaPagos extends Command
         $products = Order_detail::where('order_id', $order_id)->get();
 
         foreach ($products as $product) {
-            $pro = Product::where('id', $product->product_id);
+            $pro = Product::where('id', $product->product_id)->first();
             $value = $pro->quantity - $product->quantity;
             
             $pro->quantity = $value;
