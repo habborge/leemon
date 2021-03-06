@@ -14,7 +14,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 mt-4 mb-4">
-                        <h3>{{ $gfather }} </h3>
+                        <h3>{{ $father }} </h3>
                     </div>
                     <div class="col-md-12">
                         <div class="row">

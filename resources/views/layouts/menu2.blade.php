@@ -28,11 +28,11 @@
                                                     @foreach ($item['submenu'] as $submenu)
                                                     
                                                         @if ($submenu['submenu'] == [])
-                                                        <div class="columna columna-{{ $item['code'] }}"><h3 class="title-tam2">{{ $submenu['name'] }}</h3></div>
+                                                        <div class="columna columna-{{ $item['code'] }}"><a href="/category/{{ str_replace(" ", "-", $item['name']) }}/{{ $item['id'] }}/{{ str_replace(" ", "-",$submenu['name']) }}/{{ $submenu['id'] }}"><h3 class="title-tam2">{{ $submenu['name'] }}</h3></a></div>
                                                         @else
                                                        
                                                             <div class="columna columna-{{ $item['code'] }}">
-                                                                <h3 class="title-tam2">{{$submenu['name']}}</h3>
+                                                                <a href="/category/{{ str_replace(" ", "-", $item['name']) }}/{{ $item['id'] }}/{{ str_replace(" ", "-",$submenu['name']) }}/{{ $submenu['id'] }}"><h3 class="title-tam2">{{$submenu['name']}}</h3></a>
                                                                 @foreach ($submenu['submenu'] as $submenu2)
                                                                     @if ($submenu['submenu'] != [])
                                                                         <a href="/products/{{ str_replace(" ", "-",$item['name']) }}/{{str_replace(" ", "-",$submenu['name'])}}/{{str_replace(" ", "-",$submenu2['name'])}}_{{$submenu2['id']}}">{{$submenu2['name']}}</a>

@@ -209,7 +209,7 @@
                                                             <div class="col-6 col-md-6">
                                                                 <div class="row">
                                                                     
-                                                                    <a href="" class="dropdown-item dropdown-item-text-size">
+                                                                    <a href="/secure/orders/info" class="dropdown-item dropdown-item-text-size">
                                                                         <i class="fa fa-shopping-basket" aria-hidden="true"></i> Mis Pedidos
                                                                     </a>
                                                                     <a href="" class="dropdown-item dropdown-item-text-size">
@@ -218,9 +218,9 @@
                                                                     <a href="/addresses" class="dropdown-item dropdown-item-text-size">
                                                                         <i class="fa fa-address-book" aria-hidden="true"></i> Mis Direcciones
                                                                     </a>
-                                                                    <a href="/secure/methods" class="dropdown-item dropdown-item-text-size">
+                                                                    {{-- <a href="/secure/methods" class="dropdown-item dropdown-item-text-size">
                                                                         <i class="fa fa-credit-card-alt" aria-hidden="true"></i> Metodo de Pago
-                                                                    </a>
+                                                                    </a> --}}
                                                                    
                                                                     <a class="dropdown-item dropdown-item-text-size mt-3" href="{{ route('logout') }}"
                                                                     onclick="event.preventDefault();

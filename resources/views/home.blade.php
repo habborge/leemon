@@ -79,7 +79,7 @@
                           </picture>
                        
                         <div class = "carousel-caption font-black" >
-                          <h5 style="text-shadow: 2px 2px #202020;"> {{$category->name}}</h5>
+                          <h5 style="text-shadow: 1px 1px #202020;"> {{$category->name}}</h5>
                           </div>
                         </a>
                     </div>
