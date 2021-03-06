@@ -296,90 +296,99 @@ class ConfirmController extends Controller
 
     public function BackToCommerce(){
 
-        //return redirect()->away("https://leemon.com.co/secure/methods/zp/back");
+        return redirect()->away("https://leemon.com.co/secure/methods/zp/back");
         
         $message = "";
         $sw = 0;
         $approval = 0;
 
-        $user_id = Auth::user()->id;
-        $orderIdSession = session()->get('myorder');
-        //$orderIdSession = 80;
-        $openOrder = Order::where('user_id', $user_id)->where('id', $orderIdSession);
-        //dd($orderIdSession);
-        //dd($openOrder->first());
-        if ($openOrder->exists()){
+        if (Auth::user()){
+            $user_id = Auth::user()->id;
+            $orderIdSession = session()->get('myorder');
 
-            $order = $openOrder->first();
+            //$orderIdSession = 80;
+            $openOrder = Order::where('user_id', $user_id)->where('id', $orderIdSession);
+            //dd($orderIdSession);
+            //dd($openOrder->first());
+            if ($openOrder->exists()){
 
-            $data = [
-                "int_id_comercio" => env('ZV_ID'),
-                "str_usr_comercio" => env('ZV_CO'),
-                "str_pwd_comercio" => env('ZV_PA'),
-                "str_id_pago" => "100498-".$order->id,
-                "int_no_pago" => -1
-            ];
-    
-            $response = Http::post('https://www.zonapagos.com/Apis_CicloPago/api/VerificacionPago', $data);
-            //dd($response->json());
-            // dd(session()->all());
-            // if int_estado = 1 then API ran good
-            if ($response->json()['int_estado'] == 1){ 
+                $order = $openOrder->first();
 
-                // if int_error = 0 then API found payments
-                if ($response->json()['int_error'] == 0){
+                $data = [
+                    "int_id_comercio" => env('ZV_ID'),
+                    "str_usr_comercio" => env('ZV_CO'),
+                    "str_pwd_comercio" => env('ZV_PA'),
+                    "str_id_pago" => "100498-".$order->id,
+                    "int_no_pago" => -1
+                ];
+        
+                $response = Http::post('https://www.zonapagos.com/Apis_CicloPago/api/VerificacionPago', $data);
+                //dd($response->json());
+                // dd(session()->all());
+                // if int_estado = 1 then API ran good
+                if ($response->json()['int_estado'] == 1){ 
 
-                    if ($response->json()['int_cantidad_pagos'] == 1){
+                    // if int_error = 0 then API found payments
+                    if ($response->json()['int_error'] == 0){
 
-                        $info = $response->json()['str_res_pago'];
-                        $data_info = explode("|", $info);
+                        if ($response->json()['int_cantidad_pagos'] == 1){
+
+                            $info = $response->json()['str_res_pago'];
+                            $data_info = explode("|", $info);
+                            
+                            
+                            $result = $this->verifyInfo($info, $order->id);
+                            
+                            //array($approval, $sw, $message, $data_info);
+                            // PREGUNTAMOS POR LSO RESULATDOS
+                            $approval = $result[0];
+                            $message = $result[1];
+                            $dataTransaction = $data_info;
+
+                        }else if ($response->json()['int_cantidad_pagos'] > 1){
+                            $info = explode(";", $response->json()['str_res_pago']);
                         
-                        
-                        $result = $this->verifyInfo($info, $order->id);
-                        
-                        //array($approval, $sw, $message, $data_info);
-                        // PREGUNTAMOS POR LSO RESULATDOS
-                        $approval = $result[0];
-                        $message = $result[1];
-                        $dataTransaction = $data_info;
+                            // $output = new ConsoleOutput();
+                            // $output->writeln("<info>Converting".$response->json()['str_res_pago']."</info>");
 
-                    }else if ($response->json()['int_cantidad_pagos'] > 1){
-                        $info = explode(";", $response->json()['str_res_pago']);
-                    
-                        // $output = new ConsoleOutput();
-                        // $output->writeln("<info>Converting".$response->json()['str_res_pago']."</info>");
+                            $order_status = 0;
 
-                        $order_status = 0;
+                            for ($i=0; $i < count($info) -1; $i++) { 
+                                $result = [];
+                                $result = $this->verifyInfo($info[$i], $order->id);
+                                $data_info = $result[3];
+                                $order_status = $result[0];
+                                $order_message = $result[2];
+                            }
 
-                        for ($i=0; $i < count($info) -1; $i++) { 
-                            $result = [];
-                            $result = $this->verifyInfo($info[$i], $order->id);
-                            $data_info = $result[3];
-                            $order_status = $result[0];
-                            $order_message = $result[2];
+                            $approval = $order_status;
+                            $message = $order_message;
+                            $dataTransaction = $data_info;
                         }
 
-                        $approval = $order_status;
-                        $message = $order_message;
-                        $dataTransaction = $data_info;
-                    }
-
-                    if ($approval == 1){
-                        //session()->flush();
-                        session()->forget('cart', 'myorder', 'codehash');
+                        if ($approval == 1){
+                            //session()->flush();
+                            session()->forget('cart', 'myorder', 'codehash');
+                        }
+                    }else{
+                        $message = "No se encontro Información relacionada al pago";      
+                        $dataTransaction = "error";            
                     }
                 }else{
-                    $message = "No se encontro Información relacionada al pago";      
-                    $dataTransaction = "error";            
+                    $message = "Se presentó problemas con zonapagos";
+                    $dataTransaction = "error";
                 }
+                
             }else{
-                $message = "Se presentó problemas con zonapagos";
+                $message = "La orden de compra ya fue procesada";
                 $dataTransaction = "error";
             }
-               
         }else{
+            $message = "Esta información ya ha sido procesada y entregada";
             $dataTransaction = "error";
         }
+
+        
 
         // $data_info[0] = 31; 
         // $data_info[1] = 3772; //reference
