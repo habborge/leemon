@@ -4,10 +4,10 @@
 @endsection
 @section('content')
 <div id="main" role="main" class="clearfix">
-    <div class="row" itemtype="" itemscope="">
+    {{-- <div class="row" itemtype="" itemscope="">
             
         <img src="/img/ca_{{$gfather_id}}.jpg" alt="" width="100%" height="300px">
-</div>
+</div> --}}
     <div class="container no-padding-sm-xs">
         
         <div id="primary" class="primary-content col-md-9 col-sm-12 col-xs-12 pull-right no-padding-md no-padding-lg no-padding-sm-xs">

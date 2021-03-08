@@ -4,9 +4,9 @@
 @endsection
 @section('content')
 <div id="main" role="main" class="clearfix">
-    <div itemtype="" itemscope="">
+    {{-- <div itemtype="" itemscope="">
         <img id="slideSection" src="/img/ca_{{$gfather_id}}.jpg" alt="" class="img-fluid d-block w-100" style="max-height: 300px">
-    </div>
+    </div> --}}
     <div class="container no-padding-sm-xs">
         
         <div id="primary" class="primary-content col-md-9 col-sm-12 col-xs-12 pull-right no-padding-md no-padding-lg no-padding-sm-xs">

@@ -25,18 +25,18 @@
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <link rel="stylesheet" href="https://leemon.s3.amazonaws.com/development/statics/css/floating-wpp.min.css">
     @yield('custom-css')
 </head>
 <style>
     @font-face {
         font-family: "GothamBook";
-        src: url("{{ env('APP_URL')}}/css/GothamBook.otf") format('opentype');
+        src: url("{{ URL::to('/') }}/css/GothamBook.otf") format('opentype');
     }
 
     @font-face {
         font-family: "Gotham-Black";
-        src: url("{{ env('APP_URL')}}/css/Gotham-Black.otf") format('opentype');
+        src: url("{{ URL::to('/') }}/css/Gotham-Black.otf") format('opentype');
     }
 
     #loading_web{
@@ -361,8 +361,12 @@
 			<img src="/img/preloader.gif" id="img_loading" alt="">
 		</div>
             @yield('content')
-        
+            {{-- <a href="https://wa.me/573044144071/?text=tu%20texto%20personalizado" target="_blank">
+                <img src="https://leemon.s3.amazonaws.com/development/images/logos/logo-wasap.png" width="50" height="50">
+             </a> --}}
+             <div id="myDiv"></div>
     </div>
+    
     <link href="{{ asset('js/toastr/toastr.min.css') }}" rel="stylesheet">
         <script src="{{ asset('js/toastr/toastr.min.js') }}" defer></script>
         <link href="{{ asset('js/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
@@ -392,22 +396,36 @@
             
             // Constructing the suggestion engine
             var list = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.whitespace,
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            // url points to a json file that contains an array of country names, see
-            // https://github.com/twitter/typeahead.js/blob/gh-pages/data/countries.json
-            prefetch: '../js/list.json'
+                datumTokenizer: Bloodhound.tokenizers.whitespace,
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                // url points to a json file that contains an array of country names, see
+                // https://github.com/twitter/typeahead.js/blob/gh-pages/data/countries.json
+                prefetch: '../js/list.json'
             });
 
             // passing in `null` for the `options` arguments will result in the default
             // options being used
             $('#prefetch .typeahead').typeahead(null, {
-            name: 'list',
-            source: list
+                name: 'list',
+                source: list
             });
-                    });
+        
+            $('#myDiv').floatingWhatsApp({
+                phone: '573022058199',
+                popupMessage: 'Hola, ¿Cómo podemos ayudarte?',
+                message: "",
+                showPopup: true,
+                showOnIE: false,
+                headerTitle: 'Bienvenido a Leemon!',
+                position: 'right'
+            });
+        });
 
     </script>
+    {{-- wahtasapp --}}
+    <script type="text/javascript" src="https://leemon.s3.amazonaws.com/development/statics/js/floating-wpp.min.js" defer></script>
+    
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5EXGMB85XT"></script>
     <script>
@@ -433,18 +451,6 @@
     <noscript>
         <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1886361894716538&ev=PageView&noscript=1" />
     </noscript>
-  <!--Start of Tawk.to Script-->
-<script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/603920d2385de407571a73b1/1evfigdno';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
-    </script>
-    <!--End of Tawk.to Script-->
+    
 </body>
 </html>
