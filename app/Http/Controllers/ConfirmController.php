@@ -158,7 +158,7 @@ class ConfirmController extends Controller
 
             $response = Http::post('https://www.zonapagos.com/Apis_CicloPago/api/VerificacionPago', $data);
 
-            //dd($response->json());
+            dd($response->json());
 
             // if int_estado = 1 then API ran good
             if ($response->json()['int_estado'] == 1){ 
@@ -189,7 +189,7 @@ class ConfirmController extends Controller
                                 if ($insertData[1]){
                                     // array($approval, $sw, $message);
                                     if ($result[0] == 1){
-                                        $order_change = Order::approval_order($order->id);
+                                        $order_change = Order::approval_order($order->id, $data_info[20]);
                                         $products_discount = $this->updateQuantity($order->id);
 
                                         $info_trans = $insertData[1];
@@ -241,9 +241,13 @@ class ConfirmController extends Controller
                                     if ($insertData[1]){
                                         // array($approval, $sw, $message); var approval is 1 transaction was approved, if var approval is 0 was rejected
                                         if ($result[0] == 1){
-                                            $order_change = Order::approval_order($order->id);
+                                            $order_change = Order::approval_order($order->id, $data_info[20]);
                                             $products_discount = $this->updateQuantity($order->id);
                                             $order_status = 1;
+
+                                            $info_trans = $insertData[1];
+                                            $member = Member::select('user_id','firstname','lastname','email')->where('user_id', $order->user_id)->first();
+                                            $sending = Mail::to($member->email)->send(new SendPurchase($order, $member, $info_trans));
                                             break;
                                         }else{
                                             //$order_change = Order::reject_order($order->id);
@@ -296,7 +300,7 @@ class ConfirmController extends Controller
 
     public function BackToCommerce(){
 
-        return redirect()->away("https://leemon.com.co/secure/methods/zp/back");
+        //return redirect()->away("https://leemon.com.co/secure/methods/zp/back");
         
         $message = "";
         $sw = 0;

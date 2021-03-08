@@ -16,7 +16,8 @@ class Order extends Model
         
         $voucher_id = 0;
         $voucher_type = 0;
-
+        $delivery_cost = 0;
+        
         if ($method == 1){
             $payment = "Nombre en la tarjeta: ".$request->fullname." - ".$request->brand." Credit Card terminada en **********".$request->last4num;
         }else {
@@ -84,10 +85,11 @@ class Order extends Model
         return $rs;
     }
 
-    public static function approval_order($order){
+    public static function approval_order($order, $payment_type){
         $rs = Order::find($order);
         $rs->status = "Approved";
         $rs->status_after_approved = "Stock";
+        $rs->payment = $payment_type;
         $rs->save();
 
         return $rs;

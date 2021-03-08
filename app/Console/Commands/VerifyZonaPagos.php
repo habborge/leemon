@@ -156,7 +156,7 @@ class VerifyZonaPagos extends Command
                                 if ($insertData[1]){
                                     // array($approval, $sw, $message);
                                     if ($result[0] == 1){
-                                        $order_change = Order::approval_order($order->id);
+                                        $order_change = Order::approval_order($order->id, $data_info[20]);
                                         $products_discount = $this->updateQuantity($order->id);
                                     }else{
                                         // int_pago_terminado => 1: Terminado => 2: Pendiente: En caso de que el pago sea mixto. El pago no ha sido terminado en su totalidad. => 200 Pago iniciado
@@ -199,7 +199,7 @@ class VerifyZonaPagos extends Command
                                     if ($insertData[1]){
                                         // array($approval, $sw, $message); var approval is 1 transaction was approved, if var approval is 0 was rejected
                                         if ($result[0] == 1){
-                                            $order_change = Order::approval_order($order->id);
+                                            $order_change = Order::approval_order($order->id, $data_info[20]);
                                             $products_discount = $this->updateQuantity($order->id);
                                             $order_status = 1;
                                             break;
