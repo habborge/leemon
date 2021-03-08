@@ -245,7 +245,7 @@ class PaymentController extends Controller
                 $response = Http::post('https://www.zonapagos.com/Apis_CicloPago/api/InicioPago', $data);
 
                 //dd($response->json());
-                if ($response->json()['int_codigo'] == 2){ 
+                if ($response->json()['int_codigo'] == 1){ 
                     return redirect()->away($response->json()['str_url']);
                 }else{
                     return redirect()->back()->withErrors("No se pudo conectar a ZonaPagos, por favor intente de nuevo!!");
