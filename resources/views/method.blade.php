@@ -42,7 +42,11 @@
                         @if ($answer == 1)
                             <div class="col-md-12">
                                 <div class="row">
-                                    
+                                    @if($errors->any())
+                                        <div class="col-12 alert alert-danger" role="alert">
+                                            {{$errors->first()}}
+                                        </div>
+                                    @endif
                                         
                                             <div class="card col-md-12 card-rounded mb-3">
                                                 <div class="card-header row card-round-header" id="headingOne"> Dirección de Envio</div>

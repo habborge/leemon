@@ -60,35 +60,11 @@ class PaymentController extends Controller
 
                 if ($hash == $details['hash']){
 
-                    if (($details['prom'] == 1) and ($details['quantity'] >= 2 )){
-                        $whole = (int) ($details['quantity'] / 2);
-                        $h = (2 * $whole) + $whole;
-                        $nq = $details['quantity'] + ($h - $details['quantity']);
-                        $discount = round($details['price'] * $whole);
-                        //$details['quantity'] = $nq;
-
-                    }else if (($details['prom'] == 2) and ($details['quantity'] >= 2)){
-                        $whole = (int) ($details['quantity'] / 2);
-                        $half = round(($details['price'] / 2) * $whole);
-                        $nq = $details['quantity'];
-                    }else{
-                        $nq = $details['quantity'];
-                    }
-
                     $q_prod += $details['quantity'];
-                    $total += ($details['price'] * $nq) - $half - $discount;
-                    // $delivery += $details['delivery_cost'] * $nq;
+                    $total += ($details['price'] * $details['quantity']);
                     $total_d += $half + $discount;
                     $subTotal += ($details['price'] * $nq);
-
-                    if ($details['fee'] == 1){
-                        $beforeFee += (($details['price'] * $nq) - $half - $discount) / 1.19;
-                        $fee += ((($details['price'] * $nq) - $half - $discount) / 1.19) * 0.19;
-                    }else{
-                        $beforeFee += (($details['price'] * $nq) - $half - $discount);
-                    }
-                   
-
+ 
                 }else{
                     $sw = 1;
                     break;
@@ -146,7 +122,8 @@ class PaymentController extends Controller
                         $orderId = $rs[1];
                         
                     }else{
-                        return back()->with('notice', 'Un error ha ocurrido!!');
+                        return redirect()->back()->withErrors("Un error ha ocurrido!!");
+                        // return back()->with('notice', 'Un error ha ocurrido!!');
                     }
                 }else{
                     $order = Order::select('id')->where('user_id', $user_id)->where('code_hash', session('codehash'))->first();
@@ -268,8 +245,11 @@ class PaymentController extends Controller
                 $response = Http::post('https://www.zonapagos.com/Apis_CicloPago/api/InicioPago', $data);
 
                 //dd($response->json());
-
-                return redirect()->away($response->json()['str_url']);
+                if ($response->json()['int_codigo'] == 2){ 
+                    return redirect()->away($response->json()['str_url']);
+                }else{
+                    return redirect()->back()->withErrors("No se pudo conectar a ZonaPagos, por favor intente de nuevo!!");
+                }   
                // return redirect()->to($response->json()['str_url']);
                 
                 //dd($response->json(),json_encode($data),$response->json()['str_url']);
@@ -290,8 +270,10 @@ class PaymentController extends Controller
 
                 //return response()->json(['status'=>200, 'url' => $response->json()['str_url']]);
             }else{
-
+                return redirect()->back()->withErrors("Productos del carrito manipulados!!");
             }
+        }else{
+            return redirect()->back()->withErrors("Su sesión del carrito ha expirado!!");
         }
 
        
