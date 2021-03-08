@@ -417,7 +417,8 @@
                 showPopup: true,
                 showOnIE: false,
                 headerTitle: 'Bienvenido a Leemon!',
-                position: 'right'
+                position: 'right',
+                zIndex: 1000
             });
         });
 
