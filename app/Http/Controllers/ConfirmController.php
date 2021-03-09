@@ -158,7 +158,7 @@ class ConfirmController extends Controller
 
             $response = Http::post('https://www.zonapagos.com/Apis_CicloPago/api/VerificacionPago', $data);
 
-            //dd($response->json());
+           //dd($response->json());
 
             // if int_estado = 1 then API ran good
             if ($response->json()['int_estado'] == 1){ 
@@ -305,12 +305,13 @@ class ConfirmController extends Controller
         $message = "";
         $sw = 0;
         $approval = 0;
+        $orderIdSession = 0;
 
         if (Auth::user()){
             $user_id = Auth::user()->id;
-            $orderIdSession = session()->get('myorder');
+            // $orderIdSession = session()->get('myorder');
 
-            //$orderIdSession = 80;
+            $orderIdSession = 1;
             $openOrder = Order::where('user_id', $user_id)->where('id', $orderIdSession);
             //dd($orderIdSession);
             //dd($openOrder->first());
@@ -432,11 +433,15 @@ class ConfirmController extends Controller
         // }
         // $approval = 1;
         // $dataTransaction = $data_info;
-        
+        $url = json_encode($dataTransaction,TRUE);
+        $lru = $orderIdSession."~".$url;
+        $url2 = base64_encode($lru);
+
         return view('confirmPurchase', [
             'approval' => $approval,
             'message' => $message,
-            'response' => $dataTransaction
+            'response' => $dataTransaction,
+            'url' => $url2,
         ]);
 
     }

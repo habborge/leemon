@@ -970,7 +970,7 @@ option.one {color: #c7c7c7;}
 .md-stepper-horizontal .md-step.done .md-step-circle:before {
     font-family:'GothamBook';
     font-weight:100;
-    content: "\f00c";
+    content: url(/img/chulito.png);
 }
 .md-stepper-horizontal .md-step.done .md-step-circle *,
 .md-stepper-horizontal .md-step.editable .md-step-circle * {
@@ -1130,6 +1130,22 @@ option.one {color: #c7c7c7;}
     }
     .height-p{
         height: 80px;
+    }
+    .tabs a {
+        font-size: 18px;
+        font-family: "GothamBook";
+        
+    }
+    #sendcode{
+        margin-top: 10px;
+    }
+    .info-small {
+        font-size: 13px !important;
+    }
+    .md-stepper-horizontal .md-step .md-step-title {
+        margin-top: 16px;
+        font-size: 12px;
+        font-weight: 600;
     }
 
 }

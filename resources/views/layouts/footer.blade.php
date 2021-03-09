@@ -32,24 +32,24 @@
           <div class="col-md-6 col-lg-7 text-center text-md-right">
   
             <!-- Facebook -->
-            <a id="facebook-f" class="fb-ic facebook-f">
+            <a id="facebook-f" class="fb-ic facebook-f" href="https://www.facebook.com/leemonmarket" target="_blank">
               <i class="white-text mr-4"></i>
             </a>
 
-            <!-- Twitter -->
+            <!-- Twitter 
             <a id="twitter" class="tw-ic">
               <i class="white-text mr-4"> </i>
-            </a>
+            </a>-->
             
             <!--Instagram-->
-            <a id="instagram" class="ins-ic">
+            <a id="instagram" class="ins-ic" href="https://www.instagram.com/leemonmarket/" target="_blank">
               <i class="white-text mr-4"> </i>
             </a>
 
-            <!-- Google +-->
+            <!-- Google +
             <a id="google-plus" class="gplus-ic">
               <i class="white-text mr-4"> </i>
-            </a>
+            </a>-->
           </div>
           <!-- Grid column -->
         </div>
@@ -96,9 +96,9 @@
           <p>
             <a class="link-a" target="_blank" href="/terms/privacy-policy-and-data-processing">Política de privacidad y Tratamiento de Datos</a>
             <br>
-            <a class="link-a" href="#!">Política de Términos de Servicio, Política de Reembolsos y Devoluciones</a>
+            <a class="link-a" href="/terms/service-policy-refound-and-return-policy">Política de Términos de Servicio, Política de Reembolsos y Devoluciones</a>
           <br>
-            <a class="link-a" href="#!">FAQ</a>
+            <a class="link-a" href="/terms/faq">Preguntas Frecuentes</a>
           </p>
   
         </div>
