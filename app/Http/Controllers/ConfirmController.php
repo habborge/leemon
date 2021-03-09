@@ -309,9 +309,9 @@ class ConfirmController extends Controller
 
         if (Auth::user()){
             $user_id = Auth::user()->id;
-            // $orderIdSession = session()->get('myorder');
+            $orderIdSession = session()->get('myorder');
 
-            $orderIdSession = 1;
+            //$orderIdSession = 1;
             $openOrder = Order::where('user_id', $user_id)->where('id', $orderIdSession);
             //dd($orderIdSession);
             //dd($openOrder->first());
