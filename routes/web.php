@@ -47,14 +47,18 @@ Route::get('/secure/methods/zp/response', 'ConfirmController@ConfirmTrans');
 // back to commerce from zonaPagos
 Route::get('/secure/methods/zp/back', 'ConfirmController@BackToCommerce');
 
+// Download PDF
+Route::get('/legality/payment-result/download-pdf/{response}', 'PdfController@downloadResponseTrans');
+
 //politica de privacidad y tratamiento de datos
 Route::get('/terms/privacy-policy-and-data-processing', function () {
     return view('terms.privacy');
 });
 
-
 // Política de Términos de Servicio, Política de Reembolsos y Devoluciones
-Route::get('/terms/service-policy-refound-and-return-policy', 'ConfirmController@BackToCommerce');
+Route::get('/terms/service-policy-refound-and-return-policy',function () {
+    return view('terms.refound');
+});
 
 Route::group([
     'middleware' => ['auth']

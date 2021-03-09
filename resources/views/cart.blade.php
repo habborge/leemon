@@ -325,23 +325,23 @@
                                     </div>
                                     <div class="col-12 col-md-12 mt-4">
                                         <div class="row">
-                                            <div class="col-6 col-md-6">
+                                            <div id="firstbutton" class="col-12 col-md-6">
                                                 <a href="{{ url('/') }}" class="btn btn-leemon-back">
                                                     Seguir Comprando
                                                 </a>
                                             </div>
                                             
                                             <!--<div class="hidden-xs text-right"><strong>Total $ {{ $total }}</strong></div>-->
-                                            <div class="col-6 col-md-6 text-right">
+                                            <div id="secondbutton" class="col-12 col-md-6 text-right">
                                                 @guest
                                                     {{-- <a class="btn btn-leemon-green" href="{{ route('login') }}">Ir a Pagar</a><br> --}}
-                                                    <a id="pagar" class="btn btn-leemon-green btn-block">Ir a Pagar</a>
+                                                    <a id="pagar" class="btn btn-leemon-green btn-width">Ir a Pagar</a>
                                                     {{-- <span class="title-tam3">¿Eres nuevo en Leemon? </span><a class="title-tam2" href="{{ route('register') }}">{{ __('Unete aquí.') }}</a> --}}
                                                 @else
                                                     @if ($answer == 0)
-                                                        <a href="{{ url('purchase') }}" class="btn btn-leemon-info">Datos de Envío</a>
+                                                        <a href="{{ url('purchase') }}" class="btn btn-leemon-info btn-width">Datos de Envío</a>
                                                     @elseif ($answer == 1)
-                                                        <a href="{{ url('methods') }}" class="btn btn-leemon-method">Resumen de Compra</a>
+                                                        <a href="{{ url('methods') }}" class="btn btn-leemon-method btn-width">Resumen de Compra</a>
                                                     @endif
                                                 @endguest
                                             </div>

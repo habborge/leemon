@@ -4,7 +4,7 @@
 
 <div id="main" class=" clearfix">
     <div class="container litlemargin">
-        <div class="row justify-content-center">
+        <div class="col-12 row justify-content-center">
             <div class="md-stepper-horizontal orange">
                 {{-- <div class="md-step active done"> --}}
                 {{-- <div class="md-step active editable"> --}}
@@ -195,7 +195,7 @@
                     
                                                 <div class="col-12 col-md-12">
                                                     <div class="row">
-                                                        <div class="col-8 col-md-8 line-right-cart py-3" data-th="Product">
+                                                        <div class="col-12 col-md-8 line-right-cart py-3" data-th="Product">
                                                             <div class="row">
                                                                 <div class="col-3 col-sm-4 hidden-xs">
                                                                     <div class="row text-center">
@@ -215,6 +215,13 @@
                                                                                 <div class="row">
                                                                                     <span data-th="Price">
                                                                                         <small>$ {{ number_format($details['price'],0) }} COP</small>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <div class="row">
+                                                                                    <span data-th="Price">
+                                                                                        <small>Cant: {{ $details['quantity'] }} </small>
                                                                                     </span>
                                                                                 </div>
                                                                             </div>
@@ -295,9 +302,9 @@
                                             <div class="visible-xs">
                                                 <div class="col-md-12 mt-4">
                                                     <div class="row">
-                                                        <div class="card-title col-md-12 text-center">
-                                                            <div class="row justify-content-md-center">
-                                                                <div class="col-4 col-md-4 bg-title-cart">
+                                                        <div class="col-12 card-title col-md-12 text-center">
+                                                            <div class="row justify-content-center">
+                                                                <div class="col-8 col-md-4 bg-title-cart">
                                                                     <div class="mt-2 mb-2"><b>Subtotal Compra</b></div>
                                                                 </div>
                                                                 
@@ -305,42 +312,42 @@
                                                         </div>
                                                         
                                                         <div class="card-body info-small">
-                                                            <div class="col-md-12">
+                                                            <div class="col-12 col-md-12">
                                                                 <div class="row">
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-9 col-md-9">
                                                                         <div class="row">
                                                                             Cantidad de articulos:
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-3">
+                                                                    <div class="col-3 col-md-3">
                                                                         <div class="row float-right">
                                                                             {{ $q_prod }}
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-12">
+                                                            <div class="col-12 col-md-12">
                                                                 <div class="row">
-                                                                    <div class="col-md-8">
+                                                                    <div class="col-6 col-md-8">
                                                                         <div class="row">
                                                                             Subtotal:
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-6 col-md-4">
                                                                         <div class="row float-right">
                                                                             COP $ {{ number_format($subTotal,0) }}
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-12">
+                                                            <div class="col-12 col-md-12">
                                                                 <div class="row">
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-9 col-md-9">
                                                                         <div class="row">
                                                                             Descuento:
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-3">
+                                                                    <div class="col-3 col-md-3">
                                                                         <div class="row float-right">
                                                                             <span class="text-danger">-{{ number_format($total_d, 0) }}</span>
                                                                         </div>
@@ -348,14 +355,14 @@
                                                                 </div>
                                                             </div>
                                                             
-                                                            <div class="col-md-12">
+                                                            <div class="col-12 col-md-12">
                                                                 <div class="row">
-                                                                    <div class="col-md-8">
+                                                                    <div class="col-8 col-md-8">
                                                                         <div class="row">
                                                                             Envío:
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-4 col-md-4">
                                                                         <div class="row float-right">
                                                                             @if ($delivery_cost == "free")
                                                                                 COP$ (Envío Gratis)
@@ -374,14 +381,14 @@
                                                                 </div>
                                                             </div>
                                                             <hr>
-                                                            <div class="col-md-12">
+                                                            <div class="col-12 col-md-12">
                                                                 <div class="row">
-                                                                    <div class="col-md-8">
+                                                                    <div class="col-8 col-md-8">
                                                                         <div class="row">
                                                                             Total
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-4 col-md-4">
                                                                         <div class="row float-right">
                                                                             @if ($delivery_cost == "free")
                                                                                 COP$ {{ number_format($total,0) }}
@@ -405,22 +412,22 @@
                                         
                                             <div class="col-md-12">
                                                 <div class="row">
-                                                    <div class="col-6 col-md-6">
+                                                    <div id="firstbutton" class="col-6 col-md-6">
                                                         <a href="{{ url('/') }}" class="btn btn-leemon-back">
                                                             Seguir Comprando
                                                         </a>
                                                     </div>
                                                     
                                                     <!--<div class="hidden-xs text-right"><strong>Total $ {{ $total }}</strong></div>-->
-                                                    <div class="col-6 col-md-6 text-right">
+                                                    <div id="secondbutton"class="col-12 col-md-6 text-right">
                                                         @guest
-                                                            <a class="btn btn-leemon-warning" href="{{ route('login') }}">Iniciar Sesión</a>
+                                                            <a class="btn btn-leemon-warning btn-width" href="{{ route('login') }}">Iniciar Sesión</a>
                                                         @else
                                                             @if ($answer == 0)
-                                                                <a href="{{ url('purchase') }}" class="btn btn-leemon-method">Información de Facturación</a>
+                                                                <a href="{{ url('purchase') }}" class="btn btn-leemon-method btn-width">Información de Facturación</a>
                                                             @elseif ($answer == 1)
                                                                 {{-- <button id="proccess" class="btn btn-purchase btn-sm">Proceder con el Pago</button> --}}
-                                                                <a href="{{ route('paymentnow') }}" class="btn btn-purchase">Proceder con el Pago</a>
+                                                                <a href="{{ route('paymentnow') }}" class="btn btn-purchase btn-width">Proceder con el Pago</a>
                                                             @endif
                                                         @endguest
                                                     </div>
@@ -446,42 +453,42 @@
                             </div>
                             <div class="row">
                                 <div class="card-body info-small card-body-yellow card-round-footer">
-                                    <div class="col-md-12">
+                                    <div class="col-12 col-md-12">
                                         <div class="row">
-                                            <div class="col-md-9">
+                                            <div class="col-9 col-md-9">
                                                 <div class="row">
                                                     Cantidad de articulos:
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-3 col-md-3">
                                                 <div class="row float-right">
                                                     {{ $q_prod }}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-12 col-md-12">
                                         <div class="row">
-                                            <div class="col-md-8">
+                                            <div class="col-6 col-md-8">
                                                 <div class="row">
                                                     Subtotal:
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-6 col-md-4">
                                                 <div class="row float-right">
                                                     COP$ {{ number_format($subTotal, 0) }}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-12 col-md-12">
                                         <div class="row">
-                                            <div class="col-md-9">
+                                            <div class="col-9 col-md-9">
                                                 <div class="row">
                                                     Descuento:
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-3 col-md-3">
                                                 <div class="row float-right">
                                                     <span class="text-danger">-{{ number_format($total_d, 0) }}</span>
                                                 </div>
@@ -490,14 +497,14 @@
                                     </div>
                                     
                                     
-                                    <div class="col-md-12">
+                                    <div class="col-12 col-md-12">
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-4 col-md-4">
                                                 <div class="row">
                                                     Envío:
                                                 </div>
                                             </div>
-                                            <div class="col-md-8 text-right">
+                                            <div class="col-8 col-md-8 text-right">
                                                 <div class="row float-right">
                                                     @if ($delivery_cost == "free")
                                                         COP$ (Envío Gratis)
@@ -515,15 +522,15 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    <div class="col-md-12 mb-4">
+                                    <div class="col-12 col-md-12 mb-4">
                                         <div class="row">
-                                            <div class="col-md-8">
+                                            <div class="col-8 col-md-8">
                                                 <div class="row">
                                                     
                                                     Total:
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-4 col-md-4">
                                                 <div class="row float-right">
                                                     @if ($delivery_cost == "free")
                                                         COP$ {{ number_format($total,0) }}
@@ -539,7 +546,7 @@
                                         </div>
                                     </div>
                                     {{-- {{ $total + $delivery }} --}}
-                                    <div class="col-md-12">
+                                    <div class="col-12 col-md-12">
                                         <div class="row">
                                     
                                             <div class="text-center col-md-12">

@@ -11304,5 +11304,13 @@ a.text-dark:focus {
     width: 100%;
     border-left: 0px solid #cbcbcb;
   }
+  #firstbutton{
+    order: 2;
+   
+  }
+  #secondbutton{
+    order: 1;
+    margin-bottom: 10px;
+  }
   
 }
