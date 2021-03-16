@@ -37,6 +37,12 @@ Route::get('/products/{gfather}','ProductController@groupGfa');
 Route::get('/categories/{category}/{id}', 'ProductController@groupCategory');
 Route::get('/category/{category}/{id}/{subcategory}/{subid}', 'ProductController@groupSubCategory');
 
+// order price low to price, price to low
+Route::get('/products/filter/{price}/{gfather}/{father}/{son}', 'ProductController@groupPrice');
+Route::get('/products/filter/{price}/{gfather}/{father}/{son}/{brand}', 'ProductController@groupByBandPrice');
+Route::get('/categories/filter/{price}/{category}/{id}', 'ProductController@groupCategory');
+Route::get('/category/filter/{price}/{category}/{id}/{subcategory}/{subid}', 'ProductController@groupSubCategory');
+
 // Landing page
 Route::get('/giveaway/registry', 'GiveawayController@index');
 Route::post('/giveaway/registry', 'GiveawayController@savingData');

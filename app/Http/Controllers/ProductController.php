@@ -402,7 +402,8 @@ class ProductController extends Controller
             'subcat_id' => $subCategory_id,
             'products' => $products,
             'brands' => $brand,
-            'brandname' => ''
+            'brandname' => '',
+            'orderPrice' => ''
         ]);
     }
 
@@ -475,6 +476,7 @@ class ProductController extends Controller
             'products' => $products,
             'brands' => $brand,
             'brandname' => $brandName,
+            'orderPrice' => '',
         ]);
     }
 
@@ -502,12 +504,31 @@ class ProductController extends Controller
             'subcat_id' => 0,
             'products' => $products,
             'brands' => [],
-            'brandname' => ''
+            'brandname' => '',
+            'orderPrice' => ''
         ]);
     }
 
+    //--------------------------------------------------------------------------------------------------------------
+    //
+    //--------------------------------------------------------------------------------------------------------------
     public function groupCategory(Request $request){
         $id = $request->id;
+
+        if ($request->price){
+            $orderName = 'products.price';
+            if ($request->price == "lowtohigh"){
+                $orderby = "ASC";
+            }else{
+                $orderby = "DESC";
+            }
+            $orderPosition = $request->price;
+        }else{
+            $orderName = 'products.img2';
+            $orderby = "DESC";
+            $orderPosition = "";
+        }
+        
 
         $products = Product::select('products.id as proId', 'products.reference','products.name as proName','products.brand','products.description','products.price','products.img1','products.img2','products.prom','products.quantity as webquantity','products.health_register','products.width','products.length','products.height','products.weight','products.fee')
         ->join('product_categories as pc', 'products.id', '=', 'pc.product_id')
@@ -517,7 +538,7 @@ class ProductController extends Controller
         ->where('c3.id', $id)
         ->where('price', '>', 0)
         ->groupBy('products.id')
-        ->orderBy('products.img2', 'desc')
+        ->orderBy($orderName, $orderby)
         ->orderBy('products.name')
         ->paginate(24);
 
@@ -532,13 +553,31 @@ class ProductController extends Controller
             'subcategories' => $subcategories,
             'products' => $products,
             'brands' => [],
+            'orderPrice' => $orderPosition
         ]);
     }
 
+    //--------------------------------------------------------------------------------------------------------------
+    //
+    //--------------------------------------------------------------------------------------------------------------
     public function groupSubCategory(Request $request){
         
         $id = $request->id;
         $sub_id = $request->subid;
+
+        if ($request->price){
+            $orderName = 'products.price';
+            if ($request->price == "lowtohigh"){
+                $orderby = "ASC";
+            }else{
+                $orderby = "DESC";
+            }
+            $orderPosition = $request->price;
+        }else{
+            $orderName = 'products.img2';
+            $orderby = "DESC";
+            $orderPosition = "";
+        }
 
         $products = Product::select('products.id as proId', 'products.reference','products.name as proName','products.brand','products.description','products.price','products.img1','products.prom','products.quantity as webquantity','products.health_register','products.width','products.length','products.height','products.weight','products.fee')
         ->join('product_categories as pc', 'products.id', '=', 'pc.product_id')
@@ -547,7 +586,7 @@ class ProductController extends Controller
         ->groupBy('products.id')
         ->where('c2.id', $sub_id)
         ->where('price', '>', 0)
-        ->orderBy('products.name')
+        ->orderBy($orderName, $orderby)
         ->paginate(24);
 
         //dd($products);
@@ -562,9 +601,110 @@ class ProductController extends Controller
             'subcategories' => $subcategories,
             'products' => $products,
             'brands' => [],
+            'orderPrice' => $orderPosition
         ]);
     }
 
+    //--------------------------------------------------------------------------------------------------------------
+    //
+    //--------------------------------------------------------------------------------------------------------------
+    public function groupPrice(Request $request){
+
+        $Gfather = $request->gfather;
+        $father = $request->father;
+        $string = explode("_", $request->son);
+
+        $subCategory_id = $string[1];
+        $son = $string[0];
+        if ($request->price == "lowtohigh"){
+            $orderPrice = "ASC";
+        }else{
+            $orderPrice = "DESC";
+        }
+
+        $products = Product::select('products.id as proId', 'products.reference','products.name as proName','products.brand','products.description','products.price','products.img1','products.prom','products.quantity as webquantity','products.health_register','products.width','products.length','products.height','products.weight','products.fee')
+        ->join('product_categories as pc', 'products.id', 'pc.product_id')
+        ->join('lots as l', 'products.id', 'l.product_id')
+        ->where('pc.category_id', $subCategory_id)
+        ->orderBy('products.price', $orderPrice)
+        ->orderBy('name')
+        ->paginate(16);
+
+        $brand = Product::select('brand')
+        ->join('product_categories as pc', 'products.id', 'pc.product_id')
+        ->join('lots as l', 'products.id', 'l.product_id')
+        ->where('pc.category_id', $subCategory_id)
+        ->groupBy('brand')
+        ->selectRaw('count(brand) as total_brand, brand')->get();
+
+        return view('products.categories', [
+            'gfather' => str_replace("-", " ", $Gfather),
+            'father' => str_replace("-", " ", $father),
+            'son' => str_replace("-", " ", $son),
+            'subcat_id' => $subCategory_id,
+            'products' => $products,
+            'brands' => $brand,
+            'brandname' => '',
+            'orderPrice' => $request->price
+        ]);
+    }
+
+    //--------------------------------------------------------------------------------------------------------------
+    //
+    //--------------------------------------------------------------------------------------------------------------
+    public function groupByBandPrice(Request $request){
+        $Gfather = $request->gfather;
+        $father = $request->father;
+        $string = explode("_", $request->son);
+
+        $subCategory_id = $string[1];
+        $son = $string[0];
+
+        $brandName = mb_strtoupper(str_replace("-", " ",$request->brand)); 
+
+        if ($request->price == "lowtohigh"){
+            $orderPrice = "ASC";
+        }else{
+            $orderPrice = "DESC";
+        }
+
+        //$products = Product::where('subcategory_id', $subCategory_id)->where('brand', $brandName)->orderBy('name')->paginate(24);
+        $products = Product::select('products.id as proId', 'products.reference','products.name as proName','products.brand','products.description','products.price','products.img1','products.prom','products.quantity as webquantity','products.health_register','products.width','products.length','products.height','products.weight','products.fee')
+        ->join('product_categories as pc', 'products.id', 'pc.product_id')
+        ->join('lots as l', 'products.id', 'l.product_id')
+        ->where('pc.category_id', $subCategory_id)
+        ->where('brand', $brandName)
+        ->orderBy('products.price', $orderPrice)
+        ->orderBy('name')
+        ->paginate(24);
+
+        $brand = Product::select('brand')
+        ->join('product_categories as pc', 'products.id', 'pc.product_id')
+        ->join('lots as l', 'products.id', 'l.product_id')
+        ->where('pc.category_id', $subCategory_id)
+        ->groupBy('brand')
+        ->selectRaw('count(brand) as total_brand, brand')->get();
+                
+        return view('products.categories', [
+            'gfather' => str_replace("-", " ", $Gfather),
+            'father' => str_replace("-", " ", $father),
+            'son' => str_replace("-", " ", $son),
+            'subcat_id' => $subCategory_id,
+            'products' => $products,
+            'brands' => $brand,
+            'brandname' => $brandName,
+            'orderPrice' => $request->price,
+        ]);
+    }
+
+    //--------------------------------------------------------------------------------------------------------------
+    //
+    //--------------------------------------------------------------------------------------------------------------
+
+
+    //--------------------------------------------------------------------------------------------------------------
+    //
+    //--------------------------------------------------------------------------------------------------------------
     public function resize(){
         $brand = "MOD";
         $products = Product::where('brand', $brand)->get();

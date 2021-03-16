@@ -114,9 +114,9 @@
                 <hr>             
             </div>
             <div class="refinement brand" data-analyticsevent="ShopByBrand">
-                <h6 class="toggle active brand price-color">
+                {{-- <h6 class="toggle active brand price-color">
                 Compra por Marca
-                </h6>
+                </h6> --}}
                 <ul id="ref-price" class="refinementcontainer scrollable">
                     <div class="search-filters" style="display:none">
                         <label style="display:none" for="Search by  price">
@@ -143,27 +143,40 @@
                 Orden de Precios
                 </h6>
                 <ul id="ref-price" class="refinementcontainer scrollable">
-                    <div class="search-filters" style="display:none">
-                        <label style="display:none" for="Search by  price">
-                            Search by Price
-                        </label>
-                        <input type="text" id="Search by  price" placeholder="Search by  price" class="txtRefinement" data-list="price">
-                    </div>
+                    
                     
                         <li class="">
-                            <a class="refinementlink add brand-size" href="" title="Futurebiotics">
-                                <span class="square-check"><i class="fa fa-square-o fa-lg"></i></span>
+                            <a class="refinementlink add brand-size" href="/category/filter/lowtohigh/{{ str_replace(" ", "-",$gfather) }}/{{$gfather_id}}/{{str_replace(" ", "-",$father)}}/{{$father_id}}" title="Futurebiotics">
+                                <span class="square-check">
+                                    @if ($orderPrice == "lowtohigh")
+                                        <i class="fa fa-check-square-o" aria-hidden="true"></i><b>
+                                    @else
+                                        <i class="fa fa-square-o fa-lg"></i>
+                                    @endif
+                                </span>
                                 <span class="text-ref ">
                                    DEL MÁS BAJO AL MÁS ALTO
                                 </span>
+                                    @if ($orderPrice == "lowtohigh")
+                                        </b>
+                                    @endif
                             </a>
                         </li>
                         <li class="">
-                            <a class="refinementlink add brand-size" href="" title="Futurebiotics">
-                                <span class="square-check"><i class="fa fa-square-o fa-lg"></i></span>
+                            <a class="refinementlink add brand-size" href="/category/filter/hightolow/{{ str_replace(" ", "-",$gfather) }}/{{$gfather_id}}/{{str_replace(" ", "-",$father)}}/{{$father_id}}" title="Futurebiotics">
+                                <span class="square-check">
+                                    @if ($orderPrice == "hightolow")
+                                        <i class="fa fa-check-square-o" aria-hidden="true"></i><b>
+                                    @else
+                                        <i class="fa fa-square-o fa-lg"></i>
+                                    @endif
+                                </span>
                                 <span class="text-ref ">
                                     DEL MÁS ALTO AL MÁS BAJO
                                 </span>
+                                @if ($orderPrice == "lowtohigh")
+                                    </b>
+                                @endif
                             </a>
                         </li>
                     

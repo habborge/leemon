@@ -9,13 +9,22 @@ class searchController extends Controller
 {
     public function searchProducts(Request $request){
        
-        $products = Product::where('quantity', '>', 0)->where('name', 'LIKE', "%$request->search%")->orWhere('brand', 'LIKE', "%$request->search%")->orderBy('id', 'desc')->paginate(24);
+        //$products = Product::where('quantity', '>', 0)->where('name', 'LIKE', "%$request->search%")->orWhere('brand', 'LIKE', "%$request->search%")->orderBy('id', 'desc')->paginate(24);
+
+        $products = Product::where('quantity', '>', 0)
+        ->whereRaw("MATCH(name,brand) AGAINST(?)", array($request->search))
+        ->paginate(24);
 
         //$brand = Product::select('brand', 'brand_id')->groupBy('brand', 'brand_id')->get();
+        // if ((strlen($request->search) == "te") or (strlen($request->search) == "té") or (strlen($request->search) == "Te") or (strlen($request->search) == "Té") or (strlen($request->search) == "TE") or (strlen($request->search) == "TÉ")){
+        //     $busqueda = "%$request->search%";
+        // }else{
+        //     $busqueda = "%$request->search%";
+        // }
 
         $brand = Product::select('brand')
         ->where('quantity', '>', 0)
-        ->where('name', 'LIKE', "%$request->search%")
+        ->where('name', 'LIKE', )
         ->groupBy('brand')
         ->selectRaw('count(brand) as total_brand, brand')->get();
         
