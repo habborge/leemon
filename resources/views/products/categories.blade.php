@@ -120,7 +120,7 @@
                             @if ($brand->brand != $brandname)
                                 </a>
                             @else
-                            </b></span>
+                                </b></span>
                             @endif
                         </li>
                     @endforeach
@@ -132,30 +132,43 @@
                 Orden de Precios
                 </h6>
                 <ul id="ref-price" class="refinementcontainer scrollable">
-                    <div class="search-filters" style="display:none">
-                        <label style="display:none" for="Search by  price">
-                            Search by Price
-                        </label>
-                        <input type="text" id="Search by  price" placeholder="Search by  price" class="txtRefinement" data-list="price">
-                    </div>
-                    
-                        <li class="">
-                            <a class="refinementlink add brand-size" href="" title="Futurebiotics">
-                                <span class="square-check"><i class="fa fa-square-o fa-lg"></i></span>
-                                <span class="text-ref ">
-                                   DEL MÁS BAJO AL MÁS ALTO
-                                </span>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a class="refinementlink add brand-size" href="" title="Futurebiotics">
-                                <span class="square-check"><i class="fa fa-square-o fa-lg"></i></span>
-                                <span class="text-ref ">
-                                    DEL MÁS ALTO AL MÁS BAJO
-                                </span>
-                            </a>
-                        </li>
-                    
+                    <li class="">
+                        <a class="refinementlink add brand-size" href="/products/filter/lowtohigh/{{ str_replace(" ", "-",$gfather) }}/{{str_replace(" ", "-",$father)}}/{{str_replace(" ", "-",$son)}}_{{$subcat_id}}/{{str_replace(" ", "-", $brandname)}}" title="Futurebiotics">
+                            
+                            <span class="square-check">
+                                @if ($orderPrice == "lowtohigh")
+                                    <i class="fa fa-check-square-o" aria-hidden="true"></i><b>
+                                @else
+                                    <i class="fa fa-square-o fa-lg"></i>
+                                @endif
+                            </span>
+                            <span class="text-ref ">
+                                DEL MÁS BAJO AL MÁS ALTO
+                            </span>
+                            
+                                @if ($orderPrice == "lowtohigh")
+                                        </b>
+                                @endif  
+                             
+                        </a>
+                    </li>
+                    <li class="">
+                        <a class="refinementlink add brand-size" href="/products/filter/hightolow/{{ str_replace(" ", "-",$gfather) }}/{{str_replace(" ", "-",$father)}}/{{str_replace(" ", "-",$son)}}_{{$subcat_id}}/{{str_replace(" ", "-", $brandname)}}" title="Futurebiotics">
+                            <span class="square-check">
+                                @if ($orderPrice == "hightolow")
+                                    <i class="fa fa-check-square-o" aria-hidden="true"></i><b>
+                                @else
+                                    <i class="fa fa-square-o fa-lg"></i>
+                                @endif
+                            </span>
+                            <span class="text-ref ">
+                                DEL MÁS ALTO AL MÁS BAJO
+                            </span>
+                            @if ($orderPrice == "lowtohigh")
+                                </b>
+                            @endif
+                        </a>
+                    </li>
                 </ul>                
             </div> 
         </div>
