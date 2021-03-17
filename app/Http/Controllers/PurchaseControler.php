@@ -103,25 +103,23 @@ class PurchaseControler extends Controller
             
             $info = Member::where('user_id', $id)->first();
     
-            if ($info){
-                $infosaved = 1;
-            }
-            
             if ($p->fails()){
-                return view('purchase', [
-                    'completeRequest' => $request,
-                    'infosaved' => $infosaved,
-                    'info' => $info,
-                    // 'checkbox' => $request->sameaddress
-                ])->withErrors($p);
+                // return view('purchase', [
+                //     'completeRequest' => $request,
+                //     'infosaved' => $infosaved,
+                //     'info' => $info,
+                //     // 'checkbox' => $request->sameaddress
+                // ])->withErrors($p);
+                return redirect()->back()->withInput()->withErrors($p);
             }else{
+                
                 //$res = $this->luhnCheck($request->cc_number);
                 
                 // $user_info = New Member();
                 // $rs = $user_info->set($request);
                 
                 if($info){
-                    
+                    $infosaved = 1;
                     $delivery_ad = $request->address_1."~".$request->address_2."~".$request->address_3."~".$request->address_4."-".$request->address_5;
                     $details = $request->address_d;
                     $coutry = $request->country;
@@ -149,13 +147,14 @@ class PurchaseControler extends Controller
                     //return back()->with('notice', 'Un error ha ocurrido!!');
 
                     $error = ['notice' => 'No se pudo procesar la información!!'];
-                    return view('purchase', [
-                        'completeRequest' => $request,
-                        'infosaved' => $infosaved,
-                        'info' => $info,
-                        //'checkbox' => $request->sameaddress,
+                    return redirect()->back()->withInput()->withErrors($error);
+                    // return view('purchase', [
+                    //     'completeRequest' => $request,
+                    //     'infosaved' => $infosaved,
+                    //     'info' => $info,
+                    //     //'checkbox' => $request->sameaddress,
                         
-                    ])->withErrors($error);    
+                    // ])->withErrors($error);    
                 }
             }
            

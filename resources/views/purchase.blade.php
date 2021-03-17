@@ -61,13 +61,10 @@
                     
                     <div class="card-body card-body-yellow card-round-footer">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-12 col-md-12">
                                 @if ($errors->any()) 
-                                    <div class="alert alert-warnig" role="alert">
-                                        Revise el formulario que contine errores!! <br> 
-                                        @if ($errors->has('notice'))
-                                            {{ $errors->first('notice') }}
-                                        @endif
+                                    <div class="alert alert-danger" role="alert">
+                                        Revise el formulario que contine errores o campos obligatorios que estan vacios!! <br> 
                                     </div>
                                 @endif
                             </div>
