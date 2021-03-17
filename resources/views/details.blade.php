@@ -316,10 +316,10 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-12">
-                    <div class="" style="width: 100%">
+                    <div class="row" style="width: 100%">
                         <div class="accordion accord-width" id="accordionExample">
                             <div class="card col-md-12 col-12">
-                                <a class="text-left a-size-methods" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="width: 100%">
+                                <a class="text-left a-size-methods" type="" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="width: 100%">
                                     <div class="card-header row" id="headingOne"><div class="col-6 col-md-6 font-black text-leemon-color"><div class="row">Descripción</div></div><div class="col-6 col-md-6"><div class="row float-right">Ver Más</div></div></div>
                                 </a>
                                 <div class="row">
@@ -336,7 +336,7 @@
                                 </div>
                             </div>
                             <div class="card col-md-12">
-                                <a class="text-left a-size-methods" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" style="width: 100%">
+                                <a class="text-left a-size-methods" type="" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" style="width: 100%">
                                     <div class="card-header row" id="headingTwo"> <div class="col-6 col-md-6 font-black text-leemon-color"><div class="row">Características</div></div><div class="col-6 col-md-6"><div class="row float-right">Ver Más</div></div> </div>
                                 </a>
                                 <div class="row">
@@ -353,7 +353,7 @@
                                 </div>
                             </div>
                             <div class="card col-md-12">
-                                <a class="text-left a-size-methods" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree" style="width: 100%">
+                                <a class="text-left a-size-methods" type="" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree" style="width: 100%">
                                     <div class="card-header row" id="headingThree"><div class="col-6 col-md-6 font-black text-leemon-color"><div class="row">Ingredientes</div></div><div class="col-6 col-md-6"><div class="row float-right">Ver Más</div></div></div>
                                 </a>
                                 <div class="row">
@@ -370,7 +370,7 @@
                                 </div>
                             </div>
                             <div class="card col-md-12">
-                                <a class="text-left a-size-methods" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour" style="width: 100%">
+                                <a class="text-left a-size-methods" type="" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour" style="width: 100%">
                                     <div class="card-header row" id="headingFour"><div class="col-6 col-md-6 font-black text-leemon-color"><div class="row">Indicaciones de uso</div></div><div class="col-6 col-md-6"><div class="row float-right">Ver Más</div></div></div>
                                 </a>
                                 <div class="row">

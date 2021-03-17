@@ -344,7 +344,7 @@
                         <li id="profile" class="sidepanel-li">
                             <a href="#profile"><i class="fa fa-user-circle" aria-hidden="true"></i> Perfil</a>
                             <ul class="sub-menu-responsive">
-                                <li class="sidepanel-li"><a href="">Ordenes</a></li>
+                                <li class="sidepanel-li"><a href="/secure/orders/info">Mis pedidos</a></li>
                                 <li class="sidepanel-li"><a href="">Lista de Deseos</a></li>
                                 <li class="sidepanel-li"><a href="/addresses">Direcciones</a></li>
                                 <li class="sidepanel-li"><a href="/secure/methods">Metodos de Pago</a></li>

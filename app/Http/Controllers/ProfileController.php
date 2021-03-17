@@ -12,7 +12,7 @@ class ProfileController extends Controller
 
         $user_id = Auth::user()->id;
 
-        $orders = Order::where('user_id', $user_id)->orderBy('id', 'desc')->paginate(20);
+        $orders = Order::where('user_id', $user_id)->where('status', 'Approved')->orderBy('id', 'desc')->paginate(20);
 
         return view('profile.myOrders',[
             'orders' => $orders
