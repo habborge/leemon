@@ -215,7 +215,7 @@
                                                                     <a href="/secure/orders/info" class="dropdown-item dropdown-item-text-size">
                                                                         <i class="fa fa-shopping-basket" aria-hidden="true"></i> Mis Pedidos
                                                                     </a>
-                                                                    <a href="" class="dropdown-item dropdown-item-text-size">
+                                                                    <a href="/secure/wishlist" class="dropdown-item dropdown-item-text-size">
                                                                         <i class="fa fa-shopping-basket" aria-hidden="true"></i> Mis Listas
                                                                     </a>
                                                                     <a href="/addresses" class="dropdown-item dropdown-item-text-size">
@@ -314,44 +314,52 @@
             </div>
         </nav>
         <div id="mySidepanel" class="sidepanel">
+            <img src="/img/logo_leemon_small_black.png" alt="" class="leemonlogo img-menu-side">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
             <div class="">
-                <ul id="menu-responsive" class="menu-responsive">
+                <ul id="menu-responsive" class="menu-responsive mt-2">
                     @guest
-                    <li class="sidepanel-li">
-                        <a href="{{ route('login') }}">{{ __('Iniciar Sesión') }}</a>
-                    </li>
-                    <li class="sidepanel-li">
-                        <a href="{{ route('register')  }}">{{ __('Registrate') }}</a>
-                    </li>
-                    @endguest
-                    <li class="sidepanel-li">
-                        <a href="#"><i class="fa fa-id-card" aria-hidden="true"></i> Nosotros</a>
-                    </li>
-                    <li id="products" class="sidepanel-li">
-                        <a href="#products"><i class="fa fa-shopping-bag" aria-hidden="true"></i> Productos</a>
-                        <ul class="sub-menu-responsive">
-                            @foreach ($menus as $key => $item)
-                                @if ($item['father_id'] == 0)
-                                    <li class="sidepanel-li"><a href="/categories/{{ str_replace(" ", "-",$item['name']) }}/{{$item['id']}}">{{ $item['name'] }} </a></li>
-                                @endif
-                            @endforeach
-                        </ul>
-                    </li>
-                    @guest
-
+                        <li class="sidepanel-li">
+                            
+                            <a href="{{ route('login') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> {{ __('Iniciar Sesión') }}</a>
+                        </li>
+                        <li class="sidepanel-li">
+                            <a href="{{ route('register')  }}"><i class="fa fa-user-plus" aria-hidden="true"></i> {{ __('Registrate') }}</a>
+                        </li>
                     @else
                         <li id="profile" class="sidepanel-li">
                             <a href="#profile"><i class="fa fa-user-circle" aria-hidden="true"></i> Perfil</a>
                             <ul class="sub-menu-responsive">
-                                <li class="sidepanel-li"><a href="/secure/orders/info">Mis pedidos</a></li>
-                                <li class="sidepanel-li"><a href="">Lista de Deseos</a></li>
-                                <li class="sidepanel-li"><a href="/addresses">Direcciones</a></li>
-                                <li class="sidepanel-li"><a href="/secure/methods">Metodos de Pago</a></li>
+                                <li class="sidepanel-li"><a href="/secure/orders/info"><i class="fa fa-shopping-basket" aria-hidden="true"></i> Mis pedidos</a></li>
+                                <li class="sidepanel-li"><a href="/secure/wishlist"><i class="fa fa-heart" aria-hidden="true"></i> Lista de Deseos</a></li>
+                                <li class="sidepanel-li"><a href="/addresses"><i class="fa fa-address-book" aria-hidden="true"></i> Direcciones</a></li>
+                                {{-- <li class="sidepanel-li"><a href="/secure/methods"><i class="fa fa-credit-card-alt" aria-hidden="true"></i> Metodos de Pago</a></li> --}}
                             </ul>
                         </li>
+                    @endguest
+                    
+                        <li id="products" class="sidepanel-li">
+                            <a href="#products"><i class="fa fa-shopping-bag" aria-hidden="true"></i> Productos</a>
+                            <ul class="sub-menu-responsive">
+                                @foreach ($menus as $key => $item)
+                                    @if ($item['father_id'] == 0)
+                                        <li class="sidepanel-li"><a href="/categories/{{ str_replace(" ", "-",$item['name']) }}/{{$item['id']}}"><i class="fa fa-minus" aria-hidden="true"></i> {{ $item['name'] }} </a></li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </li>
+
+                    @guest
+
+                    @else
                         <li class="sidepanel-li">
-                            <a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar Sesión</a>
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                {{ __('Cerrar Sesión') }}
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                         </li>
                     @endguest
                 </ul>
