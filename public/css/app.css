@@ -49,7 +49,7 @@
   height: 100%;
   top: 0;
   left: 0;
-  background-color: #403d38;
+  background-color: #e0e0e0;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
@@ -88,7 +88,7 @@ ul#menu-responsive li:target ul ul,ul#menu-responsive li:target ul ul ul,ul#menu
  ul#menu-responsive li:target ul,ul#menu-responsive ul li:target ul,ul#menu-responsive ul ul li:target ul,ul#menu-responsive li.iehover ul,ul#menu-responsive ul li.iehover ul,ul#menu-responsive ul ul li.iehover ul {
   display: block;
   cursor:pointer;
-  background-color: #a5a5a5;
+  background-color: #cecece;
  }
 .menu-responsive{
   display: flex;
@@ -116,7 +116,7 @@ ul#menu-responsive li:target ul ul,ul#menu-responsive li:target ul ul ul,ul#menu
   
   padding-top: 10px;
   padding-bottom: 10px;
-  border-top: 1px solid #6c757d;
+  /* border-top: 1px solid #6c757d; */
 }
 .sidepanel-li-sub{
   
@@ -11237,8 +11237,11 @@ a.text-dark:focus {
   #imgcarousel img{
     height: 300px;
   }
-  #procel{
-    
+  .img-menu-side{
+    position: absolute;
+    top: 10px;
+    left: 25px;
+    font-size: 36px;
   }
   .owl-prev {
     
