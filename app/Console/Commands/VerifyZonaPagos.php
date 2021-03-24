@@ -4,10 +4,15 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
+use App\Mail\SendPurchase;
+use App\Member;
 use App\Order;
 use App\Order_detail;
 use App\payment_error;
 use App\Product;
+use DateTime;
+use Mail;
+
 use Symfony\Component\Console\Output\ConsoleOutput;
 
 class VerifyZonaPagos extends Command
@@ -158,6 +163,11 @@ class VerifyZonaPagos extends Command
                                     if ($result[0] == 1){
                                         $order_change = Order::approval_order($order->id, $data_info[20]);
                                         $products_discount = $this->updateQuantity($order->id);
+
+                                        $info_trans = $insertData[1];
+                                        $member = Member::select('user_id','firstname','lastname','email')->where('user_id', $order->user_id)->first();
+                                        $sending = Mail::to($member->email)->send(new SendPurchase($order, $member, $info_trans));
+
                                     }else{
                                         // int_pago_terminado => 1: Terminado => 2: Pendiente: En caso de que el pago sea mixto. El pago no ha sido terminado en su totalidad. => 200 Pago iniciado
                                         if ($data_info[3] == 1){
@@ -202,6 +212,10 @@ class VerifyZonaPagos extends Command
                                             $order_change = Order::approval_order($order->id, $data_info[20]);
                                             $products_discount = $this->updateQuantity($order->id);
                                             $order_status = 1;
+
+                                            $member = Member::select('user_id','firstname','lastname','email')->where('user_id', $order->user_id)->first();
+                                            $sending = Mail::to($member->email)->send(new SendPurchase($order, $member, $info_trans));
+
                                             break;
                                         }else{
                                             //$order_change = Order::reject_order($order->id);
