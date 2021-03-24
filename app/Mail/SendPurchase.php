@@ -42,6 +42,7 @@ class SendPurchase extends Mailable
         ->where('order_id', $this->order->id)->get();
 
         return $this->markdown('emails.purchase')
+        ->from(env('MAIL_FROM_ADDRESS'))
         ->subject('Compra en Leemon')
         ->with(['order' => $this->order, 'member' => $this->member, 'transaction' => $this->transaction, 'order_details' => $order_details]);
     }
