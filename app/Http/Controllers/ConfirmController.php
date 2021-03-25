@@ -541,18 +541,18 @@ class ConfirmController extends Controller
         pse_reference2=
         */
 
-        // $request->merchant_id=508029;
-        // $request->response_code_pol = 1; //El código de respuesta de PayU. 1 es APPROVED
-        // $request->state_pol = 4; //Indica el estado de la transacción en el sistema. 4 es APPROVED , 6 es declinada y 7 expirada
-        // $request->transaction_date = "2015-06-11 13:30:26"; //fecha de la transccion, si es aprobada se colocar como fecha de registro en el sistema
-        // $request->value = 80000.00; //valor pagado
-        // $request->transaction_id = "a67cbd9a-5d00-4b17-b82b-afca4e13cfac"; 
-        // $request->sign = "7f638a2ae42a24e60d2f8bb809bdeecc";
-        // $request->payment_method_name="VISA";
-        // $request->reference_sale = "100498-58"; //Es la referencia de la venta o pedido. Deber ser único por cada transacción que se envía al sistema.
-        // $request->reference_pol = 7069375; //La referencia o número de la transacción generado en PayU
-        // $request->currency="COP";
-        // $ref_tran = $request->reference_sale;
+        $request->merchant_id=508029;
+        $request->response_code_pol = 1; //El código de respuesta de PayU. 1 es APPROVED
+        $request->state_pol = 4; //Indica el estado de la transacción en el sistema. 4 es APPROVED , 6 es declinada y 7 expirada
+        $request->transaction_date = "2015-06-11 13:30:26"; //fecha de la transccion, si es aprobada se colocar como fecha de registro en el sistema
+        $request->value = 80000.00; //valor pagado
+        $request->transaction_id = "a67cbd9a-5d00-4b17-b82b-afca4e13cfac"; 
+        $request->sign = "7f638a2ae42a24e60d2f8bb809bdeecc";
+        $request->payment_method_name="VISA";
+        $request->reference_sale = "100498-58"; //Es la referencia de la venta o pedido. Deber ser único por cada transacción que se envía al sistema.
+        $request->reference_pol = 7069375; //La referencia o número de la transacción generado en PayU
+        $request->currency="COP";
+        $ref_tran = $request->reference_sale;
 
         
 
@@ -635,3 +635,47 @@ class ConfirmController extends Controller
 
     
 }
+
+// merchantId=508029
+// merchant_name=Test+PayU+Test+comercio
+// merchant_address=Av+123+Calle+12
+// telephone=7512354
+// merchant_url=http%3A%2F%2Fpruebaslapv.xtrweb.com
+// transactionState=4
+// lapTransactionState=APPROVED
+// message=APPROVED
+// referenceCode=100498-61
+// reference_pol=1400140964
+// transactionId=5da86e45-e80f-4d31-910d-0883001b3adf
+// description=Pay-U%3A+Compra+de+Productos+Naturales
+// trazabilityCode=approved
+// cus=approved
+// orderLanguage=es
+// extra1=
+// extra2=
+// extra3=
+// polTransactionState=4
+// signature=8376636ea895cd484f12fe41e287b866
+// polResponseCode=1
+// lapResponseCode=APPROVED
+// risk=
+// polPaymentMethod=10
+// lapPaymentMethod=VISA
+// polPaymentMethodType=2
+// lapPaymentMethodType=CREDIT_CARD
+// installmentsNumber=1
+// TX_VALUE=223900.00
+// TX_TAX=.00
+// currency=COP
+// lng=es
+// pseCycle=
+// buyerEmail=hab.borge%40gmail.com
+// pseBank=
+// pseReference1=
+// pseReference2=
+// pseReference3=
+// authorizationCode=553419
+// TX_ADMINISTRATIVE_FEE=.00
+// TX_TAX_ADMINISTRATIVE_FEE=.00
+// TX_TAX_ADMINISTRATIVE_FEE_RETURN_BASE=.00
+// processingDate=2021-03-25
