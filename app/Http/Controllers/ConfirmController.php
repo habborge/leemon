@@ -145,7 +145,7 @@ class ConfirmController extends Controller
 
             $new_payment->method = 5;
             $new_payment->reference = $request->reference_sale;
-            $new_payment->signature = $request->signature;
+            $new_payment->signature = $request->sign;
             $new_payment->error = $info;
            
             $new_payment->save();
@@ -157,7 +157,7 @@ class ConfirmController extends Controller
             $new_payment->order_id = $order_id;
             $new_payment->method = 5;
             $new_payment->reference = $request->reference_sale;
-            $new_payment->signature = $request->signature;
+            $new_payment->signature = $request->sign;
             $new_payment->error = $info;
            
             $new_payment->save();
@@ -541,21 +541,23 @@ class ConfirmController extends Controller
         pse_reference2=
         */
 
-        // $merchant_id=539177;
-        // $response_code_pol = 1; //El código de respuesta de PayU. 1 es APPROVED
-        // $state_pol = 4; //Indica el estado de la transacción en el sistema. 4 es APPROVED , 6 es declinada y 7 expirada
-        // $transaction_date = "2015-06-11 13:30:26"; //fecha de la transccion, si es aprobada se colocar como fecha de registro en el sistema
-        // $value = 330.00; //valor pagado
-        // $transaction_id = "f5e668f1-7ecc-4b83-a4d1-0aaa68260862"; 
-        // $sign = "be11f47966ffd656308292b1fb91a342a";
-        // $payment_method_name="VISA";
-        // $reference_sale = "12-appppppa-20/1/100-h0xknip"; //Es la referencia de la venta o pedido. Deber ser único por cada transacción que se envía al sistema.
-        // $reference_pol = 7069375; //La referencia o número de la transacción generado en PayU
-        // $currency="USD";
-        // $ref_tran = $reference_sale;
+        // $request->merchant_id=508029;
+        // $request->response_code_pol = 1; //El código de respuesta de PayU. 1 es APPROVED
+        // $request->state_pol = 4; //Indica el estado de la transacción en el sistema. 4 es APPROVED , 6 es declinada y 7 expirada
+        // $request->transaction_date = "2015-06-11 13:30:26"; //fecha de la transccion, si es aprobada se colocar como fecha de registro en el sistema
+        // $request->value = 80000.00; //valor pagado
+        // $request->transaction_id = "a67cbd9a-5d00-4b17-b82b-afca4e13cfac"; 
+        // $request->sign = "7f638a2ae42a24e60d2f8bb809bdeecc";
+        // $request->payment_method_name="VISA";
+        // $request->reference_sale = "100498-58"; //Es la referencia de la venta o pedido. Deber ser único por cada transacción que se envía al sistema.
+        // $request->reference_pol = 7069375; //La referencia o número de la transacción generado en PayU
+        // $request->currency="COP";
+        // $ref_tran = $request->reference_sale;
+
+        
 
         if($request->merchant_id == env('MERCHANT')){
-
+            
             // Validando si el segundo decimal del parámetro value es cero
             $explota = explode(".",$request->value);
 
@@ -576,10 +578,10 @@ class ConfirmController extends Controller
                     $valor = $request->value;
                 }
             }
-
+            
             //ApiKey~merchant_id~reference_sale~new_value~currency~state_pol
             $signature = md5(env('KEY_PAY')."~".env('MERCHANT')."~".$request->reference_sale."~".$valor."~".$request->currency."~".$request->state_pol);
-
+            
             if ($request->sign == $signature){
                 $no_aprovo = 0;
                 $dividir = explode("-",$request->reference_sale);
