@@ -390,7 +390,7 @@
                                                                      <input name="lng" 		  type="hidden"  value="es"/>
                                                                      <input name="telephone"     type="hidden"  value="{{ $member_info->phone }}"/>
                                                                      <input name="buyerFullName" type="hidden"  value="{{ $member_info->name." ".$member_info->lastname }}"/>
-                                                                     <input name="responseUrl"    type="hidden"  value="{{ env('APP_URL')}}/secure/methods/payu/response" >
+                                                                     <input name="responseUrl"    type="hidden"  value="{{ env('APP_URL')}}/secure/methods/payu/back" >
                                                                      <input name="confirmationUrl"    type="hidden"  value="{{ env('APP_URL')}}/secure/methods/payu/response" >
                                                                      <input name="Submit" class="btn-leemon-back button-payment"        type="submit"  value="" style=" background-color:transparent; background-image: url({{env('APP_URL')}}/img/boton_payu.jpg); border:none; cursor:pointer; margin-top:0px;
                                                                        margin-botton:0px; !important; clear:0px;" >
@@ -558,7 +558,7 @@
                                                         <input name="lng" 		  type="hidden"  value="es"/>
                                                         <input name="telephone"     type="hidden"  value="{{ $member_info->phone }}"/>
                                                         <input name="buyerFullName" type="hidden"  value="{{ $member_info->name." ".$member_info->lastname }}"/>
-                                                        <input name="responseUrl"    type="hidden"  value="{{ env('APP_URL')}}/secure/methods/payu/response" >
+                                                        <input name="responseUrl"    type="hidden"  value="{{ env('APP_URL')}}/secure/methods/payu/back" >
                                                         <input name="confirmationUrl"    type="hidden"  value="{{ env('APP_URL')}}/secure/methods/payu/response" >
                                                         <input name="Submit" class="btn-leemon-back button-payment"        type="submit"  value="" style=" background-color:transparent; background-image: url({{env('APP_URL')}}/img/boton_payu.jpg); border:none; cursor:pointer; margin-top:0px;
                                                         margin-botton:0px; !important; clear:0px;" >
