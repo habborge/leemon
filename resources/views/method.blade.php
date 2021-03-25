@@ -163,33 +163,7 @@
 
                                                 if ($hash == $details['hash']){
                                                 
-                                                    if (($details['prom'] == 1) and ($details['quantity'] >= 2 )){
-                                                        $whole = (int) ($details['quantity'] / 2);
-                                                        $h = (2 * $whole) + $whole;
-                                                        $nq = $details['quantity'] + ($h - $details['quantity']);
-                                                        $discount = round($details['price'] * $whole);
-                                                        //$details['quantity'] = $nq;
-                        
-                                                    }else if (($details['prom'] == 2) and ($details['quantity'] >= 2)){
-                                                        $whole = (int) ($details['quantity'] / 2);
-                                                        $half = round(($details['price'] / 2) * $whole);
-                                                        $nq = $details['quantity'];
-                                                    }else{
-                                                        $nq = $details['quantity'];
-                                                    }
-
                                                     $q_prod += $details['quantity'];
-                                                    $total += ($details['price'] * $nq) - $half - $discount;
-                                                    // $delivery += $details['delivery_cost'] * $nq;
-                                                    $total_d += $half + $discount;
-                                                    $subTotal += ($details['price'] * $nq);
-                                                    
-                                                    if ($details['fee'] == 1){
-                                                        $beforeFee += (($details['price'] * $nq) - $half - $discount) / 1.19;
-                                                        $fee += ((($details['price'] * $nq) - $half - $discount) / 1.19) * 0.19;
-                                                    }else{
-                                                        $beforeFee += (($details['price'] * $nq) - $half - $discount);
-                                                    }
                                                 }
                                                 ?>
                     
@@ -236,45 +210,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    {{--<br>
-                                                                    <div id="cart_2" class="col-md-12">
-                                                                        <div class="row">
-                                                                            
-                                                                            <div class="col-8 col-md-12">
-                                                                                <div class="row">
-                                                                                    <div class="col-9 col-md-4 input-group" data-pr="Quantity">
-                                                                                        <div class="row">
-                                                                                            <div class="input-group input-group-sm mb-3">
-                                                                                                <div class="input-group-prepend">
-                                                                                                  <span class="input-group-text" id="inputGroup-sizing-sm">Cant:</span>
-                                                                                                </div>
-                                                                                                <input class="form-control update-cart" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  data-id="{{ $id }}"  id="Quantity_{{$id}}" type="number" value="{{ $details['quantity'] }}">
-                                                                                              </div>
-                                                                                            
-                                                                                            
-                                                                                            @if ($discount > 0)
-                                                                                                <span class="info-small">Free: {{ $whole }}</span> 
-                                                                                            @endif
-                                                                                        </div>
-                                                                                    </div>
-                                                                                     <div class="col-2 col-md-2" data-th="">
-                                                                                        <div class="row">
-                                                                                            <button id="" class="btn btn-info btn-sm update-cart" data-id="{{ $id }}"><i class="fa fa-refresh"></i></button>
-                                                                                        </div>
-                                                                                    </div> 
-                                                                                    <div class="col-3 col-md-2">
-                                                                                        <div class="row">
-                                                                                            <button class="btn btn-danger btn-sm remove-from-cart" data-id="{{ $id }}"><i class="fa fa-trash-o"></i> Eliminar</button>
-                                                                                        </div>
-                                                                                        
-                                                                                    </div>
-                                                                                </div>
-                                                                                
-                                                                            </div>
-                                                                            
-                                                                            
-                                                                        </div>
-                                                                    </div>--}}
+                                                        
                                                                 </div>
                                                                 
                                                             </div>
@@ -282,7 +218,7 @@
                                                         
                                                         <div id="subtotal" data-th="Subtotal" class="col-4 col-md-4 text-right py-3">
                                                             <div class="col-md-12">
-                                                                <small><b>A pagar</b> $ {{ number_format(($details['price'] * $nq) - $half - $discount,0) }}</small>
+                                                                <small><b>A pagar</b> $ {{ number_format(($details['price']) ,0) }}</small>
                                                             </div>
                                                         </div>
                                                         
@@ -335,7 +271,17 @@
                                                                     </div>
                                                                     <div class="col-6 col-md-4">
                                                                         <div class="row float-right">
-                                                                            COP $ {{ number_format($subTotal,0) }}
+                                                                            @if ($delivery_cost == "free")
+                                                                                COP $ {{ number_format($supertotal,0) }}
+                                                                            @elseif ($delivery_cost == "freeVoucher")
+                                                                                COP $ {{ number_format($supertotal,0) }}
+                                                                            @else    
+                                                                                @if (session('tcc'))
+                                                                                
+                                                                                    COP $ {{ number_format($supertotal - session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
+                                                                                @endif
+                                                                            @endif
+                                                                            
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -349,7 +295,7 @@
                                                                     </div>
                                                                     <div class="col-3 col-md-3">
                                                                         <div class="row float-right">
-                                                                            <span class="text-danger">-{{ number_format($total_d, 0) }}</span>
+                                                                            <span class="text-danger">-0</span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -391,12 +337,13 @@
                                                                     <div class="col-4 col-md-4">
                                                                         <div class="row float-right">
                                                                             @if ($delivery_cost == "free")
-                                                                                COP$ {{ number_format($total,0) }}
+                                                                                COP$ {{ number_format($supertotal,0) }}
                                                                             @elseif ($delivery_cost == "freeVoucher")
-                                                                                COP$ {{ number_format($total,0) }}
+                                                                                COP$ {{ number_format($supertotal,0) }}
                                                                             @else    
                                                                                 @if (session('tcc'))
-                                                                                    COP$ {{ number_format($total + session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
+                                                                                
+                                                                                    COP$ {{ number_format($supertotal,0) }}
                                                                                 @endif
                                                                             @endif
                                                                         </div>
@@ -427,7 +374,35 @@
                                                                 <a href="{{ url('purchase') }}" class="btn btn-leemon-method btn-width">Información de Facturación</a>
                                                             @elseif ($answer == 1)
                                                                 {{-- <button id="proccess" class="btn btn-purchase btn-sm">Proceder con el Pago</button> --}}
-                                                                <a href="{{ route('paymentnow') }}" class="btn btn-purchase btn-width">Proceder con el Pago</a>
+                                                                
+                                                                <form method="post" action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/" target="_blank">
+                                                                    <input name="merchantId"    type="hidden"  value="{{ env('MERCHANT') }}"   >
+                                                                     <input name="accountId"     type="hidden"  value="{{ env('ACCOUNT') }}" >
+                                                                     <input name="description"   type="hidden"  value="Pay-U: Compra de Productos Naturales"  >
+                                                                     <input name="referenceCode" type="hidden"  value="100498-{{$orderId}}" >
+                                                                     <input name="amount"        type="hidden"  value="{{$supertotal}}"   >
+                                                                     <input name="tax"           type="hidden"  value="0"  >
+                                                                     <input name="taxReturnBase" type="hidden"  value="0" >
+                                                                     <input name="currency"      type="hidden"  value="COP" >
+                                                                     <input name="signature"     type="hidden"  value="{{$signature}}"  >
+                                                                     <!--<input name="test"          type="hidden"  value="0" >-->
+                                                                     <input name="buyerEmail"    type="hidden"  value="{{ $member_info->email }}" >
+                                                                     <input name="lng" 		  type="hidden"  value="es"/>
+                                                                     <input name="telephone"     type="hidden"  value="{{ $member_info->phone }}"/>
+                                                                     <input name="buyerFullName" type="hidden"  value="{{ $member_info->name." ".$member_info->lastname }}"/>
+                                                                     <input name="responseUrl"    type="hidden"  value="{{ env('APP_URL')}}/secure/methods/payu/response" >
+                                                                     <input name="confirmationUrl"    type="hidden"  value="{{ env('APP_URL')}}/secure/methods/payu/response" >
+                                                                     <input name="Submit" class="btn-leemon-back button-payment"        type="submit"  value="" style=" background-color:transparent; background-image: url({{env('APP_URL')}}/img/boton_payu.jpg); border:none; cursor:pointer; margin-top:0px;
+                                                                       margin-botton:0px; !important; clear:0px;" >
+                                                               </form>
+                                                               <form method="post" action="{{ route('paymentnow') }}">
+                                                                @csrf
+                                                                <input name="referenceId" type="hidden"  value="100498-{{$orderId}}" >
+                                                                <input name="total"        type="hidden"  value="{{$supertotal}}"   >
+                                                                <input name="sign"     type="hidden"  value="{{$firma}}"  >
+                                                                <input name="Submit" class="btn-leemon-back button-payment mt-1" type="submit"  value="" style=" background-color:transparent; background-image: url({{env('APP_URL')}}/img/boton_pse.jpg); border:none; cursor:pointer; margin-top:0px;
+                                                                   margin-botton:0px; !important; clear:0px;" >
+                                                            </form>
                                                             @endif
                                                         @endguest
                                                     </div>
@@ -476,7 +451,16 @@
                                             </div>
                                             <div class="col-6 col-md-4">
                                                 <div class="row float-right">
-                                                    COP$ {{ number_format($subTotal, 0) }}
+                                                    @if ($delivery_cost == "free")
+                                                         $ {{ number_format($supertotal,0) }}
+                                                    @elseif ($delivery_cost == "freeVoucher")
+                                                         $ {{ number_format($supertotal,0) }}
+                                                    @else    
+                                                        @if (session('tcc'))
+                                                        
+                                                             $ {{ number_format($supertotal - session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
+                                                        @endif
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -490,7 +474,7 @@
                                             </div>
                                             <div class="col-3 col-md-3">
                                                 <div class="row float-right">
-                                                    <span class="text-danger">-{{ number_format($total_d, 0) }}</span>
+                                                    <span class="text-danger">-0</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -533,12 +517,12 @@
                                             <div class="col-4 col-md-4">
                                                 <div class="row float-right">
                                                     @if ($delivery_cost == "free")
-                                                        COP$ {{ number_format($total,0) }}
+                                                        COP$ {{ number_format($supertotal,0) }}
                                                     @elseif ($delivery_cost == "freeVoucher")
-                                                        COP$ {{ number_format($total,0) }}
+                                                        COP$ {{ number_format($supertotal,0) }}
                                                     @else    
                                                         @if (session('tcc'))
-                                                            COP$ {{ number_format($total + session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
+                                                            COP$ {{ number_format($supertotal,0) }}
                                                         @endif
                                                     @endif
                                                 </div>
@@ -557,8 +541,37 @@
                                                     @if ($answer == 0)
                                                         <a href="{{ url('purchase') }}" class="btn btn-leemon-info btn-block">Información de Usuario</a>
                                                     @elseif ($answer == 1)
-                                                    {{-- <button id="proccess2" class="btn btn-purchase btn-sm btn-block">Proceder con el Pago</button> --}}
-                                                    <a href="{{ route('paymentnow') }}" class="btn btn-purchase btn-block">Proceder con el Pago</a>
+                                                    {{-- <button id="proccess2" class="btn btn-purchase btn-sm btn-block">Proceder con el Pago</button> 
+                                                    <a href="{{ route('paymentnow') }}" class="btn btn-purchase btn-block">Proceder con el Pago</a>--}}
+                                                    <form method="post" action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/" target="_blank">
+                                                        <input name="merchantId"    type="hidden"  value="{{ env('MERCHANT') }}"   >
+                                                        <input name="accountId"     type="hidden"  value="{{ env('ACCOUNT') }}" >
+                                                        <input name="description"   type="hidden"  value="Pay-U: Compra de Productos Naturales"  >
+                                                        <input name="referenceCode" type="hidden"  value="100498-{{$orderId}}" >
+                                                        <input name="amount"        type="hidden"  value="{{$supertotal}}"   >
+                                                        <input name="tax"           type="hidden"  value="0"  >
+                                                        <input name="taxReturnBase" type="hidden"  value="0" >
+                                                        <input name="currency"      type="hidden"  value="COP" >
+                                                        <input name="signature"     type="hidden"  value="{{$signature}}"  >
+                                                        <!--<input name="test"          type="hidden"  value="0" >-->
+                                                        <input name="buyerEmail"    type="hidden"  value="{{ $member_info->email }}" >
+                                                        <input name="lng" 		  type="hidden"  value="es"/>
+                                                        <input name="telephone"     type="hidden"  value="{{ $member_info->phone }}"/>
+                                                        <input name="buyerFullName" type="hidden"  value="{{ $member_info->name." ".$member_info->lastname }}"/>
+                                                        <input name="responseUrl"    type="hidden"  value="{{ env('APP_URL')}}/secure/methods/payu/response" >
+                                                        <input name="confirmationUrl"    type="hidden"  value="{{ env('APP_URL')}}/secure/methods/payu/response" >
+                                                        <input name="Submit" class="btn-leemon-back button-payment"        type="submit"  value="" style=" background-color:transparent; background-image: url({{env('APP_URL')}}/img/boton_payu.jpg); border:none; cursor:pointer; margin-top:0px;
+                                                        margin-botton:0px; !important; clear:0px;" >
+                                                   </form>
+                                                   <form method="post" action="{{ route('paymentnow') }}">
+                                                        @csrf
+                                                        <input name="referenceId" type="hidden"  value="100498-{{$orderId}}" >
+                                                        <input name="total"        type="hidden"  value="{{$supertotal}}"   >
+                                                        <input name="sign"     type="hidden"  value="{{$firma}}"  >
+                                                        <input name="Submit" class="btn-leemon-back button-payment mt-1" type="submit"  value="" style=" background-color:transparent; background-image: url({{env('APP_URL')}}/img/boton_pse.jpg); border:none; cursor:pointer; margin-top:0px;
+                                                           margin-botton:0px; !important; clear:0px;" >
+                                                    </form>
+                                                   {{-- <a href="{{ route('paymentnow') }}"><img class="btn-leemon-back button-payment mt-1" src="{{env('APP_URL')}}/img/boton_pse.jpg" alt=""></a> --}}
                                                     
                                                     @endif
                                                 @endguest

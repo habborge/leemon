@@ -26,75 +26,68 @@ class PaymentController extends Controller
         //dd("aqui");
         $method = 2;
 
-        $subTotal = 0;
-        $total = 0;
-        $q_prod = 0;
-        $delivery = 0;
-        $total_d = 0;
-        $beforeFee = 0;
-        $fee = 0;
-        $sw = 0;
+        // $subTotal = 0;
+        // $total = 0;
+        // $q_prod = 0;
+        // $delivery = 0;
+        // $total_d = 0;
+        // $beforeFee = 0;
+        // $fee = 0;
+        // $sw = 0;
+        $order_id = $request->referenceId;
+        $totalprice = $request->total;
+        $sign = $request->sign;
 
+        $firma = md5(env('SECRETPASS')."~".$totalprice."~".$order_id);
+
+       
         if (session('cart')){
             
-            //$cart = session()->get('cart');
-            $codehash = session()->get('codehash');
+            if ($firma == $sign){
+
+                //$cart = session()->get('cart');
+                $codehash = session()->get('codehash');
             
             
-            if (session('myorder')){
-                $orderExists = session()->get('myorder');
-                $resp_pending = $this->validatePending($orderExists);
-                if (($resp_pending[0] == 200) and ($resp_pending[1] == 2)){ 
-                    return response()->json(['status'=>506, 'url' => '', 'order_exists' => $orderExists, 'status_pse' => $resp_pending[2][4], 'message' => $resp_pending[3]]);
+                if (session('myorder')){
+                    $orderExists = session()->get('myorder');
+                    $resp_pending = $this->validatePending($orderExists);
+                    if (($resp_pending[0] == 200) and ($resp_pending[1] == 2)){ 
+                        return response()->json(['status'=>506, 'url' => '', 'order_exists' => $orderExists, 'status_pse' => $resp_pending[2][4], 'message' => $resp_pending[3]]);
+                    }
                 }
-            }
 
-            foreach (session('cart') as $id => $details){
-                $whole = 0;
-                $half = 0;
-                $nq = 0;
-                $h = 0;
-                $discount = 0;
+                // foreach (session('cart') as $id => $details){
+                //     $whole = 0;
+                //     $half = 0;
+                //     $nq = 0;
+                //     $h = 0;
+                //     $discount = 0;
 
-                $hash = md5(env('SECRETPASS')."~".$details['name']."~".$details['price']."~".$details['prom']."~".$details['fee']."~".$details['width']."~".$details['height']."~".$details['length']."~".$details['weight']);
+                //     $hash = md5(env('SECRETPASS')."~".$details['name']."~".$details['price']."~".$details['prom']."~".$details['fee']."~".$details['width']."~".$details['height']."~".$details['length']."~".$details['weight']);
 
-                if ($hash == $details['hash']){
+                //     if ($hash == $details['hash']){
 
-                    $q_prod += $details['quantity'];
-                    $total += ($details['price'] * $details['quantity']);
-                    $total_d += $half + $discount;
-                    $subTotal += ($details['price'] * $nq);
- 
-                }else{
-                    $sw = 1;
-                    break;
-                }
-                
-            }
-
-            if ($sw == 0){
-
-                $fee = $total * 0.19;
-
+                //         $q_prod += $details['quantity'];
+                //         $total += ($details['price'] * $details['quantity']);
+                //         $total_d += $half + $discount;
+                //         $subTotal += ($details['price'] * $nq);
+    
+                //     }else{
+                //         $sw = 1;
+                //         break;
+                //     }
+                    
+                // }
                 $user_id = Auth::user()->id;
 
                // if request->methodPay = 1 is credit card, 2 is PSE, 3 others 
-                if ($method == 1){
-                    
-                    $member = Member::select('members.email', 'members.firstname','members.lastname','members.address', 'members.delivery_address', 'members.phone', 'members.city', 'members.dpt', 'members.country', 'members.n_doc')
-                    ->where('members.user_id', $user_id)
-                    ->first();
-
-                    $methodCode = env('METHOD_PSE');
-
-                }else if ($method == 2){
-                    $member = Member::where('user_id', $user_id)->first();
-                    $methodCode = env('METHOD_PSE');
-                }else{
-                    
-                }
                 
-                $address = Address::select('addresses.id as addressId', 'addresses.address', 'addresses.zipcode', 'addresses.contact', 'addresses.details', 'c.country_master_name', 'd.department', 'ct.city_d_id')->where('user_id', $user_id)
+                $member = Member::where('user_id', $user_id)->first();
+                $methodCode = env('METHOD_PSE');
+                
+                
+                $address = Address::select('addresses.id as addressId', 'addresses.address', 'addresses.zipcode', 'addresses.contact', 'addresses.details', 'c.country_master_name', 'd.department', 'ct.city_d_id')
                 ->join('countries as c', 'c.country_master_id', 'addresses.country')
                 ->join('departments as d', 'd.code', 'addresses.dpt')
                 ->join('cost_tcc as ct', 'ct.id', 'addresses.city')
@@ -102,58 +95,60 @@ class PaymentController extends Controller
                 ->where('default', 1)->first();
                 
                 //bring product array from cart
-                $valor_almacenado = session('cart');
-                $new_array = array_values($valor_almacenado);
+                // $valor_almacenado = session('cart');
+                // $new_array = array_values($valor_almacenado);
 
                 //validating if session('codehash') exists in order table 
-                if (Order::where('user_id', $user_id)->where('code_hash', session('codehash'))->doesntExist()){
-                    $new_order = New Order();
+                // if (Order::where('user_id', $user_id)->where('code_hash', session('codehash'))->doesntExist()){
+                //     $new_order = New Order();
 
-                    //call function in Order model
-                    $rs = $new_order->insert($member, $method, $total, $address);
+                //     //call function in Order model
+                //     $rs = $new_order->insert($member, $method, $total, $address);
                 
-                    if($rs[0]){
-                        //$order_id=$rs->id;
-                        for ($i=0; $i < count($new_array); $i++ ){
-                            $new_details = New Order_detail();
+                //     if($rs[0]){
+                //         //$order_id=$rs->id;
+                //         for ($i=0; $i < count($new_array); $i++ ){
+                //             $new_details = New Order_detail();
                             
-                            $ds = $new_details->insert($rs[1], $new_array[$i]);
-                        }
-                        $orderId = $rs[1];
+                //             $ds = $new_details->insert($rs[1], $new_array[$i]);
+                //         }
+                //         $orderId = $rs[1];
                         
-                    }else{
-                        return redirect()->back()->withErrors("Un error ha ocurrido!!");
-                        // return back()->with('notice', 'Un error ha ocurrido!!');
-                    }
-                }else{
-                    $order = Order::select('id')->where('user_id', $user_id)->where('code_hash', session('codehash'))->first();
-                    $orderId = $order->id;
-                }   
+                //     }else{
+                //         return redirect()->back()->withErrors("Un error ha ocurrido!!");
+                //         // return back()->with('notice', 'Un error ha ocurrido!!');
+                //     }
+                // }else{
+                //     $order = Order::select('id')->where('user_id', $user_id)->where('code_hash', session('codehash'))->first();
+                //     $orderId = $order->id;
+                // }   
 
-                session()->put('myorder', $orderId);
-                //new class to insert new order
+                // session()->put('myorder', $orderId);
+                // //new class to insert new order
 
-                if (session()->get('deliveryCost')){
-                    if (session('deliveryCost') == "freeVoucher"){
-                        if (session()->get('voucher')){
+                // if (session()->get('deliveryCost')){
+                //     if (session('deliveryCost') == "freeVoucher"){
+                //         if (session()->get('voucher')){
                             
-                            $delivery_cost = session('voucher')['voucher_cost'];
+                //             $delivery_cost = session('voucher')['voucher_cost'];
                             
-                        }
-                    }else if (session('deliveryCost') == "free"){
-                        $delivery_cost = 0;
-                    }else{
-                        if (session()->get('tcc')){
-                            $delivery_cost = session('tcc')->consultarliquidacionResult->total->totaldespacho;
-                        }
-                    }
-                }
+                //         }
+                //     }else if (session('deliveryCost') == "free"){
+                //         $delivery_cost = 0;
+                //     }else{
+                //         if (session()->get('tcc')){
+                //             $delivery_cost = session('tcc')->consultarliquidacionResult->total->totaldespacho;
+                //         }
+                //     }
+                // }
                 
                 // $re = session()->get('tcc'); 
                 // $totalFinal =  $total + $re->consultarliquidacionResult->total->totaldespacho;
-                $totalFinal =  $total + $delivery_cost;
-                $reference = $user_id."~";
+                // $totalFinal =  $total + $delivery_cost;
+                // $reference = $user_id."~";
 
+                $totalFinal = $totalprice;
+                $orderId = $order_id;
                 $data = [
                     "InformacionPago" => [
                         "flt_total_con_iva" => $totalFinal,

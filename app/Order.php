@@ -94,4 +94,14 @@ class Order extends Model
 
         return $rs;
     }
+    public static function approval_orderPayU($order, $request){
+        $rs = Order::find($order);
+        $rs->status = "Approved";
+        $rs->method = 5;
+        $rs->status_after_approved = "Stock";
+        $rs->payment = $request->payment_method_name;
+        $rs->save();
+
+        return $rs;
+    }
 }

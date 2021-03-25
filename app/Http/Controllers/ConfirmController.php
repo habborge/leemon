@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Mail\SendPurchase;
 use App\payment_error;
+use App\Payu_payment;
 use App\Order_detail;
 use App\Product;
 use App\Member;
@@ -134,6 +135,37 @@ class ConfirmController extends Controller
     }
 
     //---------------------------------------------------------------------------------------------------------
+    private function insertInfoPayU($order_id, $request){
+        $payment = Payu_payment::where('order_id', $order_id);
+        $info = response()->json($request->all());
+
+        if ($payment->exists()){
+
+            $new_payment = $payment->first();
+
+            $new_payment->method = 5;
+            $new_payment->reference = $request->reference_sale;
+            $new_payment->signature = $request->signature;
+            $new_payment->error = $info;
+           
+            $new_payment->save();
+
+        }else{
+            
+            $new_payment = new Payu_payment();
+
+            $new_payment->order_id = $order_id;
+            $new_payment->method = 5;
+            $new_payment->reference = $request->reference_sale;
+            $new_payment->signature = $request->signature;
+            $new_payment->error = $info;
+           
+            $new_payment->save();
+        }
+
+        return array(1, $new_payment);
+    }
+    //---------------------------------------------------------------------------------------------------------
     //
     //---------------------------------------------------------------------------------------------------------
     public function ConfirmTrans(Request $request){
@@ -158,7 +190,7 @@ class ConfirmController extends Controller
 
             $response = Http::post('https://www.zonapagos.com/Apis_CicloPago/api/VerificacionPago', $data);
 
-           //dd($response->json());
+           dd($response->json());
 
             // if int_estado = 1 then API ran good
             if ($response->json()['int_estado'] == 1){ 
@@ -300,7 +332,7 @@ class ConfirmController extends Controller
 
     public function BackToCommerce(){
 
-        //return redirect()->away("https://leemon.com.co/secure/methods/zp/back");
+        return redirect()->away("https://leemon.com.co/secure/methods/zp/back");
         
         $message = "";
         $sw = 0;
@@ -309,9 +341,9 @@ class ConfirmController extends Controller
 
         if (Auth::user()){
             $user_id = Auth::user()->id;
-            $orderIdSession = session()->get('myorder');
+            //$orderIdSession = session()->get('myorder');
 
-            //$orderIdSession = 1;
+            $orderIdSession = 1;
             $openOrder = Order::where('user_id', $user_id)->where('id', $orderIdSession);
             //dd($orderIdSession);
             //dd($openOrder->first());
@@ -446,6 +478,147 @@ class ConfirmController extends Controller
 
     }
 
+    //---------------------------------------------------------------------------------------------------------
+    //
+    //---------------------------------------------------------------------------------------------------------
+    public function ConfirmTransPayU(Request $request){
+        /*response_code_pol=1
+        phone=
+        additional_value=0.00
+        test=1
+        transaction_date=2015-06-11 13:30:26 06/11/2015 13:30:26
+        cc_number=************0004
+        cc_holder=test_buyer
+        error_code_bank=
+        billing_country=CO
+        bank_referenced_name=
+        description=test_payu_01
+        administrative_fee_tax=0.00
+        value=330.00
+        administrative_fee=0.00
+        payment_method_type=2
+        office_phone=
+        email_buyer=test@payulatam.com
+        response_message_pol=ENTITY_DECLINED
+        error_message_bank=
+        shipping_city=
+        transaction_id=f5e668f1-7ecc-4b83-a4d1-0aaa68260862
+        sign=be11f47966ffd656308292b1fb91a342
+        tax=0.00
+        payment_method=10
+        billing_address=cll 93
+        payment_method_name=VISA
+        pse_bank=
+        state_pol=4
+        date=2015.05.27 01:07:35
+        nickname_buyer=
+        reference_pol=7069375
+        currency=USD
+        risk=1.0
+        shipping_address=
+        bank_id=10
+        payment_request_state=R
+        customer_number=
+        administrative_fee_base=0.00
+        attempts=1
+        merchant_id=500238
+        exchange_rate=2541.15
+        shipping_country=
+        installments_number=1
+        franchise=VISA
+        payment_method_id=2
+        extra1=
+        extra2=
+        antifraudMerchantId=
+        extra3=
+        nickname_seller=
+        ip=190.242.116.98
+        airline_code=
+        billing_city=Bogota
+        pse_reference1=
+        reference_sale=38-heidy10-3-ynafu97
+        pse_reference3=
+        pse_reference2=
+        */
+
+        // $merchant_id=539177;
+        // $response_code_pol = 1; //El código de respuesta de PayU. 1 es APPROVED
+        // $state_pol = 4; //Indica el estado de la transacción en el sistema. 4 es APPROVED , 6 es declinada y 7 expirada
+        // $transaction_date = "2015-06-11 13:30:26"; //fecha de la transccion, si es aprobada se colocar como fecha de registro en el sistema
+        // $value = 330.00; //valor pagado
+        // $transaction_id = "f5e668f1-7ecc-4b83-a4d1-0aaa68260862"; 
+        // $sign = "be11f47966ffd656308292b1fb91a342a";
+        // $payment_method_name="VISA";
+        // $reference_sale = "12-appppppa-20/1/100-h0xknip"; //Es la referencia de la venta o pedido. Deber ser único por cada transacción que se envía al sistema.
+        // $reference_pol = 7069375; //La referencia o número de la transacción generado en PayU
+        // $currency="USD";
+        // $ref_tran = $reference_sale;
+
+        if($request->merchant_id == env('MERCHANT')){
+
+            // Validando si el segundo decimal del parámetro value es cero
+            $explota = explode(".",$request->value);
+
+            if (empty($explota[1])){
+                $valor = $explota[0].".0";
+            }else{
+                //if ($explota[1] == "00")
+                $rest = substr($explota[1],1,1);
+                if ($rest == "0"){   // devuelve si el segundo digito de los decimales
+                    $rest2 = substr($explota[1],0,1);
+                    if($rest2 == "0"){
+                        $valor = $explota[0].".0";
+                    }else{
+                        $valor = $explota[0].".".$rest2;
+                    }
+                
+                }else{
+                    $valor = $request->value;
+                }
+            }
+
+            //ApiKey~merchant_id~reference_sale~new_value~currency~state_pol
+            $signature = md5(env('KEY_PAY')."~".env('MERCHANT')."~".$request->reference_sale."~".$valor."~".$request->currency."~".$request->state_pol);
+
+            if ($request->sign == $signature){
+                $no_aprovo = 0;
+                $dividir = explode("-",$request->reference_sale);
+
+                $order_id = $dividir[1];
+
+                // state_pol == 4 La trasaccion fue aprovada
+                if($request->state_pol == 4){ 
+
+                    if ($request->response_code_pol == 1){
+                        $order_change = Order::approval_orderPayU($order_id, $request);
+                        $products_discount = $this->updateQuantity($order_id);
+
+
+                    }else{
+                        $no_aprovo = 1;
+                        $error="Error-response_message_pol = ".$response_code_pol;
+                    }//end de estatus de response_code_pol
+                }else{
+                    $no_aprovo = 1;
+                    $error="Error-state_pol = ".$state_pol;
+                }
+
+                $insertData = $this->insertInfoPayU($order_id, $request);
+            }
+        
+        }
+    }
+
+    //---------------------------------------------------------------------------------------------------------
+    //
+    //---------------------------------------------------------------------------------------------------------
+    public function BackToCommercePayU(Request $request){
+        
+    }
+
+    //---------------------------------------------------------------------------------------------------------
+    //
+    //---------------------------------------------------------------------------------------------------------
     private function updateQuantity($order_id){
         $products = Order_detail::where('order_id', $order_id)->get();
 
