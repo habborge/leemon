@@ -581,12 +581,12 @@ class ConfirmController extends Controller
             
             //ApiKey~merchant_id~reference_sale~new_value~currency~state_pol
             $signature = md5(env('KEY_PAY')."~".env('MERCHANT')."~".$request->reference_sale."~".$valor."~".$request->currency."~".$request->state_pol);
+            $dividir = explode("-",$request->reference_sale);
+            $order_id = $dividir[1];
             
             if ($request->sign == $signature){
                 $no_aprovo = 0;
-                $dividir = explode("-",$request->reference_sale);
-
-                $order_id = $dividir[1];
+                
 
                 // state_pol == 4 La trasaccion fue aprovada
                 if($request->state_pol == 4){ 
@@ -605,9 +605,9 @@ class ConfirmController extends Controller
                     $error="Error-state_pol = ".$state_pol;
                 }
 
-                $insertData = $this->insertInfoPayU($order_id, $request);
+                
             }
-        
+            $insertData = $this->insertInfoPayU($order_id, $request);
         }
     }
 
