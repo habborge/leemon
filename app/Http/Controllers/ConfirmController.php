@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Mail\SendPurchase;
+use App\Mail\SendPurchasePayU;
 use App\payment_error;
 use App\Payu_payment;
 use App\Order_detail;
@@ -137,15 +138,15 @@ class ConfirmController extends Controller
     //---------------------------------------------------------------------------------------------------------
     private function insertInfoPayU($order_id, $request){
         $payment = Payu_payment::where('order_id', $order_id);
-        $info = response()->json($request->all());
+        $info = json_encode($request, true);
 
         if ($payment->exists()){
 
             $new_payment = $payment->first();
 
             $new_payment->method = 5;
-            $new_payment->reference = $request->reference_sale;
-            $new_payment->signature = $request->sign;
+            $new_payment->reference = $request['reference_sale'];
+            $new_payment->signature = $request['sign'];
             $new_payment->error = $info;
            
             $new_payment->save();
@@ -156,8 +157,8 @@ class ConfirmController extends Controller
 
             $new_payment->order_id = $order_id;
             $new_payment->method = 5;
-            $new_payment->reference = $request->reference_sale;
-            $new_payment->signature = $request->sign;
+            $new_payment->reference = $request['reference_sale'];
+            $new_payment->signature = $request['sign'];
             $new_payment->error = $info;
            
             $new_payment->save();
@@ -222,7 +223,10 @@ class ConfirmController extends Controller
                                     // array($approval, $sw, $message);
                                     if ($result[0] == 1){
                                         $order_change = Order::approval_order($order->id, $data_info[20]);
-                                        $products_discount = $this->updateQuantity($order->id);
+
+                                        if ($order_change[0] == 0){
+                                            $products_discount = $this->updateQuantity($order->id);
+                                        }
 
                                         $info_trans = $insertData[1];
                                         $member = Member::select('user_id','firstname','lastname','email')->where('user_id', $order->user_id)->first();
@@ -274,7 +278,11 @@ class ConfirmController extends Controller
                                         // array($approval, $sw, $message); var approval is 1 transaction was approved, if var approval is 0 was rejected
                                         if ($result[0] == 1){
                                             $order_change = Order::approval_order($order->id, $data_info[20]);
-                                            $products_discount = $this->updateQuantity($order->id);
+
+                                            if ($order_change[0] == 0){
+                                                $products_discount = $this->updateQuantity($order->id);
+                                            }
+
                                             $order_status = 1;
 
                                             $info_trans = $insertData[1];
@@ -481,7 +489,8 @@ class ConfirmController extends Controller
     //---------------------------------------------------------------------------------------------------------
     //
     //---------------------------------------------------------------------------------------------------------
-    public function ConfirmTransPayU(Request $request){
+    public function ConfirmTransPayU($request){
+
         /*response_code_pol=1
         phone=
         additional_value=0.00
@@ -541,25 +550,25 @@ class ConfirmController extends Controller
         pse_reference2=
         */
 
-        $request->merchant_id=508029;
-        $request->response_code_pol = 1; //El código de respuesta de PayU. 1 es APPROVED
-        $request->state_pol = 4; //Indica el estado de la transacción en el sistema. 4 es APPROVED , 6 es declinada y 7 expirada
-        $request->transaction_date = "2015-06-11 13:30:26"; //fecha de la transccion, si es aprobada se colocar como fecha de registro en el sistema
-        $request->value = 80000.00; //valor pagado
-        $request->transaction_id = "a67cbd9a-5d00-4b17-b82b-afca4e13cfac"; 
-        $request->sign = "7f638a2ae42a24e60d2f8bb809bdeecc";
-        $request->payment_method_name="VISA";
-        $request->reference_sale = "100498-58"; //Es la referencia de la venta o pedido. Deber ser único por cada transacción que se envía al sistema.
-        $request->reference_pol = 7069375; //La referencia o número de la transacción generado en PayU
-        $request->currency="COP";
-        $ref_tran = $request->reference_sale;
+        // $request->merchant_id=508029;
+        // $request->response_code_pol = 1; //El código de respuesta de PayU. 1 es APPROVED
+        // $request->state_pol = 4; //Indica el estado de la transacción en el sistema. 4 es APPROVED , 6 es declinada y 7 expirada
+        // $request->transaction_date = "2015-06-11 13:30:26"; //fecha de la transccion, si es aprobada se colocar como fecha de registro en el sistema
+        // $request->value = 80000.00; //valor pagado
+        // $request->transaction_id = "a67cbd9a-5d00-4b17-b82b-afca4e13cfac"; 
+        // $request->sign = "7f638a2ae42a24e60d2f8bb809bdeecc";
+        // $request->payment_method_name="VISA";
+        // $request->reference_sale = "100498-58"; //Es la referencia de la venta o pedido. Deber ser único por cada transacción que se envía al sistema.
+        // $request->reference_pol = 7069375; //La referencia o número de la transacción generado en PayU
+        // $request->currency="COP";
+        // $ref_tran = $request->reference_sale;
 
         
 
-        if($request->merchant_id == env('MERCHANT')){
+        if($request['merchant_id'] == env('MERCHANT')){
             
             // Validando si el segundo decimal del parámetro value es cero
-            $explota = explode(".",$request->value);
+            $explota = explode(".",$request['value']);
 
             if (empty($explota[1])){
                 $valor = $explota[0].".0";
@@ -580,20 +589,27 @@ class ConfirmController extends Controller
             }
             
             //ApiKey~merchant_id~reference_sale~new_value~currency~state_pol
-            $signature = md5(env('KEY_PAY')."~".env('MERCHANT')."~".$request->reference_sale."~".$valor."~".$request->currency."~".$request->state_pol);
-            $dividir = explode("-",$request->reference_sale);
+            $signature = md5(env('KEY_PAY')."~".env('MERCHANT')."~".$request['reference_sale']."~".$valor."~".$request['currency']."~".$request['state_pol']);
+            $dividir = explode("-",$request['reference_sale']);
             $order_id = $dividir[1];
             
-            if ($request->sign == $signature){
+            if ($request['sign'] == $signature){
                 $no_aprovo = 0;
                 
 
                 // state_pol == 4 La trasaccion fue aprovada
-                if($request->state_pol == 4){ 
+                if($request['state_pol'] == 4){ 
 
-                    if ($request->response_code_pol == 1){
+                    if ($request['response_code_pol'] == 1){
                         $order_change = Order::approval_orderPayU($order_id, $request);
-                        $products_discount = $this->updateQuantity($order_id);
+
+                        if ($order_change[0] == 0){
+                            $products_discount = $this->updateQuantity($order_id);
+                        }
+
+                        $info_trans = $request;
+                        $member = Member::select('user_id','firstname','lastname','email')->where('user_id', $order_change[1]->user_id)->first();
+                        $sending = Mail::to($member->email)->send(new SendPurchasePayU($order_change[1], $member, $info_trans));
 
 
                     }else{

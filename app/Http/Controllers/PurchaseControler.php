@@ -177,7 +177,7 @@ class PurchaseControler extends Controller
     public function methods()
     {
         $currency = "COP";
-        $method = 2;
+        $method = 0;
 
         if ((Auth::user()) and (session('cart'))){
             

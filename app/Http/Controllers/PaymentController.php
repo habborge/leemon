@@ -146,7 +146,10 @@ class PaymentController extends Controller
                 // $totalFinal =  $total + $re->consultarliquidacionResult->total->totaldespacho;
                 // $totalFinal =  $total + $delivery_cost;
                 // $reference = $user_id."~";
-
+                $update_method = Order::find($orderId);
+                $update_method->method = 2;
+                $update_method->save();
+                
                 $totalFinal = $totalprice;
                 $orderId = $order_id;
                 $data = [

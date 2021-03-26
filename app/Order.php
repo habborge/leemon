@@ -17,12 +17,8 @@ class Order extends Model
         $voucher_id = 0;
         $voucher_type = 0;
         $delivery_cost = 0;
+        $payment = "Pago";
         
-        if ($method == 1){
-            $payment = "Nombre en la tarjeta: ".$request->fullname." - ".$request->brand." Credit Card terminada en **********".$request->last4num;
-        }else {
-            $payment = "Pago PSE";
-        }
         
         if (session()->get('deliveryCost')){
             if (session('deliveryCost') == "freeVoucher"){
@@ -62,6 +58,7 @@ class Order extends Model
         $this->voucher_id = $voucher_id;
         $this->type_voucher = $voucher_type;
         $this->delivery_cost = $delivery_cost;
+        $this->discount_quantity = 0;
 
         $rs = $this->save();
         $id = $this->id;
@@ -86,22 +83,39 @@ class Order extends Model
     }
 
     public static function approval_order($order, $payment_type){
+        $r = 0;
+        
         $rs = Order::find($order);
         $rs->status = "Approved";
         $rs->status_after_approved = "Stock";
         $rs->payment = $payment_type;
+        if ($rs->discount_quantity == 1){
+            $r = 1;
+        }else{
+            $rs->discount_quantity = 1;
+        }
         $rs->save();
 
-        return $rs;
+        return array($r, $rs);
     }
     public static function approval_orderPayU($order, $request){
+
+        $r = 0;
+
         $rs = Order::find($order);
         $rs->status = "Approved";
         $rs->method = 5;
         $rs->status_after_approved = "Stock";
-        $rs->payment = $request->payment_method_name;
+        $rs->payment = $request['payment_method_name'];
+
+        if ($rs->discount_quantity == 1){
+            $r = 1;
+        }else{
+            $rs->discount_quantity = 1;
+        }
+        
         $rs->save();
 
-        return $rs;
+        return array($r, $rs);
     }
 }

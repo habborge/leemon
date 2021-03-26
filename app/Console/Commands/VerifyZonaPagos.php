@@ -124,7 +124,7 @@ class VerifyZonaPagos extends Command
             $data_info[20] = int_id_forma_pago 29 | 
         */
 
-        $ordersPre = Order::where('status', 'Open')->orWhere('status', 'Processing');
+        $ordersPre = Order::where('method', 2)->where('status', 'Open')->orWhere('status', 'Processing');
 
         $info = "";
         if ($ordersPre->exists()){
@@ -162,7 +162,10 @@ class VerifyZonaPagos extends Command
                                     // array($approval, $sw, $message);
                                     if ($result[0] == 1){
                                         $order_change = Order::approval_order($order->id, $data_info[20]);
-                                        $products_discount = $this->updateQuantity($order->id);
+                                        
+                                        if ($order_change[0] == 0){
+                                            $products_discount = $this->updateQuantity($order->id);
+                                        }
 
                                         $info_trans = $insertData[1];
                                         $member = Member::select('user_id','firstname','lastname','email')->where('user_id', $order->user_id)->first();
@@ -210,7 +213,9 @@ class VerifyZonaPagos extends Command
                                         // array($approval, $sw, $message); var approval is 1 transaction was approved, if var approval is 0 was rejected
                                         if ($result[0] == 1){
                                             $order_change = Order::approval_order($order->id, $data_info[20]);
-                                            $products_discount = $this->updateQuantity($order->id);
+                                            if ($order_change[0] == 0){
+                                                $products_discount = $this->updateQuantity($order->id);
+                                            }
                                             $order_status = 1;
 
                                             $member = Member::select('user_id','firstname','lastname','email')->where('user_id', $order->user_id)->first();
