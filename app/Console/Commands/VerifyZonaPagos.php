@@ -169,7 +169,7 @@ class VerifyZonaPagos extends Command
 
                                         $info_trans = $insertData[1];
                                         $member = Member::select('user_id','firstname','lastname','email')->where('user_id', $order->user_id)->first();
-                                        $sending = Mail::to($member->email)->send(new SendPurchase($order, $member, $info_trans));
+                                        $sending = Mail::to($member->email)->bcc(env('MAIL_FROM_ADDRESS'))->send(new SendPurchase($order, $member, $info_trans));
 
                                     }else{
                                         // int_pago_terminado => 1: Terminado => 2: Pendiente: En caso de que el pago sea mixto. El pago no ha sido terminado en su totalidad. => 200 Pago iniciado
@@ -218,8 +218,9 @@ class VerifyZonaPagos extends Command
                                             }
                                             $order_status = 1;
 
+                                            $info_trans = $insertData[1];
                                             $member = Member::select('user_id','firstname','lastname','email')->where('user_id', $order->user_id)->first();
-                                            $sending = Mail::to($member->email)->send(new SendPurchase($order, $member, $info_trans));
+                                            $sending = Mail::to($member->email)->bcc(env('MAIL_FROM_ADDRESS'))->send(new SendPurchase($order, $member, $info_trans));
 
                                             break;
                                         }else{
