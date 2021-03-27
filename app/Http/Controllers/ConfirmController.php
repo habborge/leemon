@@ -340,7 +340,7 @@ class ConfirmController extends Controller
 
     public function BackToCommerce(){
 
-        return redirect()->away("https://leemon.com.co/secure/methods/zp/back");
+        //return redirect()->away("https://leemon.com.co/secure/methods/zp/back");
         
         $message = "";
         $sw = 0;
@@ -349,9 +349,9 @@ class ConfirmController extends Controller
 
         if (Auth::user()){
             $user_id = Auth::user()->id;
-            //$orderIdSession = session()->get('myorder');
+            $orderIdSession = session()->get('myorder');
 
-            $orderIdSession = 1;
+            //$orderIdSession = 1;
             $openOrder = Order::where('user_id', $user_id)->where('id', $orderIdSession);
             //dd($orderIdSession);
             //dd($openOrder->first());
@@ -631,7 +631,167 @@ class ConfirmController extends Controller
     //
     //---------------------------------------------------------------------------------------------------------
     public function BackToCommercePayU(Request $request){
-        
+        $merchantId=$request->merchantId;
+        $merchant_name=$request->merchant_name;
+        $merchant_address=$request->merchant_address;
+        $telephone=$request->telephone;
+        $merchant_url=$request->merchant_url;
+        $transactionState=$request->transactionState;
+        $lapTransactionState=$request->lapTransactionState;
+        $message2=$request->message;
+        $referenceCode=$request->referenceCode;
+        $reference_pol=$request->reference_pol;
+        $transactionId=$request->transactionId;
+        $description=$request->description;
+        $trazabilityCode=$request->trazabilityCode;
+        $cus=$request->cus;
+        $orderLanguage=$request->orderLanguage;
+        $extra1=$request->extra1;
+        $extra2=$request->extra2;
+        $extra3=$request->extra3;
+        $polTransactionState=$request->polTransactionState;
+        $signature=$request->signature;
+        $polResponseCode=$request->polResponseCode;
+        $lapResponseCode=$request->lapResponseCode;
+        $risk=$request->risk;
+        $polPaymentMethod=$request->polPaymentMethod;
+        $lapPaymentMethod=$request->lapPaymentMethod;
+        $polPaymentMethodType=$request->polPaymentMethodType;
+        $lapPaymentMethodType=$request->lapPaymentMethodType;
+        $installmentsNumber=$request->installmentsNumber;
+        $TX_VALUE=$request->TX_VALUE;
+        $TX_TAX=$request->TX_TAX;
+        $currency=$request->currency;
+        $lng=$request->lng;
+        $pseCycle=$request->pseCycle;
+        $buyerEmail=$request->buyerEmail;
+        $pseBank=$request->pseBank;
+        $pseReference1=$request->pseReference1;
+        $pseReference2=$request->pseReference2;
+        $pseReference3=$request->pseReference3;
+        $authorizationCode=$request->authorizationCode;
+
+        $TX_ADMINISTRATIVE_FEE=$request->TX_ADMINISTRATIVE_FEE;
+        $TX_TAX_ADMINISTRATIVE_FEE=$request->TX_TAX_ADMINISTRATIVE_FEE;
+        $TX_TAX_ADMINISTRATIVE_FEE_RETURN_BASE=$request->TX_TAX_ADMINISTRATIVE_FEE_RETURN_BASE;
+        $processingDate = $request->processingDate;
+
+        $amount = round($TX_VALUE, 1,PHP_ROUND_HALF_EVEN); // 10;
+
+        $explota = explode(".",$amount);
+
+        if (empty($explota[1])){
+            $amount2 = $explota[0].".0";
+        }
+        if (Auth::user()){
+            $user_id = Auth::user()->id;
+
+            $orderIdSession = 0;
+            //ApiKey~merchantId~referenceCode~new_value~currency~transactionState
+            //$signature2 = md5($API_key."~".$merchantId."~".$referenceCode."~".$amount2."~".$currency."~".$transactionState);
+            $signature2 = md5(env('KEY_PAY')."~".env('MERCHANT')."~".$referenceCode."~".$amount2."~".$currency."~".$transactionState);
+            if ($signature == $signature2){
+                //ESTADOD E LA TRANSACCION 4 es APPROVED - 6 es RECHAZADA o DECLINADA - 5 es EXPIRADA - 7 es PENDING - 104 es ERROR
+
+
+                if ($transactionState == 4){
+                    $orderIdSession = session()->get('myorder');
+                    session()->forget('cart', 'myorder', 'codehash');
+                    $approval = 1;
+                    $message = "Su tranacción ha sido aprobada!!";
+                }else if($transactionState == 6){
+                    $approval = 0;
+                    switch ($polResponseCode) {
+                        case '4':
+                            $message = "Transacción rechazada por entidad financiera!!";
+                            break;
+                        case '5':
+                            $message = "Transacción rechazada por el banco!!";
+                            break;
+                        case '6':
+                            $message = "Fondos insuficientes!!";
+                            break;
+                        case '7':
+                            $message = "Tarjeta inválida!!";
+                            break;
+                        case '8':
+                            $message = "Débito automático no permitido. Contactar entidad financiera!!";
+                            break;
+                        case '9':
+                            $message = "Tarjeta vencida!!";
+                            break;
+                        case '10':
+                            $message = "Tarjeta restringida!!";
+                            break;
+                        case '12':
+                            $message = "Fecha de expiración o código de seguridadinválidos!!";
+                            break;
+                        case '13':
+                            $message = "Reintentar pago!!";
+                            break;
+                        case '14':
+                            $message = "Transacción inválida!!";
+                            break;
+                        case '17':
+                            $message = "El valor excede el máximo permitido por la entidad!!";
+                            break;
+                        case '19':
+                            $message = "Transacción abandonada por el pagador!!";
+                            break;
+                        case '22':
+                            $message = "Tarjeta no autorizada para comprar por internet!!";
+                            break;
+                        case '23':
+                            $message = "Transacción rechazada por sospecha de fraude!!";
+                            break;
+                        case '9995':
+                            $message = "Certificado digital no encontrado!!";
+                            break;
+                        case '9996':
+                            $message = "Error tratando de cominicarse con el banco!!";
+                            break;
+                    }
+                    
+                }else if($transactionState == 5){
+                    $approval = 0;
+                    $message = "Transacción expirada!!";
+                    
+                }else if($transactionState == 7){
+                    $approval = 7;
+                    $message = "Transacción pendiente!!";
+                
+                }else if($transactionState == 104){
+                    $approval = 0;
+                    $message = "Se presentó un Error en la Trasacción!!";
+                    
+                }
+            
+            }else{
+                $approval = 0;
+                $message = "Se presentó Poblemas en la Transacción";	
+            }
+
+            $member = Member::select('firstname', 'lastname', 'email', 'n_doc')->where('user_id', $user_id)->first();
+            $dataTransaction = ["processingDate" => $processingDate, "referenceCode" => $referenceCode, "description" => $description, "total" => $TX_VALUE, "origen" => $lapPaymentMethodType." - ".$lapPaymentMethod, "reference" => $reference_pol, "name" => $member->firstname." ".$member->lastname, "email" => $member->email, "n_doc" => $member->n_doc];
+
+        }else{
+            $approval = 0;
+            $message = "Esta información ya ha sido procesada y entregada";
+            $dataTransaction = "error";
+        }
+
+       
+        $url = json_encode($dataTransaction,TRUE);
+        $lru = $orderIdSession."~".$url;
+        $url2 = base64_encode($lru);
+
+        return view('confirmPurchasePayU', [
+            'approval' => $approval,
+            'message' => $message,
+            'response' => $dataTransaction,
+            'url' => $url2,
+        ]);
+
     }
 
     //---------------------------------------------------------------------------------------------------------

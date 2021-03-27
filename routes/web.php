@@ -61,6 +61,7 @@ Route::get('/secure/methods/payu/back', 'ConfirmController@BackToCommercePayU');
 
 // Download PDF
 Route::get('/legality/payment-result/download-pdf/{response}', 'PdfController@downloadResponseTrans');
+Route::get('/legality/payment-result/downloadPayU-pdf/{response}', 'PdfController@downloadResponsePayU');
 
 //politica de privacidad y tratamiento de datos
 Route::get('/terms/privacy-policy-and-data-processing', function () {
