@@ -34,13 +34,16 @@ class PaymentController extends Controller
         // $beforeFee = 0;
         // $fee = 0;
         // $sw = 0;
-        $order_id = $request->referenceId;
+        $part = explode("-", $request->referenceId);
+        $order_id = $part[1];
+        
         $totalprice = $request->total;
         $sign = $request->sign;
+        
+        // $firma = md5(env('SECRETPASS')."~".$totalprice."~100498-".$orderStatus[1]);  from purchaseController
+        $firma = md5(env('SECRETPASS')."~".$totalprice."~100498-".$order_id);
 
-        $firma = md5(env('SECRETPASS')."~".$totalprice."~".$order_id);
-
-       
+      
         if (session('cart')){
             
             if ($firma == $sign){
@@ -146,12 +149,13 @@ class PaymentController extends Controller
                 // $totalFinal =  $total + $re->consultarliquidacionResult->total->totaldespacho;
                 // $totalFinal =  $total + $delivery_cost;
                 // $reference = $user_id."~";
+                $orderId = $order_id;
                 $update_method = Order::find($orderId);
                 $update_method->method = 2;
                 $update_method->save();
                 
                 $totalFinal = $totalprice;
-                $orderId = $order_id;
+                
                 $data = [
                     "InformacionPago" => [
                         "flt_total_con_iva" => $totalFinal,

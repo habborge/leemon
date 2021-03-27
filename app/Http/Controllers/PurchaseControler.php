@@ -273,7 +273,7 @@ class PurchaseControler extends Controller
 
                         session()->put('deliveryCost', $deliveryCost);
 
-                        $firma = md5(env('SECRETPASS')."~".$totalprice);  
+                        
 
                         $orderStatus = $this->validateOrder($id, $member_info, $method, $totalprice, $address, $new_array);
 
@@ -281,6 +281,8 @@ class PurchaseControler extends Controller
                             return redirect()->back()->withErrors("Un error ha ocurrido!!");
                         }
                         session()->put('myorder', $orderStatus[1]);
+
+                        $firma = md5(env('SECRETPASS')."~".$totalprice."~100498-".$orderStatus[1]); 
                         $signature = md5(env('KEY_PAY')."~".env('MERCHANT')."~100498-".$orderStatus[1]."~".$totalprice."~".$currency);
 
                         return view('method', [
@@ -343,7 +345,7 @@ class PurchaseControler extends Controller
 
                                 session()->put('deliveryCost', $deliveryCost);
 
-                                $firma = md5(env('SECRETPASS')."~".$totalprice);  
+                                
 
                                 $orderStatus = $this->validateOrder($id, $member_info, $method, $totalprice, $address, $new_array);
 
@@ -355,7 +357,11 @@ class PurchaseControler extends Controller
                                 
 
                                 $totalprice += $re->consultarliquidacionResult->total->totaldespacho;
-                                $signature = md5(env('KEY_PAY')."~".env('MERCHANT')."~100498-".$orderStatus[1]."~".$totalprice."~".$currency);
+
+                                $totalprice2 = intval($totalprice);
+                                
+                                $firma = md5(env('SECRETPASS')."~".$totalprice2."~100498-".$orderStatus[1]); 
+                                $signature = md5(env('KEY_PAY')."~".env('MERCHANT')."~100498-".$orderStatus[1]."~".$totalprice2."~".$currency);
                                 return view('method', [
                                     'answer' => $answer,
                                     'cardexist' => $cardExist,
