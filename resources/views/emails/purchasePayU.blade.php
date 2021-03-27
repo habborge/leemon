@@ -3,7 +3,7 @@ Hola <span style="color: rgb(45, 77, 146)">{{ $member->firstname }} {{ $member->
 
 Gracias por Comprar en Leemon.
 <hr class="">
-Tu Orden de compra es No {{ $order['id']}}
+Tu Orden de compra No {{ $order['id']}}
 <hr class="">
 <span id="parrafo">
   Hemos recibido tu orden y empezaremos a procesarla. Pronto recibirás un correo con la confirmación de envío. Recuerda que el tiempo de entrega comienza a partir de la confirmación del pago.

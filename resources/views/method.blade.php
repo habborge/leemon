@@ -375,7 +375,7 @@
                                                             @elseif ($answer == 1)
                                                                 {{-- <button id="proccess" class="btn btn-purchase btn-sm">Proceder con el Pago</button> --}}
                                                                 
-                                                                <form method="post" action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/" target="_blank">
+                                                                <form method="post" action="{{env('PAY_URL')}}">
                                                                     <input name="merchantId"    type="hidden"  value="{{ env('MERCHANT') }}"   >
                                                                      <input name="accountId"     type="hidden"  value="{{ env('ACCOUNT') }}" >
                                                                      <input name="description"   type="hidden"  value="Pay-U: Compra de Productos Naturales"  >
@@ -543,7 +543,7 @@
                                                     @elseif ($answer == 1)
                                                     {{-- <button id="proccess2" class="btn btn-purchase btn-sm btn-block">Proceder con el Pago</button> 
                                                     <a href="{{ route('paymentnow') }}" class="btn btn-purchase btn-block">Proceder con el Pago</a>--}}
-                                                    <form method="post" action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/" target="_blank">
+                                                    <form method="post" action="{{env('PAY_URL')}}">
                                                         <input name="merchantId"    type="hidden"  value="{{ env('MERCHANT') }}"   >
                                                         <input name="accountId"     type="hidden"  value="{{ env('ACCOUNT') }}" >
                                                         <input name="description"   type="hidden"  value="Pay-U: Compra de Productos Naturales"  >
