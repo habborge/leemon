@@ -3,7 +3,7 @@ Hola <span style="color: rgb(45, 77, 146)">{{ $member->firstname }} {{ $member->
 
 Gracias por Comprar en Leemon.
 <hr class="">
-Tu Orden de compra No {{ $order->id}}
+Tu Orden de compra No {{ $order['id']}}
 <hr class="">
 <span id="parrafo">
   Hemos recibido tu orden y empezaremos a procesarla. Pronto recibirás un correo con la confirmación de envío. Recuerda que el tiempo de entrega comienza a partir de la confirmación del pago.
@@ -15,8 +15,8 @@ Tu Orden de compra No {{ $order->id}}
             <h3>Información de Compra</h3>
             <p>
                 Cliente: {{ $member->firstname }} {{ $member->lastname }}<br>
-                Via Pago: {{ $order->payment }}<br>
-                Valor: {{ $order->amount }}<br>
+                Via Pago: {{ $order['payment'] }}<br>
+                Valor: {{ $order['amount'] }}<br>
             </p>
         </td>
     </tr>
@@ -46,15 +46,15 @@ Tu Orden de compra No {{ $order->id}}
             @endforeach
             <tr>
                 <td colspan="4"><p>SUBTOTAL</p></td>
-                <td class="total"><p>$ {{ $order->amount }}</p></td>
+                <td class="total"><p>$ {{ $order['amount'] }}</p></td>
             </tr>
           <tr>
             <td colspan="4"><p>ENVIO</p></td>
-            <td class="total"><p>$ 0</p></td>
+            <td class="total"><p>$ {{ $order['delivery_cost'] }}</p></td>
           </tr>
           <tr>
             <td colspan="4" class="grand total"><p>TOTAL</p></td>
-            <td class="grand total"><p>$ {{ $order->amount + 0 }}</p></td>
+            <td class="grand total"><p>$ {{ $order['amount'] + $order['delivery_cost'] }}</p></td>
           </tr>
         </tbody>
       </table>

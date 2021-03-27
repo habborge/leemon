@@ -124,7 +124,7 @@ class VerifyZonaPagos extends Command
             $data_info[20] = int_id_forma_pago 29 | 
         */
 
-        $ordersPre = Order::where('status', 'Open')->orWhere('status', 'Processing');
+        $ordersPre = Order::where('method', 2)->where('status', 'Open')->orWhere('status', 'Processing');
 
         $info = "";
         if ($ordersPre->exists()){
@@ -162,11 +162,14 @@ class VerifyZonaPagos extends Command
                                     // array($approval, $sw, $message);
                                     if ($result[0] == 1){
                                         $order_change = Order::approval_order($order->id, $data_info[20]);
-                                        $products_discount = $this->updateQuantity($order->id);
+                                        
+                                        if ($order_change[0] == 0){
+                                            $products_discount = $this->updateQuantity($order->id);
+                                        }
 
                                         $info_trans = $insertData[1];
                                         $member = Member::select('user_id','firstname','lastname','email')->where('user_id', $order->user_id)->first();
-                                        $sending = Mail::to($member->email)->send(new SendPurchase($order, $member, $info_trans));
+                                        $sending = Mail::to($member->email)->bcc(env('MAIL_FROM_ADDRESS'))->send(new SendPurchase($order, $member, $info_trans));
 
                                     }else{
                                         // int_pago_terminado => 1: Terminado => 2: Pendiente: En caso de que el pago sea mixto. El pago no ha sido terminado en su totalidad. => 200 Pago iniciado
@@ -210,11 +213,14 @@ class VerifyZonaPagos extends Command
                                         // array($approval, $sw, $message); var approval is 1 transaction was approved, if var approval is 0 was rejected
                                         if ($result[0] == 1){
                                             $order_change = Order::approval_order($order->id, $data_info[20]);
-                                            $products_discount = $this->updateQuantity($order->id);
+                                            if ($order_change[0] == 0){
+                                                $products_discount = $this->updateQuantity($order->id);
+                                            }
                                             $order_status = 1;
 
+                                            $info_trans = $insertData[1];
                                             $member = Member::select('user_id','firstname','lastname','email')->where('user_id', $order->user_id)->first();
-                                            $sending = Mail::to($member->email)->send(new SendPurchase($order, $member, $info_trans));
+                                            $sending = Mail::to($member->email)->bcc(env('MAIL_FROM_ADDRESS'))->send(new SendPurchase($order, $member, $info_trans));
 
                                             break;
                                         }else{

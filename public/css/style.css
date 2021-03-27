@@ -1040,6 +1040,10 @@ option.one {color: #c7c7c7;}
 #vouchermessage{
     display: none;
 }
+.button-payment{
+    width:200px; 
+    height:40px;
+}
 /* ---------------------------------------------------------------------------------
    -- resposive design
 ---------------------------------------------------------------------------------- */
@@ -1146,6 +1150,10 @@ option.one {color: #c7c7c7;}
         margin-top: 16px;
         font-size: 12px;
         font-weight: 600;
+    }
+    .button-payment{
+        width:100%; 
+        height:40px;
     }
 
 }

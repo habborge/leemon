@@ -256,12 +256,12 @@
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <div class="row">
-                                                                    <div class="col-8 col-md-8">
+                                                                    <div class="col-7 col-md-7">
                                                                         <div class="row">
                                                                             Subtotal:
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-4 col-md-4">
+                                                                    <div class="col-5 col-md-5">
                                                                         <div class="row float-right">
                                                                             COP$ {{ number_format($subTotal,0) }}
                                                                         </div>
@@ -382,12 +382,12 @@
                                     </div>
                                     <div class="col-12 col-md-12">
                                         <div class="row">
-                                            <div class="col-8 col-md-8">
+                                            <div class="col-7 col-md-7">
                                                 <div class="row">
                                                     Subtotal:
                                                 </div>
                                             </div>
-                                            <div class="col-4 col-md-4">
+                                            <div class="col-5 col-md-5">
                                                 <div class="row float-right">
                                                     COP$ {{ number_format($subTotal, 0) }}
                                                 </div>

@@ -50,11 +50,18 @@ Route::post('/giveaway/registry', 'GiveawayController@savingData');
 // get Confirm from zonaPagos
 Route::get('/secure/methods/zp/response', 'ConfirmController@ConfirmTrans');
 
+// get Confirm from pay-u
+Route::get('/secure/methods/payu/response', 'ConfirmController@ConfirmTransPayU');
+
 // back to commerce from zonaPagos
 Route::get('/secure/methods/zp/back', 'ConfirmController@BackToCommerce');
 
+// back to commerce from pay-U
+Route::get('/secure/methods/payu/back', 'ConfirmController@BackToCommercePayU');
+
 // Download PDF
 Route::get('/legality/payment-result/download-pdf/{response}', 'PdfController@downloadResponseTrans');
+Route::get('/legality/payment-result/downloadPayU-pdf/{response}', 'PdfController@downloadResponsePayU');
 
 //politica de privacidad y tratamiento de datos
 Route::get('/terms/privacy-policy-and-data-processing', function () {
@@ -103,7 +110,7 @@ Route::group([
 
     //------- Payment process ----------------------------------------
     //Route::post('secure/methods/paynow', 'PaymentController@paymentProcess');
-    Route::get('secure/method/payment/now', 'PaymentController@paymentProcess')->name('paymentnow');
+    Route::post('secure/method/payment/now', 'PaymentController@paymentProcess')->name('paymentnow');
 
     //------- Send Email to friend -----------------------------------
     Route::post('send-email-friend', 'SendingEmailController@sendToFriend'); 

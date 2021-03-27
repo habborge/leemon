@@ -176,7 +176,9 @@ class PurchaseControler extends Controller
     //--------------------------------------------------------------------------------------------------------------
     public function methods()
     {
-        
+        $currency = "COP";
+        $method = 0;
+
         if ((Auth::user()) and (session('cart'))){
             
             $answer = 1;
@@ -217,17 +219,40 @@ class PurchaseControler extends Controller
                 if (Auth::user()){
 
                     $id = Auth::user()->id;
-                    $address = Address::where('user_id', $id)->where('default', 1)
+
+                    $member_info = Member::select('members.email', 'members.firstname','members.lastname','members.address', 'members.delivery_address', 'members.phone', 'members.city', 'members.dpt', 'members.country', 'members.n_doc')
+                    ->where('user_id', $id)
+                    ->first();
+
+                    $address = Address::select('addresses.id as addressId', 'addresses.address', 'addresses.zipcode', 'addresses.contact', 'addresses.details', 'c.country_master_name', 'd.department', 'ct.city_d_id', 'ct.dane_d')
                     ->join('countries as c', 'c.country_master_id', 'addresses.country')
                     ->join('departments as d', 'd.code', 'addresses.dpt')
                     ->join('cost_tcc as ct', 'ct.id', 'addresses.city')
-                    ->first();
+                    ->where('user_id', $id)
+                    ->where('default', 1)->first();
+
+                    //bring product array from cart
+                    $valor_almacenado = session('cart');
+                    $new_array = array_values($valor_almacenado);
 
                     if ($totalprice > 150000){
                         $message = "";
                         $deliveryCost = "free";
 
                         session()->put('deliveryCost', $deliveryCost);
+                        
+                        // $signature = md5(env('KEY_PAY')."~".env('MERCHANT')."~".$ref_trans."~".$suma."~".$currency);
+                        $orderStatus = $this->validateOrder($id, $member_info, $method, $totalprice, $address, $new_array);
+
+                        if ($orderStatus[0] == "345"){
+                            return redirect()->back()->withErrors("Un error ha ocurrido!!");
+                        }
+
+                        $firma = md5(env('SECRETPASS')."~".$totalprice."~100498-".$orderStatus[1]); 
+
+                        session()->put('myorder', $orderStatus[1]);
+
+                        $signature = md5(env('KEY_PAY')."~".env('MERCHANT')."~100498-".$orderStatus[1]."~".$totalprice."~".$currency);
 
                         return view('method', [
                             'answer' => $answer,
@@ -237,6 +262,10 @@ class PurchaseControler extends Controller
                             'card' => $card,
                             'message' => $message,
                             'delivery_cost' => $deliveryCost,
+                            'supertotal' => $totalprice,
+                            'firma' => $firma,
+                            'signature' => $signature,
+                            'orderId' => $orderStatus[1]
                         ]);
                     }else if (session()->get('voucher')){
                         $message = "";
@@ -244,6 +273,18 @@ class PurchaseControler extends Controller
 
                         session()->put('deliveryCost', $deliveryCost);
 
+                        
+
+                        $orderStatus = $this->validateOrder($id, $member_info, $method, $totalprice, $address, $new_array);
+
+                        if ($orderStatus[0] == "345"){
+                            return redirect()->back()->withErrors("Un error ha ocurrido!!");
+                        }
+                        session()->put('myorder', $orderStatus[1]);
+
+                        $firma = md5(env('SECRETPASS')."~".$totalprice."~100498-".$orderStatus[1]); 
+                        $signature = md5(env('KEY_PAY')."~".env('MERCHANT')."~100498-".$orderStatus[1]."~".$totalprice."~".$currency);
+
                         return view('method', [
                             'answer' => $answer,
                             'cardexist' => $cardExist,
@@ -252,6 +293,10 @@ class PurchaseControler extends Controller
                             'card' => $card,
                             'message' => $message,
                             'delivery_cost' => $deliveryCost,
+                            'supertotal' => $totalprice,
+                            'firma' => $firma,
+                            'signature' => $signature,
+                            'orderId' => $orderStatus[1]
                         ]);
                     }else{
                         $deliveryCost = "TCC";
@@ -300,6 +345,23 @@ class PurchaseControler extends Controller
 
                                 session()->put('deliveryCost', $deliveryCost);
 
+                                
+
+                                $orderStatus = $this->validateOrder($id, $member_info, $method, $totalprice, $address, $new_array);
+
+                                if ($orderStatus[0] == "345"){
+                                    return redirect()->back()->withErrors("Un error ha ocurrido!!");
+                                }
+
+                                session()->put('myorder', $orderStatus[1]);
+                                
+
+                                $totalprice += $re->consultarliquidacionResult->total->totaldespacho;
+
+                                $totalprice2 = intval($totalprice);
+                                
+                                $firma = md5(env('SECRETPASS')."~".$totalprice2."~100498-".$orderStatus[1]); 
+                                $signature = md5(env('KEY_PAY')."~".env('MERCHANT')."~100498-".$orderStatus[1]."~".$totalprice2."~".$currency);
                                 return view('method', [
                                     'answer' => $answer,
                                     'cardexist' => $cardExist,
@@ -308,6 +370,10 @@ class PurchaseControler extends Controller
                                     'card' => $card,
                                     'message' => $message,
                                     'delivery_cost' => $deliveryCost,
+                                    'supertotal' => $totalprice,
+                                    'firma' => $firma,
+                                    'signature' => $signature,
+                                    'orderId' => $orderStatus[1]
                                 ]);
                             }else{
                                 $message = $re->consultarliquidacionResult->respuesta->mensaje;
@@ -348,6 +414,53 @@ class PurchaseControler extends Controller
         
         
     }
+
+    //--------------------------------------------------------------------------------------------------------------
+    //
+    //--------------------------------------------------------------------------------------------------------------
+        private function validateOrder($id, $member_info, $method, $totalprice, $address, $new_array){
+            //validating if session('codehash') exists in order table 
+            if (Order::where('user_id', $id)->where('code_hash', session('codehash'))->doesntExist()){
+                $new_order = New Order();
+
+                //call function in Order model
+                $rs = $new_order->insert($member_info, $method, $totalprice, $address);
+            
+                if($rs[0]){
+                    //$order_id=$rs->id;
+                    for ($i=0; $i < count($new_array); $i++ ){
+                        $new_details = New Order_detail();
+                        
+                        $ds = $new_details->insert($rs[1], $new_array[$i]);
+                    }
+                    $orderId = $rs[1];
+                    return array("200", $orderId);
+                }else{
+                    return array("345", "Un error ha ocurrido!!");
+                    // redirect()->back()->withErrors("Un error ha ocurrido!!");
+                    // return back()->with('notice', 'Un error ha ocurrido!!');
+                }
+            }else{
+                
+                $order = Order::select('id')->where('user_id', $id)->where('code_hash', session('codehash'))->first();
+                //dd($order, session('codehash'), session('cart'));
+                $orderId = $order->id;
+
+                $order->amount = $totalprice;
+                $order->save();
+
+                $details = Order_detail::where('order_id', $orderId);
+                $details->delete();
+
+                for ($i=0; $i < count($new_array); $i++ ){
+                    $new_details = New Order_detail();
+                    
+                    $ds = $new_details->insert($orderId, $new_array[$i]);
+                }
+
+                return array("200", $orderId);
+            }
+        } 
 
     //--------------------------------------------------------------------------------------------------------------
     //
