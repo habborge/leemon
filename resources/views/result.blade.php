@@ -17,53 +17,57 @@
                 <div class="col-md-12">
                   <div class="row">
                     @foreach ($pro as $product)
-                      <div class="col-md-3">
+                      <div class="col-6 col-md-3">
                         <div class="row">
-                          <div class="card mb-4  shadow-global bg-leemon-pro card-rounded">
+                          <div class="card mb-4  shadow-global bg-leemon-pro">
                             <a href="/product/{{$product->id}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $product->reference }}/{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product2" alt=""></a>
-                            <div class="card-body text-center">
-                                      
-                              <span class="brand-font">{{ucwords($product->brand)}} </span>
-                              <div style="height: 60px"><h6>{{ucwords($product->name)}} </h6></div>
-                              <h6>
-                                @if ($product->prom == 1) 
-                                  <span class="badge badge-warning">Paga 2 Lleva 3</span>
-                                @elseif ($product->prom == 2)
-                                  <span class="badge badge-success">2nd 50% off</span>
-                                @endif
-                              </h6> 
-                              <div class="mb-4"><h6>$ {{number_format($product->price, 0)}} COP</h6></div>
-                                                  <!-- <a href="/product/{{$product->id}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
-                              {{-- <a href="{{ url('add-to-cart/'.$product->id) }}">
-                                <button type="button" class="btn btn-sm btn-leemon-pink">
-                                  <i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito
-                                </button>
-                              </a> --}}
-                              @if (isset(session('cart')[$product->id])) 
-                                @if (($product->quantity - session('cart')[$product->id]["quantity"]) > 0)
-                                  <div id="nodis-button" class="col-xl-auto">
-                                    <div class="row">
-                                      <button id="" class="btn btn-sm btn-leemon-pink update-cart btn-block"  data-id="{{ $product->id }}" data-dif="{{ $product->quantity - session('cart')[$product->id]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
+                            <div class="card-body col-12 col-md-12">
+                              <div class="row justify-content-center text-center">        
+                                <span class="brand-font font-black text-leemon-color">{{ucwords($product->brand)}} </span>
+                                <div class="height-p">
+                                    <h6>{{ucwords($product->name)}} </h6>
+                                </div>
+                                
+                                    @if ($product->prom == 1) 
+                                        <h6><span class="badge badge-warning">Paga 2 Lleva 3</span></h6> 
+                                    @elseif ($product->prom == 2)
+                                        <h6><span class="badge badge-success">2nd 50% off</span></h6> 
+                                    @endif
+                                    <div class="mt-2 mb-1">
+                                      <h6>$ {{number_format($product->price, 0)}} COP </h6>
                                     </div>
-                                  </div>
-                                @else
-                                  <div class="col-md-12">
-                                      No Disponible
-                                  </div>
-                                @endif
-                              @else
-                                  @if ($product->quantity >0)
-                                    <div id="nodis-button" class="col-xl-auto">
-                                      <div class="row">
-                                        <button id="" class="btn btn-sm btn-leemon-pink update-cart btn-block"  data-id="{{ $product->id }}" data-dif="{{ $product->quantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
-                                      </div>
-                                    </div>
-                                  @else
-                                    <div class="col-md-12">
-                                      No Disponible
-                                    </div>
-                                  @endif
-                              @endif 
+                                                        <!-- <a href="/product/{{$product->id}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
+                                    {{-- <a href="{{ url('add-to-cart/'.$product->id) }}">
+                                      <button type="button" class="btn btn-sm btn-leemon-pink">
+                                        <i class="czi-cart font-size-sm mr-1"></i>Agregar al Carrito
+                                      </button>
+                                    </a> --}}
+                                    @if (isset(session('cart')[$product->id])) 
+                                      @if (($product->quantity - session('cart')[$product->id]["quantity"]) > 0)
+                                        <div id="nodis-button" class="col-xl-auto">
+                                          <div class="row">
+                                            <button id="" class="btn btn-sm btn-leemon-pink update-cart btn-block"  data-id="{{ $product->id }}" data-dif="{{ $product->quantity - session('cart')[$product->id]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
+                                          </div>
+                                        </div>
+                                      @else
+                                        <div class="col-md-12">
+                                            No Disponible
+                                        </div>
+                                      @endif
+                                    @else
+                                        @if ($product->quantity >0)
+                                          <div id="nodis-button" class="col-xl-auto">
+                                            <div class="row">
+                                              <button id="" class="btn btn-sm btn-leemon-pink update-cart btn-block"  data-id="{{ $product->id }}" data-dif="{{ $product->quantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
+                                            </div>
+                                          </div>
+                                        @else
+                                          <div class="col-md-12">
+                                            No Disponible
+                                          </div>
+                                        @endif
+                                    @endif 
+                              </div>
                             </div>
                           </div>
                         </div>
