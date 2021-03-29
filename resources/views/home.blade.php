@@ -19,7 +19,7 @@
           <div class="carousel-item active">
             <picture>
               
-              <source media="(max-width: 576px)" srcset="img/SLIDER_mobil_1.webp">
+              <source media="(max-width: 576px)" srcset="img/SLIDER_mobil_1.jpg">
               <source type="image/webp"  srcset="img/SLIDER.webp">
               <img id="slide1" src="img/SLIDER.jpg" class="img-fluid d-block w-100" alt="...">
             </picture>
@@ -27,7 +27,7 @@
           </div>
           <div class="carousel-item">
             <picture>
-                <source media="(max-width: 576px)" srcset="img/SLIDER_mobil_2.webp">
+                <source media="(max-width: 576px)" srcset="img/SLIDER_mobil_2.jpg">
                 <source type="image/webp"  srcset="img/SLIDER-2.webp">
                 <img id="slide2" src="img/SLIDER-2.jpg" class="img-fluid d-block w-100" alt="...">
             </picture>
@@ -35,7 +35,7 @@
           </div>
           <div class="carousel-item">
             <picture>
-                <source media="(max-width: 576px)" srcset="img/SLIDER_mobil_3.webp">
+                <source media="(max-width: 576px)" srcset="img/SLIDER_mobil_3.jpg">
                 <source type="image/webp"  srcset="img/SLIDER-3.webp">
                 <img id="slide3" src="img/SLIDER-3.jpg" class="img-fluid d-block w-100" alt="...">
             </picture>
