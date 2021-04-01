@@ -428,7 +428,7 @@
                 message: "",
                 showPopup: true,
                 showOnIE: false,
-                headerTitle: 'Bienvenido a Leemon!',
+                headerTitle: 'Bienvenido a Leemon! <br>Horario de Lunes a Viernes 8:00am a 7:00pm <br>Sabados 8:00am a 5:00pm',
                 position: 'right',
                 zIndex: 1000
             });
