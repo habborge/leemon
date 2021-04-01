@@ -20,7 +20,7 @@
                       <div class="col-6 col-md-3">
                         <div class="row">
                           <div class="card mb-4  shadow-global bg-leemon-pro">
-                            <a href="/product/{{$product->id}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $product->reference }}/{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product2" alt=""></a>
+                            <a href="/product/{{$product->id}}"><img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $product->reference }}/{{$product->img1}}" class="card-img-top rounded mx-auto d-block img-pro img-product2 img-fluid" alt=""></a>
                             <div class="card-body col-12 col-md-12">
                               <div class="row justify-content-center text-center">        
                                 <span class="brand-font font-black text-leemon-color">{{ucwords($product->brand)}} </span>
@@ -55,7 +55,9 @@
                                         </div>
                                       @else
                                         <div class="col-md-12">
-                                          <button id="" class="btn btn-sm btn-leemon-blue notify-pro btn-block"  data-id="{{ $product->id }}" data-dif="{{ $product->quantity - session('cart')[$product->id]["quantity"] }}"><i class="fa fa-envelope" aria-hidden="true"></i> Notificar</button>
+                                          <div class="row">
+                                            <button id="" class="btn btn-sm btn-leemon-blue notify-pro btn-block"  data-id="{{ $product->id }}" data-dif="{{ $product->quantity - session('cart')[$product->id]["quantity"] }}">Notificar Disponibilidad</button>
+                                          </div>
                                         </div>
                                       @endif
                                     @else
@@ -67,10 +69,12 @@
                                           </div>
                                         @else
                                           <div class="col-md-12">
+                                            <div class="row">
                                             <button id="" class="btn btn-sm btn-leemon-blue notify-pro btn-block"  data-id="{{ $product->id }}" data-dif="{{ $product->quantity }}">Notificar Disponibilidad</button>
-                                            <a id="tooldisp_{{ $product->id }}" data-pro="{{ $product->id }}" class="dispo" style="position: absolute;right: 20px;top: -327px; z-index: 999; cursor:pointer" data-toggle="tooltip" data-placement="top" data-trigger="click" title="En estos momentos el articulo no se encuentra disponible. Si deseas, Leemon Nutrición te podrá avisar apenas esté disponible. Si has iniciado sesión da click en el botón azul de Notificar, sino inicia sesión con tu cuenta para poder registrar tu email.">
+                                            {{-- <a id="tooldisp_{{ $product->id }}" data-pro="{{ $product->id }}" class="dispo" style="position: absolute;right: 20px;top: -327px; z-index: 999; cursor:pointer" data-toggle="tooltip" data-placement="top" data-trigger="click" title="En estos momentos el articulo no se encuentra disponible. Si deseas, Leemon Nutrición te podrá avisar apenas esté disponible. Si has iniciado sesión da click en el botón azul de Notificar, sino inicia sesión con tu cuenta para poder registrar tu email.">
                                               <img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/images/logos/question.png" alt="" width="30px">
-                                            </a>
+                                            </a> --}}
+                                            </div>
                                           </div>
                                         @endif
                                     @endif 
