@@ -286,8 +286,10 @@
 .btn-leemon-blue{
     background-color: #9bbff7 !important;
     border: 0px solid #403d38 !important;
+    font-size: 0.7rem !important;
     color: #fafafa !important;
     border-radius: 10px !important;
+    height: 29px;
 }
 .btn-leemon-blue:hover{
     background-color: #5a7db6 !important;
