@@ -11,8 +11,8 @@ class searchController extends Controller
        
         //$products = Product::where('quantity', '>', 0)->where('name', 'LIKE', "%$request->search%")->orWhere('brand', 'LIKE', "%$request->search%")->orderBy('id', 'desc')->paginate(24);
 
-        $products = Product::where('quantity', '>', 0)
-        ->whereRaw("MATCH(name,brand) AGAINST(? IN BOOLEAN MODE)", array("\"$request->search \"")) 
+        $products = Product::whereRaw("MATCH(name,brand) AGAINST(? IN BOOLEAN MODE)", array("\"$request->search \"")) 
+        ->orderBy('quantity', 'DESC')
         ->paginate(24);
 
         //$brand = Product::select('brand', 'brand_id')->groupBy('brand', 'brand_id')->get();

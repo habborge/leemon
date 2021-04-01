@@ -34,7 +34,11 @@
                                         <h6><span class="badge badge-success">2nd 50% off</span></h6> 
                                     @endif
                                     <div class="mt-2 mb-1">
-                                      <h6>$ {{number_format($product->price, 0)}} COP </h6>
+                                      @if ($product->price > 0)
+                                        <h6>$ {{number_format($product->price, 0)}} COP </h6>
+                                      @else 
+                                        No Disponible
+                                      @endif
                                     </div>
                                                         <!-- <a href="/product/{{$product->id}}"><button type="button" class="btn btn-sm btn-primary">Ver Más</button></a> -->
                                     {{-- <a href="{{ url('add-to-cart/'.$product->id) }}">
@@ -44,26 +48,29 @@
                                     </a> --}}
                                     @if (isset(session('cart')[$product->id])) 
                                       @if (($product->quantity - session('cart')[$product->id]["quantity"]) > 0)
-                                        <div id="nodis-button" class="col-xl-auto">
+                                        <div id="nodis-button" class="col-xl-auto" style="width: 95%;">
                                           <div class="row">
                                             <button id="" class="btn btn-sm btn-leemon-pink update-cart btn-block"  data-id="{{ $product->id }}" data-dif="{{ $product->quantity - session('cart')[$product->id]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
                                           </div>
                                         </div>
                                       @else
                                         <div class="col-md-12">
-                                            No Disponible
+                                          <button id="" class="btn btn-sm btn-leemon-blue notify-pro btn-block"  data-id="{{ $product->id }}" data-dif="{{ $product->quantity - session('cart')[$product->id]["quantity"] }}"><i class="fa fa-envelope" aria-hidden="true"></i> Notificar</button>
                                         </div>
                                       @endif
                                     @else
                                         @if ($product->quantity >0)
-                                          <div id="nodis-button" class="col-xl-auto">
+                                          <div id="nodis-button" class="col-xl-auto"  style="width: 95%;">
                                             <div class="row">
                                               <button id="" class="btn btn-sm btn-leemon-pink update-cart btn-block"  data-id="{{ $product->id }}" data-dif="{{ $product->quantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
                                             </div>
                                           </div>
                                         @else
                                           <div class="col-md-12">
-                                            No Disponible
+                                            <button id="" class="btn btn-sm btn-leemon-blue notify-pro btn-block"  data-id="{{ $product->id }}" data-dif="{{ $product->quantity }}">Notificar Disponibilidad</button>
+                                            <a id="tooldisp_{{ $product->id }}" data-pro="{{ $product->id }}" class="dispo" style="position: absolute;right: 20px;top: -327px; z-index: 999; cursor:pointer" data-toggle="tooltip" data-placement="top" data-trigger="click" title="En estos momentos el articulo no se encuentra disponible. Si deseas, Leemon Nutrición te podrá avisar apenas esté disponible. Si has iniciado sesión da click en el botón azul de Notificar, sino inicia sesión con tu cuenta para poder registrar tu email.">
+                                              <img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/images/logos/question.png" alt="" width="30px">
+                                            </a>
                                           </div>
                                         @endif
                                     @endif 
@@ -179,6 +186,16 @@
             }
         });
       });
+
+      
+
+      
+      $('[data-toggle="tooltip"]').tooltip({
+        animated: 'fade',
+        placement: 'top',
+        trigger: 'click'
+      });
+      
     });
   </script>
 @endsection
