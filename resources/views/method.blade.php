@@ -392,7 +392,7 @@
                                                                      <input name="buyerFullName" type="hidden"  value="{{ $member_info->name." ".$member_info->lastname }}"/>
                                                                      <input name="responseUrl"    type="hidden"  value="{{ env('APP_URL')}}/secure/methods/payu/back" >
                                                                      <input name="confirmationUrl"    type="hidden"  value="{{ env('APP_URL')}}/confirmation.php" >
-                                                                     <input name="Submit" class="btn-leemon-back button-payment"        type="submit"  value="" style=" background-color:transparent; background-image: url({{env('APP_URL')}}/img/boton_payu.jpg); border:none; cursor:pointer; margin-top:0px;
+                                                                     <input name="Submit" class="btn-leemon-back button-payment"        type="submit"  value="" style=" background-color:transparent; background-image: url({{env('APP_URL')}}/img/boton_payu2.jpg); border:none; cursor:pointer; margin-top:0px;
                                                                        margin-botton:0px; !important; clear:0px;" >
                                                                </form>
                                                                
@@ -553,7 +553,7 @@
                                                         <input name="buyerFullName" type="hidden"  value="{{ $member_info->name." ".$member_info->lastname }}"/>
                                                         <input name="responseUrl"    type="hidden"  value="{{ env('APP_URL')}}/secure/methods/payu/back" >
                                                         <input name="confirmationUrl"    type="hidden"  value="{{ env('APP_URL')}}/confirmation.php" >
-                                                        <input name="Submit" class="btn-leemon-back button-payment"        type="submit"  value="" style=" background-color:transparent; background-image: url({{env('APP_URL')}}/img/boton_payu.jpg); border:none; cursor:pointer; margin-top:0px;
+                                                        <input name="Submit" class="btn-leemon-back button-payment"        type="submit"  value="" style=" background-color:transparent; background-image: url({{env('APP_URL')}}/img/boton_payu2.jpg); border:none; cursor:pointer; margin-top:0px;
                                                         margin-botton:0px; !important; clear:0px;" >
                                                    </form>
                                                    
