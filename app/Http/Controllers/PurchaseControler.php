@@ -181,6 +181,16 @@ class PurchaseControler extends Controller
         $method = 0;
 
         if ((Auth::user()) and (session('cart'))){
+
+            if (session('myorder')){
+                $orderid = session()->get('myorder');
+                $orderInfo = Order::find($orderid);
+
+                if (($orderInfo->status == "Approved") or ($orderInfo->status == "Processing")){
+                    session()->forget(['cart', 'myorder', 'codehash']);
+                    return redirect()->route('home');
+                }
+            }
             
             $answer = 1;
             $cardExist = 0;

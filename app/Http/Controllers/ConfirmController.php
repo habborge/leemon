@@ -696,7 +696,7 @@ class ConfirmController extends Controller
 
                 if ($transactionState == 4){
                     $orderIdSession = session()->get('myorder');
-                    session()->forget('cart', 'myorder', 'codehash');
+                    session()->forget(['cart', 'myorder', 'codehash']);
                     $approval = 1;
                     $message = "Su tranacción ha sido aprobada!!";
                 }else if($transactionState == 6){
