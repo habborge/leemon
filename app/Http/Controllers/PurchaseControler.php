@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use SoapClient;
 use App\Department;
+use DateTime;
 
 class PurchaseControler extends Controller
 {
@@ -307,10 +308,12 @@ class PurchaseControler extends Controller
                         // if ($card->count() >0){
                         //     $cardExist = 2;
                         // }
-
+                        $now = new \DateTime();
+                        $today = $now->format('d/m/Y');
+                        
                         $wsdl = "http://clientes.tcc.com.co/preservicios/liquidacionacuerdos.asmx?wsdl";
                         $parameters = [
-                            'Clave' => 'CLIENTETCC608W3A61CJ',
+                            'Clave' => env('TCC_PASS'),
                             'Liquidacion' => [
                                 'tipoenvio' => 2,
                                 'idciudadorigen' => '08001000',
@@ -318,7 +321,7 @@ class PurchaseControler extends Controller
                                 'valormercancia' => $totalprice,
                                 'boomerang' => 0,
                                 'cuenta' => 0,
-                                'fecharemesa' => '05/02-2021',
+                                'fecharemesa' => $today,
                                 'idunidadestrategicanegocio' => 2,
                                 'unidades' => [
                                     'unidad' => [

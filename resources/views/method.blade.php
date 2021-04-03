@@ -395,14 +395,7 @@
                                                                      <input name="Submit" class="btn-leemon-back button-payment"        type="submit"  value="" style=" background-color:transparent; background-image: url({{env('APP_URL')}}/img/boton_payu.jpg); border:none; cursor:pointer; margin-top:0px;
                                                                        margin-botton:0px; !important; clear:0px;" >
                                                                </form>
-                                                               <form method="post" action="{{ route('paymentnow') }}">
-                                                                @csrf
-                                                                <input name="referenceId" type="hidden"  value="100498-{{$orderId}}" >
-                                                                <input name="total"        type="hidden"  value="{{$supertotal}}"   >
-                                                                <input name="sign"     type="hidden"  value="{{$firma}}"  >
-                                                                <input name="Submit" class="btn-leemon-back button-payment mt-1" type="submit"  value="" style=" background-color:transparent; background-image: url({{env('APP_URL')}}/img/boton_pse.jpg); border:none; cursor:pointer; margin-top:0px;
-                                                                   margin-botton:0px; !important; clear:0px;" >
-                                                            </form>
+                                                               
                                                             @endif
                                                         @endguest
                                                     </div>
@@ -563,15 +556,7 @@
                                                         <input name="Submit" class="btn-leemon-back button-payment"        type="submit"  value="" style=" background-color:transparent; background-image: url({{env('APP_URL')}}/img/boton_payu.jpg); border:none; cursor:pointer; margin-top:0px;
                                                         margin-botton:0px; !important; clear:0px;" >
                                                    </form>
-                                                   <form method="post" action="{{ route('paymentnow') }}">
-                                                        @csrf
-                                                        <input name="referenceId" type="hidden"  value="100498-{{$orderId}}" >
-                                                        <input name="total"        type="hidden"  value="{{$supertotal}}"   >
-                                                        <input name="sign"     type="hidden"  value="{{$firma}}"  >
-                                                        <input name="Submit" class="btn-leemon-back button-payment mt-1" type="submit"  value="" style=" background-color:transparent; background-image: url({{env('APP_URL')}}/img/boton_pse.jpg); border:none; cursor:pointer; margin-top:0px;
-                                                           margin-botton:0px; !important; clear:0px;" >
-                                                    </form>
-                                                   {{-- <a href="{{ route('paymentnow') }}"><img class="btn-leemon-back button-payment mt-1" src="{{env('APP_URL')}}/img/boton_pse.jpg" alt=""></a> --}}
+                                                   
                                                     
                                                     @endif
                                                 @endguest
