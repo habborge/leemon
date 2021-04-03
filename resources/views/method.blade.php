@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-
+@php
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Cache-Control: post-check=0, pre-check=0", false);
+    header("Pragma: no-cache");
+@endphp
 <div id="main" class=" clearfix">
     <div class="container litlemargin">
         <div class="col-12 row justify-content-center">
