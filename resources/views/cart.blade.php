@@ -9,7 +9,7 @@
                     <div class="row">
 
                          @if ($answer == 1)
-                            <div class="col-md-12">
+                            <div id="cart_1"  class="col-md-12">
                                 <div class="row">
                                     <div class="card col-md-12 bg-light mb-3 card-rounded">
                                         <div class="card-header row card-round-header"><b>Dirección de Envio</b></div>
@@ -55,8 +55,8 @@
                                 </div>
                              </div>
                         @endif
-
-                        <div class="card col-md-12 card-rounded">
+                        {{--  --}}
+                        <div id="cart_2" class="card col-md-12 card-rounded">
                             <div class="row">
                                 <div class="card-header col-md-12 card-round-header">
                                     <div class="row">
@@ -352,6 +352,23 @@
                             </div>
                             
                         </div>
+                        {{--  --}}
+                        <div id="cart_3"  class="card col-md-12 card-rounded mb-3" style="background-color: #d2fcd0">
+                            
+                            <div class="row">
+                                <div class="card-body card-round-header card-round-footer text-center">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12">
+                                            <h4>Recuerda que por compras iguales o superiores <br> a $150.000 pesos (COP), obtendrás <span class="font-black">envío gratis</span></h4>
+                                        Te faltan solo $<span class="font-black">{{ number_format(150000 - $subTotal,0) }}</span> pesos (COP).  <a href="{{ url('/') }}" class="btn btn-leemon-back">
+                                            Seguir Comprando
+                                        </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{--  --}}
                     </div>
                 </div>
             </div>
