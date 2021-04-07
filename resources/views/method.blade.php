@@ -423,7 +423,7 @@
                                                 @else    
                                                     @if (session('tcc'))
                                                     <span class="font-black">Envíos gratis</span> a nivel nacional por compras desde $150.000 pesos (COP).
-                                                    <h2>Te faltan solo $<span class="font-black">{{ number_format(150000 - ($supertotal - session('tcc')->consultarliquidacion2Result->total->totaldespacho),0) }}</span> pesos.</h2>
+                                                    <h2 class="mt-2">Te faltan solo $<span class="font-black">{{ number_format(150000 - ($supertotal - session('tcc')->consultarliquidacion2Result->total->totaldespacho),0) }}</span> pesos.</h2>
                                                     
                                                     @endif
                                                 @endif
