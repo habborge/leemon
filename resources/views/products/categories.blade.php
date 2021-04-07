@@ -29,7 +29,7 @@
                                                 <div class="card-body col-12 col-md-12">
                                                     <div class="row justify-content-center text-center">
                                                         <span class="brand-font font-black text-leemon-color">{{ucwords($product->brand)}} </span>
-                                                        <div class="height-p">
+                                                        <div class="col-12 height-p">
                                                             <h6>{{ucwords($product->proName)}} </h6>
                                                         </div>
                                                         
@@ -49,7 +49,7 @@
 
                                                         @if (isset(session('cart')[$product->proId])) 
                                                             @if (($product->webquantity - session('cart')[$product->proId]["quantity"]) > 0)
-                                                                <div id="nodis-button" class="col-xl-auto">
+                                                                <div id="nodis-button" class="col-xl-auto" style="width: 95%;">
                                                                     <div class="row">
                                                                     <button id="" class="btn btn-sm btn-leemon-pink update-cart btn-block"  data-id="{{ $product->proId }}" data-dif="{{ $product->webquantity - session('cart')[$product->proId]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
                                                                     </div>

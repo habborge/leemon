@@ -382,7 +382,7 @@ class ProductController extends Controller
 
         $products = Product::select('products.id as proId', 'products.reference','products.name as proName','products.brand','products.description','products.price','products.img1','products.prom','products.quantity as webquantity','products.health_register','products.width','products.length','products.height','products.weight','products.fee')
         ->join('product_categories as pc', 'products.id', 'pc.product_id')
-        ->join('lots as l', 'products.id', 'l.product_id')
+        
         ->where('pc.category_id', $subCategory_id)
         ->orderBy('products.restrictions', 'DESC')
         ->orderBy('name')
@@ -390,7 +390,7 @@ class ProductController extends Controller
 
         $brand = Product::select('brand')
         ->join('product_categories as pc', 'products.id', 'pc.product_id')
-        ->join('lots as l', 'products.id', 'l.product_id')
+        
         ->where('pc.category_id', $subCategory_id)
         ->groupBy('brand')
         ->selectRaw('count(brand) as total_brand, brand')->get();
@@ -454,7 +454,7 @@ class ProductController extends Controller
         //$products = Product::where('subcategory_id', $subCategory_id)->where('brand', $brandName)->orderBy('name')->paginate(24);
         $products = Product::select('products.id as proId', 'products.reference','products.name as proName','products.brand','products.description','products.price','products.img1','products.prom','products.quantity as webquantity','products.health_register','products.width','products.length','products.height','products.weight','products.fee')
         ->join('product_categories as pc', 'products.id', 'pc.product_id')
-        ->join('lots as l', 'products.id', 'l.product_id')
+        //->join('lots as l', 'products.id', 'l.product_id')
         ->where('pc.category_id', $subCategory_id)
         ->where('brand', $brandName)
         ->orderBy('products.restrictions', 'DESC')
@@ -463,7 +463,7 @@ class ProductController extends Controller
 
         $brand = Product::select('brand')
         ->join('product_categories as pc', 'products.id', 'pc.product_id')
-        ->join('lots as l', 'products.id', 'l.product_id')
+        //->join('lots as l', 'products.id', 'l.product_id')
         ->where('pc.category_id', $subCategory_id)
         ->groupBy('brand')
         ->selectRaw('count(brand) as total_brand, brand')->get();
@@ -624,7 +624,7 @@ class ProductController extends Controller
 
         $products = Product::select('products.id as proId', 'products.reference','products.name as proName','products.brand','products.description','products.price','products.img1','products.prom','products.quantity as webquantity','products.health_register','products.width','products.length','products.height','products.weight','products.fee')
         ->join('product_categories as pc', 'products.id', 'pc.product_id')
-        ->join('lots as l', 'products.id', 'l.product_id')
+        //->join('lots as l', 'products.id', 'l.product_id')
         ->where('pc.category_id', $subCategory_id)
         ->orderBy('products.price', $orderPrice)
         ->orderBy('name')
@@ -632,7 +632,7 @@ class ProductController extends Controller
 
         $brand = Product::select('brand')
         ->join('product_categories as pc', 'products.id', 'pc.product_id')
-        ->join('lots as l', 'products.id', 'l.product_id')
+        //->join('lots as l', 'products.id', 'l.product_id')
         ->where('pc.category_id', $subCategory_id)
         ->groupBy('brand')
         ->selectRaw('count(brand) as total_brand, brand')->get();
@@ -671,7 +671,7 @@ class ProductController extends Controller
         //$products = Product::where('subcategory_id', $subCategory_id)->where('brand', $brandName)->orderBy('name')->paginate(24);
         $products = Product::select('products.id as proId', 'products.reference','products.name as proName','products.brand','products.description','products.price','products.img1','products.prom','products.quantity as webquantity','products.health_register','products.width','products.length','products.height','products.weight','products.fee')
         ->join('product_categories as pc', 'products.id', 'pc.product_id')
-        ->join('lots as l', 'products.id', 'l.product_id')
+        //->join('lots as l', 'products.id', 'l.product_id')
         ->where('pc.category_id', $subCategory_id)
         ->where('brand', $brandName)
         ->orderBy('products.price', $orderPrice)
@@ -680,7 +680,7 @@ class ProductController extends Controller
 
         $brand = Product::select('brand')
         ->join('product_categories as pc', 'products.id', 'pc.product_id')
-        ->join('lots as l', 'products.id', 'l.product_id')
+        //->join('lots as l', 'products.id', 'l.product_id')
         ->where('pc.category_id', $subCategory_id)
         ->groupBy('brand')
         ->selectRaw('count(brand) as total_brand, brand')->get();

@@ -6,7 +6,7 @@
     header("Cache-Control: post-check=0, pre-check=0", false);
     header("Pragma: no-cache");
 @endphp
-<div id="main" class=" clearfix">
+<div id="main" class="clearfix body-cart">
     <div class="container litlemargin">
         <div class="col-12 row justify-content-center">
             <div class="md-stepper-horizontal orange">
@@ -44,43 +44,36 @@
                 <div class="primary-content2">
                     <div class="row">
                         @if ($answer == 1)
-                            <div class="col-md-12">
+                            <div id="cart_1" class="col-md-12">
                                 <div class="row">
                                     @if($errors->any())
                                         <div class="col-12 alert alert-danger" role="alert">
                                             {{$errors->first()}}
                                         </div>
                                     @endif
-                                        
-                                            <div class="card col-md-12 card-rounded mb-3">
-                                                <div class="card-header row card-round-header" id="headingOne"> Dirección de Envio</div>
-                                                <div class="row">
-                                                    
-                                                        
-                                                            <div class="card-body card-body-yellow card-round-footer">
-                                                                <h6>{{ ucwords($address->contact) }}</h6>
-                                                                <p class="info-small">
-                                                                    @php
-                                                                        $my_address = str_replace("~", " ", $address->address)
-                                                                    @endphp
-                                                                    {{ $my_address }}, {{ $address->zipcode }} Código Postal<br>
-                                                                    {{ ucwords($address->details) }}<br>
-                                                                    {{ ucwords($address->dane_d) }} - {{ ucwords($address->city_d_id) }} ({{ ucwords($address->department) }}), {{ ucwords($address->country_master_name) }}
-                                                                </p>
-                                                            </div>
-                                                        
-                                                    
-                                                </div>
-                                                    
-                                                
+                                    <div class="card col-md-12 card-rounded mb-3">
+                                        <div class="card-header row card-round-header" id="headingOne"> 
+                                            Dirección de Envio
+                                        </div>
+                                        <div class="row">
+                                            <div class="card-body card-body-yellow card-round-footer">
+                                                <h6>{{ ucwords($address->contact) }}</h6>
+                                                <p class="info-small">
+                                                    @php
+                                                        $my_address = str_replace("~", " ", $address->address)
+                                                    @endphp
+                                                    {{ $my_address }}, {{ $address->zipcode }} Código Postal<br>
+                                                    {{ ucwords($address->details) }}<br>
+                                                    {{ ucwords($address->dane_d) }} - {{ ucwords($address->city_d_id) }} ({{ ucwords($address->department) }}), {{ ucwords($address->country_master_name) }}
+                                                </p>
                                             </div>
-                                        
-                                    
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            
                         @endif
-                        <div class="col-md-12">
+                        {{--  --}}
+                        {{-- <div id="cart_4" class="col-md-12">
                             <div class="row">
                                 <div class="card col-md-12 card-rounded mb-3">
                                     <div class="card-header row card-round-header" id="headingOne"> 
@@ -126,8 +119,11 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card col-md-12 card-rounded">
+                        </div> --}}
+                        {{--  --}}
+
+                        {{--  --}}
+                        <div id="cart_2" class="card col-md-12 card-rounded">
                             <div class="row">
                                 <div class="card-header col-md-12 card-round-header">
                                     <div class="row">
@@ -222,7 +218,7 @@
                                                         
                                                         <div id="subtotal" data-th="Subtotal" class="col-4 col-md-4 text-right py-3">
                                                             <div class="col-md-12">
-                                                                <small><b>A pagar</b> $ {{ number_format(($details['price']) ,0) }}</small>
+                                                                <small>$ {{ number_format(($details['price']) ,0) }}</small>
                                                             </div>
                                                         </div>
                                                         
@@ -282,7 +278,7 @@
                                                                             @else    
                                                                                 @if (session('tcc'))
                                                                                 
-                                                                                    COP $ {{ number_format($supertotal - session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
+                                                                                    COP $ {{ number_format($supertotal - session('tcc')->consultarliquidacion2Result->total->totaldespacho,0) }}
                                                                                 @endif
                                                                             @endif
                                                                             
@@ -323,7 +319,7 @@
                                                                                 @endif
                                                                             @else 
                                                                                 @if (session('tcc'))
-                                                                                    {{ number_format(session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
+                                                                                    {{ number_format(session('tcc')->consultarliquidacion2Result->total->totaldespacho,0) }}
                                                                                 @endif
                                                                             @endif       
                                                                         </div>
@@ -411,6 +407,37 @@
                             </div>
                             
                         </div>
+                        {{--  --}}
+                        <div id="cart_3"  class="card col-md-12 card-rounded mb-3" style="background-color: #d2fcd0">
+                            
+                            <div class="row">
+                                <div class="card-body card-round-header card-round-footer text-center">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12">
+                                            
+                                            
+                                                @if ($delivery_cost == "free")
+                                                    Felicidades has obtenido <br><h2><span class="font-black">Envío Gratis</span></h2> Valor de compra ${{ number_format($supertotal,0) }} pesos.
+                                                @elseif ($delivery_cost == "freeVoucher")
+                                                    COP $ {{ number_format(150000 -$supertotal,0) }}
+                                                @else    
+                                                    @if (session('tcc'))
+                                                    <span class="font-black">Envíos gratis</span> a nivel nacional por compras desde $150.000 pesos (COP).
+                                                    <h2 class="mt-2">Te faltan solo $<span class="font-black">{{ number_format(150000 - ($supertotal - session('tcc')->consultarliquidacion2Result->total->totaldespacho),0) }}</span> pesos.</h2>
+                                                    
+                                                    @endif
+                                                @endif
+                                            
+                                             
+                                            <a href="{{ url('/') }}" class="btn btn-leemon-back">
+                                                Seguir Comprando
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{--  --}}
                     </div>
                 </div>
             </div>
@@ -455,7 +482,7 @@
                                                     @else    
                                                         @if (session('tcc'))
                                                         
-                                                             $ {{ number_format($supertotal - session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
+                                                             $ {{ number_format($supertotal - session('tcc')->consultarliquidacion2Result->total->totaldespacho,0) }}
                                                         @endif
                                                     @endif
                                                 </div>
@@ -495,7 +522,7 @@
                                                         @endif
                                                     @else 
                                                         @if (session('tcc'))
-                                                            {{ number_format(session('tcc')->consultarliquidacionResult->total->totaldespacho,0) }}
+                                                            {{ number_format(session('tcc')->consultarliquidacion2Result->total->totaldespacho,0) }}
                                                         @endif
                                                     @endif  
                                                 </div>
