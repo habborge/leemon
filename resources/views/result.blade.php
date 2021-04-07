@@ -25,7 +25,7 @@
                               <div class="card-body col-12 col-md-12">
                                 <div class="row justify-content-center text-center">        
                                   <span class="brand-font font-black text-leemon-color">{{ucwords($product->brand)}} </span>
-                                  <div class="height-p">
+                                  <div class="col-12 height-p">
                                       <h6>{{ucwords($product->name)}} </h6>
                                   </div>
                                   

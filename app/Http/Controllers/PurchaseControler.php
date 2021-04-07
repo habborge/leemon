@@ -246,7 +246,7 @@ class PurchaseControler extends Controller
                     $valor_almacenado = session('cart');
                     $new_array = array_values($valor_almacenado);
 
-                    if ($totalprice > 150000){
+                    if ($totalprice >= 150000){
                         $message = "";
                         $deliveryCost = "free";
 
@@ -347,11 +347,11 @@ class PurchaseControler extends Controller
                         ];
 
                         $soap = new SoapClient($wsdl);
-                        $re = $soap->__soapCall("ConsultarLiquidacion", array($parameters));
+                        $re = $soap->__soapCall("ConsultarLiquidacion2", array($parameters));
                         //dd($re->consultarliquidacionResult);
 
-                        if ($re->consultarliquidacionResult){
-                            if (!empty($re->consultarliquidacionResult->idliquidacion)){
+                        if ($re->consultarliquidacion2Result){
+                            if (!empty($re->consultarliquidacion2Result->idliquidacion)){
                                 session()->put('tcc', $re); 
                                 $message = "";
                                 $deliveryCost = "payment";
@@ -369,7 +369,7 @@ class PurchaseControler extends Controller
                                 session()->put('myorder', $orderStatus[1]);
                                 
 
-                                $totalprice += $re->consultarliquidacionResult->total->totaldespacho;
+                                $totalprice += $re->consultarliquidacion2Result->total->totaldespacho;
 
                                 $totalprice2 = intval($totalprice);
                                 
@@ -389,7 +389,7 @@ class PurchaseControler extends Controller
                                     'orderId' => $orderStatus[1]
                                 ]);
                             }else{
-                                $message = $re->consultarliquidacionResult->respuesta->mensaje;
+                                $message = $re->consultarliquidacion2Result->respuesta->mensaje;
                                 return redirect()->back()->withErrors([$message]);
                             }
                         }

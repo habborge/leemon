@@ -359,10 +359,14 @@
                                 <div class="card-body card-round-header card-round-footer text-center">
                                     <div class="row">
                                         <div class="col-12 col-md-12">
-                                            <h4>Recuerda que por compras iguales o superiores <br> a $150.000 pesos (COP), obtendrás <span class="font-black">envío gratis</span></h4>
-                                        Te faltan solo $<span class="font-black">{{ number_format(150000 - $subTotal,0) }}</span> pesos (COP).  <a href="{{ url('/') }}" class="btn btn-leemon-back">
-                                            Seguir Comprando
-                                        </a>
+                                            @if ($subTotal >= 150000)
+                                                Felicidades has obtenido <br><h2><span class="font-black">Envío Gratis</span></h2> Valor de compra ${{ number_format($subTotal,0) }} pesos.
+                                            @else
+                                                <span class="font-black">Envíos gratis</span> a nivel nacional por compras desde $150.000 pesos (COP).
+                                                <h2>Te faltan solo $<span class="font-black">{{ number_format(150000 - $subTotal,0) }}</span> pesos.</h2>  
+                                                
+                                            @endif
+                                            <a href="{{ url('/') }}" class="btn btn-leemon-back">Seguir Comprando</a>
                                         </div>
                                     </div>
                                 </div>
