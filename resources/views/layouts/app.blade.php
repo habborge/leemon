@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://leemon.s3.amazonaws.com/development/statics/css/floating-wpp.min.css">
     @yield('custom-css')
+    
 </head>
 <style>
     @font-face {
@@ -438,15 +439,7 @@
     {{-- wahtasapp --}}
     <script type="text/javascript" src="https://leemon.s3.amazonaws.com/development/statics/js/floating-wpp.min.js" defer></script>
     
-    <!-- Global site tag (gtag.js) - Google Ads: 453384377 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-453384377"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'AW-453384377');
-    </script>
+    
     
 </body>
 </html>

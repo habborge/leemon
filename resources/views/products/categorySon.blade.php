@@ -203,6 +203,7 @@
 </div>
 @endsection
 @section('custom-js')
+@include('layouts.analityc')
 <script type="text/javascript">
   $(document).ready(function(){
     $(".update-wishlist").click(function (e) {
@@ -248,6 +249,45 @@
                 }
             }
         });
+    });
+
+    $(".notify-pro").click(async function (e) {
+        var ere = $(this);
+        var pd = ere.attr("data-id");
+        var t = ere.attr("data-t");
+        var email2 = '';
+        var send = 0;
+
+        if(t == 0){
+          const { value: email } = await Swal.fire({
+            title: 'Input email address',
+            input: 'email',
+            inputLabel: 'Your email address',
+            inputPlaceholder: 'Enter your email address'
+          })
+
+          if (email) {
+           email2 = email;
+           send = 1;
+          }
+        }else{
+          send = 1;
+        }
+
+        if (send == 1)
+        $.ajax({
+            url: "/secure/notify/info",
+            method: "post",
+            data: {_token: '{{ csrf_token() }}', id: pd, t: t, email:email2},
+            beforeSend: function(x){
+                ere.before("<div id='loadPro' class='col-12 text-center'><i class='fa fa-refresh fa-spin'></i> Agregando</div>");
+                ere.hide();
+            },
+            success: function (response) {
+                
+            }
+        });
+
     });
   });
 </script>
