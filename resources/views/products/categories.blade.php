@@ -60,11 +60,25 @@
                                                                 </div>
                                                             @endif
                                                         @else
-                                                            <div id="nodis-button" class="col-xl-auto" style="width: 95%;">
+                                                            @if ($product->webquantity >0)
+                                                                <div id="nodis-button" class="col-xl-auto"  style="width: 95%;">
                                                                 <div class="row">
                                                                     <button id="" class="btn btn-sm btn-leemon-pink update-cart btn-block"  data-id="{{ $product->proId }}" data-dif="{{ $product->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
                                                                 </div>
-                                                            </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="col-md-12">
+                                                                    <div class="row">
+                                                                        @guest
+                                                                            <button id="" class="btn btn-sm btn-leemon-blue notify-pro btn-block"  data-id="{{ $product->proId }}" data-t="0">Notificar Disponibilidad</button>
+                                                                        @else
+                                                                            <button id="" class="btn btn-sm btn-leemon-blue notify-pro btn-block"  data-id="{{ $product->proId }}" data-t="1">Notificar Disponibilidad</button>
+                                                                        @endguest
+                                                    
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                           
                                                         @endif 
                                                         @guest
                         
