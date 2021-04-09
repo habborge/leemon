@@ -57,7 +57,12 @@
                                         @else
                                           <div class="col-md-12">
                                             <div class="row">
-                                              <button id="" class="btn btn-sm btn-leemon-blue notify-pro btn-block"  data-id="{{ $product->id }}" data-dif="{{ $product->quantity - session('cart')[$product->id]["quantity"] }}">Notificar Disponibilidad</button>
+                                              @guest
+                                                <button id="" class="btn btn-sm btn-leemon-blue notify-pro btn-block"  data-id="{{ $product->id }}" data-t="0">Notificar Disponibilidad</button>
+                                              @else
+                                                <button id="" class="btn btn-sm btn-leemon-blue notify-pro btn-block"  data-id="{{ $product->id }}" data-t="1">Notificar Disponibilidad</button>
+                                              @endguest
+                                              
                                             </div>
                                           </div>
                                         @endif
@@ -71,7 +76,11 @@
                                           @else
                                             <div class="col-md-12">
                                               <div class="row">
-                                              <button id="" class="btn btn-sm btn-leemon-blue notify-pro btn-block"  data-id="{{ $product->id }}" data-dif="{{ $product->quantity }}">Notificar Disponibilidad</button>
+                                                @guest
+                                                <button id="" class="btn btn-sm btn-leemon-blue notify-pro btn-block"  data-id="{{ $product->id }}" data-t="0">Notificar Disponibilidad</button>
+                                              @else
+                                                <button id="" class="btn btn-sm btn-leemon-blue notify-pro btn-block"  data-id="{{ $product->id }}" data-t="1">Notificar Disponibilidad</button>
+                                              @endguest
                                               {{-- <a id="tooldisp_{{ $product->id }}" data-pro="{{ $product->id }}" class="dispo" style="position: absolute;right: 20px;top: -327px; z-index: 999; cursor:pointer" data-toggle="tooltip" data-placement="top" data-trigger="click" title="En estos momentos el articulo no se encuentra disponible. Si deseas, Leemon Nutrición te podrá avisar apenas esté disponible. Si has iniciado sesión da click en el botón azul de Notificar, sino inicia sesión con tu cuenta para poder registrar tu email.">
                                                 <img src="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/images/logos/question.png" alt="" width="30px">
                                               </a> --}}
@@ -192,8 +201,44 @@
         });
       });
 
-      
+      $(".notify-pro").click(async function (e) {
+        var ere = $(this);
+        var pd = ere.attr("data-id");
+        var t = ere.attr("data-t");
+        var email2 = '';
+        var send = 0;
 
+        if(t == 0){
+          const { value: email } = await Swal.fire({
+            title: 'Input email address',
+            input: 'email',
+            inputLabel: 'Your email address',
+            inputPlaceholder: 'Enter your email address'
+          })
+
+          if (email) {
+           email2 = email;
+           send = 1;
+          }
+        }else{
+          send = 1;
+        }
+
+        if (send == 1)
+        $.ajax({
+          url: "/secure/notify/info",
+          method: "post",
+          data: {_token: '{{ csrf_token() }}', id: pd, t: t, email:email2},
+          beforeSend: function(x){
+            ere.before("<div id='loadPro' class='col-12 text-center'><i class='fa fa-refresh fa-spin'></i> Agregando</div>");
+            ere.hide();
+          },
+          success: function (response) {
+            
+          }
+        });
+
+      });
       
       $('[data-toggle="tooltip"]').tooltip({
         animated: 'fade',

@@ -73,6 +73,9 @@ Route::get('/terms/service-policy-refound-and-return-policy',function () {
     return view('terms.refound');
 });
 
+//notify products
+Route::post('/secure/notify/info', 'NotifyController@NotifyProduct');
+
 Route::group([
     'middleware' => ['auth']
 ], function() {
