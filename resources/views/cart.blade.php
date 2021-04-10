@@ -537,7 +537,6 @@
                 $.ajax({
                     url: "{{ env('APP_URL')}}/remove-from-cart",
                     method: "DELETE",
-                    dataType: 'jsonp',
                     data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id")},
                     success: function (response) {
                         window.location.reload();
