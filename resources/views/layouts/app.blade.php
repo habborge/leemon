@@ -30,7 +30,28 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://leemon.s3.amazonaws.com/development/statics/css/floating-wpp.min.css">
     @yield('custom-css')
-    
+
+    <!-- Global site tag (gtag.js) - Google Ads: 453384377 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-453384377"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'AW-453384377');
+    </script>
+
+    <!-- Hotjar Tracking Code for www.leemon.com.co -->
+    <script>
+        (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:2343173,hjsv:6};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
 </head>
 <style>
     @font-face {
