@@ -619,7 +619,7 @@
 @include('modal.my_methods')
 @endsection
 @section('custom-js')
-@include('layouts.analityc')
+
 <script src="https://www.google.com/recaptcha/api.js?render={{ env('RE_KEY') }}"></script>
 <script>
     grecaptcha.ready(function() {

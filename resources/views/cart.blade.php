@@ -494,7 +494,7 @@
 @include('modal.my_address')
 @endsection
 @section('custom-js')
-@include('layouts.analityc')
+
 <script type="text/javascript">
     $(document).ready(function(){
         $(".update-cart").change(function (e) {

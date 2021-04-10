@@ -203,7 +203,7 @@
 </div>
 @endsection
 @section('custom-js')
-@include('layouts.analityc')
+
 <script type="text/javascript">
   $(document).ready(function(){
     $(".update-wishlist").click(function (e) {

@@ -462,7 +462,7 @@
 </div>
 @endsection
 @section('custom-js')
-@include('layouts.analityc')
+
     @if (env('APP_ENV') == "production")
         <script src="{{ secure_asset('js/xzoom.min.js') }}" defer></script>
     @else
