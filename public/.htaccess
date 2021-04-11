@@ -25,4 +25,9 @@
     RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
     RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
 
+    # This made the trick for me
+    # Remove index.php from the url
+    RewriteCond %{THE_REQUEST} ^GET.*index\.php [NC]
+    RewriteRule (.*?)index\.php/*(.*) /$1$2 [R=301,NE,L]
+
 </IfModule>
