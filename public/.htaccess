@@ -4,6 +4,13 @@
     </IfModule>
 
     RewriteEngine On
+    # Redirect www to ...
+    # RewriteCond %{HTTP_HOST} ^www.leemon.com.co/$ [NC]
+    # RewriteRule ^(.*)$ https://leemon.com.co/$1 [L,R=301]
+
+    RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+    RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+    
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
@@ -18,16 +25,11 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 
-    # Redirect www to ...
-    # RewriteCond %{HTTP_HOST} ^www.leemon.com.co/$ [NC]
-    # RewriteRule ^(.*)$ https://leemon.com.co/$1 [L,R=301]
-
-    RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
-    RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+    
 
     # This made the trick for me
     # Remove index.php from the url
-    RewriteCond %{THE_REQUEST} ^GET.*index\.php [NC]
-    RewriteRule (.*?)index\.php/*(.*) /$1$2 [R=301,NE,L]
+    # RewriteCond %{THE_REQUEST} ^GET.*index\.php [NC]
+    # RewriteRule (.*?)index\.php/*(.*) /$1$2 [R=301,NE,L]
 
 </IfModule>
