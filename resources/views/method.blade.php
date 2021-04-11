@@ -277,8 +277,12 @@
                                                                                 COP $ {{ number_format($supertotal,0) }}
                                                                             @else    
                                                                                 @if (session('tcc'))
-                                                                                
-                                                                                    COP $ {{ number_format($supertotal - session('tcc')->consultarliquidacion2Result->total->totaldespacho,0) }}
+                                                                                    @if (!empty(session('tcc')->consultarliquidacion2Result))
+                                                                                        COP $ {{ number_format($supertotal - session('tcc')->consultarliquidacion2Result->total->totaldespacho,0) }}
+                                                                                    @else
+                                                                                        COP $ {{ number_format($supertotal - session('tcc'),0) }}
+                                                                                    @endif
+                                                                                    
                                                                                 @endif
                                                                             @endif
                                                                             
@@ -319,7 +323,12 @@
                                                                                 @endif
                                                                             @else 
                                                                                 @if (session('tcc'))
-                                                                                    {{ number_format(session('tcc')->consultarliquidacion2Result->total->totaldespacho,0) }}
+                                                                                    @if (!empty(session('tcc')->consultarliquidacion2Result))
+                                                                                        COP $ {{ number_format(session('tcc')->consultarliquidacion2Result->total->totaldespacho,0) }}
+                                                                                    @else
+                                                                                        COP $ {{ number_format(session('tcc'),0) }}
+                                                                                    @endif
+                                                                                    
                                                                                 @endif
                                                                             @endif       
                                                                         </div>
@@ -423,8 +432,13 @@
                                                 @else    
                                                     @if (session('tcc'))
                                                     <span class="font-black">Envíos gratis</span> a nivel nacional por compras desde $150.000 pesos (COP).
-                                                    <h2 class="mt-2">Te faltan solo $<span class="font-black">{{ number_format(150000 - ($supertotal - session('tcc')->consultarliquidacion2Result->total->totaldespacho),0) }}</span> pesos.</h2>
-                                                    
+                                                    <h2 class="mt-2">Te faltan solo $<span class="font-black">
+                                                       
+                                                        @if (!empty(session('tcc')->consultarliquidacion2Result))
+                                                            {{ number_format(150000 - ($supertotal - session('tcc')->consultarliquidacion2Result->total->totaldespacho),0) }}</span> pesos.</h2>
+                                                        @else
+                                                        {{ number_format(150000 - ($supertotal - session('tcc')),0) }}</span> pesos.</h2>
+                                                        @endif
                                                     @endif
                                                 @endif
                                             
@@ -482,7 +496,12 @@
                                                     @else    
                                                         @if (session('tcc'))
                                                         
-                                                             $ {{ number_format($supertotal - session('tcc')->consultarliquidacion2Result->total->totaldespacho,0) }}
+                                                             
+                                                             @if (!empty(session('tcc')->consultarliquidacion2Result))
+                                                                $ {{ number_format($supertotal - session('tcc')->consultarliquidacion2Result->total->totaldespacho,0) }}
+                                                            @else
+                                                                $ {{ number_format($supertotal - session('tcc'),0) }}
+                                                            @endif
                                                         @endif
                                                     @endif
                                                 </div>
@@ -522,7 +541,12 @@
                                                         @endif
                                                     @else 
                                                         @if (session('tcc'))
+                                                            
+                                                            @if (!empty(session('tcc')->consultarliquidacion2Result))
                                                             {{ number_format(session('tcc')->consultarliquidacion2Result->total->totaldespacho,0) }}
+                                                            @else
+                                                            {{ number_format(session('tcc'),0) }}
+                                                            @endif
                                                         @endif
                                                     @endif  
                                                 </div>
