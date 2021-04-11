@@ -235,7 +235,7 @@ class PurchaseControler extends Controller
                     ->where('user_id', $id)
                     ->first();
 
-                    $address = Address::select('addresses.id as addressId', 'addresses.address', 'addresses.zipcode', 'addresses.contact', 'addresses.details', 'c.country_master_name', 'd.department', 'ct.city_d_id', 'ct.dane_d')
+                    $address = Address::select('addresses.id as addressId', 'addresses.address', 'addresses.zipcode', 'addresses.contact', 'addresses.details', 'c.country_master_name', 'd.department', 'ct.city_d_id', 'ct.dane_d', 'ct.cost_pack', 'ct.cost_m_1k', 'ct.cost_m_2k', 'ct.cost_m_3k', 'ct.cost_m_4k', 'ct.cost_m_5k')
                     ->join('countries as c', 'c.country_master_id', 'addresses.country')
                     ->join('departments as d', 'd.code', 'addresses.dpt')
                     ->join('cost_tcc as ct', 'ct.id', 'addresses.city')
@@ -348,7 +348,7 @@ class PurchaseControler extends Controller
 
                         $soap = new SoapClient($wsdl);
                         $re = $soap->__soapCall("ConsultarLiquidacion2", array($parameters));
-                        //dd($re->consultarliquidacionResult);
+                        //dd($re->consultarliquidacion2Result);
 
                         if ($re->consultarliquidacion2Result){
                             if (!empty($re->consultarliquidacion2Result->idliquidacion)){
@@ -389,8 +389,67 @@ class PurchaseControler extends Controller
                                     'orderId' => $orderStatus[1]
                                 ]);
                             }else{
-                                $message = $re->consultarliquidacion2Result->respuesta->mensaje;
-                                return redirect()->back()->withErrors([$message]);
+
+                                if ($weight >= $volweight){
+                                    $cal_weight = $weight;
+                                }else{
+                                    $cal_weight = $volweight;
+                                }
+
+                                if ($cal_weight <= 1){
+                                    $val_k = $address->cost_m_1k;
+                                }else if (($cal_weight > 1) and ($cal_weight <= 2)){
+                                    $val_k = $address->cost_m_2k;
+                                }else if (($cal_weight > 2) and ($cal_weight <= 3)){
+                                    $val_k = $address->cost_m_3k;
+                                }else if (($cal_weight > 3) and ($cal_weight <= 4)){
+                                    $val_k = $address->cost_m_4k;
+                                }else if (($cal_weight > 4) and ($cal_weight <= 5)){
+                                    $val_k = $address->cost_m_5k;
+                                }
+
+                                if (($totalprice * 0.01) > 360){
+                                    $val_1p = $totalprice * 0.01;
+                                }else{
+                                    $val_1p = 360;
+                                }
+                                
+                                $val_delivery = $val_k + $val_1p;
+
+                                session()->put('tcc', $val_delivery);
+                                $message = "";
+                                $deliveryCost = "payment";
+                                session()->put('deliveryCost', $deliveryCost);
+                                // $message = $re->consultarliquidacion2Result->respuesta->mensaje;
+                                // return redirect()->back()->withErrors([$message]);
+                                $orderStatus = $this->validateOrder($id, $member_info, $method, $totalprice, $address, $new_array);
+
+                                if ($orderStatus[0] == "345"){
+                                    return redirect()->back()->withErrors("Un error ha ocurrido!!");
+                                }
+
+                                session()->put('myorder', $orderStatus[1]);
+                                
+
+                                $totalprice += $val_delivery;
+
+                                $totalprice2 = intval($totalprice);
+                                
+                                $firma = md5(env('SECRETPASS')."~".$totalprice2."~100498-".$orderStatus[1]); 
+                                $signature = md5(env('KEY_PAY')."~".env('MERCHANT')."~100498-".$orderStatus[1]."~".$totalprice2."~".$currency);
+                                return view('method', [
+                                    'answer' => $answer,
+                                    'cardexist' => $cardExist,
+                                    'member_info' => $member_info,
+                                    'address' => $address,
+                                    'card' => $card,
+                                    'message' => $message,
+                                    'delivery_cost' => $deliveryCost,
+                                    'supertotal' => $totalprice,
+                                    'firma' => $firma,
+                                    'signature' => $signature,
+                                    'orderId' => $orderStatus[1]
+                                ]);
                             }
                         }
                     }

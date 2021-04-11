@@ -33,7 +33,12 @@ class Order extends Model
                 $delivery_cost = 0;
             }else{
                 if (session()->get('tcc')){
-                    $delivery_cost = session('tcc')->consultarliquidacion2Result->total->totaldespacho;
+                    if(!empty(session('tcc')->consultarliquidacion2Result)){
+                        $delivery_cost = session('tcc')->consultarliquidacion2Result->total->totaldespacho;
+                    }else{
+                        $delivery_cost = session('tcc');
+                    }
+                   
                 }
             }
         }
