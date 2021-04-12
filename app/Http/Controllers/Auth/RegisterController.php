@@ -71,9 +71,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $firstname = strtolower($data['name']);
+        $lastname = strtolower($data['lastname']);
+
+        $email = strtolower($data['email']);
+        
         $user = User::create([
-            'name' => $data['name']." ".$data['lastname'],
-            'email' => $data['email'],
+            'name' => $firstname." ".$lastname,
+            'email' => $email,
             'password' => Hash::make($data['password']),
             'code_verify' => null,
             'email_verified' => 0
@@ -83,9 +88,9 @@ class RegisterController extends Controller
 
         $member = Member::create([
             'user_id' => $user->id, 
-            'email' => $data['email'], 
-            'firstname' => $data['name'],
-            'lastname' => $data['lastname'],
+            'email' => $email, 
+            'firstname' => $firstname,
+            'lastname' => $lastname,
             'n_doc' => $data['ndoc'],
             'birthday' => $newDate,
             'phone' => "+".$data['callingcode']."-".$data['phone'],
