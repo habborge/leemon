@@ -70,7 +70,7 @@
           @foreach ($menus as $key => $item)
             @if ($item['father_id'] == 0)
                 
-                    <a class="link-a" href="#!">{{ $item['name'] }}</a><br>
+                    <a class="link-a" href="/categories/{{ str_replace(" ", "-",$item['name']) }}/{{ $item['id'] }}">{{ $item['name'] }}</a><br>
                 
             @endif
           @endforeach
