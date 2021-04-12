@@ -74,6 +74,11 @@ Route::get('/terms/service-policy-refound-and-return-policy',function () {
     return view('terms.refound');
 });
 
+// Preguntas frecuentes
+Route::get('/terms/faq', function (){
+    return view('terms.faq');
+});
+
 //notify products
 Route::post('/secure/notify/info', 'NotifyController@NotifyProduct');
 
