@@ -394,7 +394,7 @@
                                                                      <input name="taxReturnBase" type="hidden"  value="0" >
                                                                      <input name="currency"      type="hidden"  value="COP" >
                                                                      <input name="signature"     type="hidden"  value="{{$signature}}"  >
-                                                                     <!--<input name="test"          type="hidden"  value="0" >-->
+                                                                     {{-- <input name="test"          type="hidden"  value="1" > --}}
                                                                      <input name="buyerEmail"    type="hidden"  value="{{ $member_info->email }}" >
                                                                      <input name="lng" 		  type="hidden"  value="es"/>
                                                                      <input name="telephone"     type="hidden"  value="{{ $member_info->phone }}"/>
@@ -601,7 +601,7 @@
                                                         <input name="taxReturnBase" type="hidden"  value="0" >
                                                         <input name="currency"      type="hidden"  value="COP" >
                                                         <input name="signature"     type="hidden"  value="{{$signature}}"  >
-                                                        <!--<input name="test"          type="hidden"  value="0" >-->
+                                                        {{-- <input name="test"          type="hidden"  value="1" > --}}
                                                         <input name="buyerEmail"    type="hidden"  value="{{ $member_info->email }}" >
                                                         <input name="lng" 		  type="hidden"  value="es"/>
                                                         <input name="telephone"     type="hidden"  value="{{ $member_info->phone }}"/>
