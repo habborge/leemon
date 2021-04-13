@@ -99,4 +99,19 @@ class searchController extends Controller
         ]);
 
     }
+
+    public function searchautocomplete(Request $request){
+
+       
+        $products = Product::where('name', '=', "$request->product")
+        ->orWhere('name', 'LIKE', "%$request->product%")
+        ->orderByRaw("CASE WHEN name = '".$request->product."' THEN 10
+        WHEN name LIKE '".$request->product."%' THEN 8
+        WHEN name LIKE '%".$request->product."%' THEN 6
+        END DESC")
+        ->orderBy('name', 'asc')
+        ->orderBy('quantity', 'desc')->get(array('name'));
+
+        return response()->json($products);
+    }
 }

@@ -6,8 +6,11 @@
         <div class="row">
             <div class="col-12 col-md-12">
                 <div class="alert @if ($approval == 1) alert-success @else alert-danger @endif card-rounded" role="alert" style="width: 100%">
-                    <h4 class="alert-heading">@if ($approval == 1) Transacción Aprobada @else Atención @endif</h4>
+                    <h4 class="alert-heading">@if ($approval == 1) ¡Transacción Aprobada!  @else Atención @endif</h4>
                     <p>{{ $message }}</p>
+                    @if ($approval == 1)
+                        <p>Leemon le ha enviado un correo electronico. Por favor revisar la bandeja de entrada o la bandeja de correo no deseado</p>
+                    @endif
                     <hr>
                     <p class="mb-0">
                         <a href="{{ url('/') }}" class="btn btn-leemon-back">

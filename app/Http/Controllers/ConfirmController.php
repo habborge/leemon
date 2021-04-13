@@ -690,6 +690,7 @@ class ConfirmController extends Controller
             //ApiKey~merchantId~referenceCode~new_value~currency~transactionState
             //$signature2 = md5($API_key."~".$merchantId."~".$referenceCode."~".$amount2."~".$currency."~".$transactionState);
             $signature2 = md5(env('KEY_PAY')."~".env('MERCHANT')."~".$referenceCode."~".$amount2."~".$currency."~".$transactionState);
+            
             if ($signature == $signature2){
                 //ESTADOD E LA TRANSACCION 4 es APPROVED - 6 es RECHAZADA o DECLINADA - 5 es EXPIRADA - 7 es PENDING - 104 es ERROR
 
@@ -745,7 +746,7 @@ class ConfirmController extends Controller
                             $message = "Transacción rechazada por sospecha de fraude!!";
                             break;
                         case '9995':
-                            $message = "Certificado digital no encontrado!!";
+                            $message = "Certificado digital no encontrado!! Comunicate con servicioalcliente@leemon.com.co";
                             break;
                         case '9996':
                             $message = "Error tratando de cominicarse con el banco!!";
@@ -762,13 +763,13 @@ class ConfirmController extends Controller
                 
                 }else if($transactionState == 104){
                     $approval = 0;
-                    $message = "Se presentó un Error en la Trasacción!!";
+                    $message = "Se presentó un Error en la Trasacción en la plataforma de Pay-U!!";
                     
                 }
             
             }else{
                 $approval = 0;
-                $message = "Se presentó Poblemas en la Transacción";	
+                $message = "Se presentó Problemas en la Transacción";	
             }
 
             $member = Member::select('firstname', 'lastname', 'email', 'n_doc')->where('user_id', $user_id)->first();
