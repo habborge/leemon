@@ -394,10 +394,8 @@
 			<img src="/img/preloader.gif" id="img_loading" alt="">
 		</div>
             @yield('content')
-            {{ date("H:i:s") }}
-            {{-- <a href="https://wa.me/573044144071/?text=tu%20texto%20personalizado" target="_blank">
-                <img src="https://leemon.s3.amazonaws.com/development/images/logos/logo-wasap.png" width="50" height="50">
-             </a> --}}
+            
+            
             @if (date("l") != "SUNDAY")
                 @if (date("l") == "SATURDAY")
                     @if ((date("H:i:s") >= "08:00:00") and (date("H:i:s") <= "17:00:00"))
