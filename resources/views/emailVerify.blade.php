@@ -50,7 +50,7 @@
                                     <div class="row">
                                         <div class="col-md-12 text-center">
                                             <div class="">
-                                                <p><h5>Por favor escriba los 7-digitos del código verificación enviados al email registrado en Leemon:</h5><h6> (Queremos asegurarnos de que es usted antes de seguir navegando en Leemon)</h6></p>
+                                                <p><h5>Por favor escriba los 7-digitos del código verificación enviados al email registrado en Leemon:</h5><h6> Por favor revise la bandeja de entrada o la bandeja de correo no deseado. (Queremos asegurarnos de que es usted antes de seguir navegando en Leemon)</h6></p>
                                             </div>
                                         </div>
                                         <div class="col-md-12">

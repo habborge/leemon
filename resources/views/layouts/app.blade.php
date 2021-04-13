@@ -394,10 +394,19 @@
 			<img src="/img/preloader.gif" id="img_loading" alt="">
 		</div>
             @yield('content')
-            {{-- <a href="https://wa.me/573044144071/?text=tu%20texto%20personalizado" target="_blank">
-                <img src="https://leemon.s3.amazonaws.com/development/images/logos/logo-wasap.png" width="50" height="50">
-             </a> --}}
-             <div id="myDiv"></div>
+            
+            
+            @if (date("l") != "SUNDAY")
+                @if (date("l") == "SATURDAY")
+                    @if ((date("H:i:s") >= "08:00:00") and (date("H:i:s") <= "17:00:00"))
+                        <div id="myDiv"></div>
+                    @endif
+                @else
+                    @if ((date("H:i:s") >= "08:00:00") and (date("H:i:s") <= "19:00:00"))
+                        <div id="myDiv"></div>
+                    @endif
+                @endif
+            @endif
     </div>
     
     <link href="{{ asset('js/toastr/toastr.min.css') }}" rel="stylesheet">
@@ -428,22 +437,59 @@
             
             
             // Constructing the suggestion engine
-            var list = new Bloodhound({
-                datumTokenizer: Bloodhound.tokenizers.whitespace,
+            // var list = new Bloodhound({
+            //     datumTokenizer: Bloodhound.tokenizers.whitespace,
+            //     queryTokenizer: Bloodhound.tokenizers.whitespace,
+            //     // url points to a json file that contains an array of country names, see
+            //     // https://github.com/twitter/typeahead.js/blob/gh-pages/data/countries.json
+            //     prefetch: '../js/listpro.json'
+            // });
+
+            // // passing in `null` for the `options` arguments will result in the default
+            // // options being used
+            // $('#prefetch .typeahead').typeahead(null, {
+            //     name: 'list',
+            //     source: list,
+            //     limit: 10
+            // });
+
+            var products = new Bloodhound({
+                datumTokenizer: function(datum) {
+                    return Bloodhound.tokenizers.whitespace(datum.value);
+                },
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
-                // url points to a json file that contains an array of country names, see
-                // https://github.com/twitter/typeahead.js/blob/gh-pages/data/countries.json
-                prefetch: '../js/listpro.json'
+                prefetch: { 
+                    url: "/",
+                    transform: function(response) {
+                            return $.map(response, function(product) {
+                                return { value: restaurant.name };
+                            });
+                        }
+                },
+                remote: {
+                    wildcard: '%QUERY',
+                    url: "/searching/result/%QUERY",
+                        transform: function(response) {
+                            return $.map(response, function(product) {
+                                return { value: product.name };
+                            });
+                        }
+                }
             });
 
-            // passing in `null` for the `options` arguments will result in the default
-            // options being used
-            $('#prefetch .typeahead').typeahead(null, {
-                name: 'list',
-                source: list,
-                limit: 10
-            });
-        
+            $('.typeahead').typeahead({
+                    hint: false,
+                    highlight: true,
+                    minLength: 2,
+                },
+                {
+                    name: 'products',
+                    display: 'value',
+                    source: products,  
+                    limit: 10
+                }
+            );
+
             $('#myDiv').floatingWhatsApp({
                 phone: '573022058199',
                 popupMessage: 'Hola, ¿Cómo podemos ayudarte?',

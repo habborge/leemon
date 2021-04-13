@@ -30,7 +30,10 @@ Route::patch('update-cart', 'ProductController@update');
 Route::post('add-to-cart-quantity', 'ProductController@addToCartQuantity');
 
 Route::delete('remove-from-cart', 'ProductController@remove');
+
 Route::get('/result', 'searchController@searchProducts');
+Route::get('/searching/result/{product}', 'searchController@searchautocomplete')->name('autocomplete');
+
 Route::get('/result/brand/{brand}/{searching}', 'searchController@searchProductsByBrand');
 Route::get('/products/{gfather}/{father}/{son}', 'ProductController@groupSon');
 Route::get('/products/{gfather}/{father}/{son}/{brand}', 'ProductController@groupByBand');
