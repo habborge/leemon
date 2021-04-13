@@ -31,14 +31,14 @@
     <link rel="stylesheet" href="https://leemon.s3.amazonaws.com/development/statics/css/floating-wpp.min.css">
     @yield('custom-css')
 
-    <!-- Global site tag (gtag.js) - Google Ads: 453384377 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-453384377"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5EXGMB85XT"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-        gtag('config', 'AW-453384377');
+    gtag('config', 'G-5EXGMB85XT');
     </script>
 
     <!-- Hotjar Tracking Code for https://www.leemon.com.co -->
