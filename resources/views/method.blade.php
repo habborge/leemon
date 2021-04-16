@@ -128,10 +128,10 @@
                                 <div class="card-header col-md-12 card-round-header">
                                     <div class="row">
                                         <div class="col-md-8">
-                                            Articulos
+                                            <b>Mi Carrito</b>
                                         </div>
                                         <div id="purchase-details" class="col-md-4 text-center">
-                                            Precio
+                                            <b>Precio</b>
                                         </div>
                                     </div>
                                     
@@ -426,7 +426,7 @@
                                             
                                             
                                                 @if ($delivery_cost == "free")
-                                                    Felicidades has obtenido <br><h2><span class="font-black">Envío Gratis</span></h2> Valor de compra ${{ number_format($supertotal,0) }} pesos.
+                                                <span class="font-black">¡Felicidades!</span> has obtenido <br><h2><span class="font-black">Envío Gratis</span></h2> Valor de compra ${{ number_format($supertotal,0) }} pesos.
                                                 @elseif ($delivery_cost == "freeVoucher")
                                                     COP $ {{ number_format(150000 -$supertotal,0) }}
                                                 @else    
@@ -440,12 +440,13 @@
                                                         {{ number_format(150000 - ($supertotal - session('tcc')),0) }}</span> pesos.</h2>
                                                         @endif
                                                     @endif
+                                                    <a href="{{ url('/') }}" class="btn btn-leemon-back">
+                                                        Seguir Comprando
+                                                    </a>
                                                 @endif
                                             
                                              
-                                            <a href="{{ url('/') }}" class="btn btn-leemon-back">
-                                                Seguir Comprando
-                                            </a>
+                                            
                                         </div>
                                     </div>
                                 </div>
