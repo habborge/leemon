@@ -287,7 +287,7 @@ class ConfirmController extends Controller
 
                                             $info_trans = $insertData[1];
                                             $member = Member::select('user_id','firstname','lastname','email')->where('user_id', $order->user_id)->first();
-                                            $sending = Mail::to($member->email)->send(new SendPurchase($order, $member, $info_trans));
+                                            $sending = Mail::to($member->email)->bcc(env('MAIL_BCC_ADDRESS'))->send(new SendPurchase($order, $member, $info_trans));
                                             break;
                                         }else{
                                             //$order_change = Order::reject_order($order->id);
@@ -609,7 +609,7 @@ class ConfirmController extends Controller
 
                         $info_trans = $request;
                         $member = Member::select('user_id','firstname','lastname','email')->where('user_id', $order_change[1]->user_id)->first();
-                        $sending = Mail::to($member->email)->send(new SendPurchasePayU($order_change[1], $member, $info_trans));
+                        $sending = Mail::to($member->email)->bcc(env('MAIL_BCC_ADDRESS'))->send(new SendPurchasePayU($order_change[1], $member, $info_trans));
 
 
                     }else{

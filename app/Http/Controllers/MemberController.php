@@ -50,7 +50,7 @@ class MemberController extends Controller
                     $user->code_verify = $random;
                     $user->email_send_at = $today;
                     $user->save();
-                    $sending = Mail::to($userEmail)->send(new VerifyEmail($random));
+                    $sending = Mail::to($userEmail)->bcc(env('MAIL_FROM_ADDRESS'))->send(new VerifyEmail($random));
 
                 }
                 
