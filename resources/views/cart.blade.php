@@ -61,7 +61,7 @@
                                 <div class="card-header col-md-12 card-round-header">
                                     <div class="row">
                                         <div class="col-md-8 ">
-                                            <b>Articulos</b>
+                                            <b>Mi Carrito</b>
                                         </div>
                                         <div id="purchase-details" class="col-md-4 text-center">
                                             <b>Precio</b>
@@ -208,7 +208,7 @@
                                                                 @else
                                                                     
                                                                 @endif
-                                                                    <small>A pagar $ {{ number_format(($details['price'] * $nq) - $half - $discount,0) }}</small>
+                                                                    
                                                             </div>
                                                         </div>
                                                         
@@ -341,7 +341,7 @@
                                                     @if ($answer == 0)
                                                         <a href="{{ url('purchase') }}" class="btn btn-leemon-info btn-width">Datos de Envío</a>
                                                     @elseif ($answer == 1)
-                                                        <a href="{{ url('methods') }}" class="btn btn-leemon-method btn-width">Resumen de Compra</a>
+                                                        <a href="{{ url('methods') }}" class="btn btn-leemon-method btn-width">Ir a Pagar</a>
                                                     @endif
                                                 @endguest
                                             </div>
@@ -360,13 +360,13 @@
                                     <div class="row">
                                         <div class="col-12 col-md-12">
                                             @if ($subTotal >= 150000)
-                                                Felicidades has obtenido <br><h2><span class="font-black">Envío Gratis</span></h2> Valor de compra ${{ number_format($subTotal,0) }} pesos.
+                                            <span class="font-black">¡Felicidades!</span> has obtenido <br><h2><span class="font-black">Envío Gratis</span></h2> Valor de compra ${{ number_format($subTotal,0) }} pesos.
                                             @else
                                                 <span class="font-black">Envíos gratis</span> a nivel nacional por compras desde $150.000 pesos (COP).
                                                 <h2 class="mt-2">Te faltan solo $<span class="font-black">{{ number_format(150000 - $subTotal,0) }}</span> pesos.</h2>  
-                                                
+                                                <a href="{{ url('/') }}" class="btn btn-leemon-back">Seguir Comprando</a>
                                             @endif
-                                            <a href="{{ url('/') }}" class="btn btn-leemon-back">Seguir Comprando</a>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -474,7 +474,7 @@
                                                 @if ($answer == 0)
                                                     <a href="{{ url('purchase') }}" class="btn btn-leemon-info btn-block">Datos de Envío</a>
                                                 @elseif ($answer == 1)
-                                                    <a href="{{ url('methods') }}" class="btn btn-leemon-method btn-block">Resumen de Compra</a>
+                                                    <a href="{{ url('methods') }}" class="btn btn-leemon-method btn-block">Ir a Pagar</a>
                                                 @endif
                                             @endguest
                                         </div>
