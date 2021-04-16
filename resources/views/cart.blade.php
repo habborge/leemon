@@ -164,7 +164,12 @@
                                                                                                 <div class="input-group-prepend">
                                                                                                   <span class="input-group-text" id="inputGroup-sizing-sm">Cant:</span>
                                                                                                 </div>
-                                                                                                <input class="form-control update-cart" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  data-id="{{ $id }}"  id="Quantity_{{$id}}" type="number" value="{{ $details['quantity'] }}" max="{{ $details['maxqua'] }}">
+                                                                                                <select id="Quantity_{{$id}}" name="" id="" class="form-control update-cart" data-id="{{ $id }}">
+                                                                                                    @for ($i = 1; $i <= $details['maxqua']; $i++)
+                                                                                                    <option value="{{$i}}" @if($i == $details['quantity']) selected @endif>{{ $i }}</option>
+                                                                                                    @endfor
+                                                                                                </select>
+                                                                                                {{--<input class="form-control update-cart" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  data-id="{{ $id }}"  id="Quantity_{{$id}}" type="number" value="{{ $details['quantity'] }}" max="{{ $details['maxqua'] }}">--}}
                                                                                               </div>
                                                                                             
                                                                                             
@@ -502,7 +507,7 @@
             
             var ele = $(this);
             var q = $("#Quantity_" + ele.attr("data-id")).val();
-
+    
             
             $.ajax({
                 url: "{{ env('APP_URL')}}/update-cart",
