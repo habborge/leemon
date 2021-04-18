@@ -156,7 +156,7 @@
                                                                     <br>
                                                                     <div id="cart_2" class="col-md-12">
                                                                         <div class="row">
-                                                                            <div class="col-8 col-md-12">
+                                                                            <div class="col-12 col-md-12">
                                                                                 <div class="row">
                                                                                     <div class="col-9 col-md-4 input-group" data-pr="Quantity">
                                                                                         <div class="row">
@@ -513,6 +513,9 @@
                 url: "{{ env('APP_URL')}}/update-cart",
                 method: "patch",
                 data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id"), quantity: q},
+                beforeSend: function(x){
+                $('#loading_web').show();
+                },
                 success: function (response) {
                     window.location.reload();
                 }

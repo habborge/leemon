@@ -131,7 +131,7 @@
                                             @if (($prod_info->webquantity - session('cart')[$prod_info->id]["quantity"]) > 0)
                                                 <div class="qua col-md-3 mb-3">
                                                     <span id="cant">
-                                                        <input class="quantity" type="number" min="1" max="{{$prod_info->webquantity - session('cart')[$prod_info->id]["quantity"] }}" step="1" value="1">
+                                                        <input class="quantity" type="number" min="1" max="{{$prod_info->webquantity - session('cart')[$prod_info->id]["quantity"] }}" step="1" value="1" readonly>
                                                     </span>
                                                 </div>
                                             @else
@@ -143,7 +143,7 @@
                                         @else
                                             <div class="qua col-xl-3 mb-3">
                                                 <span id="cant">
-                                                    <input class="quantity" type="number" min="1" max="{{ $prod_info->webquantity }}" step="1" value="1">
+                                                    <input class="quantity" type="number" min="1" max="{{ $prod_info->webquantity }}" step="1" value="1" readonly>
                                                 </span>
                                             </div>
                                         @endif
@@ -172,7 +172,7 @@
                                                 <div id="nodis-button" class="col-xl-auto">
                                                     <div class="row">
                                                         <div class="col-md-12">
-                                                            <button id="" class="btn btn-leemon-pink update-cart btn-width"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity - session('cart')[$prod_info->id]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</button>
+                                                            <button id="" class="btn btn-leemon-pink update-cart btn-width" data-cart="1" data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity - session('cart')[$prod_info->id]["quantity"] }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</button>
                                                         </div>
                                                     </div>
                                                     
@@ -504,6 +504,7 @@
             var ele = $(this);
             var option = ele.attr("data-cart");
             var diff = ele.attr("data-dif");
+            alert(option);
             if (option == 1){
                 var dataQuant = ele.parents("div").find(".quantity").val();
             }else{
@@ -521,31 +522,34 @@
                 },
                 success: function (response) {
                     // window.location.reload();
-                    $('#litlecart').load(location.href + " #litlecart");
-                    toastr.success("Ha agregado un nuevo articulo al carrito!!", "Articulo Agregado");
-                    ele.show();
-                    $("#loadPro").remove();
-                    //alert(diff - dataQuant);
-                    if (diff - dataQuant < 1){
-                        if (option == 1){
-                            $("#cant").hide();
-                            $("#nodis-button").hide();
-                            $("#nodis").show();
+                    if (response.status ==200){
+                        $('#litlecart').load(location.href + " #litlecart");
+                        toastr.success("Ha agregado un nuevo articulo al carrito!!", "Articulo Agregado");
+                        ele.show();
+                        $("#loadPro").remove();
+                        //alert(diff - dataQuant);
+                        if (diff - dataQuant < 1){
+                            if (option == 1){
+                                $("#cant").hide();
+                                $("#nodis-button").hide();
+                                $("#nodis").show();
+                            }else{
+                                ele.hide();
+                                ele.before("<div class='col-md-12'>No Disponible</div>");
+                            }
                         }else{
-                            ele.hide();
-                            ele.before("<div class='col-md-12'>No Disponible</div>");
+                            
+                            ele.attr("data-dif", diff - dataQuant);
+                            if (option == 1){
+                                ele.parents("div").find(".quantity").attr('max', diff - dataQuant);
+                                ele.parents("div").find(".quantity").val(1);
+                            }
                         }
                     }else{
-                        
-                        ele.attr("data-dif", diff - dataQuant);
-                        if (option == 1){
-                            ele.parents("div").find(".quantity").attr('max', diff - dataQuant);
-                            ele.parents("div").find(".quantity").val(1);
-                        }
+                        ele.show();
+                        $("#loadPro").remove();
+                        toastr.error(response.info);
                     }
-                    
-                    
-                    
                 },
                 error: function (jqXHR, textStatus, errorThrown) { 
                      
