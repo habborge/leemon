@@ -10,6 +10,24 @@
     @endif
 @endsection
 @section('content')
+<!-- Twitter Card data -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@leemon_market">
+<meta name="twitter:title" content="Leemon">
+<meta name="twitter:description" content="{{ $prod_info->name }}">
+<meta name="twitter:creator" content="@leemon_market">
+
+<!-- Twitter Summary card images. Igual o superar los 200x200px -->
+<meta name="twitter:image" content="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}">
+
+<!-- Open Graph data -->
+<meta property="og:title" content="Leemon" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="{{ url()->full() }}" />
+<meta property="og:image" content="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}" />
+<meta property="og:description" content="Descripcion" />
+<meta property="og:site_name" content="Leemon.com.co" />
+
 <div class="tabs2">
     <div class="container">
         <div class="row">
