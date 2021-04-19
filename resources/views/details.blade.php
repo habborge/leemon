@@ -16,7 +16,7 @@
     <meta property="og:type" content="article" />
     <meta property="og:url" content="{{ url()->full() }}" />
     <meta property="og:image" content="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}" />
-    <meta property="og:description" content="Descripcion" />
+    <meta property="og:description" content="{{ $prod_info->name }}" />
     <meta property="og:site_name" content="Leemon.com.co" />
     <title>{{ config('app.name', 'Leemon') }}</title>
     <link rel="stylesheet" href="../css/owl.carousel.min.css">
