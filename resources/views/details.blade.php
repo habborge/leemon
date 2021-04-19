@@ -5,7 +5,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@leemon_market">
     <meta name="twitter:title" content="Leemon">
-    <meta name="twitter:description" content="{{ $prod_info->name }}">
+    <meta property="twitter:description" content="{{ $prod_info->name }}">
     <meta name="twitter:creator" content="@leemon_market">
     
     <!-- Twitter Summary card images. Igual o superar los 200x200px -->
@@ -18,7 +18,7 @@
     <meta property="og:image" content="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}" />
     <meta property="og:description" content="Descripcion" />
     <meta property="og:site_name" content="Leemon.com.co" />
- 
+    <title>{{ config('app.name', 'Leemon') }}</title>
     <link rel="stylesheet" href="../css/owl.carousel.min.css">
     <link rel="stylesheet" href="../css/owl.theme.default.min.css">
     <link rel="stylesheet" href="../css/buttonquantity.css">
