@@ -18,8 +18,8 @@
     <meta property="og:image" content="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}" />
     <meta property="og:image:url" content="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}" />
     <meta property="og:image:width" content="200">
-<meta property="og:image:height" content="200">
-<meta property="og:image:type" content="image/jpeg">
+||||<meta property="og:image:height" content="200">
+||||<meta property="og:image:type" content="image/png">
     <meta property="og:description" content="{{ $prod_info->name }}" />
     <meta property="og:site_name" content="Leemon.com.co" />
     <title>{{ config('app.name', 'Leemon') }}</title>
