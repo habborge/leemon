@@ -10,7 +10,7 @@
     
     <!-- Twitter Summary card images. Igual o superar los 200x200px -->
     <meta name="twitter:image" content="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}">
-    
+    <link href="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $prod_info->reference }}/{{ $prod_info->img1 }}" rel="image_src">
     <!-- Open Graph data -->
     <meta property="og:title" content="Leemon" />
     <meta property="og:type" content="article" />
