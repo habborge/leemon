@@ -432,7 +432,7 @@ class PurchaseControler extends Controller
                                         $giveaway_info->amount = $final_amount_voucher;
                                     }
                                     if ($final_amount_voucher == 0){
-                                        $giveaway_info->amount_spent = $giveData["voucher_amount"];
+                                        $giveaway_info->amount_spent = $validate_giveaway[1];
                                         $giveaway_info->amount = $final_amount_voucher;
                                     }
                                     $giveaway_info->save();
@@ -519,7 +519,7 @@ class PurchaseControler extends Controller
                                         $giveaway_info->amount = $final_amount_voucher;
                                     }
                                     if ($final_amount_voucher == 0){
-                                        $giveaway_info->amount_spent = $giveData["voucher_amount"];
+                                        $giveaway_info->amount_spent = $validate_giveaway[1];
                                         $giveaway_info->amount = $final_amount_voucher;
                                     }
                                     $giveaway_info->save();
