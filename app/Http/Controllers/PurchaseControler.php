@@ -546,9 +546,7 @@ class PurchaseControler extends Controller
                                     $totalprice3 = $totalprice2;
                                     $descr = "Pay-U: Compra de Productos Naturales";
                                 }
-                                dd($totalprice3,$totalprice2,$diff, $final_amount_voucher);
-                                     
-                                
+                               
                                 $firma = md5(env('SECRETPASS')."~".$totalprice3."~100498-".$orderStatus[1]); 
                                 $signature = md5(env('KEY_PAY')."~".env('MERCHANT')."~100498-".$orderStatus[1]."~".$totalprice3."~".$currency);
                                 return view('method', [
