@@ -430,19 +430,27 @@ class PurchaseControler extends Controller
                                     if ($diff == 0){
                                         $giveaway_info->amount_spent = $totalprice2;
                                         $giveaway_info->amount = $final_amount_voucher;
+                                        $totalprice3 = 0;
                                     }
                                     if ($final_amount_voucher == 0){
                                         $giveaway_info->amount_spent = $validate_giveaway[1];
                                         $giveaway_info->amount = $final_amount_voucher;
+                                        if ($diff > 11000){
+                                            $totalprice3 = $diff;
+                                        }else{
+                                            $totalprice3 = 11000;
+                                            
+                                        }
                                     }
                                     $giveaway_info->save();
-                                    $totalprice3 = $diff;
+                                    
                                     $descr = "Pay-U: Compra de Productos Naturales GA";
                                 }else{
                                     $totalprice3 = $totalprice2;
                                     $descr = "Pay-U: Compra de Productos Naturales";
                                 }
                                 
+
                                 $firma = md5(env('SECRETPASS')."~".$totalprice3."~100498-".$orderStatus[1]); 
                                 $signature = md5(env('KEY_PAY')."~".env('MERCHANT')."~100498-".$orderStatus[1]."~".$totalprice3."~".$currency);
                                 return view('method', [
@@ -453,7 +461,7 @@ class PurchaseControler extends Controller
                                     'card' => $card,
                                     'message' => $message,
                                     'delivery_cost' => $deliveryCost,
-                                    'supertotal' => $totalprice,
+                                    'supertotal' => $totalprice3,
                                     'firma' => $firma,
                                     'signature' => $signature,
                                     'orderId' => $orderStatus[1],
@@ -461,7 +469,7 @@ class PurchaseControler extends Controller
                                     'description' => $descr
                                 ]);
                             }else{
-
+                                
                                 if ($weight >= $volweight){
                                     $cal_weight = $weight;
                                 }else{
@@ -513,24 +521,34 @@ class PurchaseControler extends Controller
 
                                 session()->put('myorder', $orderStatus[1]);
                                 
+                                
                                 if ($giveaway_voucher == 2){
                                     if ($diff == 0){
                                         $giveaway_info->amount_spent = $totalprice2;
                                         $giveaway_info->amount = $final_amount_voucher;
+                                        $totalprice3 = 0;
                                     }
                                     if ($final_amount_voucher == 0){
                                         $giveaway_info->amount_spent = $validate_giveaway[1];
                                         $giveaway_info->amount = $final_amount_voucher;
+                                        if ($diff > 11000){
+                                            $totalprice3 = $diff;
+                                        }else{
+                                            $totalprice3 = 11000;
+
+                                        }
+                                        
                                     }
                                     $giveaway_info->save();
-                                    $totalprice3 = $diff;
+                                    
                                     $descr = "Pay-U: Compra de Productos Naturales GA";
                                 }else{
                                     $totalprice3 = $totalprice2;
                                     $descr = "Pay-U: Compra de Productos Naturales";
                                 }
-
-                                                         
+                                dd($totalprice3,$totalprice2,$diff, $final_amount_voucher);
+                                     
+                                
                                 $firma = md5(env('SECRETPASS')."~".$totalprice3."~100498-".$orderStatus[1]); 
                                 $signature = md5(env('KEY_PAY')."~".env('MERCHANT')."~100498-".$orderStatus[1]."~".$totalprice3."~".$currency);
                                 return view('method', [
@@ -752,16 +770,16 @@ class PurchaseControler extends Controller
         $hash = md5(env('SECRETPASS')."~".$giveData["voucher_id"]."~0~".$giveData["voucher_type"]."~".$giveData["voucher_amount"]);
 //dd($hash, $giveData['voucher_hash']);
         if ($hash == $giveData['voucher_hash']){
-            if ($subtotal >= $giveData["voucher_amount"]){
-                $diff = $subtotal - $giveData["voucher_amount"];
+            if ($subtotal >= $giveData["voucher_value"]){
+                $diff = $subtotal - $giveData["voucher_value"];
                 
             }else{
                 
-                $val_voucher = $giveData["voucher_amount"] - $subtotal;
+                $val_voucher = $giveData["voucher_value"] - $subtotal;
             }
         }
 
-        //dd($subtotal, $giveData["voucher_amount"], $diff , $val_voucher);
-        return array($subtotal, $giveData["voucher_amount"], $diff , $val_voucher);
+        //dd($subtotal, $giveData["voucher_value"], $diff , $val_voucher);
+        return array($subtotal, $giveData["voucher_value"], $diff , $val_voucher);
     }
 }

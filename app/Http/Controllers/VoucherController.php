@@ -50,6 +50,7 @@ class VoucherController extends Controller
                                 'voucher_cost' => 0,
                                 'voucher_type' => $info->type,
                                 'voucher_amount' => $info->amount,
+                                'voucher_value' => $info->value,
                                 'voucher_hash' => $hash
                             ];
                             $info->status = 'processing';
