@@ -539,7 +539,7 @@
             var ele = $(this);
             var option = ele.attr("data-cart");
             var diff = ele.attr("data-dif");
-            alert(option);
+        
             if (option == 1){
                 var dataQuant = ele.parents("div").find(".quantity").val();
             }else{
