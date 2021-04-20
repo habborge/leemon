@@ -136,6 +136,9 @@ Route::group([
     //------- My orders ----------------------------------------------
     Route::get('/secure/orders/info', 'ProfileController@myOrders');
 
+    //------- Back to  commerce paid with voucher GA
+    Route::get('/secure/methods/giveaway/close/{sign}', 'ConfirmGAController@BackToCommerce');
+
 });
 
 Auth::routes();

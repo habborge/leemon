@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Hash;
 use SoapClient;
 use App\Department;
 use DateTime;
+use App\Voucher;
 
 class PurchaseControler extends Controller
 {
@@ -201,6 +202,8 @@ class PurchaseControler extends Controller
             $volweight = 0;
             $sw = 0;
             $totalprice = 0;
+            $diff = 0;
+            $final_amount_voucher = 0;
 
             foreach (session('cart') as $id => $details){
                 $whole = 0;
@@ -230,6 +233,8 @@ class PurchaseControler extends Controller
                 if (Auth::user()){
 
                     $id = Auth::user()->id;
+                    $now = new \DateTime();
+                    $date_giveaway = $now->format('Y-m-d');
 
                     $member_info = Member::select('members.email', 'members.firstname','members.lastname','members.address', 'members.delivery_address', 'members.phone', 'members.city', 'members.dpt', 'members.country', 'members.n_doc')
                     ->where('user_id', $id)
@@ -242,6 +247,22 @@ class PurchaseControler extends Controller
                     ->where('user_id', $id)
                     ->where('default', 1)->first();
 
+                    $giveaway_voucher = 0;
+                    $giveaway = Voucher::where('user_id', $id)->where('type', 2)->where('start_in', '<=', $date_giveaway)->where('end_in', '>=', $date_giveaway);
+                   
+                    
+                    if($giveaway->exists()){
+                        
+                        $giveaway_info = $giveaway->first();
+                        
+                        if (($giveaway_info->status == "open") and ($giveaway_info->amount > 0)){
+                            $giveaway_voucher = 1;
+                        }else if ($giveaway_info->status == "processing"){
+                            $giveaway_voucher = 2;
+                        }
+                    
+                    }
+
                     //bring product array from cart
                     $valor_almacenado = session('cart');
                     $new_array = array_values($valor_almacenado);
@@ -251,9 +272,18 @@ class PurchaseControler extends Controller
                         $deliveryCost = "free";
 
                         session()->put('deliveryCost', $deliveryCost);
-                        
+
+                        //verify if there is a voucher giveaway return array(totalprice, voucher_amount, diff, final_amount_voucher)
+                        if(session()->get('vouchergiveaway')){
+
+                            //verify if there is a voucher giveaway
+                            $validate_giveaway = $this->verify_giveaway($id, $totalprice); 
+                            $diff = $validate_giveaway[2];
+                            $final_amount_voucher = $validate_giveaway[3];
+                        }
+
                         // $signature = md5(env('KEY_PAY')."~".env('MERCHANT')."~".$ref_trans."~".$suma."~".$currency);
-                        $orderStatus = $this->validateOrder($id, $member_info, $method, $totalprice, $address, $new_array);
+                        $orderStatus = $this->validateOrder($id, $member_info, $method, $totalprice, $address, $new_array, $diff, $final_amount_voucher);
 
                         if ($orderStatus[0] == "345"){
                             return redirect()->back()->withErrors("Un error ha ocurrido!!");
@@ -263,7 +293,26 @@ class PurchaseControler extends Controller
 
                         session()->put('myorder', $orderStatus[1]);
 
-                        $signature = md5(env('KEY_PAY')."~".env('MERCHANT')."~100498-".$orderStatus[1]."~".$totalprice."~".$currency);
+                        // $giveaway_voucher == 2 update vocuher with diff and amount
+                        if ($giveaway_voucher == 2){
+                            if ($diff == 0){
+                                $giveaway_info->amount_spent = $totalprice;
+                                $giveaway_info->amount = $final_amount_voucher;
+                            }
+                            if ($final_amount_voucher == 0){
+                                $giveaway_info->amount_spent = $validate_giveaway[1];
+                                $giveaway_info->amount = $final_amount_voucher;
+                            }
+                            $giveaway_info->save();
+                            $totalprice3 = $diff;
+                            $descr = "Pay-U: Compra de Productos Naturales GA";
+                        }else{
+                            $totalprice3 = $totalprice;
+                            $descr = "Pay-U: Compra de Productos Naturales";
+                        }
+
+                        $firma = md5(env('SECRETPASS')."~".$totalprice3."~100498-".$orderStatus[1]); 
+                        $signature = md5(env('KEY_PAY')."~".env('MERCHANT')."~100498-".$orderStatus[1]."~".$totalprice3."~".$currency);
 
                         return view('method', [
                             'answer' => $answer,
@@ -273,10 +322,12 @@ class PurchaseControler extends Controller
                             'card' => $card,
                             'message' => $message,
                             'delivery_cost' => $deliveryCost,
-                            'supertotal' => $totalprice,
+                            'supertotal' => $totalprice3,
                             'firma' => $firma,
                             'signature' => $signature,
-                            'orderId' => $orderStatus[1]
+                            'orderId' => $orderStatus[1],
+                            'giveaway' => $giveaway_voucher,
+                            'description' => $descr
                         ]);
                     }else if (session()->get('voucher')){
                         $message = "";
@@ -284,9 +335,7 @@ class PurchaseControler extends Controller
 
                         session()->put('deliveryCost', $deliveryCost);
 
-                        
-
-                        $orderStatus = $this->validateOrder($id, $member_info, $method, $totalprice, $address, $new_array);
+                        $orderStatus = $this->validateOrder($id, $member_info, $method, $totalprice, $address, $new_array, $diff, $final_amount_voucher);
 
                         if ($orderStatus[0] == "345"){
                             return redirect()->back()->withErrors("Un error ha ocurrido!!");
@@ -318,7 +367,7 @@ class PurchaseControler extends Controller
                         // if ($card->count() >0){
                         //     $cardExist = 2;
                         // }
-                        $now = new \DateTime();
+                        
                         $today = $now->format('d/m/Y');
                         
                         $wsdl = "http://clientes.tcc.com.co/preservicios/liquidacionacuerdos.asmx?wsdl";
@@ -358,9 +407,17 @@ class PurchaseControler extends Controller
 
                                 session()->put('deliveryCost', $deliveryCost);
 
-                                
+                                $subtotalprice = $totalprice + $re->consultarliquidacion2Result->total->totaldespacho;
+                                $totalprice2 = intval($subtotalprice);
 
-                                $orderStatus = $this->validateOrder($id, $member_info, $method, $totalprice, $address, $new_array);
+                                //verify if there is a voucher giveaway return array(totalprice, voucher_amount, diff, final_amount_voucher)
+                                if(session()->get('vouchergiveaway')){
+                                    $validate_giveaway = $this->verify_giveaway($id, $totalprice2); 
+                                    $diff = $validate_giveaway[2];
+                                    $final_amount_voucher = $validate_giveaway[3];
+                                }
+
+                                $orderStatus = $this->validateOrder($id, $member_info, $method, $totalprice, $address, $new_array, $diff, $final_amount_voucher);
 
                                 if ($orderStatus[0] == "345"){
                                     return redirect()->back()->withErrors("Un error ha ocurrido!!");
@@ -368,13 +425,26 @@ class PurchaseControler extends Controller
 
                                 session()->put('myorder', $orderStatus[1]);
                                 
-
-                                $totalprice += $re->consultarliquidacion2Result->total->totaldespacho;
-
-                                $totalprice2 = intval($totalprice);
+                                // $giveaway_voucher == 2 update vocuher with diff and amount
+                                if ($giveaway_voucher == 2){
+                                    if ($diff == 0){
+                                        $giveaway_info->amount_spent = $totalprice2;
+                                        $giveaway_info->amount = $final_amount_voucher;
+                                    }
+                                    if ($final_amount_voucher == 0){
+                                        $giveaway_info->amount_spent = $giveData["voucher_amount"];
+                                        $giveaway_info->amount = $final_amount_voucher;
+                                    }
+                                    $giveaway_info->save();
+                                    $totalprice3 = $diff;
+                                    $descr = "Pay-U: Compra de Productos Naturales GA";
+                                }else{
+                                    $totalprice3 = $totalprice2;
+                                    $descr = "Pay-U: Compra de Productos Naturales";
+                                }
                                 
-                                $firma = md5(env('SECRETPASS')."~".$totalprice2."~100498-".$orderStatus[1]); 
-                                $signature = md5(env('KEY_PAY')."~".env('MERCHANT')."~100498-".$orderStatus[1]."~".$totalprice2."~".$currency);
+                                $firma = md5(env('SECRETPASS')."~".$totalprice3."~100498-".$orderStatus[1]); 
+                                $signature = md5(env('KEY_PAY')."~".env('MERCHANT')."~100498-".$orderStatus[1]."~".$totalprice3."~".$currency);
                                 return view('method', [
                                     'answer' => $answer,
                                     'cardexist' => $cardExist,
@@ -386,7 +456,9 @@ class PurchaseControler extends Controller
                                     'supertotal' => $totalprice,
                                     'firma' => $firma,
                                     'signature' => $signature,
-                                    'orderId' => $orderStatus[1]
+                                    'orderId' => $orderStatus[1],
+                                    'giveaway' => $giveaway_voucher,
+                                    'description' => $descr
                                 ]);
                             }else{
 
@@ -416,13 +488,24 @@ class PurchaseControler extends Controller
                                 
                                 $val_delivery = $val_k + $val_1p;
 
+                                $subtotalprice = $totalprice + $val_delivery;
+                                $totalprice2 = intval($subtotalprice);
+
                                 session()->put('tcc', $val_delivery);
                                 $message = "";
                                 $deliveryCost = "payment";
                                 session()->put('deliveryCost', $deliveryCost);
                                 // $message = $re->consultarliquidacion2Result->respuesta->mensaje;
                                 // return redirect()->back()->withErrors([$message]);
-                                $orderStatus = $this->validateOrder($id, $member_info, $method, $totalprice, $address, $new_array);
+
+                                //verify if there is a voucher giveaway return array(totalprice, voucher_amount, diff, final_amount_voucher)
+                                if(session()->get('vouchergiveaway')){
+                                    $validate_giveaway = $this->verify_giveaway($id, $totalprice2); 
+                                    $diff = $validate_giveaway[2];
+                                    $final_amount_voucher = $validate_giveaway[3];
+                                }
+
+                               $orderStatus = $this->validateOrder($id, $member_info, $method, $totalprice, $address, $new_array, $diff, $final_amount_voucher);
 
                                 if ($orderStatus[0] == "345"){
                                     return redirect()->back()->withErrors("Un error ha ocurrido!!");
@@ -430,13 +513,26 @@ class PurchaseControler extends Controller
 
                                 session()->put('myorder', $orderStatus[1]);
                                 
+                                if ($giveaway_voucher == 2){
+                                    if ($diff == 0){
+                                        $giveaway_info->amount_spent = $totalprice2;
+                                        $giveaway_info->amount = $final_amount_voucher;
+                                    }
+                                    if ($final_amount_voucher == 0){
+                                        $giveaway_info->amount_spent = $giveData["voucher_amount"];
+                                        $giveaway_info->amount = $final_amount_voucher;
+                                    }
+                                    $giveaway_info->save();
+                                    $totalprice3 = $diff;
+                                    $descr = "Pay-U: Compra de Productos Naturales GA";
+                                }else{
+                                    $totalprice3 = $totalprice2;
+                                    $descr = "Pay-U: Compra de Productos Naturales";
+                                }
 
-                                $totalprice += $val_delivery;
-
-                                $totalprice2 = intval($totalprice);
-                                
-                                $firma = md5(env('SECRETPASS')."~".$totalprice2."~100498-".$orderStatus[1]); 
-                                $signature = md5(env('KEY_PAY')."~".env('MERCHANT')."~100498-".$orderStatus[1]."~".$totalprice2."~".$currency);
+                                                         
+                                $firma = md5(env('SECRETPASS')."~".$totalprice3."~100498-".$orderStatus[1]); 
+                                $signature = md5(env('KEY_PAY')."~".env('MERCHANT')."~100498-".$orderStatus[1]."~".$totalprice3."~".$currency);
                                 return view('method', [
                                     'answer' => $answer,
                                     'cardexist' => $cardExist,
@@ -445,10 +541,12 @@ class PurchaseControler extends Controller
                                     'card' => $card,
                                     'message' => $message,
                                     'delivery_cost' => $deliveryCost,
-                                    'supertotal' => $totalprice,
+                                    'supertotal' => $totalprice3,
                                     'firma' => $firma,
                                     'signature' => $signature,
-                                    'orderId' => $orderStatus[1]
+                                    'orderId' => $orderStatus[1],
+                                    'giveaway' => $giveaway_voucher,
+                                    'description' => $descr
                                 ]);
                             }
                         }
@@ -490,7 +588,7 @@ class PurchaseControler extends Controller
     //--------------------------------------------------------------------------------------------------------------
     //
     //--------------------------------------------------------------------------------------------------------------
-        private function validateOrder($id, $member_info, $method, $totalprice, $address, $new_array){
+        private function validateOrder($id, $member_info, $method, $totalprice, $address, $new_array, $diff, $final_amount_voucher){
             //validating if session('codehash') exists in order table 
             if (Order::where('user_id', $id)->where('code_hash', session('codehash'))->doesntExist()){
                 $new_order = New Order();
@@ -518,6 +616,13 @@ class PurchaseControler extends Controller
                 //dd($order, session('codehash'), session('cart'));
                 $orderId = $order->id;
 
+                $order->amount = $totalprice;
+
+                if(session()->get('vouchergiveaway')){
+                    $order->voucher_id = session()->get('vouchergiveaway')['voucher_id'];
+                    $order->type_voucher = session()->get('vouchergiveaway')['voucher_type'];
+                }
+
                 if (session('deliveryCost') == "free"){
                     $delivery_cost = 0;
                 }else{
@@ -531,7 +636,7 @@ class PurchaseControler extends Controller
                     }
                 }
 
-                $order->amount = $totalprice;
+                
                 $order->delivery_cost = $delivery_cost;
                 $order->save();
 
@@ -635,5 +740,28 @@ class PurchaseControler extends Controller
 		// 	$message->from('no-reply@inventcloud.com', 'InventCloud');
 		// 	$message->to($data['email'],$data['email'])->subject('Recuperación de Contraseña');
 		// });
+    }
+
+    //--------------------------------------------------------------------------------------------------------------
+    //
+    //--------------------------------------------------------------------------------------------------------------
+    private function verify_giveaway($user_id, $subtotal){
+        $giveData = session()->get('vouchergiveaway');
+        $diff = 0;
+        $val_voucher = 0;
+        $hash = md5(env('SECRETPASS')."~".$giveData["voucher_id"]."~0~".$giveData["voucher_type"]."~".$giveData["voucher_amount"]);
+//dd($hash, $giveData['voucher_hash']);
+        if ($hash == $giveData['voucher_hash']){
+            if ($subtotal >= $giveData["voucher_amount"]){
+                $diff = $subtotal - $giveData["voucher_amount"];
+                
+            }else{
+                
+                $val_voucher = $giveData["voucher_amount"] - $subtotal;
+            }
+        }
+
+        //dd($subtotal, $giveData["voucher_amount"], $diff , $val_voucher);
+        return array($subtotal, $giveData["voucher_amount"], $diff , $val_voucher);
     }
 }
