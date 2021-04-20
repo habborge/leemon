@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Leemon') }}</title>
+    
 
     <!-- Scripts -->
     
@@ -18,11 +18,11 @@
         
     
 
-    <!-- favicon -->
+    <!-- favicon 
     <link rel="apple-touch-icon" sizes="180x180" href="https://leemon.s3.amazonaws.com/development/images/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="https://leemon.s3.amazonaws.com/development/images/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://leemon.s3.amazonaws.com/development/images/favicon/favicon-16x16.png">
-    <link rel="manifest" href="https://leemon.s3.amazonaws.com/development/images/favicon/site.webmanifest">
+    <link rel="manifest" href="https://leemon.s3.amazonaws.com/development/images/favicon/site.webmanifest">-->
 
     <!-- Styles -->
     

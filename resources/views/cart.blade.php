@@ -156,7 +156,7 @@
                                                                     <br>
                                                                     <div id="cart_2" class="col-md-12">
                                                                         <div class="row">
-                                                                            <div class="col-8 col-md-12">
+                                                                            <div class="col-12 col-md-12">
                                                                                 <div class="row">
                                                                                     <div class="col-9 col-md-4 input-group" data-pr="Quantity">
                                                                                         <div class="row">
@@ -164,7 +164,12 @@
                                                                                                 <div class="input-group-prepend">
                                                                                                   <span class="input-group-text" id="inputGroup-sizing-sm">Cant:</span>
                                                                                                 </div>
-                                                                                                <input class="form-control update-cart" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  data-id="{{ $id }}"  id="Quantity_{{$id}}" type="number" value="{{ $details['quantity'] }}" max="{{ $details['maxqua'] }}">
+                                                                                                <select id="Quantity_{{$id}}" name="" id="" class="form-control update-cart" data-id="{{ $id }}">
+                                                                                                    @for ($i = 1; $i <= $details['maxqua']; $i++)
+                                                                                                    <option value="{{$i}}" @if($i == $details['quantity']) selected @endif>{{ $i }}</option>
+                                                                                                    @endfor
+                                                                                                </select>
+                                                                                                {{--<input class="form-control update-cart" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  data-id="{{ $id }}"  id="Quantity_{{$id}}" type="number" value="{{ $details['quantity'] }}" max="{{ $details['maxqua'] }}">--}}
                                                                                               </div>
                                                                                             
                                                                                             
@@ -502,12 +507,15 @@
             
             var ele = $(this);
             var q = $("#Quantity_" + ele.attr("data-id")).val();
-
+    
             
             $.ajax({
                 url: "{{ env('APP_URL')}}/update-cart",
                 method: "patch",
                 data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id"), quantity: q},
+                beforeSend: function(x){
+                $('#loading_web').show();
+                },
                 success: function (response) {
                     window.location.reload();
                 }

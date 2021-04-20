@@ -205,43 +205,55 @@ class ProductController extends Controller
         // if cart is empty then this the first product
         if(!$cart) {
             
-            $str_code = $this->quickRandom();
-            $code_hash = hash('ripemd160', $str_code);
+            if ($cant <= $product->quantity){
+                $str_code = $this->quickRandom();
+                $code_hash = hash('ripemd160', $str_code);
 
-            session()->put('codehash', $code_hash);
+                session()->put('codehash', $code_hash);
 
-            $cart = [
-                    $id => [
-                        "product_id" => $id,
-                        "name" => $product->name,
-                        "quantity" => $cant,
-                        "price" => $product->price,
-                        "fee" => $product->fee,
-                        "photo" => env('AWS_URL')."/".env('BUCKET_SUBFOLDER')."/products/".$product->reference."/".$product->img1,
-                        "prom" => $product->prom,
-                        "width" => $product->width,
-                        "length" => $product->length,
-                        "height" => $product->height,
-                        "weight" => $product->weight,
-                        "maxqua" => $product->quantity,
-                        "hash" => $hash
-                    ]
-            ];
- 
-            session()->put('cart', $cart);
- 
-            return redirect('/product'.'/'.$id)->with('success', 'Usuario creado de manera Exitosa!!');
+                $cart = [
+                        $id => [
+                            "product_id" => $id,
+                            "name" => $product->name,
+                            "quantity" => $cant,
+                            "price" => $product->price,
+                            "fee" => $product->fee,
+                            "photo" => env('AWS_URL')."/".env('BUCKET_SUBFOLDER')."/products/".$product->reference."/".$product->img1,
+                            "prom" => $product->prom,
+                            "width" => $product->width,
+                            "length" => $product->length,
+                            "height" => $product->height,
+                            "weight" => $product->weight,
+                            "maxqua" => $product->quantity,
+                            "hash" => $hash
+                        ]
+                ];
+    
+                session()->put('cart', $cart);
+    
+                //return redirect('/product'.'/'.$id)->with('success', 'Producto adicionado de manera Exitosa!!');
+                return response()->json(['status'=>200,'info' => 'Producto adicionado de manera Exitosa!!']);
+            }else{
+                return response()->json(['status'=>500,'info' => 'No puede adicionar una cantidad mayor a la existente en Stock']);
+                
+            }
+            
         }
  
         // if cart not empty then check if this product exist then increment quantity
         if(isset($cart[$id])) {
+
+            if (($cant + $cart[$id]['quantity'])<= $product->quantity){
  
-            $cart[$id]['quantity'] += $cant;
+                $cart[$id]['quantity'] += $cant;
  
-            session()->put('cart', $cart);
+                session()->put('cart', $cart);
  
-            return redirect('/home')->with('success', 'Usuario creado de manera Exitosa!!');
- 
+                //return redirect('/home')->with('success', 'Usuario creado de manera Exitosa!!');
+                return response()->json(['status'=>200,'info' => 'Producto adicionado de manera Exitosa!!']);
+            }else{
+                return response()->json(['status'=>500,'info' => 'No puede adicionar una cantidad mayor a la existente en Stock']);
+            }
         }
  
         // if item not exist in cart then add to cart with quantity = 1

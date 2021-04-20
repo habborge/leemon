@@ -518,7 +518,21 @@ class PurchaseControler extends Controller
                 //dd($order, session('codehash'), session('cart'));
                 $orderId = $order->id;
 
+                if (session('deliveryCost') == "free"){
+                    $delivery_cost = 0;
+                }else{
+                    if (session()->get('tcc')){
+                        if(!empty(session('tcc')->consultarliquidacion2Result)){
+                            $delivery_cost = session('tcc')->consultarliquidacion2Result->total->totaldespacho;
+                        }else{
+                            $delivery_cost = session('tcc');
+                        }
+                       
+                    }
+                }
+
                 $order->amount = $totalprice;
+                $order->delivery_cost = $delivery_cost;
                 $order->save();
 
                 $details = Order_detail::where('order_id', $orderId);
