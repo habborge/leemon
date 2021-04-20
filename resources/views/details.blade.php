@@ -41,7 +41,7 @@
                 <div class="row">
                     <div class="breadcrumbs-block" itemtype="" itemscope="">
                         <div id="routeCat"class="breadcrumb hidden-xs" itemprop="breadcrumb">
-                            <span class="px-1">Categorias:  </span>  
+                            <span class="pr-1">Categorias:  </span>  
                             @foreach ($categories as $category)
                                 <a class="" href="/products/{{ str_replace(" ", "-",$category->gfName) }}/{{str_replace(" ", "-",$category->fName)}}/{{str_replace(" ", "-",$category->catName)}}_{{$category->catId}}"> {{ $category->catName }} |
                             @endforeach
@@ -165,11 +165,15 @@
                                             @endif
 
                                         @else
-                                            <div class="qua col-xl-3 mb-3">
-                                                <span id="cant">
-                                                    <input class="quantity" type="number" min="1" max="{{ $prod_info->webquantity }}" step="1" value="1" readonly>
-                                                </span>
-                                            </div>
+                                            @if ($prod_info->webquantity > 0)
+                                                <div class="qua col-xl-3 mb-3">
+                                                    <span id="cant">
+                                                        <input class="quantity" type="number" min="1" max="{{ $prod_info->webquantity }}" step="1" value="1" readonly>
+                                                    </span>
+                                                </div>
+                                            @else
+
+                                            @endif
                                         @endif
                                             
                                         <div id="nodis"  class="col-md-12">
@@ -203,14 +207,21 @@
                                                 </div>
                                             @endif
                                         @else
-                                            <div id="nodis-button" class="col-xl-auto">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <button id="" class="btn btn-leemon-pink update-cart mr-1 btn-width" data-cart="1"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
-                                                    </div>  
+                                            @if ($prod_info->webquantity > 0)
+                                                <div id="nodis-button" class="col-xl-auto">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <button id="" class="btn btn-leemon-pink update-cart mr-1 btn-width" data-cart="1"  data-id="{{ $prod_id }}" data-dif="{{ $prod_info->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al Carrito</button>
+                                                        </div>  
+                                                    </div>
+                                                
                                                 </div>
-                                               
-                                            </div>
+                                            
+                                            @else
+                                            <div class="col-md-12 mb-3">
+                                                No Disponible, pero no te preocupes LEEMON te notificará cuando el producto se encuentre disponible.
+                                            </div> 
+                                            @endif
                                         @endif  
 
                                         @guest
