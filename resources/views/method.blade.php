@@ -73,6 +73,59 @@
                             </div>
                         @endif
                         {{--  --}}
+                        @if ($giveaway == 1)
+                        <div id="cart_4" class="col-md-12">
+                            <div class="row">
+                                <div class="card col-md-12 card-rounded mb-3">
+                                    <div class="card-header row card-round-header" id="headingOne"> 
+                                        Voucher de Giveaway
+                                    </div>
+                                    <div class="card-body card-body-yellow card-round-footer">
+                                        @if (session('voucher'))
+                                        <div class="row">
+                                            <div class="col-12 col-md-12">
+                                                <div class="row">
+                                                    <div class="col-12 alert alert-success" role="alert">
+                                                        Ya has Utilizado un Voucher de Descuento!!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @else
+                                            <div class="row">
+                                                <div class="col-12 col-md-12">
+                                                    <div class="row">
+                                                        <div id="vouchermessage" class="col-12 alert alert-danger" role="alert">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="loading_web2">
+                                                    <img src="/img/preloader.gif" id="img_loading" alt="">
+                                                </div>
+                                                <div class="col-12 col-md-8">
+                                                    <div class="row">
+                                                        <label for="vouchergiveaway" class="sr-only">Código de Descuento</label>
+                                                        <input type="text" class="form-control form-control-sm mr-1" id="vouchergiveaway" name="vouchergiveaway" placeholder="Código de Descuento" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4">
+                                                    <div class="row">
+                                                        <input type="hidden" name="recaptcha_token" id="recaptcha_token">
+                                                        <button id="sendgiveaway" type="button" class="btn btn-primary mb-2 btn-sm" disabled>Confirmar Código</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @elseif ($giveaway == 2)
+                            <div class="col-md-12 alert alert-success card-rounded" role="alert">
+                                Felicidade Has utilizado el Voucher de Giveaway del Més Actual!!
+                            </div>
+                        @endif
                         {{-- <div id="cart_4" class="col-md-12">
                             <div class="row">
                                 <div class="card col-md-12 card-rounded mb-3">
@@ -272,20 +325,22 @@
                                                                     <div class="col-6 col-md-4">
                                                                         <div class="row float-right">
                                                                             @if ($delivery_cost == "free")
-                                                                                COP $ {{ number_format($supertotal,0) }}
+                                                                                $ {{ number_format($supertotal,0) }}
                                                                             @elseif ($delivery_cost == "freeVoucher")
-                                                                                COP $ {{ number_format($supertotal,0) }}
+                                                                                $ {{ number_format($supertotal,0) }}
                                                                             @else    
                                                                                 @if (session('tcc'))
-                                                                                    @if (!empty(session('tcc')->consultarliquidacion2Result))
-                                                                                        COP $ {{ number_format($supertotal - session('tcc')->consultarliquidacion2Result->total->totaldespacho,0) }}
+                                                                                    @if ($supertotal == 0)
+                                                                                        $ 0
                                                                                     @else
-                                                                                        COP $ {{ number_format($supertotal - session('tcc'),0) }}
+                                                                                        @if (!empty(session('tcc')->consultarliquidacion2Result))
+                                                                                            $ {{ number_format($supertotal - session('tcc')->consultarliquidacion2Result->total->totaldespacho,0) }}
+                                                                                        @else
+                                                                                            $ {{ number_format($supertotal - session('tcc'),0) }}
+                                                                                        @endif
                                                                                     @endif
-                                                                                    
                                                                                 @endif
                                                                             @endif
-                                                                            
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -316,21 +371,23 @@
                                                                         <div class="row float-right">
                                                                             @if ($delivery_cost == "free")
                                                                                 COP$ (Envío Gratis)
-
                                                                             @elseif ($delivery_cost == "freeVoucher")
                                                                                 @if (session('voucher'))
-                                                                                    COP$ (Envío Gratis por Uso de Voucher No {{session('voucher')['voucher_id']}})
+                                                                                    (Envío Gratis por Uso de Voucher No {{session('voucher')['voucher_id']}})
                                                                                 @endif
                                                                             @else 
                                                                                 @if (session('tcc'))
-                                                                                    @if (!empty(session('tcc')->consultarliquidacion2Result))
-                                                                                        COP $ {{ number_format(session('tcc')->consultarliquidacion2Result->total->totaldespacho,0) }}
+                                                                                    @if ($supertotal == 0)
+                                                                                        $ 0
                                                                                     @else
-                                                                                        COP $ {{ number_format(session('tcc'),0) }}
+                                                                                        @if (!empty(session('tcc')->consultarliquidacion2Result))
+                                                                                        {{ number_format(session('tcc')->consultarliquidacion2Result->total->totaldespacho,0) }}
+                                                                                        @else
+                                                                                        {{ number_format(session('tcc'),0) }}
+                                                                                        @endif
                                                                                     @endif
-                                                                                    
                                                                                 @endif
-                                                                            @endif       
+                                                                            @endif        
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -383,28 +440,32 @@
                                                                 <a href="{{ url('purchase') }}" class="btn btn-leemon-method btn-width">Información de Facturación</a>
                                                             @elseif ($answer == 1)
                                                                 {{-- <button id="proccess" class="btn btn-purchase btn-sm">Proceder con el Pago</button> --}}
-                                                                
-                                                                <form method="post" action="{{env('PAY_URL')}}">
-                                                                    <input name="merchantId"    type="hidden"  value="{{ env('MERCHANT') }}"   >
-                                                                     <input name="accountId"     type="hidden"  value="{{ env('ACCOUNT') }}" >
-                                                                     <input name="description"   type="hidden"  value="Pay-U: Compra de Productos Naturales"  >
-                                                                     <input name="referenceCode" type="hidden"  value="100498-{{$orderId}}" >
-                                                                     <input name="amount"        type="hidden"  value="{{$supertotal}}"   >
-                                                                     <input name="tax"           type="hidden"  value="0"  >
-                                                                     <input name="taxReturnBase" type="hidden"  value="0" >
-                                                                     <input name="currency"      type="hidden"  value="COP" >
-                                                                     <input name="signature"     type="hidden"  value="{{$signature}}"  >
-                                                                     {{-- <input name="test"          type="hidden"  value="1" > --}}
-                                                                     <input name="buyerEmail"    type="hidden"  value="{{ $member_info->email }}" >
-                                                                     <input name="lng" 		  type="hidden"  value="es"/>
-                                                                     <input name="telephone"     type="hidden"  value="{{ $member_info->phone }}"/>
-                                                                     <input name="buyerFullName" type="hidden"  value="{{ $member_info->name." ".$member_info->lastname }}"/>
-                                                                     <input name="responseUrl"    type="hidden"  value="{{ env('APP_URL')}}/secure/methods/payu/back" >
-                                                                     <input name="confirmationUrl"    type="hidden"  value="{{ env('APP_URL')}}/confirmation.php" >
-                                                                     <input name="Submit" class="btn-leemon-back button-payment"        type="submit"  value="" style=" background-color:transparent; background-image: url({{env('APP_URL')}}/img/boton_payu2.jpg); border:none; cursor:pointer; margin-top:0px;
-                                                                       margin-botton:0px; !important; clear:0px;" >
-                                                               </form>
-                                                               
+                                                                @if (($giveaway == 2) and ($supertotal == 0))
+                                                                <a href="/secure/methods/giveaway/close/{{$firma}}" class="btn btn-success">Pagar con VocherGA</a>
+                                                                @else
+                                                                    
+                                                                    <form method="post" action="{{env('PAY_URL')}}">
+                                                                        <input name="merchantId"    type="hidden"  value="{{ env('MERCHANT') }}"   >
+                                                                        <input name="accountId"     type="hidden"  value="{{ env('ACCOUNT') }}" >
+                                                                        <input name="description"   type="hidden"  value="{{ $description }}"  >
+                                                                        <input name="referenceCode" type="hidden"  value="100498-{{$orderId}}" >
+                                                                        <input name="amount"        type="hidden"  value="{{$supertotal}}"   >
+                                                                        <input name="tax"           type="hidden"  value="0"  >
+                                                                        <input name="taxReturnBase" type="hidden"  value="0" >
+                                                                        <input name="currency"      type="hidden"  value="COP" >
+                                                                        <input name="signature"     type="hidden"  value="{{$signature}}"  >
+                                                                        {{-- <input name="test"          type="hidden"  value="1" > --}}
+                                                                        <input name="buyerEmail"    type="hidden"  value="{{ $member_info->email }}" >
+                                                                        <input name="lng" 		  type="hidden"  value="es"/>
+                                                                        <input name="telephone"     type="hidden"  value="{{ $member_info->phone }}"/>
+                                                                        <input name="buyerFullName" type="hidden"  value="{{ $member_info->name." ".$member_info->lastname }}"/>
+                                                                        <input name="responseUrl"    type="hidden"  value="{{ env('APP_URL')}}/secure/methods/payu/back" >
+                                                                        <input name="confirmationUrl"    type="hidden"  value="{{ env('APP_URL')}}/confirmation.php" >
+                                                                        <input name="Submit" class="btn-leemon-back button-payment"        type="submit"  value="" style=" background-color:transparent; background-image: url({{env('APP_URL')}}/img/boton_payu2.jpg); border:none; cursor:pointer; margin-top:0px;
+                                                                        margin-botton:0px; !important; clear:0px;" >
+                                                                    </form>
+                                                                @endif
+
                                                             @endif
                                                         @endguest
                                                     </div>
@@ -417,41 +478,42 @@
                             
                         </div>
                         {{--  --}}
-                        <div id="cart_3"  class="card col-md-12 card-rounded mb-3" style="background-color: #d2fcd0">
-                            
-                            <div class="row">
-                                <div class="card-body card-round-header card-round-footer text-center">
-                                    <div class="row">
-                                        <div class="col-12 col-md-12">
-                                            
-                                            
-                                                @if ($delivery_cost == "free")
-                                                <span class="font-black">¡Felicidades!</span> has obtenido <br><h2><span class="font-black">Envío Gratis</span></h2> Valor de compra ${{ number_format($supertotal,0) }} pesos.
-                                                @elseif ($delivery_cost == "freeVoucher")
-                                                    COP $ {{ number_format(150000 -$supertotal,0) }}
-                                                @else    
-                                                    @if (session('tcc'))
-                                                    <span class="font-black">Envíos gratis</span> a nivel nacional por compras desde $150.000 pesos (COP).
-                                                    <h2 class="mt-2">Te faltan solo $<span class="font-black">
-                                                       
-                                                        @if (!empty(session('tcc')->consultarliquidacion2Result))
-                                                            {{ number_format(150000 - ($supertotal - session('tcc')->consultarliquidacion2Result->total->totaldespacho),0) }}</span> pesos.</h2>
-                                                        @else
-                                                        {{ number_format(150000 - ($supertotal - session('tcc')),0) }}</span> pesos.</h2>
+                        @if ($giveaway != 2)
+                            <div id="cart_3"  class="card col-md-12 card-rounded mb-3" style="background-color: #d2fcd0">
+                                
+                                <div class="row">
+                                    <div class="card-body card-round-header card-round-footer text-center">
+                                        <div class="row">
+                                            <div class="col-12 col-md-12">
+                                                
+                                                
+                                                    @if ($delivery_cost == "free")
+                                                        Felicidades has obtenido <br><h2><span class="font-black">Envío Gratis</span></h2> Valor de compra ${{ number_format($supertotal,0) }} pesos.
+                                                    @elseif ($delivery_cost == "freeVoucher")
+                                                        COP $ {{ number_format(150000 -$supertotal,0) }}
+                                                    @else    
+                                                        @if (session('tcc'))
+                                                        <span class="font-black">Envíos gratis</span> a nivel nacional por compras desde $150.000 pesos (COP).
+                                                        <h2 class="mt-2">Te faltan solo $<span class="font-black">
+                                                        
+                                                            @if (!empty(session('tcc')->consultarliquidacion2Result))
+                                                                {{ number_format(150000 - ($supertotal - session('tcc')->consultarliquidacion2Result->total->totaldespacho),0) }}</span> pesos.</h2>
+                                                            @else
+                                                            {{ number_format(150000 - ($supertotal - session('tcc')),0) }}</span> pesos.</h2>
+                                                            @endif
                                                         @endif
                                                     @endif
-                                                    <a href="{{ url('/') }}" class="btn btn-leemon-back">
-                                                        Seguir Comprando
-                                                    </a>
-                                                @endif
-                                            
-                                             
-                                            
+                                                
+                                                
+                                                <a href="{{ url('/') }}" class="btn btn-leemon-back">
+                                                    Seguir Comprando
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                         {{--  --}}
                     </div>
                 </div>
@@ -496,12 +558,14 @@
                                                          $ {{ number_format($supertotal,0) }}
                                                     @else    
                                                         @if (session('tcc'))
-                                                        
-                                                             
-                                                             @if (!empty(session('tcc')->consultarliquidacion2Result))
-                                                                $ {{ number_format($supertotal - session('tcc')->consultarliquidacion2Result->total->totaldespacho,0) }}
+                                                            @if ($supertotal == 0)
+                                                                $ 0
                                                             @else
-                                                                $ {{ number_format($supertotal - session('tcc'),0) }}
+                                                                @if (!empty(session('tcc')->consultarliquidacion2Result))
+                                                                    $ {{ number_format($supertotal - session('tcc')->consultarliquidacion2Result->total->totaldespacho,0) }}
+                                                                @else
+                                                                    $ {{ number_format($supertotal - session('tcc'),0) }}
+                                                                @endif
                                                             @endif
                                                         @endif
                                                     @endif
@@ -542,11 +606,14 @@
                                                         @endif
                                                     @else 
                                                         @if (session('tcc'))
-                                                            
-                                                            @if (!empty(session('tcc')->consultarliquidacion2Result))
-                                                            {{ number_format(session('tcc')->consultarliquidacion2Result->total->totaldespacho,0) }}
+                                                            @if ($supertotal == 0)
+                                                                $ 0
                                                             @else
-                                                            {{ number_format(session('tcc'),0) }}
+                                                                @if (!empty(session('tcc')->consultarliquidacion2Result))
+                                                                {{ number_format(session('tcc')->consultarliquidacion2Result->total->totaldespacho,0) }}
+                                                                @else
+                                                                {{ number_format(session('tcc'),0) }}
+                                                                @endif
                                                             @endif
                                                         @endif
                                                     @endif  
@@ -592,27 +659,30 @@
                                                     @elseif ($answer == 1)
                                                     {{-- <button id="proccess2" class="btn btn-purchase btn-sm btn-block">Proceder con el Pago</button> 
                                                     <a href="{{ route('paymentnow') }}" class="btn btn-purchase btn-block">Proceder con el Pago</a>--}}
-                                                    <form method="post" action="{{env('PAY_URL')}}">
-                                                        <input name="merchantId"    type="hidden"  value="{{ env('MERCHANT') }}"   >
-                                                        <input name="accountId"     type="hidden"  value="{{ env('ACCOUNT') }}" >
-                                                        <input name="description"   type="hidden"  value="Pay-U: Compra de Productos Naturales"  >
-                                                        <input name="referenceCode" type="hidden"  value="100498-{{$orderId}}" >
-                                                        <input name="amount"        type="hidden"  value="{{$supertotal}}"   >
-                                                        <input name="tax"           type="hidden"  value="0"  >
-                                                        <input name="taxReturnBase" type="hidden"  value="0" >
-                                                        <input name="currency"      type="hidden"  value="COP" >
-                                                        <input name="signature"     type="hidden"  value="{{$signature}}"  >
-                                                        {{-- <input name="test"          type="hidden"  value="1" > --}}
-                                                        <input name="buyerEmail"    type="hidden"  value="{{ $member_info->email }}" >
-                                                        <input name="lng" 		  type="hidden"  value="es"/>
-                                                        <input name="telephone"     type="hidden"  value="{{ $member_info->phone }}"/>
-                                                        <input name="buyerFullName" type="hidden"  value="{{ $member_info->name." ".$member_info->lastname }}"/>
-                                                        <input name="responseUrl"    type="hidden"  value="{{ env('APP_URL')}}/secure/methods/payu/back" >
-                                                        <input name="confirmationUrl"    type="hidden"  value="{{ env('APP_URL')}}/confirmation.php" >
-                                                        <input name="Submit" class="btn-leemon-back button-payment"        type="submit"  value="" style=" background-color:transparent; background-image: url({{env('APP_URL')}}/img/boton_payu2.jpg); border:none; cursor:pointer; margin-top:0px;
-                                                        margin-botton:0px; !important; clear:0px;" >
-                                                   </form>
-                                                   
+                                                        @if (($giveaway == 2) and ($supertotal == 0))
+                                                            <a href="/secure/methods/giveaway/close/{{$firma}}" class="btn btn-success">Pagar con VocherGA</a>
+                                                        @else
+                                                            <form method="post" action="{{env('PAY_URL')}}">
+                                                                <input name="merchantId"    type="hidden"  value="{{ env('MERCHANT') }}"   >
+                                                                <input name="accountId"     type="hidden"  value="{{ env('ACCOUNT') }}" >
+                                                                <input name="description"   type="hidden"  value="{{ $description }}"  >
+                                                                <input name="referenceCode" type="hidden"  value="100498-{{$orderId}}" >
+                                                                <input name="amount"        type="hidden"  value="{{$supertotal}}"   >
+                                                                <input name="tax"           type="hidden"  value="0"  >
+                                                                <input name="taxReturnBase" type="hidden"  value="0" >
+                                                                <input name="currency"      type="hidden"  value="COP" >
+                                                                <input name="signature"     type="hidden"  value="{{$signature}}"  >
+                                                                {{-- <input name="test"          type="hidden"  value="1" > --}}
+                                                                <input name="buyerEmail"    type="hidden"  value="{{ $member_info->email }}" >
+                                                                <input name="lng" 		  type="hidden"  value="es"/>
+                                                                <input name="telephone"     type="hidden"  value="{{ $member_info->phone }}"/>
+                                                                <input name="buyerFullName" type="hidden"  value="{{ $member_info->name." ".$member_info->lastname }}"/>
+                                                                <input name="responseUrl"    type="hidden"  value="{{ env('APP_URL')}}/secure/methods/payu/back" >
+                                                                <input name="confirmationUrl"    type="hidden"  value="{{ env('APP_URL')}}/confirmation.php" >
+                                                                <input name="Submit" class="btn-leemon-back button-payment"        type="submit"  value="" style=" background-color:transparent; background-image: url({{env('APP_URL')}}/img/boton_payu2.jpg); border:none; cursor:pointer; margin-top:0px;
+                                                                margin-botton:0px; !important; clear:0px;" >
+                                                            </form>
+                                                        @endif
                                                     
                                                     @endif
                                                 @endguest
@@ -647,56 +717,23 @@
 
 <script src="https://www.google.com/recaptcha/api.js?render={{ env('RE_KEY') }}"></script>
 <script>
-    grecaptcha.ready(function() {
-    grecaptcha.execute('{{ env('RE_KEY') }}')    .then(function(token) {
-    document.getElementById("recaptcha_token").value = token;
-    }); 
-    });
+    function recaptha(){
+        grecaptcha.ready(function() {
+            grecaptcha.execute('{{ env('RE_KEY') }}')    .then(function(token) {
+                document.getElementById("recaptcha_token").value = token;
+            }); 
+        });
+    }
+    function reset_recaptcha(){
+        grecaptcha.reset() 
+    }
+
 </script>
 <script type="text/javascript">
-    // function submitForm(){
-    //     var fullname = $("#cc_name").val();
-    //     var number = $("#cc_number").val();
-    //     var month = $("#cc_expiration_m").val();
-    //     var year = $("#cc_expiration_y").val();
-    //     var cvv = $("#cc_cvv").val();
-
-    //     $.ajax({
-    //         type:'POST',
-    //         dataType:'json',
-    //         url:'secure/methods/',
-    //         data:  $("#form_edit_info_card").serialize(),
-    //         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-    //         beforeSend: function(x){
-    //             $('#loading_web').show();
-    //         },
-    //         success:function(data){
-    //             if(data.status==200){
-    //                 // swal({
-    //                 //     title: data.message,
-    //                 //     text: data.message,
-    //                 //     icon: "success",
-    //                 // }); 
-                    
-    //                 $('#loading_web').hide();
-    //                 window.location.reload(true);
-                    
-    //             }else if(data.status==403){
-    //                 $.each(data.errors, function( index, value ) {
-    //                 toastr.error(value, 'Error!', {  timeOut: 5e3});
-    //                 });
-    //                 $('#loading_web').hide();
-    //                 return  false;
-    //             }else{              
-    //                 $('#loading_web').hide();
-    //                 // toastr.error(data.message, "Error!");
-    //                 alert("error");
-    //                 return  false;
-    //             }
-    //         }
-    //     });
-    // }
+    
     $(document).ready(function(){
+        recaptha();
+
         $(".update-cart").change(function (e) {
             e.preventDefault();
             
@@ -816,6 +853,42 @@
                         $('#vouchermessage').text(data.message);
                         $('#vouchermessage').show();
                     }  
+                }
+            });
+        });
+
+        $('#vouchergiveaway').keyup(function () {
+            if (($(this).val() != '') && ($(this).val().length > 10)) {
+                $('#sendgiveaway').removeAttr('disabled');
+            }
+        });
+        $("#sendgiveaway").click(function () {
+
+            var token = '{{ csrf_token() }}';
+            var voucherF = $("#vouchergiveaway").val();
+
+            $.ajax({
+                type:'POST',
+                dataType:'json',
+                data: { voucher: voucherF, recaptcha_token: $("#recaptcha_token").val()},
+                url:'secure/methods/verify/voucher',
+                headers: {'X-CSRF-TOKEN': token},
+                beforeSend: function(x){
+                    $('#loading_web2').show();
+                },
+                success:function(data){
+                    
+                    if(data.status==200){
+                        window.location.reload();
+                    }else{ 
+                        recaptha();
+                        $('#loading_web2').hide(); 
+                        $('#vouchermessage').text(data.message);
+                        $('#vouchermessage').show();
+                        
+                    } 
+                    
+                    
                 }
             });
         });

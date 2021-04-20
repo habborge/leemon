@@ -19,7 +19,7 @@ class VoucherController extends Controller
         ]);
         
         if ($p->fails()){
-            return response()->json(['status'=>505, 'message' => 'El Voucher debe contener caracteres validos!!']);
+            return response()->json(['status'=>505, 'message' => 'El Voucher debe contener caracteres validos!! Verifique que no tenga espacios, ni caracteres especiales']);
         }else{
 
             $voucher = $request->voucher;
@@ -41,6 +41,23 @@ class VoucherController extends Controller
                                 'voucher_hash' => $hash
                             ];
                             session()->put('voucher', $voucher_array);
+                            return response()->json(['status'=>200, 'message' => 'El Voucher ha sido validado con exito!!']);
+                        }else if ($info->type == 2){
+
+                            $hash = md5(env('SECRETPASS')."~".$info->id."~0~".$info->type."~".$info->amount);
+                            $voucher_array = [
+                                'voucher_id' => $info->id,
+                                'voucher_cost' => 0,
+                                'voucher_type' => $info->type,
+                                'voucher_amount' => $info->amount,
+                                'voucher_value' => $info->value,
+                                'voucher_hash' => $hash
+                            ];
+                            $info->status = 'processing';
+                            $info->used = $today;
+                            $info->save();
+                            
+                            session()->put('vouchergiveaway', $voucher_array);
                             return response()->json(['status'=>200, 'message' => 'El Voucher ha sido validado con exito!!']);
                         }
                     }else{
