@@ -11347,4 +11347,18 @@ a.text-dark:focus {
   .pull-right2 {
     float: none !important;
   }
+
+  #one_details{
+    order:2;
+    margin-bottom: 10px;
+  }
+  #two_details{
+    order: 1;
+  }
+  #three_details{
+    order: 3;
+  }
+  
+  
+
 }
