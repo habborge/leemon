@@ -22,7 +22,7 @@
     <meta property="og:image:type" content="image/png">
     <meta property="og:description" content="{{ $prod_info->name }}" />
     <meta property="og:site_name" content="Leemon.com.co" />
-    <title>{{ config('app.name', 'Leemon') }}</title>
+    <title>Leemon - Details</title>
     <link rel="stylesheet" href="../css/owl.carousel.min.css">
     <link rel="stylesheet" href="../css/owl.theme.default.min.css">
     <link rel="stylesheet" href="../css/buttonquantity.css">

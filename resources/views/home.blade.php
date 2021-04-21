@@ -4,6 +4,7 @@
  
   <link rel="stylesheet" href="css/owl.carousel.min.css">
   <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <title>Leemon - Home</title>
 @endsection
 @section('content')
 
