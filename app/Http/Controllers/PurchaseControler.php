@@ -370,7 +370,7 @@ class PurchaseControler extends Controller
                         
                         $today = $now->format('d/m/Y');
                         
-                        $wsdl = "http://clientes.tcc.com.co/preservicios/liquidacionacuerdos.asmx?wsdl";
+                        $wsdl = "http://clientes.tcc.com.co/servicios/liquidacionacuerdos.asmx?wsdl";
                         $parameters = [
                             'Clave' => env('TCC_PASS'),
                             'Liquidacion' => [
