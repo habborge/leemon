@@ -379,7 +379,7 @@ class PurchaseControler extends Controller
                                 'idciudaddestino' => $address->dane_d,
                                 'valormercancia' => $totalprice,
                                 'boomerang' => 0,
-                                'cuenta' => 0,
+                                'cuenta' => 5785500,
                                 'fecharemesa' => $today,
                                 'idunidadestrategicanegocio' => 2,
                                 'unidades' => [
@@ -397,7 +397,7 @@ class PurchaseControler extends Controller
 
                         $soap = new SoapClient($wsdl);
                         $re = $soap->__soapCall("ConsultarLiquidacion2", array($parameters));
-                        //dd($re->consultarliquidacion2Result);
+                        dd($re->consultarliquidacion2Result);
 
                         if ($re->consultarliquidacion2Result){
                             if (!empty($re->consultarliquidacion2Result->idliquidacion)){
