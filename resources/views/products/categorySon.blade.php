@@ -217,7 +217,8 @@
                                     </div>
                                     @foreach ($subcategories as $subcategory) 
                                         <li class="">
-                                            <a class="refinementlink add brand-size" href="/category/{{ str_replace(" ", "-",$gfather) }}/{{ $gfather_id }}/{{ str_replace(" ", "-",$subcategory->name) }}/{{ $subcategory->id }}" title="Futurebiotics">
+                                            {{-- /products/{{ str_replace(" ", "-",$item['name']) }}/{{str_replace(" ", "-",$submenu['name'])}}/{{str_replace(" ", "-",$submenu2['name'])}}_{{$submenu2['id']}} --}}
+                                            <a class="refinementlink add brand-size" href="/products/{{ str_replace(" ", "-",$gfather) }}/{{ str_replace(" ", "-",$father) }}/{{str_replace(" ", "-",$subcategory->name)}}_{{ $subcategory->id }}" title="Futurebiotics">
                                                 <span class="square-check"><i class="fa fa-square-o fa-lg"></i></span>
                                                 <span class="text-ref ">
                                                     {{ $subcategory->name}}
@@ -239,42 +240,44 @@
                         <div id="faq2" class="collapse" aria-labelledby="faqhead2" data-parent="#faq">
                             <div class="card-body">
                                 <ul id="ref-price" class="refinementcontainer scrollable">
+                        
+                        
                                     <li class="">
-                                            <a class="refinementlink add brand-size" href="/categories/filter/lowtohigh/{{ str_replace(" ", "-",$gfather) }}/{{$gfather_id}}" title="Futurebiotics">
-                                                <span class="square-check">
-                                                    @if ($orderPrice == "lowtohigh")
-                                                        <i class="fa fa-check-square-o" aria-hidden="true"></i><b>
-                                                    @else
-                                                        <i class="fa fa-square-o fa-lg"></i>
-                                                    @endif
-                                                </span>
-                                                <span class="text-ref ">
-                                                DEL MÁS BAJO AL MÁS ALTO
-                                                </span>
+                                        <a class="refinementlink add brand-size" href="/category/filter/lowtohigh/{{ str_replace(" ", "-",$gfather) }}/{{$gfather_id}}/{{str_replace(" ", "-",$father)}}/{{$father_id}}" title="Futurebiotics">
+                                            <span class="square-check">
                                                 @if ($orderPrice == "lowtohigh")
-                                                    </b>
-                                                @endif 
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a class="refinementlink add brand-size" href="/categories/filter/hightolow/{{ str_replace(" ", "-",$gfather) }}/{{$gfather_id}}" title="Futurebiotics">
-                                                <span class="square-check">
-                                                    @if ($orderPrice == "hightolow")
-                                                        <i class="fa fa-check-square-o" aria-hidden="true"></i><b>
-                                                    @else
-                                                        <i class="fa fa-square-o fa-lg"></i>
-                                                    @endif
-                                                </span>
-                                                <span class="text-ref ">
-                                                    DEL MÁS ALTO AL MÁS BAJO
-                                                </span>
+                                                    <i class="fa fa-check-square-o" aria-hidden="true"></i><b>
+                                                @else
+                                                    <i class="fa fa-square-o fa-lg"></i>
+                                                @endif
+                                            </span>
+                                            <span class="text-ref ">
+                                               DEL MÁS BAJO AL MÁS ALTO
+                                            </span>
                                                 @if ($orderPrice == "lowtohigh")
                                                     </b>
                                                 @endif
-                                            </a>
-                                        </li>
-                                    
-                                </ul>     
+                                        </a>
+                                    </li>
+                                    <li class="">
+                                        <a class="refinementlink add brand-size" href="/category/filter/hightolow/{{ str_replace(" ", "-",$gfather) }}/{{$gfather_id}}/{{str_replace(" ", "-",$father)}}/{{$father_id}}" title="Futurebiotics">
+                                            <span class="square-check">
+                                                @if ($orderPrice == "hightolow")
+                                                    <i class="fa fa-check-square-o" aria-hidden="true"></i><b>
+                                                @else
+                                                    <i class="fa fa-square-o fa-lg"></i>
+                                                @endif
+                                            </span>
+                                            <span class="text-ref ">
+                                                DEL MÁS ALTO AL MÁS BAJO
+                                            </span>
+                                            @if ($orderPrice == "lowtohigh")
+                                                </b>
+                                            @endif
+                                        </a>
+                                    </li>
+                                
+                            </ul>     
                                   
                             </div>
                         </div>
