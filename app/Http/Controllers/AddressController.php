@@ -77,11 +77,14 @@ class AddressController extends Controller
      */
     public function create(Request $request)
     {
+        
+
         if($request->value){
             $value = $request->value;
         }else{
             $value = "nothing";
         }
+        
         $country_id = 47;
         $dpts = Department::where('country_id', $country_id)->orderBy('department', 'ASC')->get();
 
@@ -130,9 +133,9 @@ class AddressController extends Controller
 
             if($rs){
                 if ($request->valuefrom){
-                    return redirect('methods')->with('success', 'Dirección Agregada de amnera exitosa!!');
+                    return redirect('cart')->with('success', 'Dirección Agregada de manera éxitosa!!');
                 }else{
-                    return redirect('addresses')->with('success', 'Usuario creado de manera Exitosa!!');
+                    return redirect('addresses')->with('success', 'Dirección creada de manera éxitosa!!');
                 }
             }else{
                 return view('profile.newaddress', [
