@@ -59,6 +59,7 @@ class Order extends Model
         $this->delivery_address = "Dirección: ".$address->address.", OBS:".$address->details.", Contacto:".$address->contact;
         $this->country = $address->country_master_name;
         $this->dpt = $address->department;
+        $this->zipcode = $address->dane_d;
         $this->city = $address->city_d_id;
         $this->voucher_id = $voucher_id;
         $this->type_voucher = $voucher_type;

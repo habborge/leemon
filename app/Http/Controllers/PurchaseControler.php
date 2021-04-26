@@ -248,7 +248,7 @@ class PurchaseControler extends Controller
                     ->where('default', 1)->first();
 
                     $giveaway_voucher = 0;
-                    $giveaway = Voucher::where('user_id', $id)->where('type', 2)->where('start_in', '<=', $date_giveaway)->where('end_in', '>=', $date_giveaway);
+                    $giveaway = Voucher::where('user_id', $id)->where('type', 2)->where('start_in', '<=', $date_giveaway)->where('end_in', '>=', $date_giveaway)->where('status', 'open');
                    
                     
                     if($giveaway->exists()){
@@ -372,14 +372,14 @@ class PurchaseControler extends Controller
                         
                         $wsdl = "http://clientes.tcc.com.co/servicios/liquidacionacuerdos.asmx?wsdl";
                         $parameters = [
-                            'Clave' => env('TCC_PASS'),
+                            'Clave' => env('TCC_PASS'), // cambair aproduccion
                             'Liquidacion' => [
                                 'tipoenvio' => 2,
                                 'idciudadorigen' => '08001000',
                                 'idciudaddestino' => $address->dane_d,
                                 'valormercancia' => $totalprice,
                                 'boomerang' => 0,
-                                'cuenta' => 5785500,
+                                'cuenta' => 5785500, //cambair a produccion
                                 'fecharemesa' => $today,
                                 'idunidadestrategicanegocio' => 2,
                                 'unidades' => [
@@ -654,6 +654,10 @@ class PurchaseControler extends Controller
 
                 
                 $order->delivery_cost = $delivery_cost;
+                $order->delivery_address = "Dirección: ".$address->address.", OBS:".$address->details.", Contacto:".$address->contact;
+                $order->dpt = $address->department;
+                $order->zipcode = $address->dane_d;
+                $order->city = $address->city_d_id;
                 $order->save();
 
                 $details = Order_detail::where('order_id', $orderId);

@@ -101,7 +101,7 @@
             <div id="secondary" class="refinements col-md-3 pull-left2 no-padding-md no-padding-lg hidden-xs hidden-sm">
                <hr> Filtrar
                 <hr>
-                <div class="refinement brand" data-analyticsevent="ShopBySub">
+                <div id="bysubcat" class="refinement brand" data-analyticsevent="ShopBySub">
                     <h6 class="toggle active brand price-color">
                         Compra por Subcategoria
                     </h6>
@@ -127,7 +127,7 @@
                     </ul>   
                     <hr>             
                 </div>
-                <div class="refinement brand" data-analyticsevent="ShopByBrand">
+                <div id="bybrand" class="refinement brand" data-analyticsevent="ShopByBrand">
                     {{-- <h6 class="toggle active brand price-color">
                     Compra por Marca
                     </h6> --}}
@@ -152,7 +152,7 @@
                     </ul>   
                     <hr>             
                 </div>
-                 <div class="refinement brand" data-analyticsevent="ShopByPrice">
+                <div id="byprice" class="refinement brand" data-analyticsevent="ShopByPrice">
                     <h6 class="toggle active price price-color">
                     Orden de Precios
                     </h6>
@@ -196,7 +196,91 @@
                         
                     </ul>  
                     <hr>               
-                </div> 
+                </div>
+                <div class="accordion refinement" id="faq">
+                    <div class="card">
+                        <div class="card-header" id="faqhead1">
+                            <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq1"
+                            aria-expanded="true" aria-controls="faq1"> 
+                                Compra por Subcategoria
+                                </a>
+                        </div>
+
+                        <div id="faq1" class="collapse" aria-labelledby="faqhead1" data-parent="#faq">
+                            <div class="card-body">
+                                <ul id="ref-price" class="refinementcontainer scrollable">
+                                    <div class="search-filters" style="display:none">
+                                        <label style="display:none" for="Search by  price">
+                                            Search by price
+                                        </label>
+                                        <input type="text" id="Search by  price" placeholder="Search by  price" class="txtRefinement" data-list="price">
+                                    </div>
+                                    @foreach ($subcategories as $subcategory) 
+                                        <li class="">
+                                            <a class="refinementlink add brand-size" href="/category/{{ str_replace(" ", "-",$gfather) }}/{{ $gfather_id }}/{{ str_replace(" ", "-",$subcategory->name) }}/{{ $subcategory->id }}" title="Futurebiotics">
+                                                <span class="square-check"><i class="fa fa-square-o fa-lg"></i></span>
+                                                <span class="text-ref ">
+                                                    {{ $subcategory->name}}
+                                                    {{-- <span class="hits" style="color:#333333">({{$brand->total_brand}})</span> --}}
+                                                </span>
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="faqhead2">
+                            <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq2"
+                            aria-expanded="true" aria-controls="faq2">Orden de Precios</a>
+                        </div>
+
+                        <div id="faq2" class="collapse" aria-labelledby="faqhead2" data-parent="#faq">
+                            <div class="card-body">
+                                <ul id="ref-price" class="refinementcontainer scrollable">
+                                    <li class="">
+                                            <a class="refinementlink add brand-size" href="/categories/filter/lowtohigh/{{ str_replace(" ", "-",$gfather) }}/{{$gfather_id}}" title="Futurebiotics">
+                                                <span class="square-check">
+                                                    @if ($orderPrice == "lowtohigh")
+                                                        <i class="fa fa-check-square-o" aria-hidden="true"></i><b>
+                                                    @else
+                                                        <i class="fa fa-square-o fa-lg"></i>
+                                                    @endif
+                                                </span>
+                                                <span class="text-ref ">
+                                                DEL MÁS BAJO AL MÁS ALTO
+                                                </span>
+                                                @if ($orderPrice == "lowtohigh")
+                                                    </b>
+                                                @endif 
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a class="refinementlink add brand-size" href="/categories/filter/hightolow/{{ str_replace(" ", "-",$gfather) }}/{{$gfather_id}}" title="Futurebiotics">
+                                                <span class="square-check">
+                                                    @if ($orderPrice == "hightolow")
+                                                        <i class="fa fa-check-square-o" aria-hidden="true"></i><b>
+                                                    @else
+                                                        <i class="fa fa-square-o fa-lg"></i>
+                                                    @endif
+                                                </span>
+                                                <span class="text-ref ">
+                                                    DEL MÁS ALTO AL MÁS BAJO
+                                                </span>
+                                                @if ($orderPrice == "lowtohigh")
+                                                    </b>
+                                                @endif
+                                            </a>
+                                        </li>
+                                    
+                                </ul>     
+                                  
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
             </div>
         </div>
     </div>
