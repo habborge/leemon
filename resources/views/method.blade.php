@@ -13,20 +13,20 @@
                 {{-- <div class="md-step active done"> --}}
                 {{-- <div class="md-step active editable"> --}}
                 <div class="md-step active done">
-                  <div class="md-step-circle"><span>1</span></div>
+                  <div class="md-step-circle step-confirm"><span>1</span></div>
                   <div class="md-step-title">Registro</div>
                   <div class="md-step-bar-left"></div>
                   <div class="md-step-bar-right"></div>
                 </div>
                 <div class="md-step active done">
-                  <div class="md-step-circle"><span>2</span></div>
+                  <div class="md-step-circle step-confirm"><span>2</span></div>
                   <div class="md-step-title">Verificación</div>
                   {{-- <div class="md-step-optional">Optional</div> --}}
                   <div class="md-step-bar-left"></div>
                   <div class="md-step-bar-right"></div>
                 </div>
                 <div class="md-step active done">
-                  <div class="md-step-circle"><span>3</span></div>
+                  <div class="md-step-circle step-confirm"><span>3</span></div>
                   <div class="md-step-title">Datos de Envío</div>
                   <div class="md-step-bar-left"></div>
                   <div class="md-step-bar-right"></div>

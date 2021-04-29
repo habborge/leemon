@@ -468,15 +468,34 @@
                                         </div>
                                     @else
                                         <div class="col-md-12">
-                                            No Disponible
+                                            <div class="row">
+                                            @guest
+                                                <button id="" class="btn btn-sm btn-leemon-blue notify-pro btn-block"  data-id="{{ $similar->proId }}" data-t="0">Notificar Disponibilidad</button>
+                                            @else
+                                                <button id="" class="btn btn-sm btn-leemon-blue notify-pro btn-block"  data-id="{{ $similar->proId }}" data-t="1">Notificar Disponibilidad</button>
+                                            @endguest
+                                            
+                                            </div>
                                         </div>
                                     @endif
                                 @else
-                                    <div id="nodis-button" class="col-xl-auto">
+                                    @if ($similar->webquantity > 0)
+                                        <div id="nodis-button" class="col-xl-auto">
                                         <div class="row">
-                                        <button id="" class="btn btn-sm btn-leemon-pink update-cart btn-block"  data-id="{{ $similar->proId }}" data-dif="{{ $similar->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
+                                            <button id="" class="btn btn-sm btn-leemon-pink update-cart btn-block" data-cart="2" data-id="{{ $similar->proId }}" data-dif="{{ $similar->webquantity }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar</button>
                                         </div>
-                                    </div>
+                                        </div>
+                                    @else
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                @guest
+                                                    <button id="" class="btn btn-sm btn-leemon-blue notify-pro btn-block"  data-id="{{ $similar->proId }}" data-t="0">Notificar Disponibilidad</button>
+                                                @else
+                                                <button id="" class="btn btn-sm btn-leemon-blue notify-pro btn-block"  data-id="{{ $similar->proId }}" data-t="1">Notificar Disponibilidad</button>
+                                                @endguest
+                                            </div>
+                                        </div>
+                                    @endif
                                 @endif
                               
                             
