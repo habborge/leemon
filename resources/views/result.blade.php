@@ -5,7 +5,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@leemon_market">
     <meta name="twitter:title" content="Leemon">
-    <meta property="twitter:description" content="{{ $pro[0]->name }}">
+    <meta property="twitter:description" content="Resultado de {{ $search }}">
     <meta name="twitter:creator" content="@leemon_market">
     
     <!-- Twitter Summary card images. Igual o superar los 200x200px -->
@@ -20,7 +20,7 @@
     <meta property="og:image:width" content="200">
     <meta property="og:image:height" content="200">
     <meta property="og:image:type" content="image/png">
-    <meta property="og:description" content="{{ $pro[0]->name }}" />
+    <meta property="og:description" content="Resultado de {{ $search }}" />
     <meta property="og:site_name" content="Leemon.com.co" />
     <title>.::Leemon::Busqueda::.</title>
 @endsection
