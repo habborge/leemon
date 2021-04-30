@@ -1,5 +1,29 @@
 @extends('layouts.app')
+@section('custom-css')
 
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@leemon_market">
+    <meta name="twitter:title" content="Leemon">
+    <meta property="twitter:description" content="{{ $pro[0]->name }}">
+    <meta name="twitter:creator" content="@leemon_market">
+    
+    <!-- Twitter Summary card images. Igual o superar los 200x200px -->
+    <meta name="twitter:image" content="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $pro[0]->reference }}/{{ $pro[0]->img1 }}">
+    <link href="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $pro[0]->reference }}/{{ $pro[0]->img1 }}" rel="image_src">
+    <!-- Open Graph data -->
+    <meta property="og:title" content="Leemon" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="{{ url()->full() }}" />
+    <meta property="og:image" content="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $pro[0]->reference }}/{{ $pro[0]->img1 }}" />
+    <meta property="og:image:url" content="{{ env('AWS_URL') }}/{{ env('BUCKET_SUBFOLDER')}}/products/{{ $pro[0]->reference }}/{{ $pro[0]->img1 }}" />
+    <meta property="og:image:width" content="200">
+    <meta property="og:image:height" content="200">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:description" content="{{ $pro[0]->name }}" />
+    <meta property="og:site_name" content="Leemon.com.co" />
+    <title>.::Leemon::Busqueda::.</title>
+@endsection
 @section('content')
   <div id="main" role="main" class="clearfix">    
     <div class="container  no-padding-sm-xs">
