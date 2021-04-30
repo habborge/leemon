@@ -16,7 +16,7 @@
                             {{-- <div class="md-step active done"> --}}
                             {{-- <div class="md-step active editable"> --}}
                             <div class="md-step active done">
-                              <div class="md-step-circle"><span>1</span></div>
+                              <div class="md-step-circle step-confirm"><span>1</span></div>
                               <div class="md-step-title">Registro</div>
                               <div class="md-step-bar-left"></div>
                               <div class="md-step-bar-right"></div>
