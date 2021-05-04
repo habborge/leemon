@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('custom-css')
+    <title>Leemon - Carrito</title>
+@endsection
 @section('content')
 <div id="main" class="tabs clearfix body-cart">
     <div class="container no-padding-sm-xs dataPosition2">

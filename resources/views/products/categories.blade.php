@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('custom-css')
-    
+    <title>Leemon - {{ $son }}</title>
 @endsection
 @section('content')
 <div id="main" role="main" class="clearfix">

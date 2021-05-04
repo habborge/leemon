@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('custom-css')
+<title>Leemon - Verificar email</title>
 <style>
     #botonResend{
         display: none

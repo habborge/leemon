@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('custom-css')
+    <title>Leemon - Ir a Pagar</title>
+@endsection
 @section('content')
 @php
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");

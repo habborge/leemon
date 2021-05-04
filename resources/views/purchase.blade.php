@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('custom-css')
+    <title>Leemon - Agregar Dirección</title>
     <link rel="stylesheet" href="/css/jquery-ui.min.css">
     <link rel="stylesheet" href="/css/select2.min.css">
     <style>

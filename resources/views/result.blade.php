@@ -23,7 +23,7 @@
     <meta property="og:image:type" content="image/png">
     <meta property="og:description" content="Resultados de {{ $search }}" />
     <meta property="og:site_name" content="Leemon.com.co" />
-    <title>.::Leemon::Busqueda::.</title>
+    <title>Leemon - Busqueda</title>
   @endif
 @endsection
 @section('content')
