@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('custom-css')
+    <title>Leemon - Confirmar Compra por Pay-U</title>
+@endsection
 @section('content')
 <div class="tabs">
     <div class="container">
