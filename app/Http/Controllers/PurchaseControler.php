@@ -248,7 +248,7 @@ class PurchaseControler extends Controller
                     ->where('default', 1)->first();
 
                     $giveaway_voucher = 0;
-                    $giveaway = Voucher::where('user_id', $id)->where('type', 2)->where('start_in', '<=', $date_giveaway)->where('end_in', '>=', $date_giveaway)->where('status', 'open');
+                    $giveaway = Voucher::where('user_id', $id)->where('type', 2)->where('start_in', '<=', $date_giveaway)->where('end_in', '>=', $date_giveaway);
                    
                     
                     if($giveaway->exists()){
