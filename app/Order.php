@@ -65,6 +65,8 @@ class Order extends Model
         $this->type_voucher = $voucher_type;
         $this->delivery_cost = $delivery_cost;
         $this->discount_quantity = 0;
+        $this->invoice_status = 0;
+        $this->invoice = null;
 
         $rs = $this->save();
         $id = $this->id;
